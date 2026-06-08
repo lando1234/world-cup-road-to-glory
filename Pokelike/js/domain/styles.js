@@ -49,9 +49,9 @@ const STYLE_LABELS = Object.freeze({
 });
 
 // Transitional mapping for the vanilla battle engine. The current TYPE_CHART in
-// data.js has 17 legacy keys, while the football domain has 18 StyleIds; until
-// P1-004 wires consumers to domain styles, set_piece_master intentionally shares
-// the neutral Normal matchup profile to preserve existing combat balance.
+// data.js has 17 legacy keys, while the football domain has 18 StyleIds.
+// set_piece_master intentionally shares the neutral Normal matchup profile
+// during the legacy battle-engine transition to preserve combat balance.
 const STYLE_LEGACY_TYPES = Object.freeze({
   balanced: "Normal",
   high_press: "Fire",
@@ -73,9 +73,9 @@ const STYLE_LEGACY_TYPES = Object.freeze({
   set_piece_master: "Normal"
 });
 
-// Snapshot of data.js TYPE_CHART values for P1-003. Keep changes here paired
-// with verifyStyleChartParity(TYPE_CHART) until P1-004 makes data.js consume the
-// domain style system directly.
+// Snapshot of data.js TYPE_CHART values. Keep changes here paired with
+// verifyStyleChartParity(TYPE_CHART) until the legacy TYPE_CHART is fully
+// removed.
 const LEGACY_TYPE_CHART_VALUES = Object.freeze({
   Normal: Object.freeze({ Normal: 1, Fire: 1, Water: 1, Electric: 1, Grass: 1, Ice: 1, Fighting: 1, Poison: 1, Ground: 1, Flying: 1, Psychic: 1, Bug: 1, Rock: 0.5, Ghost: 0, Dragon: 1, Dark: 1, Steel: 0.5 }),
   Fire: Object.freeze({ Normal: 1, Fire: 0.5, Water: 0.5, Electric: 1, Grass: 2, Ice: 2, Fighting: 1, Poison: 1, Ground: 1, Flying: 1, Psychic: 1, Bug: 2, Rock: 0.5, Ghost: 1, Dragon: 0.5, Dark: 1, Steel: 2 }),

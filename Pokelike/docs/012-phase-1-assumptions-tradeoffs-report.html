@@ -427,6 +427,33 @@
             </div>
           </div>
         </li>
+        <li class="task-entry">
+          <header>
+            <div class="task-title">
+              <h3>P1-004 — Wire <code>STYLE_CHART</code> into <code>data.js</code></h3>
+              <span class="pill">Status: implemented</span>
+              <span class="pill">Review: PASS</span>
+            </div>
+          </header>
+          <div class="task-grid">
+            <div class="task-note">
+              <strong>Assumptions</strong>
+              <p>The battle engine can keep calling <code>getTypeEffectiveness()</code>; the compatibility split belongs in <code>data.js</code>, not in <code>battle.js</code>.</p>
+            </div>
+            <div class="task-note">
+              <strong>Tradeoffs</strong>
+              <p>Football mode accepts both native <code>StyleId</code> values and legacy type strings during transition. This prevents immediate adapter churn but keeps temporary mapping logic in <code>data.js</code>.</p>
+            </div>
+            <div class="task-note">
+              <strong>Design Decisions</strong>
+              <p>Non-football mode continues reading <code>TYPE_CHART</code>. Football mode reads <code>STYLE_CHART</code> from the domain globals and leaves <code>MOVE_POOL</code> unchanged for the slice.</p>
+            </div>
+            <div class="task-note">
+              <strong>Risks / Follow-up</strong>
+              <p>Low risk after branch verification. Later cleanup can add explicit <code>data.js</code> aliases if future callers expect style constants from the data layer rather than <code>DomainStyles</code>.</p>
+            </div>
+          </div>
+        </li>
       </ul>
     </section>
 

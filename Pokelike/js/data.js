@@ -21,11 +21,51 @@ const TYPE_CHART = {
   Steel:    { Normal:1,   Fire:0.5, Water:0.5, Electric:0.5, Grass:1,   Ice:2,   Fighting:1,   Poison:1,   Ground:1, Flying:1,   Psychic:1,   Bug:1,   Rock:2,   Ghost:1,   Dragon:1,   Dark:1,   Steel:0.5 },
 };
 
-function getTypeEffectiveness(attackType, defenderTypes) {
+function isFootballStyleMode() {
+  return Boolean(window.FEATURES?.footballMode && window.STYLE_CHART);
+}
+
+function normalizeLegacyType(type) {
+  if (!type) return null;
+  return type.charAt(0).toUpperCase() + type.slice(1).toLowerCase();
+}
+
+function styleIdFromType(type) {
+  if (!type) return null;
+  if (window.STYLE_CHART?.[type]) return type;
+
+  const legacyType = normalizeLegacyType(type);
+  const legacyMap = window.STYLE_LEGACY_TYPES || {};
+  const styleIds = window.STYLE_IDS || [];
+
+  return styleIds.find(styleId => legacyMap[styleId] === legacyType) || null;
+}
+
+function getStyleEffectiveness(attackType, defenderTypes) {
+  const attackStyle = styleIdFromType(attackType);
+  if (!attackStyle) return 1;
+
   let mult = 1;
   for (const dt of defenderTypes) {
-    const cap = dt.charAt(0).toUpperCase() + dt.slice(1).toLowerCase();
-    const atCap = attackType.charAt(0).toUpperCase() + attackType.slice(1).toLowerCase();
+    const defenderStyle = styleIdFromType(dt);
+    const value = window.STYLE_CHART?.[attackStyle]?.[defenderStyle];
+
+    if (value !== undefined) {
+      mult *= value;
+    }
+  }
+  return mult;
+}
+
+function getTypeEffectiveness(attackType, defenderTypes) {
+  if (isFootballStyleMode()) {
+    return getStyleEffectiveness(attackType, defenderTypes);
+  }
+
+  let mult = 1;
+  for (const dt of defenderTypes) {
+    const cap = normalizeLegacyType(dt);
+    const atCap = normalizeLegacyType(attackType);
     if (TYPE_CHART[atCap] && TYPE_CHART[atCap][cap] !== undefined) {
       mult *= TYPE_CHART[atCap][cap];
     }
