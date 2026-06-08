@@ -400,6 +400,33 @@
             </div>
           </div>
         </li>
+        <li class="task-entry">
+          <header>
+            <div class="task-title">
+              <h3>P1-003 — Implement <code>StyleId</code> enum and <code>STYLE_CHART</code></h3>
+              <span class="pill">Status: implemented</span>
+              <span class="pill">Review: PASS</span>
+            </div>
+          </header>
+          <div class="task-grid">
+            <div class="task-note">
+              <strong>Assumptions</strong>
+              <p>The current legacy <code>TYPE_CHART</code> has 17 keys, while the football domain requires 18 <code>StyleId</code> keys. Phase 1 can preserve balance by projecting styles through a temporary legacy mapping.</p>
+            </div>
+            <div class="task-note">
+              <strong>Tradeoffs</strong>
+              <p><code>set_piece_master</code> temporarily shares the neutral <code>Normal</code> matchup profile. This avoids inventing new combat math before P1-004, but it must be revisited when the battle engine consumes native style keys.</p>
+            </div>
+            <div class="task-note">
+              <strong>Design Decisions</strong>
+              <p>Keep all style work inside <code>domain/styles.js</code>, expose globals for the current script runtime, and provide <code>verifyStyleChartParity()</code> so drift can be checked without modifying <code>data.js</code>.</p>
+            </div>
+            <div class="task-note">
+              <strong>Risks / Follow-up</strong>
+              <p>Medium design risk if the temporary <code>set_piece_master</code> mapping becomes treated as final. P1-004 should reduce drift by making <code>data.js</code> consume or re-export the domain style system.</p>
+            </div>
+          </div>
+        </li>
       </ul>
     </section>
 
