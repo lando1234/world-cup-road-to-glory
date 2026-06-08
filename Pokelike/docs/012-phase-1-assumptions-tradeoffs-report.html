@@ -454,6 +454,33 @@
             </div>
           </div>
         </li>
+        <li class="task-entry">
+          <header>
+            <div class="task-title">
+              <h3>P1-010 — Implement <code>createPlayerInstance()</code> in <code>domain/combat-adapter.js</code></h3>
+              <span class="pill">Status: implemented</span>
+              <span class="pill">Review: PASS</span>
+            </div>
+          </header>
+          <div class="task-grid">
+            <div class="task-note">
+              <strong>Assumptions</strong>
+              <p>The safest Phase 1 boundary is a plain runtime adapter that creates existing battle-engine objects from validated football profiles without wiring gameplay yet.</p>
+            </div>
+            <div class="task-note">
+              <strong>Tradeoffs</strong>
+              <p>The adapter keeps legacy fields such as <code>speciesId</code>, <code>types</code>, <code>currentHp</code>, and <code>moveTier</code> so battle, save/load, and UI code remain unchanged. Football-specific naming stays deferred to later UI tasks.</p>
+            </div>
+            <div class="task-note">
+              <strong>Design Decisions</strong>
+              <p><code>createPlayerInstance()</code> reads profiles through <code>DomainProfiles.getProfileOrThrow()</code>, maps styles through <code>DomainStyles.styleToLegacyType()</code>, mirrors the existing HP formula, and exports only through <code>window.DomainCombatAdapter</code>.</p>
+            </div>
+            <div class="task-note">
+              <strong>Risks / Follow-up</strong>
+              <p>Low integration risk because no caller has been rewired. P1-014 must explicitly decide when <code>createInstance()</code> delegates to the adapter and must verify no PokeAPI requests fire for football profile IDs.</p>
+            </div>
+          </div>
+        </li>
       </ul>
     </section>
 
