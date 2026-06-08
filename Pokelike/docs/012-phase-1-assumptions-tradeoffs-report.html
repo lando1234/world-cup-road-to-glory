@@ -1,0 +1,388 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SPEC 011 Phase 1 Assumptions, Tradeoffs, and Design Decisions</title>
+  <style>
+    :root {
+      --bg: #f6f4ef;
+      --card: #ffffff;
+      --ink: #1d2433;
+      --muted: #667085;
+      --line: #d9d6cc;
+      --accent: #1f7a5f;
+      --accent-2: #bf7a1f;
+      --danger: #a33b3b;
+      --soft: #eef7f3;
+      --soft-2: #fff6e8;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at top left, rgba(31, 122, 95, 0.16), transparent 36rem),
+        linear-gradient(180deg, #fbfaf7, var(--bg));
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.55;
+    }
+
+    main {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 48px 24px 72px;
+    }
+
+    header {
+      padding: 32px;
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      background: rgba(255, 255, 255, 0.86);
+      box-shadow: 0 20px 60px rgba(29, 36, 51, 0.08);
+    }
+
+    h1,
+    h2,
+    h3 {
+      line-height: 1.15;
+      margin: 0;
+    }
+
+    h1 {
+      max-width: 900px;
+      font-size: clamp(2rem, 4vw, 4.2rem);
+      letter-spacing: -0.04em;
+    }
+
+    h2 {
+      margin-bottom: 18px;
+      font-size: clamp(1.35rem, 2vw, 2rem);
+      letter-spacing: -0.02em;
+    }
+
+    h3 {
+      margin-bottom: 8px;
+      font-size: 1rem;
+    }
+
+    p {
+      margin: 0;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      gap: 8px;
+      align-items: center;
+      margin-bottom: 18px;
+      color: var(--accent);
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .subtitle {
+      max-width: 820px;
+      margin-top: 18px;
+      color: var(--muted);
+      font-size: 1.08rem;
+    }
+
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 26px;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      min-height: 32px;
+      padding: 6px 12px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: #fff;
+      color: var(--muted);
+      font-size: 0.86rem;
+      font-weight: 700;
+    }
+
+    section {
+      margin-top: 28px;
+      padding: 28px;
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      background: rgba(255, 255, 255, 0.9);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .card {
+      min-height: 100%;
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: var(--card);
+    }
+
+    .card strong {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--accent);
+      font-size: 0.78rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .card p {
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .assumption-list,
+    .decision-list,
+    .risk-list {
+      display: grid;
+      gap: 14px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .item {
+      display: grid;
+      gap: 6px;
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: var(--card);
+    }
+
+    .item .label {
+      color: var(--accent);
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .item .body {
+      color: var(--muted);
+    }
+
+    .split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+
+    .tradeoff {
+      border-color: rgba(191, 122, 31, 0.36);
+      background: var(--soft-2);
+    }
+
+    .risk {
+      border-color: rgba(163, 59, 59, 0.28);
+    }
+
+    .risk .label {
+      color: var(--danger);
+    }
+
+    .callout {
+      padding: 18px;
+      border: 1px solid rgba(31, 122, 95, 0.3);
+      border-radius: 18px;
+      background: var(--soft);
+      color: #245044;
+    }
+
+    footer {
+      margin-top: 28px;
+      color: var(--muted);
+      font-size: 0.9rem;
+      text-align: center;
+    }
+
+    @media (max-width: 860px) {
+      .grid,
+      .split {
+        grid-template-columns: 1fr;
+      }
+
+      header,
+      section {
+        padding: 22px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <div class="eyebrow">Implementation report</div>
+      <h1>SPEC 011 Phase 1 assumptions, tradeoffs, and design decisions</h1>
+      <p class="subtitle">
+        This report records the engineering assumptions made outside the written specs, plus the practical tradeoffs and localized design decisions that should guide Phase 1 implementation.
+      </p>
+      <div class="meta">
+        <span class="pill">Scope: Phase 1 vertical slice only</span>
+        <span class="pill">No gameplay redesign</span>
+        <span class="pill">Minimize file changes</span>
+        <span class="pill">Working game after every task</span>
+      </div>
+    </header>
+
+    <section>
+      <h2>Operating Assumptions</h2>
+      <div class="grid">
+        <article class="card">
+          <strong>Task discipline</strong>
+          <p>Each SPEC 011 task is treated as an isolated ticket. If dependencies are incomplete, implementation stops instead of partially building future work.</p>
+        </article>
+        <article class="card">
+          <strong>Compatibility first</strong>
+          <p>The vanilla engine remains the source of truth for battle flow, map traversal, save/restore shape, and screen transitions unless a Phase 1 ticket explicitly changes the boundary.</p>
+        </article>
+        <article class="card">
+          <strong>Football-only slice</strong>
+          <p>Phase 1 assumes football mode is the active experience, but legacy Pokelike code paths stay in place behind feature gates rather than being deleted.</p>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <h2>Assumptions Outside The Specs</h2>
+      <ul class="assumption-list">
+        <li class="item">
+          <span class="label">No build tooling will be introduced</span>
+          <span class="body">All new code should work through plain script tags, browser globals, and static JSON fetches. This keeps the Phase 1 demo aligned with the current project shape.</span>
+        </li>
+        <li class="item">
+          <span class="label">Domain modules use globals for now</span>
+          <span class="body">Because the existing app is not bundled, new domain modules should attach stable namespaces to <code>window</code> while keeping logic portable enough to copy into a future TypeScript domain layer.</span>
+        </li>
+        <li class="item">
+          <span class="label">Existing active saves may be imperfect</span>
+          <span class="body">Migration should be defensive for missing fields, but it should not try to convert an old active run into a football run. Fresh football runs are the supported Phase 1 path.</span>
+        </li>
+        <li class="item">
+          <span class="label">Catalog fetch errors are recoverable</span>
+          <span class="body">If JSON cannot load, the title screen should fail visibly and block new runs instead of falling back to Pokemon data or starting with incomplete football content.</span>
+        </li>
+        <li class="item">
+          <span class="label">CSS additions should be additive</span>
+          <span class="body">New football card, album, and stamp styles should avoid large rewrites of existing CSS. Legacy selectors can stay as long as football screens render correctly.</span>
+        </li>
+        <li class="item">
+          <span class="label">Manual QA is acceptable for Phase 1</span>
+          <span class="body">Automated tests are valuable, but the task breakdown treats manual smoke tests as the Phase 1 gate. Test scripts should not block small implementation tickets unless a ticket asks for them.</span>
+        </li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Tradeoffs</h2>
+      <div class="split">
+        <article class="item tradeoff">
+          <span class="label">Globals over imports</span>
+          <span class="body">Using browser globals preserves the no-build setup and minimizes boot risk. The cost is weaker dependency enforcement and more careful script order management.</span>
+        </article>
+        <article class="item tradeoff">
+          <span class="label">Feature gates over deletion</span>
+          <span class="body">Gating Nuzlocke, cloud save, trade, and CCC is safer than removing code. The cost is temporary dead code that must not leak into the football UI.</span>
+        </article>
+        <article class="item tradeoff">
+          <span class="label">Adapter over battle rewrite</span>
+          <span class="body">Creating football-shaped instances that match the old battle schema protects combat math. The cost is keeping fields like <code>speciesId</code> during Phase 1.</span>
+        </article>
+        <article class="item tradeoff">
+          <span class="label">Lite settlement over full economy</span>
+          <span class="body">Album-only settlement proves retention without pulling in credits, fragments, or achievements. The cost is a smaller reward moment until Phase 3.</span>
+        </article>
+        <article class="item tradeoff">
+          <span class="label">T0 silhouettes over real portraits</span>
+          <span class="body">CSS fallbacks avoid broken images and legal exposure. The cost is lower presentation quality for the first playtest.</span>
+        </article>
+        <article class="item tradeoff">
+          <span class="label">Small reports over broad refactors</span>
+          <span class="body">Each task should leave the game playable. The cost is accepting some temporary duplication in UI paths until the vertical slice is complete.</span>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <h2>Design Decisions Taken</h2>
+      <ul class="decision-list">
+        <li class="item">
+          <span class="label">Preserve engine semantics</span>
+          <span class="body">Keep battle damage, map DAG generation, team cap, boss win/loss flow, and current run persistence intact unless the active task explicitly changes them.</span>
+        </li>
+        <li class="item">
+          <span class="label">Prefer data-driven football content</span>
+          <span class="body">Players, host city bosses, and album layout should live in JSON catalogs. Code should load and validate those catalogs instead of embedding one-off player lists in UI handlers.</span>
+        </li>
+        <li class="item">
+          <span class="label">Use football branches inside existing screens</span>
+          <span class="body">For Phase 1, reskin starter, catch, swap, badge, and dex screens in place. Avoid creating an alternate UI framework or routing layer.</span>
+        </li>
+        <li class="item">
+          <span class="label">Make album writes monotonic</span>
+          <span class="body">Album state can move from unknown to seen to signed, never backwards. Settlement patches and direct mark calls should use the same rule.</span>
+        </li>
+        <li class="item">
+          <span class="label">Block invalid starts</span>
+          <span class="body">If catalogs are not loaded, starting a run is disabled. A visible loading/error state is better than falling through to legacy data.</span>
+        </li>
+        <li class="item">
+          <span class="label">Leave future systems unreachable</span>
+          <span class="body">Legend fragments, Run Budget, knockout, named events, achievements, and full meta settlement should not be partially implemented during Phase 1 tasks that do not request them.</span>
+        </li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Risk Notes</h2>
+      <ul class="risk-list">
+        <li class="item risk">
+          <span class="label">Script order remains fragile</span>
+          <span class="body">Because modules are plain scripts, a missing or misplaced script tag can break boot. Each task touching <code>index.html</code> should verify the title screen still loads.</span>
+        </li>
+        <li class="item risk">
+          <span class="label">UI terminology can leak</span>
+          <span class="body">The existing UI has many hardcoded Pokemon strings. The grep gate should be treated as a required identity check, not a polish step.</span>
+        </li>
+        <li class="item risk">
+          <span class="label">Save migration must be boring</span>
+          <span class="body">Migration should initialize structure only in Phase 1. It should not grant rewards, delete old keys, or mutate active runs.</span>
+        </li>
+        <li class="item risk">
+          <span class="label">Async catalog loading can race</span>
+          <span class="body">Any code path that renders starters, scouts, bosses, or album slots must assume catalog readiness is enforced before user interaction begins.</span>
+        </li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Guardrails For Future Task Work</h2>
+      <div class="callout">
+        Implement the requested task only. Before editing, confirm dependencies, name the affected files, and call out risks. After editing, validate the smallest playable path affected by the task. If a task requires an unfinished dependency, stop instead of filling in future work.
+      </div>
+    </section>
+
+    <footer>
+      Generated for the Pokelike World Cup Road to Glory vertical slice.
+    </footer>
+  </main>
+</body>
+</html>
