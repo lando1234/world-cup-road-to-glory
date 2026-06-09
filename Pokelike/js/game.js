@@ -284,7 +284,9 @@ async function showStarterSelect() {
   }
 
   const startLevel = 5;
-  const activeStarterIds = state.gen2Mode ? GEN2_STARTER_IDS : STARTER_IDS;
+  const activeStarterIds = window.FEATURES?.footballMode === true
+    ? STARTER_IDS
+    : (state.gen2Mode ? GEN2_STARTER_IDS : LEGACY_STARTER_IDS);
   const starters = state.isEndlessMode ? [] : await Promise.all(activeStarterIds.map(id => fetchPokemonById(id)));
 
   container.innerHTML = '';

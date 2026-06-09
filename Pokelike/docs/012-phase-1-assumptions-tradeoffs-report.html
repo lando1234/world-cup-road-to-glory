@@ -369,6 +369,33 @@
             </div>
           </div>
         </li>
+        <li class="task-entry">
+          <header>
+            <div class="task-title">
+              <h3>P1-015 — Replace starter selection with football starters</h3>
+              <span class="pill">Status: implemented</span>
+              <span class="pill">Review: PASS</span>
+            </div>
+          </header>
+          <div class="task-grid">
+            <div class="task-note">
+              <strong>Assumptions</strong>
+              <p>The football starter trio owns <code>STARTER_IDS</code> in Phase 1: profileIds 1, 2, and 3 map to Mbappé, Messi, and Van Dijk. Legacy Gen 1 starters still need an explicit compatibility constant while football mode is active by default.</p>
+            </div>
+            <div class="task-note">
+              <strong>Tradeoffs</strong>
+              <p>Adding <code>LEGACY_STARTER_IDS</code> preserves non-football Gen 1 behavior after <code>STARTER_IDS</code> becomes football-only. The cost is one extra transitional constant in <code>data.js</code> until the legacy Pokémon mode is fully separated or removed.</p>
+            </div>
+            <div class="task-note">
+              <strong>Design Decisions</strong>
+              <p><code>showStarterSelect()</code> now ignores <code>state.gen2Mode</code> when <code>FEATURES.footballMode</code> is true, so a saved Gen 2 toggle cannot bypass the football trio. Non-football mode keeps the previous Gen 1 / Gen 2 branch unchanged through <code>LEGACY_STARTER_IDS</code> and <code>GEN2_STARTER_IDS</code>.</p>
+            </div>
+            <div class="task-note">
+              <strong>Risks / Follow-up</strong>
+              <p>Low runtime risk because starter rendering still uses <code>fetchPokemonById()</code>, <code>createInstance()</code>, and <code>renderPokemonCard()</code>. UI copy, Marquee Signing presentation, and Pokémon-themed badges remain intentionally deferred to later UI/theme tasks.</p>
+            </div>
+          </div>
+        </li>
       </ul>
     </section>
 

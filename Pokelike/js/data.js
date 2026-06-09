@@ -1144,7 +1144,9 @@ async function getCatchChoices(mapIndex, count = 3, maxGenId = 151, excludeStart
   const widenMode = isEndless ? 'endless' : (isGen2 ? 'gen2' : 'none');
   const bucket = getBstBucket(range.min, widenMode);
 
-  const starterIds = excludeStarters ? (minGenId >= 152 ? GEN2_STARTER_IDS : STARTER_IDS) : [];
+  const starterIds = excludeStarters
+    ? (window.FEATURES?.footballMode === true ? STARTER_IDS : (minGenId >= 152 ? GEN2_STARTER_IDS : LEGACY_STARTER_IDS))
+    : [];
   const starterSet = new Set(starterIds);
   const larvitarLine = new Set([246, 247, 248]);
   // Base eligibility: drops legendaries, starters, and the larvitar back-half gate.
@@ -1233,7 +1235,8 @@ function createInstance(species, level, isShiny = false, moveTier = 1) {
 }
 
 // Starters
-const STARTER_IDS = [1, 4, 7];
+const STARTER_IDS = [1, 2, 3];
+const LEGACY_STARTER_IDS = [1, 4, 7];
 const GEN2_STARTER_IDS = [152, 155, 158];
 
 
