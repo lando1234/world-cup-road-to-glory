@@ -801,7 +801,48 @@ function formatFormName(apiName) {
   return `${base} (${form})`;
 }
 
+function isFootballMode() {
+  return window.FEATURES?.footballMode === true;
+}
+
+function isFootballProfileIdRange(id) {
+  const profileId = Number(id);
+  return Number.isInteger(profileId) && profileId >= 1 && profileId <= 50;
+}
+
+function assertFootballProfilesAvailable() {
+  if (!window.DomainProfiles) {
+    throw new Error("Football profile catalog is not available. Load DomainProfiles before requesting football profile IDs.");
+  }
+  if (typeof window.DomainProfiles.initCatalog !== 'function' ||
+      typeof window.DomainProfiles.getProfileOrThrow !== 'function') {
+    throw new Error("Football profile catalog is incomplete. DomainProfiles.initCatalog() and getProfileOrThrow() are required.");
+  }
+}
+
+function assertFootballCombatAdapterAvailable() {
+  if (!window.DomainCombatAdapter ||
+      typeof window.DomainCombatAdapter.createPlayerInstance !== 'function') {
+    throw new Error("Football combat adapter is not available. Load DomainCombatAdapter.createPlayerInstance() before creating football instances.");
+  }
+}
+
+function isFootballProfileRequest(id) {
+  return isFootballMode() && isFootballProfileIdRange(id);
+}
+
+function getFootballProfileRequestId(species) {
+  if (typeof species === 'number' || typeof species === 'string') return species;
+  return species?.profileId ?? species?.speciesId ?? species?.id;
+}
+
 async function fetchPokemonById(idOrSlug) {
+  if (isFootballProfileRequest(idOrSlug)) {
+    assertFootballProfilesAvailable();
+    await window.DomainProfiles.initCatalog();
+    return window.DomainProfiles.getProfileOrThrow(idOrSlug);
+  }
+
   // Static bundle short-circuit (numeric IDs only — form slugs still go through the network)
   if (typeof idOrSlug === 'number') {
     const dex = _staticPokedex || await loadStaticPokedex();
@@ -1159,6 +1200,12 @@ function calcHp(baseHp, level) {
 
 function createInstance(species, level, isShiny = false, moveTier = 1) {
   const lvl = level || 5;
+  const footballProfileId = getFootballProfileRequestId(species);
+  if (isFootballProfileRequest(footballProfileId)) {
+    assertFootballCombatAdapterAvailable();
+    return window.DomainCombatAdapter.createPlayerInstance(footballProfileId, lvl, { moveTier });
+  }
+
   const id = species.id ?? species.speciesId;
   const gen2ShinyBoost = isShiny && typeof state !== 'undefined' && state.gen2Mode;
   const baseStats = gen2ShinyBoost

@@ -342,6 +342,33 @@
           <span class="label">Manual QA is acceptable for Phase 1</span>
           <span class="body">Automated tests are valuable, but the task breakdown treats manual smoke tests as the Phase 1 gate. Test scripts should not block small implementation tickets unless a ticket asks for them.</span>
         </li>
+        <li class="task-entry">
+          <header>
+            <div class="task-title">
+              <h3>P1-014 — Guard PokeAPI paths for football profile IDs in <code>data.js</code></h3>
+              <span class="pill">Status: implemented</span>
+              <span class="pill">Review: PASS</span>
+            </div>
+          </header>
+          <div class="task-grid">
+            <div class="task-note">
+              <strong>Assumptions</strong>
+              <p>When <code>FEATURES.footballMode</code> is true, numeric IDs 1-50 are reserved for football profiles even if the domain catalog has not loaded yet. They must not be interpreted as legacy Pokémon IDs.</p>
+            </div>
+            <div class="task-note">
+              <strong>Tradeoffs</strong>
+              <p>The guard stays in <code>data.js</code> so existing callers in <code>game.js</code> and <code>ui.js</code> remain unchanged. This preserves flow compatibility but keeps a temporary bridge in the legacy data layer.</p>
+            </div>
+            <div class="task-note">
+              <strong>Design Decisions</strong>
+              <p><code>fetchPokemonById()</code> claims football IDs before static Pokédex, cache, or PokeAPI lookup. <code>createInstance()</code> claims direct IDs and profile/species-shaped objects before legacy instance construction, then delegates to <code>DomainCombatAdapter.createPlayerInstance()</code>.</p>
+            </div>
+            <div class="task-note">
+              <strong>Risks / Follow-up</strong>
+              <p>Dependency failures now fail loudly with descriptive errors instead of falling back to Ivysaur/Messi ID collisions. P1-015 can replace starter IDs next, but should verify the starter screen after catalog initialization.</p>
+            </div>
+          </div>
+        </li>
       </ul>
     </section>
 
