@@ -5,7 +5,7 @@
 **Inputs:** [001](./001-codebase-discovery.md), [006B](./006B-technical-blueprint-revised.md), [007](./007-football-data-pack.md), [008](./008-meta-progression.md), [009](./009-gameplay-loop-node-system.md)  
 **Version:** v1.1  
 **Date:** 2026-06-10  
-**Last sync:** `main` @ this commit — Scout Report gameplay wiring (T10)
+**Last sync:** `main` @ this commit — Host City boss gameplay wiring (T11)
 **Assumptions:** Single developer · existing Pokelike vanilla JS · browser game · no React · no backend changes
 
 ---
@@ -14,9 +14,9 @@
 
 | Metric | Count |
 |--------|------:|
-| **Done** | 23 |
+| **Done** | 24 |
 | **Partial** | 6 |
-| **Not started** | 23 |
+| **Not started** | 22 |
 | **Total tickets** | 52 |
 
 **Legend:** ✅ Done · 🟡 Partial (shipped subset; acceptance not fully met) · ⬜ Not started
@@ -37,7 +37,8 @@ Before continuing gameplay implementation, T0 establishes the repeatable validat
 | T7-001 | ✅ | `DomainScout` pool loader/report builder, `scout_pools.json`, and Node report validation — `220747a` |
 | T8-001 | ✅ | Map 0 layer-1 catch forced scout override and Node validation — `65ec43b` |
 | T9-001 | ✅ | `DomainRecruit` contract offer/pass API, ledger append, duplicate detection, and Node validation — `e3b1145` |
-| T10-001 | ✅ | `doCatchNode` football branch uses Scout Report, Contract Offer, album seen, and no catch RNG — this commit |
+| T10-001 | ✅ | `doCatchNode` football branch uses Scout Report, Contract Offer, album seen, and no catch RNG — `e13362b` |
+| T11-001 | ✅ | `doBossNode` football branch uses `DomainBosses.getHostCity()` and `buildBossTeam()` without `GYM_LEADERS` — this commit |
 
 **Per-task Definition of Done from this point forward:**
 
@@ -82,10 +83,10 @@ Domain tasks should extend `Pokelike/scripts/validate-football-domain.mjs` inste
 | P1-016 | ✅ | `domain/scout.js` + `scout_pools.json` build 3-choice reports for maps 0–2 — `220747a` |
 | P1-017 | ✅ | Map 0 layer-1 catch report forces Pedri/Ramos/Alisson — `65ec43b` |
 | P1-018 | ✅ | `DomainRecruit.offerContract()` / `passOnReport()` ledger + album semantics — `e3b1145` |
-| P1-019 | ✅ | Football `doCatchNode` uses `DomainScout` + `DomainRecruit`; legacy catch retained for non-football — this commit |
+| P1-019 | ✅ | Football `doCatchNode` uses `DomainScout` + `DomainRecruit`; legacy catch retained for non-football — `e13362b` |
 | P1-020 | ⬜ | No `runId` / `ledger` on run state |
 | P1-021 | ✅ | `checkAndEvolveTeam` + Moon Stone guards — `da6a262` |
-| P1-022 | ⬜ | `doBossNode` still uses `GYM_LEADERS` |
+| P1-022 | ✅ | Football `doBossNode` uses `DomainBosses.getHostCity()` + `buildBossTeam()`; legacy `GYM_LEADERS` path retained outside football — this commit |
 | P1-023 | ⬜ | No `maxMapIndex` cap / slice end redirect |
 | P1-024 | ⬜ | No slice-complete trigger at 3 stamps |
 | P1-025 | ⬜ | Badge screen still gym fantasy |
@@ -153,7 +154,7 @@ P1-042  → persist ledger in poke_current_run
 P1-043  → applyAccountPatch
 ```
 
-**Current:** P1-013, P1-027, P1-028, P1-041, P1-016, P1-017, P1-018, and P1-019 complete. Next implementation step is P1-022 boss node wiring.
+**Current:** P1-013, P1-027, P1-028, P1-041, P1-016, P1-017, P1-018, P1-019, and P1-022 complete. Next implementation step is P1-023 slice map cap / redirect alignment.
 
 **Exit:** `game_album` read/write path exists; mid-run reload preserves ledger shape.
 
@@ -174,7 +175,7 @@ P1-034  → Squad Registration reskin
 ### Wave 4 — Host city progression
 
 ```
-P1-022  → doBossNode → getHostCity
+P1-022  → doBossNode → getHostCity ✅
 P1-023  → cap maps at maxMapIndex 2
 P1-024  → slice-complete at badges === 3
 P1-025  → City Stamp ceremony
@@ -1564,7 +1565,7 @@ P1-001 → P1-002 → P1-003 → P1-004 → P1-005 → P1-007 → P1-008 → P1-
 ### Remaining critical spine (from current state)
 
 ```
-P1-022 → P1-023 → P1-024 → P1-030 → P1-036 → P1-044 → P1-046 → P1-052
+P1-023 → P1-024 → P1-030 → P1-036 → P1-044 → P1-046 → P1-052
 ```
 
 ### Parallelizable Tasks
@@ -1630,10 +1631,10 @@ These can run concurrently with critical path segments when a second pass or con
 ### Milestone 3 — Host City boss works ⬜
 
 **Completion criteria:**
-- [ ] `doBossNode` loads JSON roster for maps 0–2
+- [x] `doBossNode` loads JSON roster for maps 0–2
 - [ ] Boss win increments stamp; City Stamp ceremony displays
 - [ ] Map 2 win triggers slice complete (not map 3)
-- [ ] No `GYM_LEADERS` reference in football path
+- [x] No `GYM_LEADERS` reference in football path
 
 **Blocked by:** Milestone 2 + P1-022, P1-023, P1-024, P1-025
 

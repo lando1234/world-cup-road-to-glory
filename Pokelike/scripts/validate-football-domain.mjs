@@ -189,6 +189,34 @@ await runTest("football catch node is wired to scout recruitment flow", () => {
   assert(!signBlock.includes("markPokedexCaught"), "football scout signing should not write poke_dex");
 });
 
+await runTest("football boss node is wired to host city domain flow", () => {
+  const gameSource = readText("js/game.js");
+  const doBossIndex = gameSource.indexOf("async function doBossNode(node)");
+  const leaderViewIndex = gameSource.indexOf("function buildHostCityLeaderView(boss)");
+  const doEliteIndex = gameSource.indexOf("async function doElite4()");
+
+  assert(doBossIndex !== -1, "game.js should define doBossNode");
+  assert(leaderViewIndex !== -1, "game.js should define buildHostCityLeaderView");
+  assert(doEliteIndex !== -1, "game.js should define doElite4");
+
+  const doBossBlock = gameSource.slice(doBossIndex, leaderViewIndex);
+  const footballBranchStart = doBossBlock.indexOf("if (isFootballModeEnabled())");
+  const legacyBranchStart = doBossBlock.indexOf("const leader = GYM_LEADERS[state.currentMap]");
+
+  assert(footballBranchStart !== -1, "doBossNode should branch for football mode");
+  assert(legacyBranchStart !== -1, "doBossNode should retain legacy GYM_LEADERS branch");
+  assert(footballBranchStart < legacyBranchStart, "football boss branch should run before legacy GYM_LEADERS path");
+
+  const footballBranch = doBossBlock.slice(footballBranchStart, legacyBranchStart);
+  assert(footballBranch.includes("DomainBosses?.getHostCity(state.currentMap)"), "football boss branch should load host city by current map");
+  assert(footballBranch.includes("DomainBosses.buildBossTeam(boss)"), "football boss branch should build team through DomainBosses");
+  assert(footballBranch.includes("runBattleScreen(enemyTeam, true"), "football boss branch should use existing boss battle flow");
+  assert(footballBranch.includes("state.badges++"), "football boss win should increment the engine stamp counter");
+  assert(footballBranch.includes("showBadgeScreen(leader)"), "football boss win should reuse ceremony flow until stamp UI task");
+  assert(footballBranch.includes("showGameOver()"), "football boss loss should trigger game over");
+  assert(!footballBranch.includes("GYM_LEADERS"), "football boss branch must not read legacy GYM_LEADERS");
+});
+
 await runTest("feature gates default to football slice mode", () => {
   const features = context.window.FEATURES;
   assert(features.footballMode === true, "FEATURES.footballMode must be true");

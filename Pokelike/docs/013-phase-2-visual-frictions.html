@@ -290,6 +290,31 @@
 
         <article class="entry" data-priority="medium">
           <div class="entry-head">
+            <h3>Host City win still uses legacy badge ceremony shell</h3>
+            <span class="pill">Priority: Medium</span>
+          </div>
+          <div class="entry-body">
+            <div class="field">
+              <span>Surface</span>
+              <p><code>badge-screen</code>, <code>badge-icon-img</code>, <code>badge-count-display</code>, and next-map transition copy.</p>
+            </div>
+            <div class="field">
+              <span>Friction</span>
+              <p>Host City Challenge wins now use JSON boss data, but the ceremony still relies on legacy screen IDs, badge sprite slots, and badge-count language.</p>
+            </div>
+            <div class="field">
+              <span>Phase 2 Direction</span>
+              <p>Create a City Stamp ceremony with stamp artwork, host city/nation metadata, and slice-progress language independent from legacy badge sprites.</p>
+            </div>
+            <div class="field">
+              <span>Evidence</span>
+              <p>T11 adapts <code>DomainBosses</code> output into the existing <code>showBadgeScreen()</code> contract so gameplay can ship before P1-025 visual polish.</p>
+            </div>
+          </div>
+        </article>
+
+        <article class="entry" data-priority="medium">
+          <div class="entry-head">
             <h3>Scout Report still rides legacy catch and swap surfaces</h3>
             <span class="pill">Priority: Medium</span>
           </div>

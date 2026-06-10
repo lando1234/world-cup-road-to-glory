@@ -759,6 +759,33 @@
         <li class="task-entry">
           <header>
             <div class="task-title">
+              <h3>T11 — Host City boss gameplay wiring</h3>
+              <span class="pill">Status: implemented</span>
+              <span class="pill">Review: PASS</span>
+            </div>
+          </header>
+          <div class="task-grid">
+            <div class="task-note">
+              <strong>Assumptions</strong>
+              <p>The first three Host City Challenge fights can run through the existing boss battle screen once their rosters are built from <code>host_city_bosses.json</code>. The internal <code>state.badges</code> counter remains the engine stamp counter until the stamp ceremony task renames the UI.</p>
+            </div>
+            <div class="task-note">
+              <strong>Tradeoffs</strong>
+              <p>P1-022 adds a football branch before the legacy <code>GYM_LEADERS</code> path instead of deleting the legacy code. This preserves Classic mode behavior and keeps the change focused on Phase 1 football routing.</p>
+            </div>
+            <div class="task-note">
+              <strong>Design Decisions</strong>
+              <p>Football <code>doBossNode</code> now calls <code>DomainBosses.getHostCity(state.currentMap)</code>, builds the enemy team with <code>DomainBosses.buildBossTeam()</code>, and adapts the boss config into the leader object expected by <code>showBadgeScreen()</code>.</p>
+            </div>
+            <div class="task-note">
+              <strong>Risks / Follow-up</strong>
+              <p>The fight now uses real host city rosters, but the post-win ceremony still uses legacy badge screen structure and sprite slots. P1-023/P1-024 must finish slice-end routing, and P1-025 must convert the ceremony into City Stamp presentation.</p>
+            </div>
+          </div>
+        </li>
+        <li class="task-entry">
+          <header>
+            <div class="task-title">
               <h3>P1-001 — Create <code>domain/features.js</code> with Phase 1 flags</h3>
               <span class="pill">Status: implemented</span>
             </div>
@@ -1293,7 +1320,7 @@
     </section>
 
     <footer>
-      Generated for the Pokelike World Cup Road to Glory vertical slice. Last updated 2026-06-10 — T10 Scout Report gameplay wiring, T9 recruitment contract API, T8 Map 0 forced scout override, T7 scout pool foundation, T6 boot-time migration wiring, T5 save v3 album migration, T4 DomainAlbum persistence API, T3 album layout data, T2 host city boss catalog, T1 boot and cloud gates, Node/npm automation baseline, T0 validation protocol, one-task-one-commit rule, visual-friction registry, bridges registry, migration guardrails, TheSportsDB release-risk notes.
+      Generated for the Pokelike World Cup Road to Glory vertical slice. Last updated 2026-06-10 — T11 Host City boss gameplay wiring, T10 Scout Report gameplay wiring, T9 recruitment contract API, T8 Map 0 forced scout override, T7 scout pool foundation, T6 boot-time migration wiring, T5 save v3 album migration, T4 DomainAlbum persistence API, T3 album layout data, T2 host city boss catalog, T1 boot and cloud gates, Node/npm automation baseline, T0 validation protocol, one-task-one-commit rule, visual-friction registry, bridges registry, migration guardrails, TheSportsDB release-risk notes.
     </footer>
   </main>
 </body>

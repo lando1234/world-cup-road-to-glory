@@ -1010,6 +1010,31 @@ async function doBossNode(node) {
     return;
   }
 
+  if (isFootballModeEnabled()) {
+    const boss = window.DomainBosses?.getHostCity(state.currentMap);
+    if (!boss) {
+      console.error(`No host city boss configured for map ${state.currentMap}.`);
+      showGameOver();
+      return;
+    }
+
+    const enemyTeam = window.DomainBosses.buildBossTeam(boss);
+    const leader = buildHostCityLeaderView(boss);
+    showScreen('battle-screen');
+    document.getElementById('battle-title').textContent = `Host City Challenge vs ${leader.name}!`;
+    document.getElementById('battle-subtitle').textContent = `${leader.badge} is on the line!`;
+    await runBattleScreen(enemyTeam, true, () => {
+      state.badges++;
+      advanceFromNode(state.map, node.id);
+      showBadgeScreen(leader);
+      const ach = unlockAchievement(`gym_${state.currentMap}`);
+      if (ach) showAchievementToast(ach);
+    }, () => {
+      showGameOver();
+    }, leader.name);
+    return;
+  }
+
   if (state.currentMap === 8) {
     await doElite4();
     return;
@@ -1032,6 +1057,17 @@ async function doBossNode(node) {
   }, () => {
     showGameOver();
   }, leader.name);
+}
+
+function buildHostCityLeaderView(boss) {
+  return {
+    name: boss.label || boss.hostCity,
+    badge: boss.stamp?.displayName || `${boss.hostCity} Stamp`,
+    type: boss.primaryStyle,
+    hostCity: boss.hostCity,
+    nation: boss.nation,
+    stamp: boss.stamp
+  };
 }
 
 async function doElite4() {
