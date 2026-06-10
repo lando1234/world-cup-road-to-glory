@@ -96,6 +96,7 @@ runScript(context, "js/domain/bosses.js");
 runScript(context, "js/domain/combat-adapter.js");
 runScript(context, "js/domain/save.js");
 runScript(context, "js/domain/scout.js");
+runScript(context, "js/domain/recruit.js");
 
 context.window.GAME_THEME = {
   node: {
@@ -386,6 +387,54 @@ await runTest("album API persists seen and signed states monotonically", () => {
     rejectedUnknownProfile = true;
   }
   assert(rejectedUnknownProfile, "album API should reject profileIds outside the loaded catalog");
+});
+
+await runTest("recruit contract signs player and appends ledger", () => {
+  context.localStorage.removeItem("game_album");
+  const runState = { team: [{ profileId: 1 }], ledger: {} };
+
+  const result = context.window.DomainRecruit.offerContract(12, runState);
+
+  assert(result.added === true, "contract offer should add when squad has room");
+  assert(result.needsSwap === false, "contract offer should not require swap when squad has room");
+  assert(result.duplicate === false, "new contract should not be marked duplicate");
+  assert(runState.ledger.signedProfileIds.join(",") === "12", "signedProfileIds should append signed profile");
+  assert(runState.ledger.duplicateSignProfileIds.length === 0, "new sign should not append duplicate ledger");
+  assert(context.window.DomainAlbum.getEntryState(12) === "signed", "contract offer should mark album signed");
+});
+
+await runTest("recruit contract tracks duplicate signs", () => {
+  context.localStorage.setItem("game_album", JSON.stringify({ "12": 1 }));
+  const runState = { team: [], ledger: { signedProfileIds: [], duplicateSignProfileIds: [] } };
+
+  const result = context.window.DomainRecruit.offerContract(12, runState);
+
+  assert(result.added === true, "duplicate contract should still be accepted when squad has room");
+  assert(result.duplicate === true, "duplicate contract should be marked duplicate");
+  assert(runState.ledger.signedProfileIds.join(",") === "12", "duplicate sign should still append signedProfileIds");
+  assert(runState.ledger.duplicateSignProfileIds.join(",") === "12", "duplicate sign should append duplicateSignProfileIds");
+});
+
+await runTest("recruit contract full squad requests swap without signing", () => {
+  context.localStorage.removeItem("game_album");
+  const runState = {
+    team: Array.from({ length: 6 }, (_, index) => ({ profileId: index + 1 })),
+    ledger: { signedProfileIds: [], duplicateSignProfileIds: [] }
+  };
+
+  const result = context.window.DomainRecruit.offerContract(14, runState);
+
+  assert(result.added === false, "full squad contract should not add immediately");
+  assert(result.needsSwap === true, "full squad contract should request swap");
+  assert(runState.ledger.signedProfileIds.length === 0, "full squad pending swap should not append signed ledger");
+  assert(context.window.DomainAlbum.getEntryState(14) === "unknown", "full squad pending swap should not mark album signed");
+});
+
+await runTest("recruit pass on report does not sign", () => {
+  const result = context.window.DomainRecruit.passOnReport();
+  assert(result.added === false, "pass on report should not add");
+  assert(result.needsSwap === false, "pass on report should not request swap");
+  assert(result.passed === true, "pass on report should return passed flag");
 });
 
 await runTest("save v3 migration copies legacy dex to album idempotently", () => {

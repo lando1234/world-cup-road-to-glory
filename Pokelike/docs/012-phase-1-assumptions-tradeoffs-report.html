@@ -705,6 +705,33 @@
         <li class="task-entry">
           <header>
             <div class="task-title">
+              <h3>T9 — Recruitment contract domain API</h3>
+              <span class="pill">Status: implemented</span>
+              <span class="pill">Review: PASS</span>
+            </div>
+          </header>
+          <div class="task-grid">
+            <div class="task-note">
+              <strong>Assumptions</strong>
+              <p>Contract offers are deterministic: selecting a player means a 100% accepted signing unless the squad is full and requires a separate registration decision.</p>
+            </div>
+            <div class="task-note">
+              <strong>Tradeoffs</strong>
+              <p>When squad is full, <code>offerContract()</code> returns <code>needsSwap</code> without mutating album or signed ledger. This preserves the decline-swap path for P1-034 and avoids crediting unsigned players.</p>
+            </div>
+            <div class="task-note">
+              <strong>Design Decisions</strong>
+              <p><code>DomainRecruit</code> creates missing run ledger arrays, appends <code>signedProfileIds</code> on immediate sign, appends <code>duplicateSignProfileIds</code> only when <code>game_album</code> was already signed, and delegates signed state to <code>DomainAlbum</code>.</p>
+            </div>
+            <div class="task-note">
+              <strong>Risks / Follow-up</strong>
+              <p>P1-019 still needs to call this API from the Scout Report flow and add the actual runtime player instance to the squad. P1-034 later owns the full-squad swap/decline screen.</p>
+            </div>
+          </div>
+        </li>
+        <li class="task-entry">
+          <header>
+            <div class="task-title">
               <h3>P1-001 — Create <code>domain/features.js</code> with Phase 1 flags</h3>
               <span class="pill">Status: implemented</span>
             </div>
@@ -1239,7 +1266,7 @@
     </section>
 
     <footer>
-      Generated for the Pokelike World Cup Road to Glory vertical slice. Last updated 2026-06-10 — T8 Map 0 forced scout override, T7 scout pool foundation, T6 boot-time migration wiring, T5 save v3 album migration, T4 DomainAlbum persistence API, T3 album layout data, T2 host city boss catalog, T1 boot and cloud gates, Node/npm automation baseline, T0 validation protocol, one-task-one-commit rule, visual-friction registry, bridges registry, migration guardrails, TheSportsDB release-risk notes.
+      Generated for the Pokelike World Cup Road to Glory vertical slice. Last updated 2026-06-10 — T9 recruitment contract API, T8 Map 0 forced scout override, T7 scout pool foundation, T6 boot-time migration wiring, T5 save v3 album migration, T4 DomainAlbum persistence API, T3 album layout data, T2 host city boss catalog, T1 boot and cloud gates, Node/npm automation baseline, T0 validation protocol, one-task-one-commit rule, visual-friction registry, bridges registry, migration guardrails, TheSportsDB release-risk notes.
     </footer>
   </main>
 </body>
