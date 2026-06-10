@@ -5,7 +5,7 @@
 **Inputs:** [001](./001-codebase-discovery.md), [006B](./006B-technical-blueprint-revised.md), [007](./007-football-data-pack.md), [008](./008-meta-progression.md), [009](./009-gameplay-loop-node-system.md)  
 **Version:** v1.1  
 **Date:** 2026-06-10  
-**Last sync:** `main` @ this commit — Squad Registration swap UX (T26)
+**Last sync:** `main` @ this commit — Football chrome album controls (T27)
 **Assumptions:** Single developer · existing Pokelike vanilla JS · browser game · no React · no backend changes
 
 ---
@@ -14,8 +14,8 @@
 
 | Metric | Count |
 |--------|------:|
-| **Done** | 39 |
-| **Partial** | 7 |
+| **Done** | 40 |
+| **Partial** | 6 |
 | **Not started** | 6 |
 | **Total tickets** | 52 |
 
@@ -53,7 +53,8 @@ Before continuing gameplay implementation, T0 establishes the repeatable validat
 | T23-001 | ✅ | Current-run persistence preserves `runId` and `ledger` through `poke_current_run` save/load — `4c01f0a` |
 | T24-001 | ✅ | `applyAccountPatch()` merges `game_album` monotonically and leaves active runs untouched — `c09b5ad` |
 | T25-001 | ✅ | Catch screen is reskinned as Scout Report with contract confirmation, duplicate hints, and stamp animation hook — `6826e6a` |
-| T26-001 | ✅ | Swap screen is reskinned as Squad Registration for football full-squad signings — this commit |
+| T26-001 | ✅ | Swap screen is reskinned as Squad Registration for football full-squad signings — `b21011e` |
+| T27-001 | ✅ | Football chrome shows Album controls and hides deferred Achievements/Hall surfaces — this commit |
 
 **Per-task Definition of Done from this point forward:**
 
@@ -117,7 +118,7 @@ Domain tasks should extend `Pokelike/scripts/validate-football-domain.mjs` inste
 | P1-035 | 🟡 | Minimal `slice-complete-screen` shell exists — this commit; full squad snapshot/album presentation polish pending |
 | P1-036 | ✅ | `DomainSave.settleRunLite()` returns album patch + summary; settlement modal renders on slice complete and football game over — `959079b` |
 | P1-037 | 🟡 | `renderPlayerCard()` — `edabaa7`; **not all screens / stat labels unified** |
-| P1-038 | 🟡 | Title reskin + hide deferred modes — `ec5e717`; **map HUD still opens Pokédex modal** |
+| P1-038 | ✅ | Title/map chrome shows Album controls, hides deferred Achievements/Hall/cloud/modes, and keeps Settings visible — this commit |
 | P1-039 | 🟡 | Battle **field** copy only (Transfer Target, Form N) — `a098829`; **battle log strings untouched** |
 | P1-040 | 🟡 | Portrait fallback in cards + battle — `a098829`; **T0 silhouette spec incomplete** |
 | P1-041 | ✅ | `initGame()` calls `migrateSaveV2toV3()` before Continue Run reads — `011a3fa` |
@@ -207,7 +208,7 @@ P1-045  → cloud save suppress (finish P1-006 cloud slice) ✅
 
 ```
 P1-037  (finish) → unify all card call sites + football stat labels
-P1-038  (finish) → map HUD Album button + hide remaining Pokémon chrome
+P1-038  (finish) → map HUD Album button + hide remaining Pokémon chrome ✅
 P1-039  (finish) → battle log faint/win/loss strings
 P1-040  (finish) → T0 silhouette pipeline everywhere
 P1-031  → album_layout loader ✅

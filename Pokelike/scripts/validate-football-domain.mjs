@@ -398,7 +398,13 @@ await runTest("football album modal replaces pokedex collection surface", () => 
   assert(albumLayoutSource.includes("Fan Favorites"), "album layout should include Fan Favorites page");
   assert(uiSource.includes("Vol. 1 complete in full campaign"), "album modal should render full campaign footer note");
   assert(uiSource.includes("window.GAME_THEME.collectionLabel"), "collection buttons should use GAME_THEME.collectionLabel in football mode");
+  assert(uiSource.includes("hideMilestones: true"), "football title/map chrome should hide achievements");
+  assert(uiSource.includes("hideArchive: true"), "football title chrome should hide archive");
+  assert(uiSource.includes("button[onclick=\"openAchievementsModal()\"]"), "football chrome should target achievement buttons");
+  assert(uiSource.includes("football-album-button"), "football collection buttons should get album button styling");
+  assert(uiSource.includes("album-icon-glyph"), "football map collection buttons should replace pokedex image with album glyph");
   assert(cssSource.includes(".album-modal-box"), "style.css should define album modal shell");
+  assert(cssSource.includes(".album-icon-glyph"), "style.css should define album icon glyph");
   assert(cssSource.includes(".album-grid"), "style.css should define album grid");
   assert(cssSource.includes(".album-style-chip"), "style.css should define album style chips");
 });

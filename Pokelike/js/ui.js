@@ -271,6 +271,8 @@ function getTitleScreenCopy() {
       hideGenToggle: true,
       hideNuzlocke: true,
       hideBattleTower: true,
+      hideMilestones: true,
+      hideArchive: true,
       hideDiscord: true,
       hidePokemonDisclaimer: true,
       hideCloudSave: window.FEATURES?.cloudSave === false
@@ -288,6 +290,8 @@ function getTitleScreenCopy() {
     hideGenToggle: false,
     hideNuzlocke: false,
     hideBattleTower: false,
+    hideMilestones: false,
+    hideArchive: false,
     hideDiscord: false,
     hidePokemonDisclaimer: false,
     hideCloudSave: false
@@ -326,13 +330,31 @@ function applyTitleScreenPresentation() {
   if (archiveBtn) archiveBtn.textContent = copy.archive;
   document.querySelectorAll('button[onclick="openPokedexModal()"]').forEach(btn => {
     btn.title = copy.isFootball ? window.GAME_THEME.collectionLabel : 'Pokédex';
+    btn.classList.toggle('football-album-button', copy.isFootball);
     const img = btn.querySelector('img');
-    if (img) img.alt = copy.isFootball ? window.GAME_THEME.collectionLabel : 'Pokédex';
+    if (img) {
+      img.alt = copy.isFootball ? window.GAME_THEME.collectionLabel : 'Pokédex';
+      img.style.display = copy.isFootball ? 'none' : '';
+    }
+    let glyph = btn.querySelector('.album-icon-glyph');
+    if (copy.isFootball) {
+      if (!glyph) {
+        glyph = document.createElement('span');
+        glyph.className = 'album-icon-glyph';
+        glyph.setAttribute('aria-hidden', 'true');
+        glyph.textContent = '📖';
+        btn.prepend(glyph);
+      }
+    } else if (glyph) {
+      glyph.remove();
+    }
   });
 
   _titleScreenSetVisible(screen.querySelector('.gen-toggle-wrap'), !copy.hideGenToggle);
   _titleScreenSetVisible(document.getElementById('btn-hard-run'), !copy.hideNuzlocke);
   _titleScreenSetVisible(document.getElementById('btn-endless-run'), !copy.hideBattleTower);
+  document.querySelectorAll('button[onclick="openAchievementsModal()"]').forEach(btn => _titleScreenSetVisible(btn, !copy.hideMilestones));
+  _titleScreenSetVisible(document.getElementById('title-btn-archive'), !copy.hideArchive);
   if (copy.hideBattleTower) {
     _titleScreenSetVisible(document.getElementById('btn-continue-endless'), false);
   } else {
