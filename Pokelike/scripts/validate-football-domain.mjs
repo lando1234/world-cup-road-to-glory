@@ -237,6 +237,38 @@ await runTest("football slice map cap is enforced before map generation", () => 
   assert(startMapBlock.indexOf("normalizePlayableMapIndex") < startMapBlock.indexOf("generateMap"), "startMap must normalize before generateMap");
 });
 
+await runTest("football slice complete interrupts post-third-stamp map advance", () => {
+  const gameSource = readText("js/game.js");
+  const htmlSource = readText("index.html");
+  const targetIndex = gameSource.indexOf("function getFootballSliceStampTarget()");
+  const completeIndex = gameSource.indexOf("function isFootballSliceComplete()");
+  const badgeIndex = gameSource.indexOf("function showBadgeScreen(leader)");
+  const sliceScreenIndex = gameSource.indexOf("function showSliceCompleteScreen()");
+  const gameOverIndex = gameSource.indexOf("async function showGameOver()");
+
+  assert(targetIndex !== -1, "game.js should define getFootballSliceStampTarget");
+  assert(completeIndex !== -1, "game.js should define isFootballSliceComplete");
+  assert(badgeIndex !== -1, "game.js should define showBadgeScreen");
+  assert(sliceScreenIndex !== -1, "game.js should define showSliceCompleteScreen");
+  assert(gameOverIndex !== -1, "game.js should define showGameOver after slice completion helpers");
+
+  const completeBlock = gameSource.slice(completeIndex, badgeIndex);
+  const badgeBlock = gameSource.slice(badgeIndex, sliceScreenIndex);
+  const sliceBlock = gameSource.slice(sliceScreenIndex, gameOverIndex);
+
+  assert(completeBlock.includes("state.badges >= getFootballSliceStampTarget()"), "slice completion should key off earned stamps");
+  assert(badgeBlock.includes("if (isFootballSliceComplete())"), "badge advance should check slice completion");
+  assert(badgeBlock.includes("showSliceCompleteScreen();"), "badge advance should show slice complete screen");
+  assert(badgeBlock.indexOf("showSliceCompleteScreen();") < badgeBlock.indexOf("startMap(state.currentMap + 1)"), "slice complete must happen before next-map start");
+  assert(sliceBlock.includes("settleRunLite"), "slice completion should flow through settleRunLite");
+  assert(sliceBlock.includes("clearSavedRun();"), "slice completion should clear the active run after settlement");
+  assert(sliceBlock.includes("initGame();"), "slice completion should return to title boot flow");
+  assert(!sliceBlock.includes("doElite4"), "slice completion should not call elite flow");
+  assert(htmlSource.includes('id="slice-complete-screen"'), "index.html should define slice-complete-screen");
+  assert(htmlSource.includes("Vertical Slice — 3 of 8 host cities"), "slice complete message should use honest vertical slice label");
+  assert(!htmlSource.slice(htmlSource.indexOf('id="slice-complete-screen"'), htmlSource.indexOf("<!-- ===== WIN SCREEN ===== -->")).includes("Elite Four"), "slice complete screen must not use Elite Four copy");
+});
+
 await runTest("feature gates default to football slice mode", () => {
   const features = context.window.FEATURES;
   assert(features.footballMode === true, "FEATURES.footballMode must be true");

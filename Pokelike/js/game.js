@@ -114,6 +114,15 @@ function normalizePlayableMapIndex(mapIndex) {
   return Math.max(0, safeMapIndex);
 }
 
+function getFootballSliceStampTarget() {
+  const maxMapIndex = getFootballMaxMapIndex();
+  return Number.isFinite(maxMapIndex) ? maxMapIndex + 1 : Infinity;
+}
+
+function isFootballSliceComplete() {
+  return isFootballModeEnabled() && state.badges >= getFootballSliceStampTarget();
+}
+
 function getTitleBootStatusEl() {
   let el = document.getElementById('title-boot-status');
   if (el) return el;
@@ -2688,6 +2697,10 @@ function showBadgeScreen(leader) {
   };
   const advance = () => {
     document.removeEventListener('keydown', onKey);
+    if (isFootballSliceComplete()) {
+      showSliceCompleteScreen();
+      return;
+    }
     if (state.currentMap >= 7) {
       state.eliteIndex = 0;
       startMap(8);
@@ -2697,6 +2710,42 @@ function showBadgeScreen(leader) {
   };
   nextBtn.onclick = advance;
   document.addEventListener('keydown', onKey);
+}
+
+function settleRunLite(runSnapshot) {
+  return {
+    patch: {},
+    summary: {
+      stampsEarned: runSnapshot?.badges || 0,
+      signedCount: window.DomainAlbum?.countSigned?.() || 0
+    }
+  };
+}
+
+function showSliceCompleteScreen() {
+  showScreen('slice-complete-screen');
+  const titleEl = document.getElementById('slice-complete-title');
+  const summaryEl = document.getElementById('slice-complete-summary');
+  const teamEl = document.getElementById('slice-complete-team');
+  const continueBtn = document.getElementById('btn-slice-complete-continue');
+  const target = getFootballSliceStampTarget();
+
+  if (titleEl) titleEl.textContent = 'Vertical Slice — 3 of 8 host cities';
+  if (summaryEl) {
+    const signedCount = window.DomainAlbum?.countSigned?.() || 0;
+    summaryEl.textContent = `${Math.min(state.badges, target)} stamps earned. ${signedCount} album signings recorded.`;
+  }
+  if (teamEl) {
+    teamEl.innerHTML = state.team.map(player => renderPokemonCard(player, false, false)).join('');
+  }
+  if (continueBtn) {
+    continueBtn.onclick = () => {
+      const settlement = settleRunLite({ ...state, team: state.team.map(player => ({ ...player })) });
+      state.lastSettlementSummary = settlement.summary;
+      clearSavedRun();
+      initGame();
+    };
+  }
 }
 
 async function showGameOver() {

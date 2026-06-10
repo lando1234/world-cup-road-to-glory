@@ -5,7 +5,7 @@
 **Inputs:** [001](./001-codebase-discovery.md), [006B](./006B-technical-blueprint-revised.md), [007](./007-football-data-pack.md), [008](./008-meta-progression.md), [009](./009-gameplay-loop-node-system.md)  
 **Version:** v1.1  
 **Date:** 2026-06-10  
-**Last sync:** `main` @ this commit — Phase 1 map cap and Host City HUD wiring (T12)
+**Last sync:** `main` @ this commit — Slice-complete trigger and minimal completion screen (T13)
 **Assumptions:** Single developer · existing Pokelike vanilla JS · browser game · no React · no backend changes
 
 ---
@@ -14,9 +14,9 @@
 
 | Metric | Count |
 |--------|------:|
-| **Done** | 25 |
-| **Partial** | 6 |
-| **Not started** | 21 |
+| **Done** | 26 |
+| **Partial** | 8 |
+| **Not started** | 18 |
 | **Total tickets** | 52 |
 
 **Legend:** ✅ Done · 🟡 Partial (shipped subset; acceptance not fully met) · ⬜ Not started
@@ -39,7 +39,8 @@ Before continuing gameplay implementation, T0 establishes the repeatable validat
 | T9-001 | ✅ | `DomainRecruit` contract offer/pass API, ledger append, duplicate detection, and Node validation — `e3b1145` |
 | T10-001 | ✅ | `doCatchNode` football branch uses Scout Report, Contract Offer, album seen, and no catch RNG — `e13362b` |
 | T11-001 | ✅ | `doBossNode` football branch uses `DomainBosses.getHostCity()` and `buildBossTeam()` without `GYM_LEADERS` — `1edb6f0` |
-| T12-001 | ✅ | `startMap()` caps football slice maps at `FEATURES.maxMapIndex` and map HUD/tooltips use Host City boss data — this commit |
+| T12-001 | ✅ | `startMap()` caps football slice maps at `FEATURES.maxMapIndex` and map HUD/tooltips use Host City boss data — `0aa0e18` |
+| T13-001 | ✅ | Third stamp routes to a minimal slice-complete screen and lightweight `settleRunLite()` before returning to title — this commit |
 
 **Per-task Definition of Done from this point forward:**
 
@@ -88,8 +89,8 @@ Domain tasks should extend `Pokelike/scripts/validate-football-domain.mjs` inste
 | P1-020 | ⬜ | No `runId` / `ledger` on run state |
 | P1-021 | ✅ | `checkAndEvolveTeam` + Moon Stone guards — `da6a262` |
 | P1-022 | ✅ | Football `doBossNode` uses `DomainBosses.getHostCity()` + `buildBossTeam()`; legacy `GYM_LEADERS` path retained outside football — `1edb6f0` |
-| P1-023 | ✅ | `startMap()` normalizes maps above `FEATURES.maxMapIndex`; football HUD/tooltips show Host City names — this commit |
-| P1-024 | ⬜ | No slice-complete trigger at 3 stamps |
+| P1-023 | ✅ | `startMap()` normalizes maps above `FEATURES.maxMapIndex`; football HUD/tooltips show Host City names — `0aa0e18` |
+| P1-024 | ✅ | Third stamp shows `slice-complete-screen` instead of advancing to map 3 — this commit |
 | P1-025 | ⬜ | Badge screen still gym fantasy |
 | P1-026 | ⬜ | `map.js` has no football weights / labels |
 | P1-027 | ✅ | `DomainAlbum` `game_album` API implemented for seen/signed/count — `495ef23` |
@@ -100,8 +101,8 @@ Domain tasks should extend `Pokelike/scripts/validate-football-domain.mjs` inste
 | P1-032 | 🟡 | Marquee Signing reskin — `5c2b3d8`; **Core Six style triangle tooltip missing** |
 | P1-033 | ⬜ | Catch screen still Pokémon UX |
 | P1-034 | ⬜ | Swap screen not reskinned |
-| P1-035 | ⬜ | Slice-complete screen not created |
-| P1-036 | ⬜ | `settleRunLite` not implemented |
+| P1-035 | 🟡 | Minimal `slice-complete-screen` shell exists — this commit; full squad snapshot/album presentation polish pending |
+| P1-036 | 🟡 | Local lightweight `settleRunLite()` handoff exists — this commit; domain API, patch application, and game-over modal pending |
 | P1-037 | 🟡 | `renderPlayerCard()` — `edabaa7`; **not all screens / stat labels unified** |
 | P1-038 | 🟡 | Title reskin + hide deferred modes — `ec5e717`; **map HUD still opens Pokédex modal** |
 | P1-039 | 🟡 | Battle **field** copy only (Transfer Target, Form N) — `a098829`; **battle log strings untouched** |
@@ -155,7 +156,7 @@ P1-042  → persist ledger in poke_current_run
 P1-043  → applyAccountPatch
 ```
 
-**Current:** P1-013, P1-027, P1-028, P1-041, P1-016, P1-017, P1-018, P1-019, P1-022, and P1-023 complete. Next implementation step is P1-024 slice-complete trigger.
+**Current:** P1-013, P1-027, P1-028, P1-041, P1-016, P1-017, P1-018, P1-019, P1-022, P1-023, and P1-024 complete. P1-035/P1-036 have minimal shells and still need full product/domain passes. Next implementation step is P1-030 album modal or P1-025 City Stamp ceremony, depending on whether we prioritize collection loop or visual terminology cleanup.
 
 **Exit:** `game_album` read/write path exists; mid-run reload preserves ledger shape.
 
@@ -178,7 +179,7 @@ P1-034  → Squad Registration reskin
 ```
 P1-022  → doBossNode → getHostCity ✅
 P1-023  → cap maps at maxMapIndex 2 ✅
-P1-024  → slice-complete at badges === 3
+P1-024  → slice-complete at badges === 3 ✅
 P1-025  → City Stamp ceremony
 P1-026  → football node weights + GAME_THEME tooltips
 P1-035  → slice-complete screen
@@ -1566,7 +1567,7 @@ P1-001 → P1-002 → P1-003 → P1-004 → P1-005 → P1-007 → P1-008 → P1-
 ### Remaining critical spine (from current state)
 
 ```
-P1-024 → P1-030 → P1-036 → P1-044 → P1-046 → P1-052
+P1-030 → P1-036 → P1-044 → P1-046 → P1-052
 ```
 
 ### Parallelizable Tasks
@@ -1634,7 +1635,7 @@ These can run concurrently with critical path segments when a second pass or con
 **Completion criteria:**
 - [x] `doBossNode` loads JSON roster for maps 0–2
 - [ ] Boss win increments stamp; City Stamp ceremony displays
-- [ ] Map 2 win triggers slice complete (not map 3)
+- [x] Map 2 win triggers slice complete (not map 3)
 - [x] No `GYM_LEADERS` reference in football path
 
 **Blocked by:** Milestone 2 + P1-022, P1-023, P1-024, P1-025
