@@ -1719,16 +1719,30 @@ function catchPokemon(pokemon, node) {
 function showSwapScreen(newPoke, node) {
   showScreen('swap-screen');
   const hasRoom = state.team.length < 6;
-  const h2 = document.querySelector('#swap-screen h2');
-  if (h2) h2.textContent = hasRoom ? 'New Pokémon!' : 'Team Full!';
   const isFootballIncoming = isFootballRuntimeInstance(newPoke);
+  const h2 = document.querySelector('#swap-screen h2');
+  if (h2) {
+    h2.textContent = isFootballIncoming
+      ? 'Squad Registration'
+      : (hasRoom ? 'New Pokémon!' : 'Team Full!');
+  }
   const swapCaught = isFootballIncoming
     ? window.DomainAlbum?.getEntryState?.(newPoke.profileId) === 'signed'
     : _isDexCaught(getPokedex()[newPoke.speciesId]);
   document.getElementById('swap-incoming').innerHTML = `<div style="display:flex;justify-content:center;">${renderPokemonCard(newPoke, true, false, swapCaught)}</div>`;
   const el = document.getElementById('swap-choices');
   el.innerHTML = '';
-  document.getElementById('swap-prompt').textContent = hasRoom ? 'Add to team or keep team as-is:' : 'Choose a Pokémon to release:';
+  const swapPrompt = document.getElementById('swap-prompt');
+  const cancelSwapBtn = document.getElementById('btn-cancel-swap');
+  if (isFootballIncoming) {
+    swapPrompt.textContent = hasRoom
+      ? 'Register this signing or decline the contract.'
+      : 'Select a squad slot to replace, or decline this contract.';
+    if (cancelSwapBtn) cancelSwapBtn.textContent = 'Decline contract';
+  } else {
+    swapPrompt.textContent = hasRoom ? 'Add to team or keep team as-is:' : 'Choose a Pokémon to release:';
+    if (cancelSwapBtn) cancelSwapBtn.textContent = 'Keep team as-is';
+  }
 
   // Trait overlay (endless mode only)
   let traitOverlay = document.getElementById('swap-trait-overlay');
@@ -1751,7 +1765,9 @@ function showSwapScreen(newPoke, node) {
     const addBtn = document.createElement('button');
     addBtn.className = 'btn-primary';
     addBtn.style.cssText = 'width:100%;margin-bottom:10px;';
-    addBtn.textContent = `Add ${newPoke.name} to team!`;
+    addBtn.textContent = isFootballIncoming
+      ? `Register ${newPoke.name}`
+      : `Add ${newPoke.name} to team!`;
     addBtn.addEventListener('click', () => {
       cleanup();
       if (isFootballIncoming && window.DomainRecruit?.offerContract) {
@@ -1764,7 +1780,7 @@ function showSwapScreen(newPoke, node) {
       state.savedQuestionResolve = null;
       advanceFromNode(state.map, node.id);
       state.currentNode = null;
-      showMapNotification(`${newPoke.name} joined your team!`);
+      showMapNotification(isFootballIncoming ? `${newPoke.name} signed to the squad!` : `${newPoke.name} joined your team!`);
       showMapScreen();
     });
     el.appendChild(addBtn);

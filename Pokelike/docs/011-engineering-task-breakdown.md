@@ -5,7 +5,7 @@
 **Inputs:** [001](./001-codebase-discovery.md), [006B](./006B-technical-blueprint-revised.md), [007](./007-football-data-pack.md), [008](./008-meta-progression.md), [009](./009-gameplay-loop-node-system.md)  
 **Version:** v1.1  
 **Date:** 2026-06-10  
-**Last sync:** `main` @ this commit — Scout Report contract UX (T25)
+**Last sync:** `main` @ this commit — Squad Registration swap UX (T26)
 **Assumptions:** Single developer · existing Pokelike vanilla JS · browser game · no React · no backend changes
 
 ---
@@ -14,9 +14,9 @@
 
 | Metric | Count |
 |--------|------:|
-| **Done** | 38 |
+| **Done** | 39 |
 | **Partial** | 7 |
-| **Not started** | 7 |
+| **Not started** | 6 |
 | **Total tickets** | 52 |
 
 **Legend:** ✅ Done · 🟡 Partial (shipped subset; acceptance not fully met) · ⬜ Not started
@@ -52,7 +52,8 @@ Before continuing gameplay implementation, T0 establishes the repeatable validat
 | T22-001 | ✅ | New and loaded runs normalize `runId` plus minimal recruitment ledger shape — `fd70d35` |
 | T23-001 | ✅ | Current-run persistence preserves `runId` and `ledger` through `poke_current_run` save/load — `4c01f0a` |
 | T24-001 | ✅ | `applyAccountPatch()` merges `game_album` monotonically and leaves active runs untouched — `c09b5ad` |
-| T25-001 | ✅ | Catch screen is reskinned as Scout Report with contract confirmation, duplicate hints, and stamp animation hook — this commit |
+| T25-001 | ✅ | Catch screen is reskinned as Scout Report with contract confirmation, duplicate hints, and stamp animation hook — `6826e6a` |
+| T26-001 | ✅ | Swap screen is reskinned as Squad Registration for football full-squad signings — this commit |
 
 **Per-task Definition of Done from this point forward:**
 
@@ -112,7 +113,7 @@ Domain tasks should extend `Pokelike/scripts/validate-football-domain.mjs` inste
 | P1-031 | ✅ | `DomainAlbum` loads/caches `album_layout.json`, exposes pages and ordered slot profile IDs, and boot gate initializes layout — `83e8b8a` |
 | P1-032 | 🟡 | Marquee Signing reskin — `5c2b3d8`; **Core Six style triangle tooltip missing** |
 | P1-033 | ✅ | Scout Report screen has football copy, host-city subtitle, duplicate hints, contract confirmation, and animation hook — this commit |
-| P1-034 | ⬜ | Swap screen not reskinned |
+| P1-034 | ✅ | Football full-squad flow uses Squad Registration copy, decline contract action, and DomainRecruit force-add — this commit |
 | P1-035 | 🟡 | Minimal `slice-complete-screen` shell exists — this commit; full squad snapshot/album presentation polish pending |
 | P1-036 | ✅ | `DomainSave.settleRunLite()` returns album patch + summary; settlement modal renders on slice complete and football game over — `959079b` |
 | P1-037 | 🟡 | `renderPlayerCard()` — `edabaa7`; **not all screens / stat labels unified** |
@@ -168,7 +169,7 @@ P1-042  → persist ledger in poke_current_run ✅
 P1-043  → applyAccountPatch ✅
 ```
 
-**Current:** P1-013, P1-027, P1-028, P1-041, P1-016, P1-017, P1-018, P1-019, P1-020, P1-022, P1-023, P1-024, P1-025, P1-026, P1-029, P1-030, P1-031, P1-033, P1-036, P1-042, P1-043, P1-044, and P1-045 complete. P1-034 remains the next football UI gap before QA and grep sign-off.
+**Current:** P1-013, P1-027, P1-028, P1-041, P1-016, P1-017, P1-018, P1-019, P1-020, P1-022, P1-023, P1-024, P1-025, P1-026, P1-029, P1-030, P1-031, P1-033, P1-034, P1-036, P1-042, P1-043, P1-044, and P1-045 complete. Next implementation step is P1-046 run loop QA and release checklist alignment.
 
 **Exit:** `game_album` read/write path exists; mid-run reload preserves ledger shape.
 
@@ -181,7 +182,7 @@ P1-018  → domain/recruit.js
 P1-019  → rewire doCatchNode
 P1-029  → route dex writes → album facades
 P1-033  → Scout Report / Contract Offer UI ✅
-P1-034  → Squad Registration reskin
+P1-034  → Squad Registration reskin ✅
 ```
 
 **Exit:** Catch nodes are football scout reports; album seen/signed updates on display/sign.

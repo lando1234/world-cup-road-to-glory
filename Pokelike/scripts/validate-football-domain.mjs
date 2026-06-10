@@ -248,6 +248,28 @@ await runTest("football catch node is wired to scout recruitment flow", () => {
   assert(!signBlock.includes("markPokedexCaught"), "football scout signing should not write poke_dex");
 });
 
+await runTest("football swap screen is reskinned as squad registration", () => {
+  const gameSource = readText("js/game.js");
+  const htmlSource = readText("index.html");
+  const swapIndex = gameSource.indexOf("function showSwapScreen(newPoke, node)");
+  const itemIndex = gameSource.indexOf("function doItemNode(node)");
+  assert(swapIndex !== -1, "game.js should define showSwapScreen");
+  assert(itemIndex !== -1, "game.js should define doItemNode after showSwapScreen");
+
+  const swapBlock = gameSource.slice(swapIndex, itemIndex);
+
+  assert(htmlSource.includes('<h2>Squad Registration</h2>'), "swap screen HTML should default to Squad Registration");
+  assert(htmlSource.includes("Decline contract"), "swap screen cancel button should default to Decline contract");
+  assert(swapBlock.includes("isFootballRuntimeInstance(newPoke)"), "swap screen should detect football incoming players");
+  assert(swapBlock.includes("'Squad Registration'"), "football swap title should be Squad Registration");
+  assert(swapBlock.includes("Select a squad slot to replace, or decline this contract."), "football full-squad prompt should avoid release/Pokemon copy");
+  assert(swapBlock.includes("Register this signing or decline the contract."), "football add-with-room prompt should use registration copy");
+  assert(swapBlock.includes("Decline contract"), "football swap cancel action should be decline contract");
+  assert(swapBlock.includes("Register ${newPoke.name}"), "football direct add button should use registration copy");
+  assert(swapBlock.includes("DomainRecruit.offerContract(newPoke.profileId, state, { forceAdd: true })"), "football swap should force-add through DomainRecruit");
+  assert(swapBlock.includes("signed to the squad"), "football swap notification should use squad signing copy");
+});
+
 await runTest("football boss node is wired to host city domain flow", () => {
   const gameSource = readText("js/game.js");
   const doBossIndex = gameSource.indexOf("async function doBossNode(node)");
