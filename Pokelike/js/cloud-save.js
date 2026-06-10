@@ -1,5 +1,5 @@
 const SAVE_SERVER = 'https://save.pokelike.xyz';
-const SAVE_SCHEMA_VERSION = 2;
+const SAVE_SCHEMA_VERSION = 3;
 
 function isCloudSaveEnabled() {
   return window.FEATURES?.cloudSave !== false;

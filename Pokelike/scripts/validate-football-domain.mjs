@@ -94,6 +94,7 @@ runScript(context, "js/domain/profiles.js");
 runScript(context, "js/domain/album.js");
 runScript(context, "js/domain/bosses.js");
 runScript(context, "js/domain/combat-adapter.js");
+runScript(context, "js/domain/save.js");
 
 context.window.GAME_THEME = {
   node: {
@@ -289,6 +290,51 @@ await runTest("album API persists seen and signed states monotonically", () => {
     rejectedUnknownProfile = true;
   }
   assert(rejectedUnknownProfile, "album API should reject profileIds outside the loaded catalog");
+});
+
+await runTest("save v3 migration copies legacy dex to album idempotently", () => {
+  context.localStorage.removeItem("game_album");
+  context.localStorage.removeItem("saveVersion");
+  context.localStorage.removeItem("footballCredits");
+  context.localStorage.removeItem("legendFragments");
+  context.localStorage.setItem("poke_dex", JSON.stringify({
+    "4": 0,
+    "6": 1,
+    "7": { caught: true },
+    "not-a-profile": 1
+  }));
+  const activeRun = JSON.stringify({ team: [{ speciesId: 4 }], currentNodeId: "node-1" });
+  context.localStorage.setItem("poke_current_run", activeRun);
+
+  const result = context.window.DomainSave.migrateSaveV2toV3();
+  assert(result.migrated === true, "first v3 migration should run");
+  assert(result.albumCopied === true, "first v3 migration should copy album when absent");
+  assert(context.localStorage.getItem("saveVersion") === "3", "saveVersion should be set to 3");
+
+  const album = JSON.parse(context.localStorage.getItem("game_album"));
+  assert(album["4"] === 0, "legacy seen dex entry should migrate as album seen");
+  assert(album["6"] === 1, "legacy caught dex entry should migrate as album signed");
+  assert(album["7"] === 1, "legacy object caught entry should compact to album signed");
+  assert(!("not-a-profile" in album), "invalid legacy dex keys should not migrate");
+  assert(context.localStorage.getItem("poke_current_run") === activeRun, "migration must not mutate active run save");
+  assert(context.localStorage.getItem("footballCredits") === null, "album-only migration must not initialize footballCredits");
+  assert(context.localStorage.getItem("legendFragments") === null, "album-only migration must not initialize legendFragments");
+
+  const secondResult = context.window.DomainSave.migrateSaveV2toV3();
+  assert(secondResult.migrated === false, "second v3 migration should be a no-op");
+  assert(context.localStorage.getItem("game_album") === JSON.stringify(album), "second v3 migration should not change album");
+  assert(context.localStorage.getItem("poke_dex") !== null, "legacy poke_dex should be retained for one release");
+});
+
+await runTest("save v3 migration preserves existing album", () => {
+  context.localStorage.removeItem("saveVersion");
+  context.localStorage.setItem("game_album", JSON.stringify({ "4": 1 }));
+  context.localStorage.setItem("poke_dex", JSON.stringify({ "4": 0, "6": 1 }));
+
+  const result = context.window.DomainSave.migrateSaveV2toV3();
+  assert(result.migrated === true, "migration should still set saveVersion when album exists");
+  assert(result.albumCopied === false, "migration should not copy legacy dex over an existing album");
+  assert(context.localStorage.getItem("game_album") === JSON.stringify({ "4": 1 }), "existing album must not be overwritten");
 });
 
 await runTest("football slice gates trade and legendary map nodes", () => {
