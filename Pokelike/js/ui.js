@@ -127,6 +127,14 @@ function getWildEncounterBattleCopy(enemy) {
   };
 }
 
+function formatBattleFaintLog(name) {
+  if (isFootballBattlePresentation()) {
+    const faintCopy = window.GAME_THEME?.battle?.faint || 'is exhausted';
+    return `${name} ${faintCopy}!`;
+  }
+  return `${name} fainted!`;
+}
+
 function getBattlePortraitUrl(entity) {
   if (!isFootballCardEntity(entity)) return entity?.spriteUrl || '';
   const profile = getProfileForCard(entity);
@@ -3021,7 +3029,7 @@ async function animateBattleVisually(detailedLog, pTeamInit, eTeamInit) {
       const sideId = event.side === 'player' ? 'player-side' : 'enemy-side';
       const el = document.querySelector(`#${sideId} .battle-pokemon[data-idx="${event.idx}"]`);
       if (el) { el.classList.add('fainted'); el.classList.remove('active-pokemon'); }
-      addLogEntry(`${event.name} fainted!`, 'log-faint');
+      addLogEntry(formatBattleFaintLog(event.name), 'log-faint');
       await sleep(300);
 
     } else if (event.type === 'send_out') {

@@ -910,6 +910,17 @@ await runTest("football map labels use football terminology", () => {
   assert(!bossLabel.includes("Gym"), "football boss tooltip should not include legacy gym terminology");
 });
 
+await runTest("football battle presentation uses theme faint copy", () => {
+  const uiSource = readText("js/ui.js");
+  const battleSource = readText("js/battle.js");
+
+  assert(uiSource.includes("function formatBattleFaintLog"), "ui.js should define formatBattleFaintLog");
+  assert(uiSource.includes("window.GAME_THEME?.battle?.faint"), "football faint log should read GAME_THEME.battle.faint");
+  assert(uiSource.includes("return `${name} fainted!`;"), "legacy faint log should remain available outside football mode");
+  assert(uiSource.includes("addLogEntry(formatBattleFaintLog(event.name), 'log-faint')"), "visual battle log should use themed faint formatter");
+  assert(!battleSource.includes("GAME_THEME"), "battle.js damage engine should remain theme-agnostic");
+});
+
 await runTest("cloud save is disabled by football feature gate", async () => {
   const cloudSource = readText("js/cloud-save.js");
   const gameSource = readText("js/game.js");
