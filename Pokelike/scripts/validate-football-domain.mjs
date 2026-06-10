@@ -440,6 +440,18 @@ await runTest("player catalog validates Phase 1 roster", () => {
   assert(context.window.DomainProfiles.getProfile(2).commonName === "Messi", "profileId 2 must be Messi");
 });
 
+await runTest("marquee signing screen exposes core six style triangle", () => {
+  const gameSource = readText("js/game.js");
+  const cssSource = readText("css/style.css");
+
+  assert(gameSource.includes("core-six-style-triangle"), "starter screen should render Core Six style triangle panel");
+  assert(gameSource.includes("High Press"), "style triangle should describe High Press");
+  assert(gameSource.includes("Possession Build-up"), "style triangle should describe Possession Build-up");
+  assert(gameSource.includes("Compact Block"), "style triangle should describe Compact Block");
+  assert(cssSource.includes(".core-six-style-triangle"), "style.css should style Core Six triangle panel");
+  assert(cssSource.includes(".core-six-triangle-grid"), "style.css should define Core Six triangle grid");
+});
+
 await runTest("combat adapter creates browser-compatible football instances", () => {
   const instance = context.window.DomainCombatAdapter.createPlayerInstance(2, 5, { moveTier: 1 });
   assert(instance.profileId === 2, "instance.profileId must be 2");

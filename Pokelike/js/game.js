@@ -608,6 +608,19 @@ async function showStarterSelect() {
     container.style.gap = '16px';
 
     const isFootballMarquee = window.FEATURES?.footballMode === true;
+    if (isFootballMarquee) {
+      const triangle = document.createElement('details');
+      triangle.className = 'core-six-style-triangle';
+      triangle.innerHTML = `
+        <summary>Core Six style triangle</summary>
+        <div class="core-six-triangle-grid">
+          <div><strong>High Press</strong><span>Wins the ball early and turns pressure into chances.</span></div>
+          <div><strong>Possession Build-up</strong><span>Controls tempo, field position, and passing lanes.</span></div>
+          <div><strong>Compact Block</strong><span>Protects the box, absorbs runs, and counters with structure.</span></div>
+        </div>
+      `;
+      container.appendChild(triangle);
+    }
     for (const species of starters) {
       if (!species) continue;
       const isShiny = rng() < (hasShinyCharm() ? 0.02 : 0.01);

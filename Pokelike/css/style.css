@@ -237,6 +237,44 @@ h1, h2, .pixel-font {
   gap: 16px;
   max-width: 980px;
 }
+.core-six-style-triangle {
+  flex-basis: 100%;
+  max-width: 760px;
+  margin: 0 auto 4px;
+  border: 2px solid var(--border);
+  background: var(--bg-card);
+  box-shadow: 2px 2px 0 #000;
+  padding: 9px 11px;
+  font-size: 9px;
+  line-height: 1.5;
+}
+.core-six-style-triangle summary {
+  cursor: pointer;
+  color: var(--gold);
+}
+.core-six-triangle-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  margin-top: 8px;
+}
+.core-six-triangle-grid div {
+  border: 1px solid var(--border);
+  padding: 7px;
+  background: var(--bg2);
+}
+.core-six-triangle-grid strong,
+.core-six-triangle-grid span {
+  display: block;
+}
+.core-six-triangle-grid span {
+  color: var(--text-dim);
+  font-size: 8px;
+  margin-top: 5px;
+}
+@media (max-width: 720px) {
+  .core-six-triangle-grid { grid-template-columns: 1fr; }
+}
 #starter-screen.marquee-signing .marquee-choice {
   display: flex;
   flex-direction: column;

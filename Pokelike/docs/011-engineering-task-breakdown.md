@@ -5,7 +5,7 @@
 **Inputs:** [001](./001-codebase-discovery.md), [006B](./006B-technical-blueprint-revised.md), [007](./007-football-data-pack.md), [008](./008-meta-progression.md), [009](./009-gameplay-loop-node-system.md)  
 **Version:** v1.1  
 **Date:** 2026-06-10  
-**Last sync:** `main` @ this commit — Themed football faint log (T28)
+**Last sync:** `main` @ this commit — Core Six marquee tooltip (T29)
 **Assumptions:** Single developer · existing Pokelike vanilla JS · browser game · no React · no backend changes
 
 ---
@@ -14,8 +14,8 @@
 
 | Metric | Count |
 |--------|------:|
-| **Done** | 41 |
-| **Partial** | 5 |
+| **Done** | 42 |
+| **Partial** | 4 |
 | **Not started** | 6 |
 | **Total tickets** | 52 |
 
@@ -55,7 +55,8 @@ Before continuing gameplay implementation, T0 establishes the repeatable validat
 | T25-001 | ✅ | Catch screen is reskinned as Scout Report with contract confirmation, duplicate hints, and stamp animation hook — `6826e6a` |
 | T26-001 | ✅ | Swap screen is reskinned as Squad Registration for football full-squad signings — `b21011e` |
 | T27-001 | ✅ | Football chrome shows Album controls and hides deferred Achievements/Hall surfaces — `5ae457b` |
-| T28-001 | ✅ | Football visual battle log uses `GAME_THEME.battle.faint` while leaving `battle.js` math untouched — this commit |
+| T28-001 | ✅ | Football visual battle log uses `GAME_THEME.battle.faint` while leaving `battle.js` math untouched — `efc947a` |
+| T29-001 | ✅ | Marquee Signing screen exposes collapsible Core Six style triangle guidance — this commit |
 
 **Per-task Definition of Done from this point forward:**
 
@@ -113,7 +114,7 @@ Domain tasks should extend `Pokelike/scripts/validate-football-domain.mjs` inste
 | P1-029 | ✅ | Football profile writes through `markPokedexSeen/Caught` route to `DomainAlbum` and return before `poke_dex` writes — `2c9931a` |
 | P1-030 | ✅ | Football collection opens World Cup Album modal with Marquee/Favorites pages and unknown/seen/signed states — `f20e5d4` |
 | P1-031 | ✅ | `DomainAlbum` loads/caches `album_layout.json`, exposes pages and ordered slot profile IDs, and boot gate initializes layout — `83e8b8a` |
-| P1-032 | 🟡 | Marquee Signing reskin — `5c2b3d8`; **Core Six style triangle tooltip missing** |
+| P1-032 | ✅ | Marquee Signing includes player cards plus collapsible Core Six style triangle guidance — this commit |
 | P1-033 | ✅ | Scout Report screen has football copy, host-city subtitle, duplicate hints, contract confirmation, and animation hook — this commit |
 | P1-034 | ✅ | Football full-squad flow uses Squad Registration copy, decline contract action, and DomainRecruit force-add — this commit |
 | P1-035 | 🟡 | Minimal `slice-complete-screen` shell exists — this commit; full squad snapshot/album presentation polish pending |
@@ -214,7 +215,7 @@ P1-039  (finish) → battle log faint/win/loss strings ✅
 P1-040  (finish) → T0 silhouette pipeline everywhere
 P1-031  → album_layout loader ✅
 P1-030  → album modal (marquee + favorites pages) ✅
-P1-032  (finish) → Core Six style triangle on marquee
+P1-032  (finish) → Core Six style triangle on marquee ✅
 ```
 
 **Exit:** Grep gate (P1-049) likely passable on slice screens.
