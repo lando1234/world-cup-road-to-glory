@@ -93,6 +93,12 @@ function isFootballCardEntity(entity) {
   return Number.isInteger(id) && id >= 1 && id <= 50;
 }
 
+function shouldSkipFootballEvolution(pokemon) {
+  if (window.FEATURES?.footballMode !== true || !pokemon) return false;
+  if (pokemon.profileId != null) return true;
+  return isFootballCardEntity(pokemon);
+}
+
 function isFootballBattlePresentation() {
   return window.FEATURES?.footballMode === true;
 }
@@ -3460,6 +3466,8 @@ async function checkAndEvolveTeam() {
   try {
   const skipAnim = getSettings().autoSkipEvolve;
   for (const pokemon of state.team) {
+    if (shouldSkipFootballEvolution(pokemon)) continue;
+
     const wasFainted = pokemon.currentHp <= 0;
 
     // Eviolite blocks all evolutions — check before showing any branching popup.
@@ -4068,6 +4076,30 @@ function openDexDetailModal(speciesId, name, spriteUrl, shinySpriteUrl, types) {
 // ---- Patch Notes Modal ----
 
 const PATCH_NOTES = [
+  {
+    version: '1.8',
+    title: 'Football Evolution Bypass (P1-021)',
+    date: '2026-06-10',
+    sections: [
+      {
+        heading: 'Evolution Bypass',
+        entries: [
+          'Football players no longer evolve via level thresholds — checkAndEvolveTeam skips any member with a catalog profileId',
+          'Messi (profileId 2) and other football IDs no longer collide with Pokémon EVOLUTIONS lookup (e.g. Ivysaur → Venusaur at 32)',
+          'Form/level gains from battles and Rare Candy still apply normally; only species rename and sprite swap are blocked',
+          'Moon Stone / applyEvolution path guarded — football profiles cannot be targeted or force-evolved in football mode',
+          'Legacy Pokémon evolution and item evolution unchanged when footballMode is off',
+        ],
+      },
+      {
+        heading: 'Assumptions',
+        entries: [
+          'Football runtime instances always carry profileId from createPlayerInstance(); guard also falls back to DomainProfiles.isFootballProfileId when profileId is missing',
+          'No cosmetic toast at form thresholds yet — deferred per spec',
+        ],
+      },
+    ],
+  },
   {
     version: '1.7',
     title: 'World Cup Slice — Battle & Encounter UI',

@@ -1472,6 +1472,7 @@ function doItemNode(node) {
   const canUseMaxRevive   = state.team.some(p => p.currentHp <= 0);
   const canUseFullRestore = state.team.some(p => p.currentHp > 0 && p.currentHp < p.maxHp);
   const canUseEvoStone    = state.team.some(p => {
+    if (isFootballEvolutionBlocked(p)) return false;
     if (BRANCHING_EVOLUTIONS[p.speciesId]) return true;
     const evo = EVOLUTIONS[p.speciesId];
     return evo && evo.into !== p.speciesId;
@@ -1652,6 +1653,7 @@ function openUsableItemModal(item, bagIdx, afterUse = null) {
     if (item.id === 'max_revive')   return p.currentHp <= 0;
     if (item.id === 'full_restore') return p.currentHp > 0 && p.currentHp < p.maxHp;
     if (item.id === 'moon_stone') {
+      if (isFootballEvolutionBlocked(p)) return false;
       if (p.currentHp <= 0) return false;
       if (BRANCHING_EVOLUTIONS[p.speciesId]) return true;
       const evo = EVOLUTIONS[p.speciesId];
@@ -1739,7 +1741,24 @@ function openUsableItemModal(item, bagIdx, afterUse = null) {
   });
 }
 
+function isFootballEvolutionBlocked(pokemon) {
+  if (window.FEATURES?.footballMode !== true || !pokemon) return false;
+  if (pokemon.profileId != null) return true;
+  const id = pokemon.profileId ?? pokemon.speciesId;
+  if (id == null) return false;
+  if (typeof window.DomainProfiles?.isFootballProfileId === 'function') {
+    try {
+      return window.DomainProfiles.isFootballProfileId(id);
+    } catch (_) {
+      return false;
+    }
+  }
+  return Number.isInteger(id) && id >= 1 && id <= 50;
+}
+
 async function applyEvolution(pokemon) {
+  if (isFootballEvolutionBlocked(pokemon)) return;
+
   // Eviolite blocks all evolutions — check before showing any branching popup.
   if (pokemon.heldItem?.id === 'eviolite') return;
 
