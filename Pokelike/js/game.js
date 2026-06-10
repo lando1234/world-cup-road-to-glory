@@ -2901,14 +2901,25 @@ function showSliceCompleteScreen() {
   showScreen('slice-complete-screen');
   const titleEl = document.getElementById('slice-complete-title');
   const summaryEl = document.getElementById('slice-complete-summary');
+  const statsEl = document.getElementById('slice-complete-stats');
   const teamEl = document.getElementById('slice-complete-team');
   const continueBtn = document.getElementById('btn-slice-complete-continue');
   const target = getFootballSliceStampTarget();
+  const sliceProfileIds = window.DomainAlbum?.getSliceAlbumProfileIds?.() || [];
+  const signedCount = window.DomainAlbum?.countSigned?.(sliceProfileIds) || 0;
+  const totalCount = sliceProfileIds.length || state.team.length || 1;
+  const albumPct = Math.round((signedCount / Math.max(1, totalCount)) * 100);
 
-  if (titleEl) titleEl.textContent = 'Vertical Slice — 3 of 8 host cities';
+  if (titleEl) titleEl.textContent = window.GAME_THEME?.sliceCompleteTitle || 'Host City Complete';
   if (summaryEl) {
-    const signedCount = window.DomainAlbum?.countSigned?.() || 0;
-    summaryEl.textContent = `${Math.min(state.badges, target)} stamps earned. ${signedCount} album signings recorded.`;
+    summaryEl.textContent = `Vertical Slice — 3 of 8 host cities. Squad snapshot locked for settlement.`;
+  }
+  if (statsEl) {
+    statsEl.innerHTML = `
+      <div><span>Stamps</span><strong>${Math.min(state.badges, target)} / ${target}</strong></div>
+      <div><span>Album</span><strong>${signedCount} / ${totalCount}</strong></div>
+      <div><span>Slice Album</span><strong>${albumPct}%</strong></div>
+    `;
   }
   if (teamEl) {
     teamEl.innerHTML = state.team.map(player => renderPokemonCard(player, false, false)).join('');

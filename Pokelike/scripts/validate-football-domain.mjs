@@ -342,8 +342,13 @@ await runTest("football slice complete interrupts post-third-stamp map advance",
   assert(badgeBlock.includes("showSliceCompleteScreen();"), "badge advance should show slice complete screen");
   assert(badgeBlock.indexOf("showSliceCompleteScreen();") < badgeBlock.indexOf("startMap(state.currentMap + 1)"), "slice complete must happen before next-map start");
   assert(sliceBlock.includes("settleRunAndReturnToTitle();"), "slice completion should flow through settlement helper");
+  assert(sliceBlock.includes("DomainAlbum?.getSliceAlbumProfileIds"), "slice completion should calculate slice album total");
+  assert(sliceBlock.includes("DomainAlbum?.countSigned"), "slice completion should calculate signed album count");
+  assert(sliceBlock.includes("albumPct"), "slice completion should calculate album percentage");
+  assert(sliceBlock.includes("window.GAME_THEME?.sliceCompleteTitle"), "slice completion should use GAME_THEME title");
   assert(!sliceBlock.includes("doElite4"), "slice completion should not call elite flow");
   assert(htmlSource.includes('id="slice-complete-screen"'), "index.html should define slice-complete-screen");
+  assert(htmlSource.includes('id="slice-complete-stats"'), "slice complete screen should define stats container");
   assert(htmlSource.includes("Vertical Slice — 3 of 8 host cities"), "slice complete message should use honest vertical slice label");
   assert(!htmlSource.slice(htmlSource.indexOf('id="slice-complete-screen"'), htmlSource.indexOf("<!-- ===== WIN SCREEN ===== -->")).includes("Elite Four"), "slice complete screen must not use Elite Four copy");
 });

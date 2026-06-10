@@ -5,7 +5,7 @@
 **Inputs:** [001](./001-codebase-discovery.md), [006B](./006B-technical-blueprint-revised.md), [007](./007-football-data-pack.md), [008](./008-meta-progression.md), [009](./009-gameplay-loop-node-system.md)  
 **Version:** v1.1  
 **Date:** 2026-06-10  
-**Last sync:** `main` @ this commit — Core Six marquee tooltip (T29)
+**Last sync:** `main` @ this commit — Slice-complete presentation stats (T30)
 **Assumptions:** Single developer · existing Pokelike vanilla JS · browser game · no React · no backend changes
 
 ---
@@ -14,8 +14,8 @@
 
 | Metric | Count |
 |--------|------:|
-| **Done** | 42 |
-| **Partial** | 4 |
+| **Done** | 43 |
+| **Partial** | 3 |
 | **Not started** | 6 |
 | **Total tickets** | 52 |
 
@@ -56,7 +56,8 @@ Before continuing gameplay implementation, T0 establishes the repeatable validat
 | T26-001 | ✅ | Swap screen is reskinned as Squad Registration for football full-squad signings — `b21011e` |
 | T27-001 | ✅ | Football chrome shows Album controls and hides deferred Achievements/Hall surfaces — `5ae457b` |
 | T28-001 | ✅ | Football visual battle log uses `GAME_THEME.battle.faint` while leaving `battle.js` math untouched — `efc947a` |
-| T29-001 | ✅ | Marquee Signing screen exposes collapsible Core Six style triangle guidance — this commit |
+| T29-001 | ✅ | Marquee Signing screen exposes collapsible Core Six style triangle guidance — `e038ae2` |
+| T30-001 | ✅ | Slice-complete screen shows squad snapshot, stamp progress, and slice album percentage — this commit |
 
 **Per-task Definition of Done from this point forward:**
 
@@ -117,7 +118,7 @@ Domain tasks should extend `Pokelike/scripts/validate-football-domain.mjs` inste
 | P1-032 | ✅ | Marquee Signing includes player cards plus collapsible Core Six style triangle guidance — this commit |
 | P1-033 | ✅ | Scout Report screen has football copy, host-city subtitle, duplicate hints, contract confirmation, and animation hook — this commit |
 | P1-034 | ✅ | Football full-squad flow uses Squad Registration copy, decline contract action, and DomainRecruit force-add — this commit |
-| P1-035 | 🟡 | Minimal `slice-complete-screen` shell exists — this commit; full squad snapshot/album presentation polish pending |
+| P1-035 | ✅ | Slice-complete screen shows squad snapshot, 3-stamp progress, album signed count, and slice album percentage — this commit |
 | P1-036 | ✅ | `DomainSave.settleRunLite()` returns album patch + summary; settlement modal renders on slice complete and football game over — `959079b` |
 | P1-037 | 🟡 | `renderPlayerCard()` — `edabaa7`; **not all screens / stat labels unified** |
 | P1-038 | ✅ | Title/map chrome shows Album controls, hides deferred Achievements/Hall/cloud/modes, and keeps Settings visible — this commit |
@@ -198,7 +199,7 @@ P1-023  → cap maps at maxMapIndex 2 ✅
 P1-024  → slice-complete at badges === 3 ✅
 P1-025  → City Stamp ceremony ✅
 P1-026  → football node weights + GAME_THEME tooltips ✅
-P1-035  → slice-complete screen
+P1-035  → slice-complete screen ✅
 P1-036  → settleRunLite + summary modal
 P1-044  → game over settlement before clearSavedRun ✅
 P1-045  → cloud save suppress (finish P1-006 cloud slice) ✅

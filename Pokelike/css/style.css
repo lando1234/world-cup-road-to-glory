@@ -1092,6 +1092,37 @@ h1, h2, .pixel-font {
   100% { transform: scale(1); box-shadow: 2px 2px 0 #000; }
 }
 
+.slice-complete-stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  width: min(620px, 92vw);
+  margin: 10px auto 4px;
+}
+.slice-complete-stats div {
+  background: var(--bg-card);
+  border: 2px solid var(--border);
+  box-shadow: 2px 2px 0 #000;
+  padding: 10px 8px;
+  text-align: center;
+}
+.slice-complete-stats span,
+.slice-complete-stats strong {
+  display: block;
+}
+.slice-complete-stats span {
+  color: var(--text-dim);
+  font-size: 8px;
+  margin-bottom: 6px;
+}
+.slice-complete-stats strong {
+  color: var(--gold);
+  font-size: 12px;
+}
+@media (max-width: 640px) {
+  .slice-complete-stats { grid-template-columns: 1fr; }
+}
+
 /* ---- Trait preview under pick options ---- */
 .poke-choice-wrap {
   display: flex;
