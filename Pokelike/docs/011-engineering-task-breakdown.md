@@ -5,7 +5,7 @@
 **Inputs:** [001](./001-codebase-discovery.md), [006B](./006B-technical-blueprint-revised.md), [007](./007-football-data-pack.md), [008](./008-meta-progression.md), [009](./009-gameplay-loop-node-system.md)  
 **Version:** v1.1  
 **Date:** 2026-06-10  
-**Last sync:** `main` @ this commit — Phase 1 album layout data (T3)
+**Last sync:** `main` @ this commit — `DomainAlbum` seen/signed persistence API (T4)
 **Assumptions:** Single developer · existing Pokelike vanilla JS · browser game · no React · no backend changes
 
 ---
@@ -14,9 +14,9 @@
 
 | Metric | Count |
 |--------|------:|
-| **Done** | 16 |
+| **Done** | 17 |
 | **Partial** | 6 |
-| **Not started** | 30 |
+| **Not started** | 29 |
 | **Total tickets** | 52 |
 
 **Legend:** ✅ Done · 🟡 Partial (shipped subset; acceptance not fully met) · ⬜ Not started
@@ -30,7 +30,8 @@ Before continuing gameplay implementation, T0 establishes the repeatable validat
 | T0-001 | ✅ | Node project baseline, validation harness, static server, Phase 2 visual frictions registry — `feb8f94` |
 | T1-001 | ✅ | Boot gate, slice node gates, and cloud-save shutdown — `db538b3` |
 | T2-001 | ✅ | Host city boss catalog, loader, boot gate, and Node boss-team validation — `b75e23c` |
-| T3-001 | ✅ | Phase 1 `album_layout.json` and Node layout/profile validation — this commit |
+| T3-001 | ✅ | Phase 1 `album_layout.json` and Node layout/profile validation — `73523ba` |
+| T4-001 | ✅ | `DomainAlbum` `game_album` seen/signed API and monotonic storage validation — this commit |
 
 **Per-task Definition of Done from this point forward:**
 
@@ -69,7 +70,7 @@ Domain tasks should extend `Pokelike/scripts/validate-football-domain.mjs` inste
 | P1-010 | ✅ | `createPlayerInstance()` — `9085c97` |
 | P1-011 | ✅ | `host_city_bosses.json` authored for maps 0–2 with spec rosters — `b75e23c` |
 | P1-012 | ✅ | `DomainBosses` loader, validation, lookup, and `buildBossTeam()` — `b75e23c` |
-| P1-013 | ✅ | `album_layout.json` authored for marquee + favorites slice pages — this commit |
+| P1-013 | ✅ | `album_layout.json` authored for marquee + favorites slice pages — `73523ba` |
 | P1-014 | ✅ | PokeAPI guard + football `getFootballCatchChoices` — `f20ff1e`, `a098829` |
 | P1-015 | ✅ | `STARTER_IDS = [1, 2, 3]` — `c430a36` |
 | P1-016 | ⬜ | No `domain/scout.js`; interim BST replacement only |
@@ -83,7 +84,7 @@ Domain tasks should extend `Pokelike/scripts/validate-football-domain.mjs` inste
 | P1-024 | ⬜ | No slice-complete trigger at 3 stamps |
 | P1-025 | ⬜ | Badge screen still gym fantasy |
 | P1-026 | ⬜ | `map.js` has no football weights / labels |
-| P1-027 | ⬜ | `domain/album.js` still stub |
+| P1-027 | ✅ | `DomainAlbum` `game_album` API implemented for seen/signed/count — this commit |
 | P1-028 | ⬜ | No v3 album migration |
 | P1-029 | ⬜ | Dex writes not routed to album |
 | P1-030 | ⬜ | Album modal not built |
@@ -146,7 +147,7 @@ P1-042  → persist ledger in poke_current_run
 P1-043  → applyAccountPatch
 ```
 
-**Current:** P1-013 complete. Next implementation step is P1-027, followed by migration and boot wiring.
+**Current:** P1-013 and P1-027 complete. Next implementation step is P1-028 migration, followed by boot wiring.
 
 **Exit:** `game_album` read/write path exists; mid-run reload preserves ledger shape.
 
@@ -1557,7 +1558,7 @@ P1-001 → P1-002 → P1-003 → P1-004 → P1-005 → P1-007 → P1-008 → P1-
 ### Remaining critical spine (from current state)
 
 ```
-P1-027 → P1-028 → P1-041 → P1-016 → P1-017 → P1-018
+P1-028 → P1-041 → P1-016 → P1-017 → P1-018
 → P1-019 → P1-022 → P1-023 → P1-024 → P1-030 → P1-036 → P1-044 → P1-046 → P1-052
 ```
 

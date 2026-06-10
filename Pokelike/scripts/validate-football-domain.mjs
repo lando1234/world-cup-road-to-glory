@@ -91,6 +91,7 @@ const context = createBrowserLikeContext();
 runScript(context, "js/domain/features.js");
 runScript(context, "js/domain/styles.js");
 runScript(context, "js/domain/profiles.js");
+runScript(context, "js/domain/album.js");
 runScript(context, "js/domain/bosses.js");
 runScript(context, "js/domain/combat-adapter.js");
 
@@ -257,6 +258,37 @@ await runTest("album layout defines Phase 1 slice pages", () => {
       assert(profile.album.slot === expectedSlot, `profileId ${slot.profileId} album slot mismatch`);
     });
   }
+});
+
+await runTest("album API persists seen and signed states monotonically", () => {
+  context.localStorage.removeItem("game_album");
+  context.localStorage.removeItem("poke_dex");
+
+  const { DomainAlbum } = context.window;
+  assert(DomainAlbum.ALBUM_STORAGE_KEY === "game_album", "album storage key must be game_album");
+  assert(DomainAlbum.getEntryState(4) === "unknown", "profileId 4 should start unknown");
+  assert(DomainAlbum.countSigned() === 0, "empty album should have zero signed entries");
+
+  DomainAlbum.markAlbumSeen(4);
+  assert(DomainAlbum.getEntryState(4) === "seen", "markAlbumSeen should set profileId 4 to seen");
+  assert(JSON.parse(context.localStorage.getItem("game_album"))["4"] === 0, "seen profile should be stored as 0");
+
+  DomainAlbum.markAlbumSigned(4);
+  assert(DomainAlbum.getEntryState(4) === "signed", "markAlbumSigned should set profileId 4 to signed");
+  assert(JSON.parse(context.localStorage.getItem("game_album"))["4"] === 1, "signed profile should be stored as 1");
+  assert(DomainAlbum.countSigned() === 1, "one signed slice album profile should be counted");
+
+  DomainAlbum.markAlbumSeen(4);
+  assert(DomainAlbum.getEntryState(4) === "signed", "markAlbumSeen must not downgrade signed entries");
+  assert(context.localStorage.getItem("poke_dex") === null, "album API must not write poke_dex");
+
+  let rejectedUnknownProfile = false;
+  try {
+    DomainAlbum.markAlbumSeen(999);
+  } catch (_) {
+    rejectedUnknownProfile = true;
+  }
+  assert(rejectedUnknownProfile, "album API should reject profileIds outside the loaded catalog");
 });
 
 await runTest("football slice gates trade and legendary map nodes", () => {

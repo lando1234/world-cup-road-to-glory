@@ -570,6 +570,33 @@
         <li class="task-entry">
           <header>
             <div class="task-title">
+              <h3>T4 — <code>DomainAlbum</code> seen/signed persistence API</h3>
+              <span class="pill">Status: implemented</span>
+              <span class="pill">Review: PASS</span>
+            </div>
+          </header>
+          <div class="task-grid">
+            <div class="task-note">
+              <strong>Assumptions</strong>
+              <p>Album state is account-level progress and should be compact enough to persist independently from run state. In Phase 1, signed count is scoped to the visible slice album pages: marquee and favorites.</p>
+            </div>
+            <div class="task-note">
+              <strong>Tradeoffs</strong>
+              <p>The API does not migrate <code>poke_dex</code> and does not replace gameplay call sites yet. That keeps P1-027 focused on the single write path; P1-028 owns migration and P1-029 owns gameplay routing.</p>
+            </div>
+            <div class="task-note">
+              <strong>Design Decisions</strong>
+              <p><code>DomainAlbum</code> writes only <code>game_album</code>, treats corrupt stored data as empty, rejects unknown profile IDs once the profile catalog is loaded, and preserves monotonic state transitions so signed entries cannot be downgraded to seen.</p>
+            </div>
+            <div class="task-note">
+              <strong>Risks / Follow-up</strong>
+              <p>Until P1-041 wires migration on boot, legacy saves will not populate <code>game_album</code>. Until P1-029 routes scout/sign flows through this API, album state will not reflect new gameplay actions.</p>
+            </div>
+          </div>
+        </li>
+        <li class="task-entry">
+          <header>
+            <div class="task-title">
               <h3>P1-001 — Create <code>domain/features.js</code> with Phase 1 flags</h3>
               <span class="pill">Status: implemented</span>
             </div>
@@ -1104,7 +1131,7 @@
     </section>
 
     <footer>
-      Generated for the Pokelike World Cup Road to Glory vertical slice. Last updated 2026-06-10 — T3 album layout data, T2 host city boss catalog, T1 boot and cloud gates, Node/npm automation baseline, T0 validation protocol, one-task-one-commit rule, visual-friction registry, bridges registry, migration guardrails, TheSportsDB release-risk notes.
+      Generated for the Pokelike World Cup Road to Glory vertical slice. Last updated 2026-06-10 — T4 DomainAlbum persistence API, T3 album layout data, T2 host city boss catalog, T1 boot and cloud gates, Node/npm automation baseline, T0 validation protocol, one-task-one-commit rule, visual-friction registry, bridges registry, migration guardrails, TheSportsDB release-risk notes.
     </footer>
   </main>
 </body>
