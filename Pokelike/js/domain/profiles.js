@@ -304,7 +304,16 @@ function getAllProfiles() {
 
 function isFootballProfileId(id) {
   const profileId = normalizeProfileId(id);
-  return profileId !== null && profileId >= 1 && profileId <= 50;
+  if (profileId === null || !profileIndex) return false;
+  return Boolean(profileIndex[profileId]);
+}
+
+function getScoutableProfileIds(excludeProfileIds = []) {
+  assertCatalogLoaded();
+  const excluded = new Set(excludeProfileIds);
+  return profileCatalog
+    .filter(profile => profile.flags?.scoutable && !profile.flags?.bossExclusive && !excluded.has(profile.profileId))
+    .map(profile => profile.profileId);
 }
 
 const DomainProfiles = Object.freeze({
@@ -313,6 +322,7 @@ const DomainProfiles = Object.freeze({
   getProfile,
   getProfileOrThrow,
   getAllProfiles,
+  getScoutableProfileIds,
   isFootballProfileId,
   validatePlayerCatalog
 });

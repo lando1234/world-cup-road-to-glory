@@ -889,8 +889,11 @@ async function doBattleNode(node) {
   const enemy = createInstance(enemySpecies, level, false, getMoveТierForMap(state.currentMap));
   const titleEl = document.getElementById('battle-title');
   const subEl = document.getElementById('battle-subtitle');
-  if (titleEl) titleEl.textContent = `Wild ${enemy.name} appeared!`;
-  if (subEl) subEl.textContent = `Level ${enemy.level}`;
+  const wildCopy = typeof getWildEncounterBattleCopy === 'function'
+    ? getWildEncounterBattleCopy(enemy)
+    : { title: `Wild ${enemy.name} appeared!`, subtitle: `Level ${enemy.level}` };
+  if (titleEl) titleEl.textContent = wildCopy.title;
+  if (subEl) subEl.textContent = wildCopy.subtitle;
   const won = await new Promise(resolve => {
     runBattleScreen([enemy], false, () => resolve(true), () => resolve(false), null, [], 1);
   });

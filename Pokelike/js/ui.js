@@ -93,6 +93,61 @@ function isFootballCardEntity(entity) {
   return Number.isInteger(id) && id >= 1 && id <= 50;
 }
 
+function isFootballBattlePresentation() {
+  return window.FEATURES?.footballMode === true;
+}
+
+function formatBattleLevelLabel(level) {
+  if (isFootballBattlePresentation()) return `Form ${level}`;
+  return `Lv${level}`;
+}
+
+function formatBattleNamePlate(name, level) {
+  return `${name} ${formatBattleLevelLabel(level)}`;
+}
+
+function getWildEncounterBattleCopy(enemy) {
+  if (isFootballBattlePresentation()) {
+    const displayName = enemy?.nickname || enemy?.name || 'Unknown';
+    const title = window.GAME_THEME?.battle?.scoutingTitle || 'Transfer Target Found';
+    return {
+      title,
+      subtitle: `${formatBattleLevelLabel(enemy?.level ?? 1)} — ${displayName}`
+    };
+  }
+  return {
+    title: `Wild ${enemy?.name || 'Pokémon'} appeared!`,
+    subtitle: `Level ${enemy?.level ?? 1}`
+  };
+}
+
+function getBattlePortraitUrl(entity) {
+  if (!isFootballCardEntity(entity)) return entity?.spriteUrl || '';
+  const profile = getProfileForCard(entity);
+  return profile?.portrait || entity?.spriteUrl || '';
+}
+
+function getBattlePortraitFallbackLabel(entity) {
+  const profile = getProfileForCard(entity);
+  if (profile?.nation) return profile.nation;
+  if (profile?.commonName) return profile.commonName.slice(0, 3).toUpperCase();
+  return String(entity?.profileId ?? entity?.speciesId ?? '?');
+}
+
+function renderBattleSpriteHtml(entity) {
+  const alt = entity?.nickname || entity?.name || 'Combatant';
+  if (!isFootballCardEntity(entity)) {
+    return `<img src="${entity?.spriteUrl || ''}" alt="${alt}" class="battle-sprite" onerror="this.src=''">`;
+  }
+  const portrait = getBattlePortraitUrl(entity);
+  const fallback = getBattlePortraitFallbackLabel(entity);
+  return `<div class="battle-sprite-stack football-battle-portrait">
+    <img src="${portrait}" alt="${alt}" class="football-battle-portrait-img"
+         onerror="this.style.display='none';var fb=this.nextElementSibling;if(fb)fb.style.display='flex';">
+    <div class="battle-portrait-fallback" style="display:none" aria-hidden="true">${fallback}</div>
+  </div>`;
+}
+
 function getProfileForCard(entity) {
   const id = entity?.profileId ?? entity?.speciesId;
   if (id == null) return null;
@@ -189,6 +244,8 @@ function applyStarterScreenPresentation() {
 const TITLE_SCREEN_LEGACY_COPY = Object.freeze({
   logo: 'POKELIKE',
   subtitle: 'Pokemon Roguelike',
+  newRun: 'Normal Mode',
+  continueRun: 'Continue Run',
   collection: '📖 Pokédex',
   milestones: '🏆 Achievements',
   archive: '🏛️ Hall of Fame'
@@ -200,6 +257,8 @@ function getTitleScreenCopy() {
       isFootball: true,
       logo: window.GAME_THEME.title,
       subtitle: window.GAME_THEME.subtitle,
+      newRun: window.GAME_THEME.newCampaignLabel,
+      continueRun: window.GAME_THEME.continueCampaignLabel,
       collection: `📖 ${window.GAME_THEME.collectionLabel}`,
       milestones: '🏆 Milestones',
       archive: '🏛️ World Cup Archive',
@@ -215,6 +274,8 @@ function getTitleScreenCopy() {
     isFootball: false,
     logo: TITLE_SCREEN_LEGACY_COPY.logo,
     subtitle: TITLE_SCREEN_LEGACY_COPY.subtitle,
+    newRun: TITLE_SCREEN_LEGACY_COPY.newRun,
+    continueRun: TITLE_SCREEN_LEGACY_COPY.continueRun,
     collection: TITLE_SCREEN_LEGACY_COPY.collection,
     milestones: TITLE_SCREEN_LEGACY_COPY.milestones,
     archive: TITLE_SCREEN_LEGACY_COPY.archive,
@@ -245,6 +306,11 @@ function applyTitleScreenPresentation() {
 
   if (logoEl) logoEl.textContent = copy.logo;
   if (subtitleEl) subtitleEl.textContent = copy.subtitle;
+
+  const newRunBtn = document.getElementById('btn-new-run');
+  const continueRunBtn = document.getElementById('btn-continue-run');
+  if (newRunBtn) newRunBtn.textContent = copy.newRun;
+  if (continueRunBtn) continueRunBtn.textContent = copy.continueRun;
 
   const collectionBtn = document.getElementById('title-btn-collection');
   const milestonesBtn = document.getElementById('title-btn-milestones');
@@ -603,10 +669,10 @@ function renderBattleField(pTeam, eTeam) {
       const active  = i === pActiveIdx;
       const hpBlock = renderHpBar(p.currentHp, p.maxHp);
       return `<div class="battle-pokemon ${fainted?'fainted':''} ${active?'active-pokemon':''}" data-idx="${i}">
-        <div class="battle-poke-name">${p.nickname||p.name} Lv${p.level}</div>
+        <div class="battle-poke-name">${formatBattleNamePlate(p.nickname||p.name, p.level)}</div>
         <div class="poke-hp">${hpBlock}</div>
         <img src="ui/battleBase.png" class="battle-base" alt="">
-        <img src="${p.spriteUrl||''}" alt="${p.name}" class="battle-sprite" onerror="this.src=''">
+        ${renderBattleSpriteHtml(p)}
         <div class="battle-stages"></div>
       </div>`;
     }).join('');
@@ -616,10 +682,10 @@ function renderBattleField(pTeam, eTeam) {
       const fainted = p.currentHp <= 0;
       const active  = i === eActiveIdx;
       return `<div class="battle-pokemon ${fainted?'fainted':''} ${active?'active-pokemon':''}" data-idx="${i}">
-        <div class="battle-poke-name">${p.name} Lv${p.level}</div>
+        <div class="battle-poke-name">${formatBattleNamePlate(p.name, p.level)}</div>
         <div class="poke-hp">${renderHpBar(p.currentHp, p.maxHp)}</div>
         <img src="ui/battleBase.png" class="battle-base" alt="">
-        <img src="${p.spriteUrl||''}" alt="${p.name}" class="battle-sprite" onerror="this.src=''">
+        ${renderBattleSpriteHtml(p)}
         <div class="battle-stages"></div>
       </div>`;
     }).join('');
@@ -2941,10 +3007,11 @@ async function animateBattleVisually(detailedLog, pTeamInit, eTeamInit) {
         // Flash white, swap sprite, update name display
         el.classList.add('hit-normal');
         await sleep(200);
-        const imgEl = el.querySelector('.battle-sprite');
-        if (imgEl) imgEl.src = event.spriteUrl;
+        const entity = pTeamInit[event.idx];
+        const imgEl = el.querySelector('.football-battle-portrait-img') || el.querySelector('.battle-sprite:not(.football-battle-portrait-img)');
+        if (imgEl && !isFootballCardEntity(entity)) imgEl.src = event.spriteUrl;
         const nameEl = el.querySelector('.battle-poke-name');
-        if (nameEl) nameEl.textContent = `${event.name} Lv${pTeamInit[event.idx].level}`;
+        if (nameEl) nameEl.textContent = formatBattleNamePlate(event.name, entity?.level ?? pTeamInit[event.idx].level);
         el.classList.remove('hit-normal');
       }
       addLogEntry(`${event.name} transformed into ${event.intoName}!`, 'log-player');
@@ -3457,7 +3524,7 @@ async function animateLevelUp(levelUps) {
     el.classList.add('level-up');
     const lvText = document.createElement('div');
     lvText.className = 'level-up-text';
-    lvText.textContent = `Lv ${newLevel}!`;
+    lvText.textContent = isFootballBattlePresentation() ? `Form ${newLevel}!` : `Lv ${newLevel}!`;
     el.appendChild(lvText);
 
     await sleep(900);
@@ -3465,7 +3532,7 @@ async function animateLevelUp(levelUps) {
     lvText.remove();
 
     const nameEl = el.querySelector('.battle-poke-name');
-    if (nameEl) nameEl.textContent = `${pokemon.nickname || pokemon.name} Lv${newLevel}`;
+    if (nameEl) nameEl.textContent = formatBattleNamePlate(pokemon.nickname || pokemon.name, newLevel);
   }));
 }
 
@@ -4001,6 +4068,47 @@ function openDexDetailModal(speciesId, name, spriteUrl, shinySpriteUrl, types) {
 // ---- Patch Notes Modal ----
 
 const PATCH_NOTES = [
+  {
+    version: '1.7',
+    title: 'World Cup Slice — Battle & Encounter UI',
+    date: '2026-06-09',
+    sections: [
+      {
+        heading: 'Football Battle Presentation',
+        entries: [
+          'Wild encounters open with "Transfer Target Found" instead of "Wild Pokémon appeared!"',
+          'Battle name plates and level-up flash use Form N instead of Lv N in football mode',
+          'Football player portraits render upright (no mirror flip), centered with aspect ratio preserved',
+          'Missing portrait assets fall back to a nation-code badge instead of a broken image',
+          'Legacy Pokémon mode is unchanged when footballMode is off',
+        ],
+      },
+      {
+        heading: 'Title Screen Polish',
+        entries: [
+          'Football title screen uses a hero + menu panel layout with semi-transparent backdrop',
+          'Primary actions relabelled to New Campaign / Continue Campaign in football mode',
+        ],
+      },
+      {
+        heading: 'Encounter Fix',
+        entries: [
+          'Football wild battles now draw from scoutable player profiles instead of the Pokémon BST bucket',
+          'Profile lookup no longer treats every numeric ID 1–50 as a football profile — fixes crash on Unknown football profileId: 48',
+        ],
+      },
+      {
+        heading: 'Assumptions (Vertical Slice)',
+        entries: [
+          'Player portrait PNGs live at /assets/players/{slug}.png — 404s are expected until art is exported',
+          'Only catalogued profileIds are football entities; Pokémon IDs that overlap 1–50 fall through to legacy sprites when not in the catalog',
+          'Wild scouting pool = profiles flagged scoutable in player_profiles.json, excluding marquee starters [1, 2, 3]',
+          'Battle log, trainer intros, and map HUD may still use legacy Pokémon copy — presentation pass is battle-field only',
+          'Combat mechanics, damage formulas, AI, save logic, and map generation were not modified',
+        ],
+      },
+    ],
+  },
   {
     version: '1.6',
     title: 'Achievements, Sync & Tower Patch',

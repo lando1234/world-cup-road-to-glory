@@ -28,6 +28,8 @@ const TYPE_CHART = {
 const GAME_THEME = Object.freeze({
   title: "Road to Glory",
   subtitle: "Build your World Cup squad",
+  newCampaignLabel: "New Campaign",
+  continueCampaignLabel: "Continue Campaign",
   collectionLabel: "World Cup Album",
   managerLabel: "Manager",
   starterScreenTitle: "Marquee Signing",
@@ -41,7 +43,8 @@ const GAME_THEME = Object.freeze({
     faint: "is exhausted",
     injured: "is injured",
     win: "Victory",
-    loss: "Defeat"
+    loss: "Defeat",
+    scoutingTitle: "Transfer Target Found"
   }),
   node: Object.freeze({
     scoutReport: "Scout Report",
@@ -863,8 +866,19 @@ function assertFootballCombatAdapterAvailable() {
   }
 }
 
-function isFootballProfileRequest(id) {
-  return isFootballMode() && isFootballProfileIdRange(id);
+function isFootballProfileRequest(idOrSpecies) {
+  if (!isFootballMode()) return false;
+  const id = typeof idOrSpecies === 'object' && idOrSpecies !== null
+    ? getFootballProfileRequestId(idOrSpecies)
+    : idOrSpecies;
+  if (typeof window.DomainProfiles?.isFootballProfileId === 'function') {
+    try {
+      return window.DomainProfiles.isFootballProfileId(id);
+    } catch (_) {
+      return false;
+    }
+  }
+  return isFootballProfileIdRange(id);
 }
 
 function getFootballProfileRequestId(species) {
@@ -873,10 +887,11 @@ function getFootballProfileRequestId(species) {
 }
 
 async function fetchPokemonById(idOrSlug) {
-  if (isFootballProfileRequest(idOrSlug)) {
+  if (isFootballMode() && typeof idOrSlug === 'number') {
     assertFootballProfilesAvailable();
     await window.DomainProfiles.initCatalog();
-    return window.DomainProfiles.getProfileOrThrow(idOrSlug);
+    const profile = window.DomainProfiles.getProfile(idOrSlug);
+    if (profile) return profile;
   }
 
   // Static bundle short-circuit (numeric IDs only — form slugs still go through the network)
@@ -1168,7 +1183,29 @@ function getBstBucket(rangeMin, widenMode) {
 // then swaps any out-of-gen pick that has no persistent buffs for a random in-gen
 // species — so previously-levelled out-of-gen Pokemon appear at their natural
 // pre-gating per-slot rate while unlevelled out-of-gen ones still can't show up.
+async function getFootballCatchChoices(count = 3, excludeStarters = false) {
+  assertFootballProfilesAvailable();
+  await window.DomainProfiles.initCatalog();
+  const starterIds = excludeStarters ? STARTER_IDS : [];
+  const eligible = window.DomainProfiles.getScoutableProfileIds(starterIds);
+  if (eligible.length === 0) return [];
+
+  const shuffled = [...eligible];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(rng() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+
+  const ids = shuffled.slice(0, Math.max(count * 3, count));
+  const results = await Promise.all(ids.map(id => fetchPokemonById(id)));
+  return results.filter(Boolean).slice(0, count);
+}
+
 async function getCatchChoices(mapIndex, count = 3, maxGenId = 151, excludeStarters = false, minGenId = 1, allowLevelledOutOfGen = false) {
+  if (isFootballMode()) {
+    return getFootballCatchChoices(count, excludeStarters);
+  }
+
   const isGen2  = typeof state !== 'undefined' && state.gen2Mode;
   const ranges  = isGen2 ? GEN2_MAP_BST_RANGES : MAP_BST_RANGES;
   const range   = ranges[Math.min(mapIndex, ranges.length - 1)];
