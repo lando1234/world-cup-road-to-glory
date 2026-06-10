@@ -82,7 +82,83 @@ function renderHpBar(current, max) {
           <span class="hp-text">${Math.max(0,current)}/${max}</span>`;
 }
 
+function isFootballCardEntity(entity) {
+  if (window.FEATURES?.footballMode !== true || !entity) return false;
+  const id = entity.profileId ?? entity.speciesId;
+  if (id == null) return false;
+  if (typeof window.DomainProfiles?.isFootballProfileId === 'function') {
+    return window.DomainProfiles.isFootballProfileId(id);
+  }
+  return Number.isInteger(id) && id >= 1 && id <= 50;
+}
+
+function getProfileForCard(entity) {
+  const id = entity?.profileId ?? entity?.speciesId;
+  if (id == null) return null;
+  try {
+    if (typeof window.DomainProfiles?.getProfile === 'function') {
+      return window.DomainProfiles.getProfile(id);
+    }
+  } catch (_) {
+    return null;
+  }
+  return null;
+}
+
+function renderStyleChip(styleId) {
+  if (!styleId) return '';
+  const labels = window.STYLE_LABELS || window.DomainStyles?.STYLE_LABELS || {};
+  const label = labels[styleId] || styleId;
+  const cssFn = window.styleCssClass || window.DomainStyles?.styleCssClass;
+  const legacyClass = typeof cssFn === 'function' ? (cssFn(styleId)?.legacyClass || '') : '';
+  return `<span class="type-badge style-chip ${legacyClass}" data-style="${styleId}">${label}</span>`;
+}
+
+function renderPlayerCard(instance, onClick, selected) {
+  const profile = getProfileForCard(instance);
+  const displayName = profile?.displayName || instance.nickname || instance.name || 'Player';
+  const nation = profile?.nation || '';
+  const position = profile?.position || '';
+  const portrait = profile?.portrait || instance.spriteUrl || '';
+  const formLevel = instance.level ?? 5;
+  const currentHp = instance.currentHp ?? instance.maxHp ?? 0;
+  const maxHp = Math.max(1, instance.maxHp ?? 1);
+  const fallbackLabel = nation || String(instance.profileId ?? instance.speciesId ?? '?');
+
+  const styleHtml = [
+    renderStyleChip(profile?.primaryStyle),
+    profile?.secondaryStyle && profile.secondaryStyle !== profile.primaryStyle
+      ? renderStyleChip(profile.secondaryStyle)
+      : ''
+  ].filter(Boolean).join('');
+
+  const metaHtml = (nation || position)
+    ? `<div class="player-meta">${nation ? `<span class="player-nation">${nation}</span>` : ''}${position ? `<span class="player-position">${position}</span>` : ''}</div>`
+    : '';
+
+  return `<div class="poke-card player-card${selected ? ' selected' : ''}" ${onClick ? 'role="button" tabindex="0"' : ''}">
+    <div class="poke-sprite-wrap">
+      <img src="${portrait}" alt="${displayName}" class="poke-sprite player-portrait"
+           onerror="this.style.display='none';var fb=this.nextElementSibling;if(fb)fb.style.display='flex';">
+      <div class="player-portrait-fallback" style="display:none" aria-hidden="true">${fallbackLabel}</div>
+    </div>
+    <div class="poke-name">${displayName}</div>
+    ${metaHtml}
+    <div class="poke-level player-form-level">Form ${formLevel}</div>
+    ${styleHtml ? `<div class="poke-types player-styles">${styleHtml}</div>` : ''}
+    <div class="player-stamina-label">Stamina</div>
+    <div class="poke-hp">${renderHpBar(currentHp, maxHp)}</div>
+  </div>`;
+}
+
 function renderPokemonCard(pokemon, onClick, selected, dexCaught = false, hofStarterBadge = false) {
+  if (isFootballCardEntity(pokemon)) {
+    return renderPlayerCard(pokemon, onClick, selected);
+  }
+  return _renderLegacyPokemonCard(pokemon, onClick, selected, dexCaught, hofStarterBadge);
+}
+
+function _renderLegacyPokemonCard(pokemon, onClick, selected, dexCaught = false, hofStarterBadge = false) {
   const pct = pokemon.currentHp / pokemon.maxHp;
   const typeHtml = (pokemon.types || ['???']).map(t =>
     `<span class="type-badge type-${t.toLowerCase()}">${t}</span>`

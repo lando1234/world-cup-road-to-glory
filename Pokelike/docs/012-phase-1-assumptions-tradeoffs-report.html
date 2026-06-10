@@ -562,6 +562,33 @@
             </div>
           </div>
         </li>
+        <li class="task-entry">
+          <header>
+            <div class="task-title">
+              <h3>P1-037 — Render football player cards via <code>domain/profiles</code></h3>
+              <span class="pill">Status: implemented</span>
+              <span class="pill">Review: PASS</span>
+            </div>
+          </header>
+          <div class="task-grid">
+            <div class="task-note">
+              <strong>Assumptions</strong>
+              <p>Football cards should appear anywhere existing code already calls <code>renderPokemonCard()</code>, without touching <code>game.js</code> call sites. Profile metadata is read at render time from <code>DomainProfiles</code>; the runtime instance alone is not enough for nation, position, or style labels.</p>
+            </div>
+            <div class="task-note">
+              <strong>Tradeoffs</strong>
+              <p>Option C dispatch keeps the public API stable and extracts legacy markup into <code>_renderLegacyPokemonCard()</code>. The football card is intentionally narrower than full SPEC 011 card mockups: metadata + stamina only, no stat rows, skill tier bar, move block, or rarity border yet.</p>
+            </div>
+            <div class="task-note">
+              <strong>Design Decisions</strong>
+              <p><code>renderPokemonCard()</code> routes football entities to <code>renderPlayerCard()</code> when <code>footballMode</code> is on and the id is in the football catalog. Style chips reuse <code>STYLE_LABELS</code> text with existing <code>.type-badge</code> colors via <code>styleCssClass()</code>. Portrait failures show a minimal nation-code placeholder for P1-040 to replace later.</p>
+            </div>
+            <div class="task-note">
+              <strong>Risks / Follow-up</strong>
+              <p>Battle HUD and team bar still use legacy compact rendering. Starter screen title/copy remains Pokémon-themed until P1-032/P1-038. Missing portrait assets fall back to nation text until P1-040.</p>
+            </div>
+          </div>
+        </li>
       </ul>
     </section>
 
