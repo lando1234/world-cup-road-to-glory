@@ -62,6 +62,17 @@ h1, h2, .pixel-font {
   text-align: center;
   gap: 24px;
 }
+#title-screen.football-title {
+  gap: 16px;
+}
+#title-screen.football-title .gen-toggle-wrap,
+#title-screen.football-title #btn-hard-run,
+#title-screen.football-title #btn-endless-run,
+#title-screen.football-title #btn-continue-endless,
+#title-screen.football-title #title-discord-link,
+#title-screen.football-title #title-pokemon-disclaimer {
+  display: none !important;
+}
 .game-logo {
   font-family: 'Press Start 2P', monospace;
   font-size: clamp(16px, 4vw, 36px);
@@ -172,7 +183,6 @@ h1, h2, .pixel-font {
   justify-content: center;
   flex-wrap: wrap;
 }
-
 /* PC Box */
 .pc-box {
   background: #111e3a;

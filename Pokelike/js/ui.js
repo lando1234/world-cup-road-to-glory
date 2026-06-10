@@ -67,6 +67,7 @@ function showScreen(id) {
   if (tt) tt.classList.remove('visible');
   _itemTooltip.hide();
   _hoverEnabled = false;
+  if (id === 'title-screen') applyTitleScreenPresentation();
 }
 
 function hpBarColor(pct) {
@@ -150,6 +151,95 @@ function renderPlayerCard(instance, onClick, selected) {
     <div class="poke-hp">${renderHpBar(currentHp, maxHp)}</div>
   </div>`;
 }
+
+const TITLE_SCREEN_LEGACY_COPY = Object.freeze({
+  logo: 'POKELIKE',
+  subtitle: 'Pokemon Roguelike',
+  collection: '📖 Pokédex',
+  milestones: '🏆 Achievements',
+  archive: '🏛️ Hall of Fame'
+});
+
+function getTitleScreenCopy() {
+  if (window.FEATURES?.footballMode === true && window.GAME_THEME) {
+    return {
+      isFootball: true,
+      logo: window.GAME_THEME.title,
+      subtitle: window.GAME_THEME.subtitle,
+      collection: `📖 ${window.GAME_THEME.collectionLabel}`,
+      milestones: '🏆 Milestones',
+      archive: '🏛️ World Cup Archive',
+      hideGenToggle: true,
+      hideNuzlocke: true,
+      hideBattleTower: true,
+      hideDiscord: true,
+      hidePokemonDisclaimer: true,
+      hideCloudSave: window.FEATURES?.cloudSave === false
+    };
+  }
+  return {
+    isFootball: false,
+    logo: TITLE_SCREEN_LEGACY_COPY.logo,
+    subtitle: TITLE_SCREEN_LEGACY_COPY.subtitle,
+    collection: TITLE_SCREEN_LEGACY_COPY.collection,
+    milestones: TITLE_SCREEN_LEGACY_COPY.milestones,
+    archive: TITLE_SCREEN_LEGACY_COPY.archive,
+    hideGenToggle: false,
+    hideNuzlocke: false,
+    hideBattleTower: false,
+    hideDiscord: false,
+    hidePokemonDisclaimer: false,
+    hideCloudSave: false
+  };
+}
+
+function _titleScreenSetVisible(el, visible) {
+  if (!el) return;
+  if (!el.dataset.titleDefaultDisplay) {
+    el.dataset.titleDefaultDisplay = el.style.display || '';
+  }
+  el.style.display = visible ? el.dataset.titleDefaultDisplay : 'none';
+}
+
+function applyTitleScreenPresentation() {
+  const screen = document.getElementById('title-screen');
+  if (!screen) return;
+
+  const copy = getTitleScreenCopy();
+  const logoEl = screen.querySelector('.game-logo');
+  const subtitleEl = screen.querySelector('.game-subtitle');
+
+  if (logoEl) logoEl.textContent = copy.logo;
+  if (subtitleEl) subtitleEl.textContent = copy.subtitle;
+
+  const collectionBtn = document.getElementById('title-btn-collection');
+  const milestonesBtn = document.getElementById('title-btn-milestones');
+  const archiveBtn = document.getElementById('title-btn-archive');
+  if (collectionBtn) collectionBtn.textContent = copy.collection;
+  if (milestonesBtn) milestonesBtn.textContent = copy.milestones;
+  if (archiveBtn) archiveBtn.textContent = copy.archive;
+
+  _titleScreenSetVisible(screen.querySelector('.gen-toggle-wrap'), !copy.hideGenToggle);
+  _titleScreenSetVisible(document.getElementById('btn-hard-run'), !copy.hideNuzlocke);
+  _titleScreenSetVisible(document.getElementById('btn-endless-run'), !copy.hideBattleTower);
+  if (copy.hideBattleTower) {
+    _titleScreenSetVisible(document.getElementById('btn-continue-endless'), false);
+  } else {
+    const continueEndless = document.getElementById('btn-continue-endless');
+    if (continueEndless?.dataset.titleDefaultDisplay !== undefined) {
+      continueEndless.style.display = continueEndless.dataset.titleDefaultDisplay;
+    }
+  }
+
+  _titleScreenSetVisible(document.getElementById('title-discord-link'), !copy.hideDiscord);
+  _titleScreenSetVisible(document.getElementById('title-pokemon-disclaimer'), !copy.hidePokemonDisclaimer);
+  _titleScreenSetVisible(document.getElementById('title-cloud-wrap'), !copy.hideCloudSave);
+
+  screen.classList.toggle('football-title', copy.isFootball);
+  screen.classList.toggle('legacy-title', !copy.isFootball);
+}
+
+document.addEventListener('DOMContentLoaded', applyTitleScreenPresentation);
 
 function renderPokemonCard(pokemon, onClick, selected, dexCaught = false, hofStarterBadge = false) {
   if (isFootballCardEntity(pokemon)) {
