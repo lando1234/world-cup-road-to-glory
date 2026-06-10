@@ -261,9 +261,7 @@ await runTest("football slice complete interrupts post-third-stamp map advance",
   assert(badgeBlock.includes("if (isFootballSliceComplete())"), "badge advance should check slice completion");
   assert(badgeBlock.includes("showSliceCompleteScreen();"), "badge advance should show slice complete screen");
   assert(badgeBlock.indexOf("showSliceCompleteScreen();") < badgeBlock.indexOf("startMap(state.currentMap + 1)"), "slice complete must happen before next-map start");
-  assert(sliceBlock.includes("settleRunLite"), "slice completion should flow through settleRunLite");
-  assert(sliceBlock.includes("clearSavedRun();"), "slice completion should clear the active run after settlement");
-  assert(sliceBlock.includes("initGame();"), "slice completion should return to title boot flow");
+  assert(sliceBlock.includes("settleRunAndReturnToTitle();"), "slice completion should flow through settlement helper");
   assert(!sliceBlock.includes("doElite4"), "slice completion should not call elite flow");
   assert(htmlSource.includes('id="slice-complete-screen"'), "index.html should define slice-complete-screen");
   assert(htmlSource.includes("Vertical Slice — 3 of 8 host cities"), "slice complete message should use honest vertical slice label");
@@ -276,11 +274,11 @@ await runTest("football stamp ceremony uses host city stamp presentation", () =>
   const cssSource = readText("css/style.css");
   const flagIndex = gameSource.indexOf("function flagEmojiFromCountryCode(countryCode)");
   const badgeIndex = gameSource.indexOf("function showBadgeScreen(leader)");
-  const settleIndex = gameSource.indexOf("function settleRunLite(runSnapshot)");
+  const settleIndex = gameSource.indexOf("function createRunSnapshot()");
 
   assert(flagIndex !== -1, "game.js should define flagEmojiFromCountryCode");
   assert(badgeIndex !== -1, "game.js should define showBadgeScreen");
-  assert(settleIndex !== -1, "game.js should define settleRunLite after showBadgeScreen");
+  assert(settleIndex !== -1, "game.js should define createRunSnapshot after showBadgeScreen");
 
   const badgeBlock = gameSource.slice(badgeIndex, settleIndex);
   const footballBranch = badgeBlock.slice(
@@ -704,6 +702,49 @@ await runTest("save v3 migration initializes fresh account album", () => {
   assert(result.albumCopied === true, "fresh account migration should initialize album storage");
   assert(context.localStorage.getItem("saveVersion") === "3", "fresh account migration should set saveVersion 3");
   assert(context.localStorage.getItem("game_album") === "{}", "fresh account migration should initialize game_album as an empty object");
+});
+
+await runTest("settleRunLite returns album patch and summary without currency rewards", () => {
+  context.localStorage.setItem("game_album", JSON.stringify({ "12": 1 }));
+  const result = context.window.DomainSave.settleRunLite({
+    badges: 3,
+    ledger: {
+      signedProfileIds: [14, 15],
+      battleCount: 7,
+      scoutReportsSeen: ["n1", "n2"]
+    }
+  });
+
+  assert(result.patch.album["14"] === 1, "settlement patch should include signed profile 14");
+  assert(result.patch.album["15"] === 1, "settlement patch should include signed profile 15");
+  assert(result.summary.stampsEarned === 3, "settlement summary should include stamps earned");
+  assert(result.summary.newSigns.length === 2, "settlement summary should list new signs");
+  assert(result.summary.albumSignedCount >= 1, "settlement summary should include album signed count");
+  assert(result.summary.battles === 7, "settlement summary should include battle count");
+  assert(result.summary.scouts === 2, "settlement summary should include scout count");
+  assert(result.summary.metaRewardsLabel === "Meta rewards coming soon", "settlement summary should avoid currency rewards");
+
+  context.window.DomainSave.applyAccountPatch(result.patch);
+  const album = JSON.parse(context.localStorage.getItem("game_album"));
+  assert(album["14"] === 1 && album["15"] === 1, "applyAccountPatch should write game_album patch");
+});
+
+await runTest("settlement modal is wired before run clear", () => {
+  const gameSource = readText("js/game.js");
+  const uiSource = readText("js/ui.js");
+  const settleIndex = gameSource.indexOf("function settleRunAndReturnToTitle");
+  const sliceIndex = gameSource.indexOf("function showSliceCompleteScreen");
+  const gameOverIndex = gameSource.indexOf("async function showGameOver");
+
+  assert(settleIndex !== -1, "game.js should define settleRunAndReturnToTitle");
+  assert(uiSource.includes("function showSettlementLiteModal"), "ui.js should define settlement lite modal");
+  const settleBlock = gameSource.slice(settleIndex, sliceIndex);
+  assert(settleBlock.includes("DomainSave?.settleRunLite"), "game settlement helper should call DomainSave.settleRunLite");
+  assert(settleBlock.includes("DomainSave?.applyAccountPatch"), "game settlement helper should call DomainSave.applyAccountPatch");
+  assert(settleBlock.indexOf("applyAccountPatch") < settleBlock.indexOf("clearSavedRun"), "account patch should apply before clearSavedRun");
+  const gameOverBlock = gameSource.slice(gameOverIndex, gameSource.indexOf("function showWinScreen"));
+  assert(gameOverBlock.includes("if (isFootballModeEnabled())"), "football game over should use settlement flow");
+  assert(gameOverBlock.includes("settleRunAndReturnToTitle();"), "football game over should render settlement before title return");
 });
 
 await runTest("football slice gates trade and legendary map nodes", () => {

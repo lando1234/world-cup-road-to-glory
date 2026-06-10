@@ -2760,14 +2760,27 @@ function showBadgeScreen(leader) {
   document.addEventListener('keydown', onKey);
 }
 
-function settleRunLite(runSnapshot) {
+function createRunSnapshot() {
   return {
-    patch: {},
-    summary: {
-      stampsEarned: runSnapshot?.badges || 0,
-      signedCount: window.DomainAlbum?.countSigned?.() || 0
-    }
+    ...state,
+    team: state.team.map(player => ({ ...player })),
+    ledger: state.ledger ? { ...state.ledger } : {}
   };
+}
+
+function settleRunAndReturnToTitle(runSnapshot = createRunSnapshot()) {
+  const settlement = window.DomainSave?.settleRunLite?.(runSnapshot) || { patch: {}, summary: {} };
+  window.DomainSave?.applyAccountPatch?.(settlement.patch);
+  state.lastSettlementSummary = settlement.summary;
+  if (typeof showSettlementLiteModal === 'function') {
+    showSettlementLiteModal(settlement.summary, () => {
+      clearSavedRun();
+      initGame();
+    });
+  } else {
+    clearSavedRun();
+    initGame();
+  }
 }
 
 function showSliceCompleteScreen() {
@@ -2788,16 +2801,17 @@ function showSliceCompleteScreen() {
   }
   if (continueBtn) {
     continueBtn.onclick = () => {
-      const settlement = settleRunLite({ ...state, team: state.team.map(player => ({ ...player })) });
-      state.lastSettlementSummary = settlement.summary;
-      clearSavedRun();
-      initGame();
+      settleRunAndReturnToTitle();
     };
   }
 }
 
 async function showGameOver() {
   localStorage.setItem('poke_win_streak', '0');
+  if (isFootballModeEnabled()) {
+    settleRunAndReturnToTitle();
+    return;
+  }
   clearSavedRun();
   if (typeof syncToCloud === 'function') {
     await Promise.race([syncToCloud(), new Promise(r => setTimeout(r, 3000))]);

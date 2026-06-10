@@ -975,6 +975,33 @@
         <li class="task-entry">
           <header>
             <div class="task-title">
+              <h3>T19 — Settlement lite domain API and modal</h3>
+              <span class="pill">Status: implemented</span>
+              <span class="pill">Review: PASS</span>
+            </div>
+          </header>
+          <div class="task-grid">
+            <div class="task-note">
+              <strong>Assumptions</strong>
+              <p>Settlement lite can operate with partial run ledger data. Missing battle/scout counts default to zero until P1-020 enriches run snapshots.</p>
+            </div>
+            <div class="task-note">
+              <strong>Tradeoffs</strong>
+              <p>P1-036 moves settlement into <code>DomainSave</code> and adds a compact modal, but keeps the modal lightweight. P1-035 remains responsible for product-level slice-complete presentation polish.</p>
+            </div>
+            <div class="task-note">
+              <strong>Design Decisions</strong>
+              <p><code>settleRunLite()</code> returns <code>{ patch, summary }</code> with album-only patches and no currency rewards. <code>applyAccountPatch()</code> writes <code>game_album</code>. Game flow calls settlement before clearing the active run.</p>
+            </div>
+            <div class="task-note">
+              <strong>Risks / Follow-up</strong>
+              <p>Run stats remain basic until ledger work lands. P1-044 should add the explicit game-over order invariant and final audit around failed-run persistence.</p>
+            </div>
+          </div>
+        </li>
+        <li class="task-entry">
+          <header>
+            <div class="task-title">
               <h3>P1-001 — Create <code>domain/features.js</code> with Phase 1 flags</h3>
               <span class="pill">Status: implemented</span>
             </div>
@@ -1509,7 +1536,7 @@
     </section>
 
     <footer>
-      Generated for the Pokelike World Cup Road to Glory vertical slice. Last updated 2026-06-10 — T18 Football dex facade album routing, T17 Album layout domain loader, T16 World Cup Album modal, T15 Football map weights and question routing, T14 City Stamp ceremony reskin, T13 Slice-complete trigger and minimal completion screen, T12 Phase 1 map cap and Host City HUD wiring, T11 Host City boss gameplay wiring, T10 Scout Report gameplay wiring, T9 recruitment contract API, T8 Map 0 forced scout override, T7 scout pool foundation, T6 boot-time migration wiring, T5 save v3 album migration, T4 DomainAlbum persistence API, T3 album layout data, T2 host city boss catalog, T1 boot and cloud gates, Node/npm automation baseline, T0 validation protocol, one-task-one-commit rule, visual-friction registry, bridges registry, migration guardrails, TheSportsDB release-risk notes.
+      Generated for the Pokelike World Cup Road to Glory vertical slice. Last updated 2026-06-10 — T19 Settlement lite domain API and modal, T18 Football dex facade album routing, T17 Album layout domain loader, T16 World Cup Album modal, T15 Football map weights and question routing, T14 City Stamp ceremony reskin, T13 Slice-complete trigger and minimal completion screen, T12 Phase 1 map cap and Host City HUD wiring, T11 Host City boss gameplay wiring, T10 Scout Report gameplay wiring, T9 recruitment contract API, T8 Map 0 forced scout override, T7 scout pool foundation, T6 boot-time migration wiring, T5 save v3 album migration, T4 DomainAlbum persistence API, T3 album layout data, T2 host city boss catalog, T1 boot and cloud gates, Node/npm automation baseline, T0 validation protocol, one-task-one-commit rule, visual-friction registry, bridges registry, migration guardrails, TheSportsDB release-risk notes.
     </footer>
   </main>
 </body>

@@ -90,10 +90,77 @@ function migrateSaveV2toV3() {
   });
 }
 
+function readAlbumState() {
+  return readJsonStorage(SAVE_ALBUM_STORAGE_KEY, {});
+}
+
+function getProfileName(profileId) {
+  try {
+    const profile = window.DomainProfiles?.getProfile?.(profileId);
+    return profile?.commonName || profile?.displayName || `Profile ${profileId}`;
+  } catch (_) {
+    return `Profile ${profileId}`;
+  }
+}
+
+function getScoutCount(ledger = {}) {
+  if (Number.isFinite(Number(ledger.scoutCount))) return Number(ledger.scoutCount);
+  if (Array.isArray(ledger.scoutReportsSeen)) return ledger.scoutReportsSeen.length;
+  return 0;
+}
+
+function settleRunLite(runSnapshot = {}, accountState = {}) {
+  const currentAlbum = isPlainObject(accountState.album)
+    ? { ...accountState.album }
+    : readAlbumState();
+  const signedProfileIds = Array.isArray(runSnapshot.ledger?.signedProfileIds)
+    ? runSnapshot.ledger.signedProfileIds
+    : [];
+
+  const albumPatch = { ...currentAlbum };
+  for (const profileId of signedProfileIds) {
+    const normalizedProfileId = normalizeAlbumProfileId(profileId);
+    if (normalizedProfileId) albumPatch[normalizedProfileId] = 1;
+  }
+
+  const sliceProfileIds = window.DomainAlbum?.getSliceAlbumProfileIds?.() || [];
+  const signedCount = window.DomainAlbum?.countSigned?.(sliceProfileIds) || Object.values(albumPatch).filter(state => state === 1).length;
+  const newSignIds = [...new Set(signedProfileIds.map(Number).filter(Number.isInteger))];
+
+  return Object.freeze({
+    patch: Object.freeze({
+      album: Object.freeze(albumPatch)
+    }),
+    summary: Object.freeze({
+      stampsEarned: Number(runSnapshot.badges || 0),
+      newSigns: Object.freeze(newSignIds.map(profileId => Object.freeze({
+        profileId,
+        name: getProfileName(profileId)
+      }))),
+      albumSignedCount: signedCount,
+      albumTotal: sliceProfileIds.length || Object.keys(albumPatch).length,
+      battles: Number(runSnapshot.ledger?.battleCount || 0),
+      scouts: getScoutCount(runSnapshot.ledger),
+      metaRewardsLabel: "Meta rewards coming soon"
+    })
+  });
+}
+
+function applyAccountPatch(patch = {}) {
+  if (isPlainObject(patch.album)) {
+    localStorage.setItem(SAVE_ALBUM_STORAGE_KEY, JSON.stringify(patch.album));
+  }
+  return Object.freeze({
+    albumApplied: isPlainObject(patch.album)
+  });
+}
+
 const DomainSave = Object.freeze({
   SAVE_SCHEMA_VERSION: DOMAIN_SAVE_SCHEMA_VERSION,
   migrateSaveV2toV3,
-  compactLegacyDexToAlbum
+  compactLegacyDexToAlbum,
+  settleRunLite,
+  applyAccountPatch
 });
 
 window.DomainSave = DomainSave;

@@ -4041,6 +4041,42 @@ async function openPokedexModal(initialTab = 'normal') {
 
 function openShinyDexModal() { openPokedexModal('shiny'); }
 
+function showSettlementLiteModal(summary = {}, onContinue = () => {}) {
+  const existing = document.getElementById('settlement-lite-modal');
+  if (existing) existing.remove();
+
+  const newSigns = Array.isArray(summary.newSigns) && summary.newSigns.length
+    ? summary.newSigns.map(sign => `<li>${albumEscape(sign.name || `Profile ${sign.profileId}`)}</li>`).join('')
+    : '<li>No new signings this run</li>';
+
+  const modal = document.createElement('div');
+  modal.id = 'settlement-lite-modal';
+  modal.style.cssText = 'position:fixed;inset:0;z-index:320;background:rgba(0,0,0,0.84);display:flex;align-items:center;justify-content:center;padding:16px;';
+  modal.innerHTML = `
+    <div class="album-modal-box" style="width:min(420px,92vw);border:3px solid #2b8f6b;padding:14px;background:#081612;box-shadow:0 0 0 2px #000,4px 4px 0 rgba(0,0,0,0.7);">
+      <h2 style="font-family:'Press Start 2P',monospace;font-size:12px;color:#77e0b5;text-align:center;margin:0 0 12px;">Run Summary</h2>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:9px;color:var(--text);">
+        <div>Stamps<br><strong>${Number(summary.stampsEarned || 0)}</strong></div>
+        <div>Album<br><strong>${Number(summary.albumSignedCount || 0)} / ${Number(summary.albumTotal || 0)}</strong></div>
+        <div>Matches<br><strong>${Number(summary.battles || 0)}</strong></div>
+        <div>Scouts<br><strong>${Number(summary.scouts || 0)}</strong></div>
+      </div>
+      <div style="margin-top:12px;color:var(--text);font-size:9px;">
+        <div style="color:var(--text-dim);margin-bottom:4px;">New signs</div>
+        <ul style="margin:0;padding-left:18px;line-height:1.6;">${newSigns}</ul>
+      </div>
+      <div style="margin-top:12px;color:var(--text-dim);font-size:8px;text-align:center;">${albumEscape(summary.metaRewardsLabel || 'Meta rewards coming soon')}</div>
+      <div style="display:flex;justify-content:center;margin-top:14px;">
+        <button id="btn-settlement-lite-continue" class="btn-primary">Continue</button>
+      </div>
+    </div>`;
+  document.body.appendChild(modal);
+  document.getElementById('btn-settlement-lite-continue').onclick = () => {
+    modal.remove();
+    onContinue();
+  };
+}
+
 function openDexDetailModal(speciesId, name, spriteUrl, shinySpriteUrl, types) {
   const existing = document.getElementById('dex-detail-modal');
   if (existing) existing.remove();

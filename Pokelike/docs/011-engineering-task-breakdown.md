@@ -5,7 +5,7 @@
 **Inputs:** [001](./001-codebase-discovery.md), [006B](./006B-technical-blueprint-revised.md), [007](./007-football-data-pack.md), [008](./008-meta-progression.md), [009](./009-gameplay-loop-node-system.md)  
 **Version:** v1.1  
 **Date:** 2026-06-10  
-**Last sync:** `main` @ this commit — Football dex facade album routing (T18)
+**Last sync:** `main` @ this commit — Settlement lite domain API and modal (T19)
 **Assumptions:** Single developer · existing Pokelike vanilla JS · browser game · no React · no backend changes
 
 ---
@@ -14,8 +14,8 @@
 
 | Metric | Count |
 |--------|------:|
-| **Done** | 31 |
-| **Partial** | 8 |
+| **Done** | 32 |
+| **Partial** | 7 |
 | **Not started** | 13 |
 | **Total tickets** | 52 |
 
@@ -45,7 +45,8 @@ Before continuing gameplay implementation, T0 establishes the repeatable validat
 | T15-001 | ✅ | Football question nodes resolve only to battle/trainer, with slice-safe weights/gates validated — `e0da8e5` |
 | T16-001 | ✅ | Football collection opens World Cup Album modal with layout pages and unknown/seen/signed states — `f20e5d4` |
 | T17-001 | ✅ | `DomainAlbum` owns album layout fetch/cache plus ordered slot profile IDs — `83e8b8a` |
-| T18-001 | ✅ | Football `markPokedexSeen/Caught` facades route to `DomainAlbum` before `poke_dex` writes — this commit |
+| T18-001 | ✅ | Football `markPokedexSeen/Caught` facades route to `DomainAlbum` before `poke_dex` writes — `2c9931a` |
+| T19-001 | ✅ | `DomainSave.settleRunLite()` + `applyAccountPatch()` feed settlement modal before returning to title — this commit |
 
 **Per-task Definition of Done from this point forward:**
 
@@ -100,14 +101,14 @@ Domain tasks should extend `Pokelike/scripts/validate-football-domain.mjs` inste
 | P1-026 | ✅ | Football slice gates trade/legendary, validates L1 scout weight, uses GAME_THEME labels, and restricts question nodes to battle/trainer — `e0da8e5` |
 | P1-027 | ✅ | `DomainAlbum` `game_album` API implemented for seen/signed/count — `495ef23` |
 | P1-028 | ✅ | `migrateSaveV2toV3()` copies `poke_dex` to `game_album`, sets save v3, and preserves active runs — `94d3326` |
-| P1-029 | ✅ | Football profile writes through `markPokedexSeen/Caught` route to `DomainAlbum` and return before `poke_dex` writes — this commit |
+| P1-029 | ✅ | Football profile writes through `markPokedexSeen/Caught` route to `DomainAlbum` and return before `poke_dex` writes — `2c9931a` |
 | P1-030 | ✅ | Football collection opens World Cup Album modal with Marquee/Favorites pages and unknown/seen/signed states — `f20e5d4` |
 | P1-031 | ✅ | `DomainAlbum` loads/caches `album_layout.json`, exposes pages and ordered slot profile IDs, and boot gate initializes layout — `83e8b8a` |
 | P1-032 | 🟡 | Marquee Signing reskin — `5c2b3d8`; **Core Six style triangle tooltip missing** |
 | P1-033 | ⬜ | Catch screen still Pokémon UX |
 | P1-034 | ⬜ | Swap screen not reskinned |
 | P1-035 | 🟡 | Minimal `slice-complete-screen` shell exists — this commit; full squad snapshot/album presentation polish pending |
-| P1-036 | 🟡 | Local lightweight `settleRunLite()` handoff exists — this commit; domain API, patch application, and game-over modal pending |
+| P1-036 | ✅ | `DomainSave.settleRunLite()` returns album patch + summary; settlement modal renders on slice complete and football game over — this commit |
 | P1-037 | 🟡 | `renderPlayerCard()` — `edabaa7`; **not all screens / stat labels unified** |
 | P1-038 | 🟡 | Title reskin + hide deferred modes — `ec5e717`; **map HUD still opens Pokédex modal** |
 | P1-039 | 🟡 | Battle **field** copy only (Transfer Target, Form N) — `a098829`; **battle log strings untouched** |
@@ -161,7 +162,7 @@ P1-042  → persist ledger in poke_current_run
 P1-043  → applyAccountPatch
 ```
 
-**Current:** P1-013, P1-027, P1-028, P1-041, P1-016, P1-017, P1-018, P1-019, P1-022, P1-023, P1-024, P1-025, P1-026, P1-029, P1-030, and P1-031 complete. P1-035/P1-036 have minimal shells and still need full product/domain passes. Next implementation step is P1-036 settlement domain API.
+**Current:** P1-013, P1-027, P1-028, P1-041, P1-016, P1-017, P1-018, P1-019, P1-022, P1-023, P1-024, P1-025, P1-026, P1-029, P1-030, P1-031, and P1-036 complete. P1-035 still has a minimal shell and needs full product presentation. Next implementation step is P1-044 game-over settlement invariant audit.
 
 **Exit:** `game_album` read/write path exists; mid-run reload preserves ledger shape.
 
@@ -1572,7 +1573,7 @@ P1-001 → P1-002 → P1-003 → P1-004 → P1-005 → P1-007 → P1-008 → P1-
 ### Remaining critical spine (from current state)
 
 ```
-P1-036 → P1-044 → P1-046 → P1-052
+P1-044 → P1-046 → P1-052
 ```
 
 ### Parallelizable Tasks
