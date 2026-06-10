@@ -31,7 +31,7 @@ body.dark-mode {
 }
 
 body {
-  background: url('../ui/background.jpg') center / cover fixed;
+  background: url('../ui/background.png') center / cover fixed;
   color: var(--text);
   font-family: monospace, 'Courier New';
   font-size: 14px;
@@ -2634,7 +2634,7 @@ h1, h2, .pixel-font {
 .settings-row:hover     { background: #dedad0; }
 .settings-label         { color: #181410; }
 
-/* Semi-transparent overlays so background.jpg shows through */
+/* Semi-transparent overlays so background.png shows through */
 #gameover-screen   { background: rgba(10, 0, 0, 0.75); }
 #transition-screen { background: rgba(0, 0, 0, 0.55); }
 
@@ -2661,7 +2661,7 @@ h1, h2, .pixel-font {
    DARK MODE
    ====================================================== */
 body.dark-mode {
-  background-image: url('../ui/backgroundDarkMode.jpg');
+  background-image: url('../ui/backgroundDarkMode.png');
 }
 
 body.dark-mode .poke-card,
