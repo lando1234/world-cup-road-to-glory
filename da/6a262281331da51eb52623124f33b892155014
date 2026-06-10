@@ -1,0 +1,28 @@
+Pokelike/index.html
+  s_3267f40cfa83dd::t_961d0ea5e69a7c 35
+Pokelike/js/game.js
+  s_3267f40cfa83dd::t_35e51f06f8eb92 1760-1761
+  s_3267f40cfa83dd::t_66677bbc5f3df5 1475
+  s_3267f40cfa83dd::t_cfe0e31c1ae418 1744-1758
+  s_3267f40cfa83dd::t_fd48ed386015f8 1656
+Pokelike/js/ui.js
+  s_3267f40cfa83dd::t_60f79f7adb8da0 3469-3470
+  s_3267f40cfa83dd::t_611f43195ae1db 96-101
+  s_3267f40cfa83dd::t_e925af9ecc3616 4080-4102
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.6",
+  "base_commit_sha": "da6a262281331da51eb52623124f33b892155014",
+  "prompts": {},
+  "sessions": {
+    "s_3267f40cfa83dd": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "129a5347-c081-49f2-95df-0d3bf451bf24",
+        "model": "composer-2.5"
+      },
+      "human_author": "Matias Landau <landaumatias@gmail.com>"
+    }
+  }
+}
