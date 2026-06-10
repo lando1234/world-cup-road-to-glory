@@ -773,6 +773,18 @@ function getNodeLabel(node) {
   if (node.visited) return 'Visited';
   if (window.FEATURES?.footballMode === true) {
     const themeNode = window.GAME_THEME?.node || {};
+    if (node.type === NODE_TYPES.BOSS) {
+      const boss = window.DomainBosses?.getHostCity(node.mapIndex);
+      if (boss) {
+        const challengeLabel = themeNode.hostCityChallenge || 'Host City Challenge';
+        const teamHtml = boss.roster.map(slot => {
+          const profile = window.DomainProfiles?.getProfile(slot.profileId);
+          const name = profile?.commonName || profile?.displayName || `Player ${slot.profileId}`;
+          return `<div style="color:#ccc;font-size:9px;">${name} <span style="color:#aaa;">Form ${slot.formLevel}</span></div>`;
+        }).join('');
+        return `<div style="font-weight:bold;margin-bottom:4px;">${challengeLabel}: ${boss.hostCity} — ${boss.label}</div>${teamHtml}`;
+      }
+    }
     const footballLabels = {
       [NODE_TYPES.START]:      'Start',
       [NODE_TYPES.BATTLE]:     `${themeNode.friendlyMatch || 'Friendly Match'} — +1 Form Level`,

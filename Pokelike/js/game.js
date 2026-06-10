@@ -97,6 +97,23 @@ function isFootballModeEnabled() {
   return window.FEATURES?.footballMode === true;
 }
 
+function getFootballMaxMapIndex() {
+  if (!isFootballModeEnabled() || window.FEATURES?.sliceMode !== true) return Infinity;
+  const maxMapIndex = Number(window.FEATURES?.maxMapIndex);
+  return Number.isInteger(maxMapIndex) ? maxMapIndex : Infinity;
+}
+
+function normalizePlayableMapIndex(mapIndex) {
+  const numericMapIndex = Number(mapIndex);
+  const safeMapIndex = Number.isInteger(numericMapIndex) ? numericMapIndex : 0;
+  const maxMapIndex = getFootballMaxMapIndex();
+  if (safeMapIndex > maxMapIndex) {
+    console.warn(`Map ${safeMapIndex} is outside the Phase 1 slice. Redirecting to map ${maxMapIndex}.`);
+    return maxMapIndex;
+  }
+  return Math.max(0, safeMapIndex);
+}
+
 function getTitleBootStatusEl() {
   let el = document.getElementById('title-boot-status');
   if (el) return el;
@@ -574,6 +591,7 @@ async function selectStarter(pokemon) {
 // ---- Map Management ----
 
 function startMap(mapIndex) {
+  mapIndex = normalizePlayableMapIndex(mapIndex);
   state.currentMap = mapIndex;
   state.map = generateMap(mapIndex, state.nuzlockeMode, state.gen2Mode);
 
@@ -609,10 +627,18 @@ function showMapScreen() {
         : `<span>Map ${state.currentMap+1}: vs <b>${leader.name}</b> (${leader.type})</span>`;
     } else {
       const isFinal = state.currentMap === 8;
-      const leader = isFinal ? null : GYM_LEADERS[state.currentMap];
-      mapInfo.innerHTML = isFinal
-        ? `<span>Elite Four & Champion</span>`
-        : `<span>Map ${state.currentMap+1}: vs <b>${leader.name}</b> (${leader.type})</span>`;
+      if (isFootballModeEnabled()) {
+        const boss = window.DomainBosses?.getHostCity(state.currentMap);
+        const leader = boss ? buildHostCityLeaderView(boss) : null;
+        mapInfo.innerHTML = leader
+          ? `<span>Host City ${state.currentMap + 1}: <b>${leader.hostCity}</b> vs ${leader.name}</span>`
+          : `<span>Host City ${state.currentMap + 1}</span>`;
+      } else {
+        const leader = isFinal ? null : GYM_LEADERS[state.currentMap];
+        mapInfo.innerHTML = isFinal
+          ? `<span>Elite Four & Champion</span>`
+          : `<span>Map ${state.currentMap+1}: vs <b>${leader.name}</b> (${leader.type})</span>`;
+      }
     }
   }
   // Mode is communicated by the START node's colour (see getNodeColor in
@@ -628,6 +654,17 @@ function showMapScreen() {
       const label = JOHTO_GYM_LEADERS[i].badge;
       return earned
         ? `<img src="${BASE}${i + 9}.png" alt="${label}" title="${label}" class="badge-icon-img">`
+        : `<span class="badge-icon-empty" title="${label}"></span>`;
+    }).join('');
+  } else if (isFootballModeEnabled()) {
+    const maxMapIndex = getFootballMaxMapIndex();
+    const stampCount = Number.isFinite(maxMapIndex) ? maxMapIndex + 1 : 8;
+    badgeHtml = Array.from({ length: stampCount }, (_, i) => {
+      const earned = i < state.badges;
+      const boss = window.DomainBosses?.getHostCity(i);
+      const label = boss?.stamp?.displayName || `Host City ${i + 1} Stamp`;
+      return earned
+        ? `<img src="${BASE}${i + 1}.png" alt="${label}" title="${label}" class="badge-icon-img">`
         : `<span class="badge-icon-empty" title="${label}"></span>`;
     }).join('');
   } else {

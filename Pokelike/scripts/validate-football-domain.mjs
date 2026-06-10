@@ -217,6 +217,26 @@ await runTest("football boss node is wired to host city domain flow", () => {
   assert(!footballBranch.includes("GYM_LEADERS"), "football boss branch must not read legacy GYM_LEADERS");
 });
 
+await runTest("football slice map cap is enforced before map generation", () => {
+  const gameSource = readText("js/game.js");
+  const maxIndex = gameSource.indexOf("function getFootballMaxMapIndex()");
+  const normalizeIndex = gameSource.indexOf("function normalizePlayableMapIndex(mapIndex)");
+  const startMapIndex = gameSource.indexOf("function startMap(mapIndex)");
+
+  assert(maxIndex !== -1, "game.js should define getFootballMaxMapIndex");
+  assert(normalizeIndex !== -1, "game.js should define normalizePlayableMapIndex");
+  assert(startMapIndex !== -1, "game.js should define startMap");
+
+  const maxBlock = gameSource.slice(maxIndex, normalizeIndex);
+  const normalizeBlock = gameSource.slice(normalizeIndex, startMapIndex);
+  const startMapBlock = gameSource.slice(startMapIndex, gameSource.indexOf("function showMapScreen()"));
+  assert(maxBlock.includes("window.FEATURES?.maxMapIndex"), "getFootballMaxMapIndex should read FEATURES.maxMapIndex");
+  assert(normalizeBlock.includes("getFootballMaxMapIndex()"), "normalizePlayableMapIndex should use getFootballMaxMapIndex");
+  assert(normalizeBlock.includes("safeMapIndex > maxMapIndex"), "normalizePlayableMapIndex should cap maps above the slice max");
+  assert(startMapBlock.includes("mapIndex = normalizePlayableMapIndex(mapIndex);"), "startMap should normalize before assigning state.currentMap");
+  assert(startMapBlock.indexOf("normalizePlayableMapIndex") < startMapBlock.indexOf("generateMap"), "startMap must normalize before generateMap");
+});
+
 await runTest("feature gates default to football slice mode", () => {
   const features = context.window.FEATURES;
   assert(features.footballMode === true, "FEATURES.footballMode must be true");
@@ -587,6 +607,12 @@ await runTest("football map labels use football terminology", () => {
   assert(context.getNodeLabel({ type: "catch" }) === "Scout Report", "catch node should display Scout Report");
   assert(context.getNodeLabel({ type: "pokecenter" }) === "Recovery Center", "pokecenter node should display Recovery Center");
   assert(context.getNodeLabel({ type: "boss" }) === "Host City Challenge", "boss node should display Host City Challenge");
+
+  const bossLabel = context.getNodeLabel({ type: "boss", mapIndex: 1 });
+  assert(bossLabel.includes("Berlin"), "boss tooltip should include host city name");
+  assert(bossLabel.includes("Host City Challenge"), "boss tooltip should include host city challenge label");
+  assert(bossLabel.includes("Form 20"), "boss tooltip should include JSON roster form levels");
+  assert(!bossLabel.includes("Gym"), "football boss tooltip should not include legacy gym terminology");
 });
 
 await runTest("cloud save is disabled by football feature gate", async () => {

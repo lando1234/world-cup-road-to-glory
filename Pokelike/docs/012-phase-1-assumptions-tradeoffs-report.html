@@ -786,6 +786,33 @@
         <li class="task-entry">
           <header>
             <div class="task-title">
+              <h3>T12 — Phase 1 map cap and Host City HUD wiring</h3>
+              <span class="pill">Status: implemented</span>
+              <span class="pill">Review: PASS</span>
+            </div>
+          </header>
+          <div class="task-grid">
+            <div class="task-note">
+              <strong>Assumptions</strong>
+              <p><code>FEATURES.maxMapIndex</code> is the authoritative Phase 1 map boundary. Runtime code should normalize map starts before map generation so accidental calls to maps 3-7 cannot create out-of-slice content.</p>
+            </div>
+            <div class="task-note">
+              <strong>Tradeoffs</strong>
+              <p>P1-023 clamps out-of-slice map starts to the last playable host city instead of introducing the slice-complete screen. That keeps the guard small; P1-024 must still replace the post-Tokyo transition with a real completion flow.</p>
+            </div>
+            <div class="task-note">
+              <strong>Design Decisions</strong>
+              <p><code>startMap()</code> calls <code>normalizePlayableMapIndex()</code> before <code>generateMap()</code>. Football map info and boss tooltips now read <code>DomainBosses</code> host city, label, stamp, and roster form-level data instead of reading legacy boss arrays.</p>
+            </div>
+            <div class="task-note">
+              <strong>Risks / Follow-up</strong>
+              <p>The guard prevents invalid generation but does not yet end the run. P1-024 owns the third-stamp slice-complete trigger and P1-025 owns the full City Stamp ceremony copy/art pass.</p>
+            </div>
+          </div>
+        </li>
+        <li class="task-entry">
+          <header>
+            <div class="task-title">
               <h3>P1-001 — Create <code>domain/features.js</code> with Phase 1 flags</h3>
               <span class="pill">Status: implemented</span>
             </div>
@@ -1320,7 +1347,7 @@
     </section>
 
     <footer>
-      Generated for the Pokelike World Cup Road to Glory vertical slice. Last updated 2026-06-10 — T11 Host City boss gameplay wiring, T10 Scout Report gameplay wiring, T9 recruitment contract API, T8 Map 0 forced scout override, T7 scout pool foundation, T6 boot-time migration wiring, T5 save v3 album migration, T4 DomainAlbum persistence API, T3 album layout data, T2 host city boss catalog, T1 boot and cloud gates, Node/npm automation baseline, T0 validation protocol, one-task-one-commit rule, visual-friction registry, bridges registry, migration guardrails, TheSportsDB release-risk notes.
+      Generated for the Pokelike World Cup Road to Glory vertical slice. Last updated 2026-06-10 — T12 Phase 1 map cap and Host City HUD wiring, T11 Host City boss gameplay wiring, T10 Scout Report gameplay wiring, T9 recruitment contract API, T8 Map 0 forced scout override, T7 scout pool foundation, T6 boot-time migration wiring, T5 save v3 album migration, T4 DomainAlbum persistence API, T3 album layout data, T2 host city boss catalog, T1 boot and cloud gates, Node/npm automation baseline, T0 validation protocol, one-task-one-commit rule, visual-friction registry, bridges registry, migration guardrails, TheSportsDB release-risk notes.
     </footer>
   </main>
 </body>
