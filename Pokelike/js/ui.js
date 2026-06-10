@@ -152,6 +152,40 @@ function renderPlayerCard(instance, onClick, selected) {
   </div>`;
 }
 
+function getStarterScreenCopy() {
+  if (window.FEATURES?.footballMode === true && window.GAME_THEME) {
+    return {
+      title: window.GAME_THEME.starterScreenTitle,
+      subtitle: window.GAME_THEME.subtitle,
+      loading: 'Loading marquee signings...',
+      isFootball: true
+    };
+  }
+  return {
+    title: 'Choose Your Starter!',
+    subtitle: '',
+    loading: 'Loading starters...',
+    isFootball: false
+  };
+}
+
+function applyStarterScreenPresentation() {
+  const screen = document.getElementById('starter-screen');
+  const titleEl = document.getElementById('starter-screen-title');
+  const subtitleEl = document.getElementById('starter-screen-subtitle');
+  const copy = getStarterScreenCopy();
+
+  if (titleEl) titleEl.textContent = copy.title;
+  if (subtitleEl) {
+    subtitleEl.textContent = copy.subtitle;
+    subtitleEl.hidden = !copy.subtitle;
+  }
+  if (screen) {
+    screen.classList.toggle('marquee-signing', copy.isFootball);
+    screen.classList.toggle('legacy-starter-select', !copy.isFootball);
+  }
+}
+
 const TITLE_SCREEN_LEGACY_COPY = Object.freeze({
   logo: 'POKELIKE',
   subtitle: 'Pokemon Roguelike',

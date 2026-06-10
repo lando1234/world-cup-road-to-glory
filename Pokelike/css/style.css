@@ -183,6 +183,31 @@ h1, h2, .pixel-font {
   justify-content: center;
   flex-wrap: wrap;
 }
+#starter-screen.marquee-signing {
+  gap: 20px;
+  padding: 16px;
+}
+#starter-screen.marquee-signing #starter-screen-title {
+  margin-bottom: 0;
+}
+#starter-screen .starter-screen-subtitle {
+  margin: 0;
+  font-size: clamp(8px, 2vw, 11px);
+  color: var(--text-dim);
+  text-align: center;
+  max-width: 520px;
+  line-height: 1.6;
+}
+#starter-screen.marquee-signing #starter-choices {
+  gap: 16px;
+  max-width: 980px;
+}
+#starter-screen.marquee-signing .marquee-choice {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 /* PC Box */
 .pc-box {
   background: #111e3a;

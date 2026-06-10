@@ -254,8 +254,10 @@ function makeMaxedStarsEl(speciesId) {
 
 async function showStarterSelect() {
   showScreen('starter-screen');
+  applyStarterScreenPresentation();
+  const starterCopy = getStarterScreenCopy();
   const container = document.getElementById('starter-choices');
-  container.innerHTML = '<div class="loading">Loading starters...</div>';
+  container.innerHTML = `<div class="loading">${starterCopy.loading}</div>`;
 
   if (state.isEndlessMode) {
     endlessState.currentRegion = rollRegion(endlessState.stageNumber, endlessState.regionNumber);
@@ -444,11 +446,14 @@ async function showStarterSelect() {
     container.style.flexWrap = 'wrap';
     container.style.gap = '16px';
 
+    const isFootballMarquee = window.FEATURES?.footballMode === true;
     for (const species of starters) {
       if (!species) continue;
       const isShiny = rng() < (hasShinyCharm() ? 0.02 : 0.01);
       const inst = createInstance(species, startLevel, isShiny, 0);
-      const starterCaught = _isDexCaught(getPokedex()[inst.speciesId]);
+      const starterCaught = isFootballMarquee ? false : _isDexCaught(getPokedex()[inst.speciesId]);
+      const choiceWrap = document.createElement('div');
+      choiceWrap.className = isFootballMarquee ? 'marquee-choice' : '';
       const wrapper = document.createElement('div');
       wrapper.innerHTML = renderPokemonCard(inst, true, false, starterCaught);
       const card = wrapper.querySelector('.poke-card');
@@ -456,7 +461,8 @@ async function showStarterSelect() {
       card.setAttribute('tabindex', '0');
       card.addEventListener('click', () => selectStarter(inst));
       card.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') selectStarter(inst); });
-      container.appendChild(card);
+      choiceWrap.appendChild(card);
+      container.appendChild(choiceWrap);
     }
   }
 }
