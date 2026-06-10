@@ -1,0 +1,19 @@
+Pokelike/js/domain/profiles.js
+  s_3267f40cfa83dd::t_6905a58c1784de 3,5-6,8-318
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.6",
+  "base_commit_sha": "eef0f661852d9cdfab70ea667eb1efd88360fad8",
+  "prompts": {},
+  "sessions": {
+    "s_3267f40cfa83dd": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "129a5347-c081-49f2-95df-0d3bf451bf24",
+        "model": "composer-2.5"
+      },
+      "human_author": "Matias Landau <landaumatias@gmail.com>"
+    }
+  }
+}
