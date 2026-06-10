@@ -1056,6 +1056,33 @@
         <li class="task-entry">
           <header>
             <div class="task-title">
+              <h3>T22 — Run identity ledger shape</h3>
+              <span class="pill">Status: implemented</span>
+              <span class="pill">Review: PASS</span>
+            </div>
+          </header>
+          <div class="task-grid">
+            <div class="task-note">
+              <strong>Assumptions</strong>
+              <p>Phase 1 only needs a minimal recruitment ledger: seen profile IDs, signed profile IDs, and duplicate signed profile IDs. Rich battle/scout analytics remain optional fields.</p>
+            </div>
+            <div class="task-note">
+              <strong>Tradeoffs</strong>
+              <p>The run shape stays inside the existing <code>game.js</code> persistence boundary instead of introducing a separate run-save module before the React/Next migration.</p>
+            </div>
+            <div class="task-note">
+              <strong>Design Decisions</strong>
+              <p><code>createRunId()</code> prefers <code>crypto.randomUUID()</code> and falls back to a timestamp/random string. New runs and continued legacy saves pass through <code>normalizeRunIdentity()</code>.</p>
+            </div>
+            <div class="task-note">
+              <strong>Risks / Follow-up</strong>
+              <p>P1-042 should explicitly verify that the normalized shape survives a <code>saveRun()</code>/<code>loadRun()</code> cycle through <code>poke_current_run</code>.</p>
+            </div>
+          </div>
+        </li>
+        <li class="task-entry">
+          <header>
+            <div class="task-title">
               <h3>P1-001 — Create <code>domain/features.js</code> with Phase 1 flags</h3>
               <span class="pill">Status: implemented</span>
             </div>
@@ -1590,7 +1617,7 @@
     </section>
 
     <footer>
-      Generated for the Pokelike World Cup Road to Glory vertical slice. Last updated 2026-06-10 — T21 Cloud save suppression gate, T20 Game-over settlement order invariant, T19 Settlement lite domain API and modal, T18 Football dex facade album routing, T17 Album layout domain loader, T16 World Cup Album modal, T15 Football map weights and question routing, T14 City Stamp ceremony reskin, T13 Slice-complete trigger and minimal completion screen, T12 Phase 1 map cap and Host City HUD wiring, T11 Host City boss gameplay wiring, T10 Scout Report gameplay wiring, T9 recruitment contract API, T8 Map 0 forced scout override, T7 scout pool foundation, T6 boot-time migration wiring, T5 save v3 album migration, T4 DomainAlbum persistence API, T3 album layout data, T2 host city boss catalog, T1 boot and cloud gates, Node/npm automation baseline, T0 validation protocol, one-task-one-commit rule, visual-friction registry, bridges registry, migration guardrails, TheSportsDB release-risk notes.
+      Generated for the Pokelike World Cup Road to Glory vertical slice. Last updated 2026-06-10 — T22 Run identity ledger shape, T21 Cloud save suppression gate, T20 Game-over settlement order invariant, T19 Settlement lite domain API and modal, T18 Football dex facade album routing, T17 Album layout domain loader, T16 World Cup Album modal, T15 Football map weights and question routing, T14 City Stamp ceremony reskin, T13 Slice-complete trigger and minimal completion screen, T12 Phase 1 map cap and Host City HUD wiring, T11 Host City boss gameplay wiring, T10 Scout Report gameplay wiring, T9 recruitment contract API, T8 Map 0 forced scout override, T7 scout pool foundation, T6 boot-time migration wiring, T5 save v3 album migration, T4 DomainAlbum persistence API, T3 album layout data, T2 host city boss catalog, T1 boot and cloud gates, Node/npm automation baseline, T0 validation protocol, one-task-one-commit rule, visual-friction registry, bridges registry, migration guardrails, TheSportsDB release-risk notes.
     </footer>
   </main>
 </body>

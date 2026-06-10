@@ -162,6 +162,30 @@ await runTest("game boot migrates save before run reads", () => {
   assert(migrationIndex < continueRunReadIndex, "save migration must run before initGame reads poke_current_run");
 });
 
+await runTest("new and loaded runs carry run identity ledger shape", () => {
+  const gameSource = readText("js/game.js");
+  const persistenceIndex = gameSource.indexOf("// ---- Run persistence ----");
+  const initGameIndex = gameSource.indexOf("async function initGame()");
+  const startNewRunIndex = gameSource.indexOf("async function startNewRun");
+  const showTrainerIndex = gameSource.indexOf("async function showTrainerSelect()");
+  assert(persistenceIndex !== -1, "game.js should have run persistence section");
+  assert(startNewRunIndex !== -1, "game.js should define startNewRun");
+  assert(showTrainerIndex !== -1, "game.js should define showTrainerSelect after startNewRun");
+
+  const persistenceBlock = gameSource.slice(persistenceIndex, initGameIndex);
+  const startNewRunBlock = gameSource.slice(startNewRunIndex, showTrainerIndex);
+
+  assert(persistenceBlock.includes("function createRunId()"), "run persistence should define createRunId");
+  assert(persistenceBlock.includes("crypto.randomUUID"), "createRunId should prefer crypto.randomUUID when available");
+  assert(persistenceBlock.includes("function createEmptyRunLedger()"), "run persistence should define createEmptyRunLedger");
+  assert(persistenceBlock.includes("seenProfileIds: []"), "empty ledger should include seenProfileIds");
+  assert(persistenceBlock.includes("signedProfileIds: []"), "empty ledger should include signedProfileIds");
+  assert(persistenceBlock.includes("duplicateSignProfileIds: []"), "empty ledger should include duplicateSignProfileIds");
+  assert(persistenceBlock.includes("state = normalizeRunIdentity(saved, { assignRunId: true });"), "loadRun should normalize older saves before restoring state");
+  assert(startNewRunBlock.includes("normalizeRunIdentity({"), "startNewRun should normalize new run state");
+  assert(startNewRunBlock.includes("{ assignRunId: true }"), "new runs should receive a runId");
+});
+
 await runTest("football catch node is wired to scout recruitment flow", () => {
   const gameSource = readText("js/game.js");
   const doCatchIndex = gameSource.indexOf("async function doCatchNode(node)");

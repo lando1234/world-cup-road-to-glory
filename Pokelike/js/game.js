@@ -34,6 +34,42 @@ let state = {
 
 // ---- Run persistence ----
 
+function createRunId() {
+  if (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function') {
+    return crypto.randomUUID();
+  }
+  return `run-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 10)}`;
+}
+
+function createEmptyRunLedger() {
+  return {
+    seenProfileIds: [],
+    signedProfileIds: [],
+    duplicateSignProfileIds: [],
+  };
+}
+
+function normalizeRunLedger(ledger) {
+  const normalized = createEmptyRunLedger();
+  if (!ledger || typeof ledger !== 'object' || Array.isArray(ledger)) {
+    return normalized;
+  }
+  for (const key of Object.keys(normalized)) {
+    if (Array.isArray(ledger[key])) normalized[key] = [...ledger[key]];
+  }
+  if (Number.isFinite(Number(ledger.scoutCount))) normalized.scoutCount = Number(ledger.scoutCount);
+  if (Number.isFinite(Number(ledger.battleCount))) normalized.battleCount = Number(ledger.battleCount);
+  if (Array.isArray(ledger.scoutReportsSeen)) normalized.scoutReportsSeen = [...ledger.scoutReportsSeen];
+  return normalized;
+}
+
+function normalizeRunIdentity(runState, { assignRunId = false } = {}) {
+  if (!runState || typeof runState !== 'object') return runState;
+  if (!runState.runId && assignRunId) runState.runId = createRunId();
+  runState.ledger = normalizeRunLedger(runState.ledger);
+  return runState;
+}
+
 function saveRun() {
   try {
     const saved = { ...state, currentNodeId: state.currentNode?.id || null, currentNode: null, rngSeed: getRngSeed() };
@@ -47,7 +83,7 @@ function loadRun() {
     if (!raw) return false;
     const saved = JSON.parse(raw);
     if (saved.rngSeed) seedRng(saved.rngSeed);
-    state = saved;
+    state = normalizeRunIdentity(saved, { assignRunId: true });
     state.currentNode = saved.currentNodeId ? (state.map?.nodes?.[saved.currentNodeId] || null) : null;
     delete state.currentNodeId;
     delete state.rngSeed;
@@ -312,7 +348,7 @@ async function startNewRun(nuzlockeMode = false, gen2Mode = false, forcedStarter
   const savedTrainer = localStorage.getItem('poke_trainer') || null;
   const seed = (Date.now() ^ (Math.random() * 0x100000000 | 0)) >>> 0;
   seedRng(seed);
-  state = { currentMap: 0, currentNode: null, team: [], items: [], badges: 0, map: null, eliteIndex: 0, trainer: savedTrainer || 'boy', starterSpeciesId: null, maxTeamSize: 1, nuzlockeMode, gen2Mode, silverBeaten: 0, usedPokecenter: false, pickedUpItem: false, runSeed: seed };
+  state = normalizeRunIdentity({ currentMap: 0, currentNode: null, team: [], items: [], badges: 0, map: null, eliteIndex: 0, trainer: savedTrainer || 'boy', starterSpeciesId: null, maxTeamSize: 1, nuzlockeMode, gen2Mode, silverBeaten: 0, usedPokecenter: false, pickedUpItem: false, runSeed: seed }, { assignRunId: true });
   if (forcedStarterId && savedTrainer) {
     await pickForcedStarter(forcedStarterId);
     return;
