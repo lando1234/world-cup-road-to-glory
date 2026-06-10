@@ -1136,6 +1136,20 @@ h1, h2, .pixel-font {
 /* ---- Badge Screen ---- */
 #badge-screen { align-items: center; justify-content: center; gap: 20px; text-align: center; }
 .badge-icon { width: 96px; height: 96px; image-rendering: pixelated; animation: bounce 0.5s ease-in-out infinite alternate; }
+.badge-stamp-flag {
+  width: 96px;
+  height: 96px;
+  border: 2px solid var(--gold);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 215, 0, 0.08);
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.18);
+  font-size: 48px;
+  line-height: 1;
+  animation: bounce 0.5s ease-in-out infinite alternate;
+}
 @keyframes bounce { from { transform: scale(1); } to { transform: scale(1.1); } }
 #badge-msg { font-family: 'Press Start 2P', monospace; font-size: clamp(10px,2.5vw,14px); color: var(--gold); }
 #badge-leader { font-size: 16px; color: var(--text); }
@@ -3222,4 +3236,3 @@ body.dark-mode #btn-hard-run:hover { box-shadow: 4px 4px 0 0 #cc2222; }
   font-family: 'Press Start 2P', monospace;
   letter-spacing: 0;
 }
-

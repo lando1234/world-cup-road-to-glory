@@ -269,6 +269,39 @@ await runTest("football slice complete interrupts post-third-stamp map advance",
   assert(!htmlSource.slice(htmlSource.indexOf('id="slice-complete-screen"'), htmlSource.indexOf("<!-- ===== WIN SCREEN ===== -->")).includes("Elite Four"), "slice complete screen must not use Elite Four copy");
 });
 
+await runTest("football stamp ceremony uses host city stamp presentation", () => {
+  const gameSource = readText("js/game.js");
+  const htmlSource = readText("index.html");
+  const cssSource = readText("css/style.css");
+  const flagIndex = gameSource.indexOf("function flagEmojiFromCountryCode(countryCode)");
+  const badgeIndex = gameSource.indexOf("function showBadgeScreen(leader)");
+  const settleIndex = gameSource.indexOf("function settleRunLite(runSnapshot)");
+
+  assert(flagIndex !== -1, "game.js should define flagEmojiFromCountryCode");
+  assert(badgeIndex !== -1, "game.js should define showBadgeScreen");
+  assert(settleIndex !== -1, "game.js should define settleRunLite after showBadgeScreen");
+
+  const badgeBlock = gameSource.slice(badgeIndex, settleIndex);
+  const footballBranch = badgeBlock.slice(
+    badgeBlock.indexOf("if (isFootballModeEnabled())"),
+    badgeBlock.indexOf("} else {")
+  );
+  assert(footballBranch.includes("leader.badge"), "football ceremony should use stamp display name");
+  assert(footballBranch.includes("leader.hostCity"), "football ceremony should display host city");
+  assert(footballBranch.includes("leader.nation"), "football ceremony should use nation metadata");
+  assert(footballBranch.includes("Stamps:"), "football ceremony should label progress as stamps");
+  assert(footballBranch.includes("badgeImg.style.display = 'none'"), "football ceremony should hide legacy badge image");
+  assert(footballBranch.includes("stampFlag.style.display = 'flex'"), "football ceremony should show stamp flag");
+  assert(!footballBranch.includes("sprites/badges"), "football ceremony must not load badge sprites");
+
+  const mapSource = gameSource.slice(gameSource.indexOf("function showMapScreen()"), badgeIndex);
+  const footballHudBranch = mapSource.slice(mapSource.indexOf("} else if (isFootballModeEnabled())"), mapSource.indexOf("} else {", mapSource.indexOf("} else if (isFootballModeEnabled())")));
+  assert(footballHudBranch.includes("flagEmojiFromCountryCode"), "football HUD should use nation flag for earned stamps");
+  assert(!footballHudBranch.includes("<img"), "football HUD should not render badge sprite images");
+  assert(htmlSource.includes('id="badge-stamp-flag"'), "index.html should include badge-stamp-flag element");
+  assert(cssSource.includes(".badge-stamp-flag"), "style.css should define badge-stamp-flag styles");
+});
+
 await runTest("feature gates default to football slice mode", () => {
   const features = context.window.FEATURES;
   assert(features.footballMode === true, "FEATURES.footballMode must be true");

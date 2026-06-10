@@ -123,6 +123,15 @@ function isFootballSliceComplete() {
   return isFootballModeEnabled() && state.badges >= getFootballSliceStampTarget();
 }
 
+function flagEmojiFromCountryCode(countryCode) {
+  const code = String(countryCode || '').trim().toUpperCase();
+  if (!/^[A-Z]{2,3}$/.test(code)) return '★';
+  const twoLetterCode = code.slice(0, 2);
+  return [...twoLetterCode]
+    .map(char => String.fromCodePoint(0x1F1E6 + char.charCodeAt(0) - 65))
+    .join('');
+}
+
 function getTitleBootStatusEl() {
   let el = document.getElementById('title-boot-status');
   if (el) return el;
@@ -672,8 +681,9 @@ function showMapScreen() {
       const earned = i < state.badges;
       const boss = window.DomainBosses?.getHostCity(i);
       const label = boss?.stamp?.displayName || `Host City ${i + 1} Stamp`;
+      const flag = flagEmojiFromCountryCode(boss?.nation);
       return earned
-        ? `<img src="${BASE}${i + 1}.png" alt="${label}" title="${label}" class="badge-icon-img">`
+        ? `<span class="badge-icon-img" role="img" aria-label="${label}" title="${label}">${flag}</span>`
         : `<span class="badge-icon-empty" title="${label}"></span>`;
     }).join('');
   } else {
@@ -2674,16 +2684,46 @@ function runBattleScreen(enemyTeam, isBoss, onWin, onLose, enemyName = null, ene
 
 function showBadgeScreen(leader) {
   showScreen('badge-screen');
-  document.getElementById('badge-msg').textContent = `You earned the ${leader.badge}!`;
-  document.getElementById('badge-leader').textContent = '';
-  document.getElementById('badge-count-display').textContent = `Badges: ${state.badges}/8`;
+  const badgeMsg = document.getElementById('badge-msg');
+  const badgeLeader = document.getElementById('badge-leader');
+  const badgeCount = document.getElementById('badge-count-display');
   const badgeImg = document.getElementById('badge-icon-img');
-  if (badgeImg) {
-    if (state.gen2Mode) {
-      // Johto sprites are at indices 9-16
-      badgeImg.src = `sprites/badges/${state.badges + 8}.png`;
-    } else {
-      badgeImg.src = `sprites/badges/${state.badges}.png`;
+  const stampFlag = document.getElementById('badge-stamp-flag');
+
+  if (isFootballModeEnabled()) {
+    const target = getFootballSliceStampTarget();
+    const flag = flagEmojiFromCountryCode(leader.nation);
+    if (badgeMsg) badgeMsg.textContent = `${leader.badge} earned`;
+    if (badgeLeader) badgeLeader.textContent = `${leader.hostCity} · ${leader.name}`;
+    if (badgeCount) badgeCount.textContent = `Stamps: ${Math.min(state.badges, target)}/${target}`;
+    if (badgeImg) {
+      badgeImg.style.display = 'none';
+      badgeImg.removeAttribute('src');
+      badgeImg.alt = leader.badge || 'City Stamp';
+    }
+    if (stampFlag) {
+      stampFlag.textContent = flag;
+      stampFlag.title = leader.badge || 'City Stamp';
+      stampFlag.setAttribute('aria-label', leader.badge || 'City Stamp');
+      stampFlag.style.display = 'flex';
+    }
+  } else {
+    if (badgeMsg) badgeMsg.textContent = `You earned the ${leader.badge}!`;
+    if (badgeLeader) badgeLeader.textContent = '';
+    if (badgeCount) badgeCount.textContent = `Badges: ${state.badges}/8`;
+    if (stampFlag) {
+      stampFlag.style.display = 'none';
+      stampFlag.textContent = '';
+      stampFlag.removeAttribute('aria-label');
+    }
+    if (badgeImg) {
+      badgeImg.style.display = '';
+      if (state.gen2Mode) {
+        // Johto sprites are at indices 9-16
+        badgeImg.src = `sprites/badges/${state.badges + 8}.png`;
+      } else {
+        badgeImg.src = `sprites/badges/${state.badges}.png`;
+      }
     }
   }
 
