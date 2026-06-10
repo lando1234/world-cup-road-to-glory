@@ -5,7 +5,7 @@
 **Inputs:** [001](./001-codebase-discovery.md), [006B](./006B-technical-blueprint-revised.md), [007](./007-football-data-pack.md), [008](./008-meta-progression.md), [009](./009-gameplay-loop-node-system.md)  
 **Version:** v1.1  
 **Date:** 2026-06-10  
-**Last sync:** `main` @ this commit — Run identity ledger shape (T22)
+**Last sync:** `main` @ this commit — Run save identity persistence (T23)
 **Assumptions:** Single developer · existing Pokelike vanilla JS · browser game · no React · no backend changes
 
 ---
@@ -14,9 +14,9 @@
 
 | Metric | Count |
 |--------|------:|
-| **Done** | 35 |
+| **Done** | 36 |
 | **Partial** | 7 |
-| **Not started** | 10 |
+| **Not started** | 9 |
 | **Total tickets** | 52 |
 
 **Legend:** ✅ Done · 🟡 Partial (shipped subset; acceptance not fully met) · ⬜ Not started
@@ -49,7 +49,8 @@ Before continuing gameplay implementation, T0 establishes the repeatable validat
 | T19-001 | ✅ | `DomainSave.settleRunLite()` + `applyAccountPatch()` feed settlement modal before returning to title — `959079b` |
 | T20-001 | ✅ | Game-over settlement path documents and validates patch-before-clear ordering — `2525cc8` |
 | T21-001 | ✅ | Cloud save stays disabled for football Phase 1, with no `game_album` cloud key or disabled-mode fetch — `387895a` |
-| T22-001 | ✅ | New and loaded runs normalize `runId` plus minimal recruitment ledger shape — this commit |
+| T22-001 | ✅ | New and loaded runs normalize `runId` plus minimal recruitment ledger shape — `fd70d35` |
+| T23-001 | ✅ | Current-run persistence preserves `runId` and `ledger` through `poke_current_run` save/load — this commit |
 
 **Per-task Definition of Done from this point forward:**
 
@@ -117,7 +118,7 @@ Domain tasks should extend `Pokelike/scripts/validate-football-domain.mjs` inste
 | P1-039 | 🟡 | Battle **field** copy only (Transfer Target, Form N) — `a098829`; **battle log strings untouched** |
 | P1-040 | 🟡 | Portrait fallback in cards + battle — `a098829`; **T0 silhouette spec incomplete** |
 | P1-041 | ✅ | `initGame()` calls `migrateSaveV2toV3()` before Continue Run reads — `011a3fa` |
-| P1-042 | ⬜ | `runId` / `ledger` not in save shape |
+| P1-042 | ✅ | `saveRun()` serializes full state with `runId`/`ledger`; `loadRun()` restores and normalizes them — this commit |
 | P1-043 | ⬜ | `applyAccountPatch()` not implemented |
 | P1-044 | ✅ | Football game over runs settlement/applyAccountPatch before `clearSavedRun()` with order invariant test — `2525cc8` |
 | P1-045 | ✅ | Cloud save remains feature-gated off; validation proves no `game_album` cloud key, no disabled-mode fetch, no boot auth modal — this commit |
@@ -161,11 +162,11 @@ P1-027  → domain/album.js API
 P1-028  → migrateSaveV2toV3
 P1-041  → call migration on initGame boot
 P1-020  → runId + ledger on state init ✅
-P1-042  → persist ledger in poke_current_run
+P1-042  → persist ledger in poke_current_run ✅
 P1-043  → applyAccountPatch
 ```
 
-**Current:** P1-013, P1-027, P1-028, P1-041, P1-016, P1-017, P1-018, P1-019, P1-020, P1-022, P1-023, P1-024, P1-025, P1-026, P1-029, P1-030, P1-031, P1-036, P1-044, and P1-045 complete. P1-035 still has a minimal shell and needs full product presentation. Next implementation step is P1-042 save-shape verification, then P1-046 run loop QA and release checklist alignment.
+**Current:** P1-013, P1-027, P1-028, P1-041, P1-016, P1-017, P1-018, P1-019, P1-020, P1-022, P1-023, P1-024, P1-025, P1-026, P1-029, P1-030, P1-031, P1-036, P1-042, P1-044, and P1-045 complete. P1-035 still has a minimal shell and needs full product presentation. Next implementation step is P1-043 patch applier hardening, then P1-046 run loop QA and release checklist alignment.
 
 **Exit:** `game_album` read/write path exists; mid-run reload preserves ledger shape.
 

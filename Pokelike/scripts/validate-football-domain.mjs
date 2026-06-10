@@ -186,6 +186,26 @@ await runTest("new and loaded runs carry run identity ledger shape", () => {
   assert(startNewRunBlock.includes("{ assignRunId: true }"), "new runs should receive a runId");
 });
 
+await runTest("run identity ledger persists through current run save shape", () => {
+  const gameSource = readText("js/game.js");
+  const saveRunIndex = gameSource.indexOf("function saveRun()");
+  const loadRunIndex = gameSource.indexOf("function loadRun()");
+  const clearRunIndex = gameSource.indexOf("function clearSavedRun()");
+  assert(saveRunIndex !== -1, "game.js should define saveRun");
+  assert(loadRunIndex !== -1, "game.js should define loadRun");
+  assert(clearRunIndex !== -1, "game.js should define clearSavedRun");
+
+  const saveRunBlock = gameSource.slice(saveRunIndex, loadRunIndex);
+  const loadRunBlock = gameSource.slice(loadRunIndex, clearRunIndex);
+
+  assert(saveRunBlock.includes("const saved = { ...state,"), "saveRun should serialize the full state object");
+  assert(!saveRunBlock.includes("delete saved.runId"), "saveRun must not strip runId");
+  assert(!saveRunBlock.includes("delete saved.ledger"), "saveRun must not strip ledger");
+  assert(loadRunBlock.includes("state = normalizeRunIdentity(saved, { assignRunId: true });"), "loadRun should restore and normalize saved run identity");
+  assert(loadRunBlock.includes("delete state.currentNodeId"), "loadRun should keep transient currentNodeId cleanup");
+  assert(loadRunBlock.includes("delete state.rngSeed"), "loadRun should keep transient rngSeed cleanup");
+});
+
 await runTest("football catch node is wired to scout recruitment flow", () => {
   const gameSource = readText("js/game.js");
   const doCatchIndex = gameSource.indexOf("async function doCatchNode(node)");

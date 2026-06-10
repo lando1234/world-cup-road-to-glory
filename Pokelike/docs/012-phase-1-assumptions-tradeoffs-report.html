@@ -1083,6 +1083,33 @@
         <li class="task-entry">
           <header>
             <div class="task-title">
+              <h3>T23 — Run save identity persistence</h3>
+              <span class="pill">Status: implemented</span>
+              <span class="pill">Review: PASS</span>
+            </div>
+          </header>
+          <div class="task-grid">
+            <div class="task-note">
+              <strong>Assumptions</strong>
+              <p>The active run save should continue to use the existing <code>poke_current_run</code> key during Phase 1. New neutral save keys wait for the larger migration.</p>
+            </div>
+            <div class="task-note">
+              <strong>Tradeoffs</strong>
+              <p>Because <code>saveRun()</code> serializes full <code>state</code>, preserving <code>runId</code> and <code>ledger</code> does not need custom serialization code. The risk is accidental future filtering, so the guard lives in validation.</p>
+            </div>
+            <div class="task-note">
+              <strong>Design Decisions</strong>
+              <p>The validation harness now checks that <code>saveRun()</code> keeps full-state serialization and does not strip <code>runId</code> or <code>ledger</code>, while <code>loadRun()</code> keeps transient cleanup for <code>currentNodeId</code> and <code>rngSeed</code>.</p>
+            </div>
+            <div class="task-note">
+              <strong>Risks / Follow-up</strong>
+              <p>Manual reload QA should still confirm that a mid-run scout signing survives browser reload in the visible album and settlement summary.</p>
+            </div>
+          </div>
+        </li>
+        <li class="task-entry">
+          <header>
+            <div class="task-title">
               <h3>P1-001 — Create <code>domain/features.js</code> with Phase 1 flags</h3>
               <span class="pill">Status: implemented</span>
             </div>
@@ -1617,7 +1644,7 @@
     </section>
 
     <footer>
-      Generated for the Pokelike World Cup Road to Glory vertical slice. Last updated 2026-06-10 — T22 Run identity ledger shape, T21 Cloud save suppression gate, T20 Game-over settlement order invariant, T19 Settlement lite domain API and modal, T18 Football dex facade album routing, T17 Album layout domain loader, T16 World Cup Album modal, T15 Football map weights and question routing, T14 City Stamp ceremony reskin, T13 Slice-complete trigger and minimal completion screen, T12 Phase 1 map cap and Host City HUD wiring, T11 Host City boss gameplay wiring, T10 Scout Report gameplay wiring, T9 recruitment contract API, T8 Map 0 forced scout override, T7 scout pool foundation, T6 boot-time migration wiring, T5 save v3 album migration, T4 DomainAlbum persistence API, T3 album layout data, T2 host city boss catalog, T1 boot and cloud gates, Node/npm automation baseline, T0 validation protocol, one-task-one-commit rule, visual-friction registry, bridges registry, migration guardrails, TheSportsDB release-risk notes.
+      Generated for the Pokelike World Cup Road to Glory vertical slice. Last updated 2026-06-10 — T23 Run save identity persistence, T22 Run identity ledger shape, T21 Cloud save suppression gate, T20 Game-over settlement order invariant, T19 Settlement lite domain API and modal, T18 Football dex facade album routing, T17 Album layout domain loader, T16 World Cup Album modal, T15 Football map weights and question routing, T14 City Stamp ceremony reskin, T13 Slice-complete trigger and minimal completion screen, T12 Phase 1 map cap and Host City HUD wiring, T11 Host City boss gameplay wiring, T10 Scout Report gameplay wiring, T9 recruitment contract API, T8 Map 0 forced scout override, T7 scout pool foundation, T6 boot-time migration wiring, T5 save v3 album migration, T4 DomainAlbum persistence API, T3 album layout data, T2 host city boss catalog, T1 boot and cloud gates, Node/npm automation baseline, T0 validation protocol, one-task-one-commit rule, visual-friction registry, bridges registry, migration guardrails, TheSportsDB release-risk notes.
     </footer>
   </main>
 </body>
