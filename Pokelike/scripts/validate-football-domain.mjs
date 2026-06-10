@@ -741,6 +741,7 @@ await runTest("settlement modal is wired before run clear", () => {
   const settleBlock = gameSource.slice(settleIndex, sliceIndex);
   assert(settleBlock.includes("DomainSave?.settleRunLite"), "game settlement helper should call DomainSave.settleRunLite");
   assert(settleBlock.includes("DomainSave?.applyAccountPatch"), "game settlement helper should call DomainSave.applyAccountPatch");
+  assert(settleBlock.includes("Order invariant"), "settlement helper should document patch-before-clear invariant");
   assert(settleBlock.indexOf("applyAccountPatch") < settleBlock.indexOf("clearSavedRun"), "account patch should apply before clearSavedRun");
   const gameOverBlock = gameSource.slice(gameOverIndex, gameSource.indexOf("function showWinScreen"));
   assert(gameOverBlock.includes("if (isFootballModeEnabled())"), "football game over should use settlement flow");

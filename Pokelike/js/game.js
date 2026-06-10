@@ -2770,6 +2770,8 @@ function createRunSnapshot() {
 
 function settleRunAndReturnToTitle(runSnapshot = createRunSnapshot()) {
   const settlement = window.DomainSave?.settleRunLite?.(runSnapshot) || { patch: {}, summary: {} };
+  // Order invariant: account patch must persist before the active run snapshot
+  // is cleared, because that snapshot is the settlement source.
   window.DomainSave?.applyAccountPatch?.(settlement.patch);
   state.lastSettlementSummary = settlement.summary;
   if (typeof showSettlementLiteModal === 'function') {

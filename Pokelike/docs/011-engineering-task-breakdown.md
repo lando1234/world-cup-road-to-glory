@@ -5,7 +5,7 @@
 **Inputs:** [001](./001-codebase-discovery.md), [006B](./006B-technical-blueprint-revised.md), [007](./007-football-data-pack.md), [008](./008-meta-progression.md), [009](./009-gameplay-loop-node-system.md)  
 **Version:** v1.1  
 **Date:** 2026-06-10  
-**Last sync:** `main` @ this commit — Settlement lite domain API and modal (T19)
+**Last sync:** `main` @ this commit — Game-over settlement order invariant (T20)
 **Assumptions:** Single developer · existing Pokelike vanilla JS · browser game · no React · no backend changes
 
 ---
@@ -14,9 +14,9 @@
 
 | Metric | Count |
 |--------|------:|
-| **Done** | 32 |
+| **Done** | 33 |
 | **Partial** | 7 |
-| **Not started** | 13 |
+| **Not started** | 12 |
 | **Total tickets** | 52 |
 
 **Legend:** ✅ Done · 🟡 Partial (shipped subset; acceptance not fully met) · ⬜ Not started
@@ -46,7 +46,8 @@ Before continuing gameplay implementation, T0 establishes the repeatable validat
 | T16-001 | ✅ | Football collection opens World Cup Album modal with layout pages and unknown/seen/signed states — `f20e5d4` |
 | T17-001 | ✅ | `DomainAlbum` owns album layout fetch/cache plus ordered slot profile IDs — `83e8b8a` |
 | T18-001 | ✅ | Football `markPokedexSeen/Caught` facades route to `DomainAlbum` before `poke_dex` writes — `2c9931a` |
-| T19-001 | ✅ | `DomainSave.settleRunLite()` + `applyAccountPatch()` feed settlement modal before returning to title — this commit |
+| T19-001 | ✅ | `DomainSave.settleRunLite()` + `applyAccountPatch()` feed settlement modal before returning to title — `959079b` |
+| T20-001 | ✅ | Game-over settlement path documents and validates patch-before-clear ordering — this commit |
 
 **Per-task Definition of Done from this point forward:**
 
@@ -108,7 +109,7 @@ Domain tasks should extend `Pokelike/scripts/validate-football-domain.mjs` inste
 | P1-033 | ⬜ | Catch screen still Pokémon UX |
 | P1-034 | ⬜ | Swap screen not reskinned |
 | P1-035 | 🟡 | Minimal `slice-complete-screen` shell exists — this commit; full squad snapshot/album presentation polish pending |
-| P1-036 | ✅ | `DomainSave.settleRunLite()` returns album patch + summary; settlement modal renders on slice complete and football game over — this commit |
+| P1-036 | ✅ | `DomainSave.settleRunLite()` returns album patch + summary; settlement modal renders on slice complete and football game over — `959079b` |
 | P1-037 | 🟡 | `renderPlayerCard()` — `edabaa7`; **not all screens / stat labels unified** |
 | P1-038 | 🟡 | Title reskin + hide deferred modes — `ec5e717`; **map HUD still opens Pokédex modal** |
 | P1-039 | 🟡 | Battle **field** copy only (Transfer Target, Form N) — `a098829`; **battle log strings untouched** |
@@ -116,7 +117,7 @@ Domain tasks should extend `Pokelike/scripts/validate-football-domain.mjs` inste
 | P1-041 | ✅ | `initGame()` calls `migrateSaveV2toV3()` before Continue Run reads — `011a3fa` |
 | P1-042 | ⬜ | `runId` / `ledger` not in save shape |
 | P1-043 | ⬜ | `applyAccountPatch()` not implemented |
-| P1-044 | ⬜ | Game over settlement order not wired |
+| P1-044 | ✅ | Football game over runs settlement/applyAccountPatch before `clearSavedRun()` with order invariant test — this commit |
 | P1-045 | ⬜ | Cloud save suppress incomplete |
 | P1-046 | ⬜ | QA — happy path |
 | P1-047 | ⬜ | QA — album persistence |
@@ -162,7 +163,7 @@ P1-042  → persist ledger in poke_current_run
 P1-043  → applyAccountPatch
 ```
 
-**Current:** P1-013, P1-027, P1-028, P1-041, P1-016, P1-017, P1-018, P1-019, P1-022, P1-023, P1-024, P1-025, P1-026, P1-029, P1-030, P1-031, and P1-036 complete. P1-035 still has a minimal shell and needs full product presentation. Next implementation step is P1-044 game-over settlement invariant audit.
+**Current:** P1-013, P1-027, P1-028, P1-041, P1-016, P1-017, P1-018, P1-019, P1-022, P1-023, P1-024, P1-025, P1-026, P1-029, P1-030, P1-031, P1-036, and P1-044 complete. P1-035 still has a minimal shell and needs full product presentation. Next implementation step is P1-046 run loop QA and release checklist alignment.
 
 **Exit:** `game_album` read/write path exists; mid-run reload preserves ledger shape.
 
@@ -190,7 +191,7 @@ P1-025  → City Stamp ceremony ✅
 P1-026  → football node weights + GAME_THEME tooltips ✅
 P1-035  → slice-complete screen
 P1-036  → settleRunLite + summary modal
-P1-044  → game over settlement before clearSavedRun
+P1-044  → game over settlement before clearSavedRun ✅
 P1-045  → cloud save suppress (finish P1-006 cloud slice)
 ```
 
@@ -1573,7 +1574,7 @@ P1-001 → P1-002 → P1-003 → P1-004 → P1-005 → P1-007 → P1-008 → P1-
 ### Remaining critical spine (from current state)
 
 ```
-P1-044 → P1-046 → P1-052
+P1-046 → P1-052
 ```
 
 ### Parallelizable Tasks
@@ -1656,7 +1657,7 @@ These can run concurrently with critical path segments when a second pass or con
 - [ ] `game_album` survives page reload and second run
 - [x] Album modal shows seen/signed states for slice pages
 - [x] `migrateSaveV2toV3` idempotent; `poke_dex` not written in football runs
-- [ ] Game over settlement applies album patch before run clear
+- [x] Game over settlement applies album patch before run clear
 
 **Blocked by:** Milestone 2 + P1-028, P1-029, P1-030, P1-036, P1-041, P1-043, P1-044
 
