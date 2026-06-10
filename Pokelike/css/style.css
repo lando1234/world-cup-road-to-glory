@@ -519,6 +519,36 @@ h1, h2, .pixel-font {
   text-align: left;
   margin-bottom: -4px;
 }
+.poke-card.player-card .player-tier-bar {
+  width: 100%;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 3px 5px;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 7px;
+  text-align: center;
+  text-transform: uppercase;
+}
+.poke-card.player-card .player-tier-elite { color: var(--gold); }
+.poke-card.player-card .player-tier-rare { color: var(--blue); }
+.player-stat-grid {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 4px;
+}
+.player-stat-grid div {
+  display: flex;
+  justify-content: space-between;
+  gap: 4px;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  padding: 3px 4px;
+  font-size: 7px;
+  line-height: 1.4;
+}
+.player-stat-grid span { color: var(--text-dim); }
+.player-stat-grid strong { color: var(--text); }
 .poke-card.player-card .player-styles .style-chip {
   font-size: 6px;
   padding: 2px 4px;

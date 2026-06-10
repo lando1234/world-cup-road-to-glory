@@ -194,6 +194,18 @@ function renderPlayerCard(instance, onClick, selected) {
   const currentHp = instance.currentHp ?? instance.maxHp ?? 0;
   const maxHp = Math.max(1, instance.maxHp ?? 1);
   const fallbackLabel = nation || String(instance.profileId ?? instance.speciesId ?? '?');
+  const stats = profile?.baseStats || instance.baseStats || {};
+  const vision = Math.round(((stats.special ?? 0) + (stats.spdef ?? 0)) / 2);
+  const statRows = [
+    ['Stamina', stats.hp ?? maxHp],
+    ['Power', stats.atk ?? 0],
+    ['Defense', stats.def ?? 0],
+    ['Technique', stats.special ?? 0],
+    ['Vision', vision],
+    ['Pace', stats.speed ?? 0],
+  ];
+  const rarity = profile?.rarity || 'squad';
+  const tierLabel = rarity === 'elite' ? 'Elite' : rarity === 'rare' ? 'Rare' : 'Squad';
 
   const styleHtml = [
     renderStyleChip(profile?.primaryStyle),
@@ -215,9 +227,13 @@ function renderPlayerCard(instance, onClick, selected) {
     <div class="poke-name">${displayName}</div>
     ${metaHtml}
     <div class="poke-level player-form-level">Form ${formLevel}</div>
+    <div class="player-tier-bar player-tier-${rarity}">${tierLabel}</div>
     ${styleHtml ? `<div class="poke-types player-styles">${styleHtml}</div>` : ''}
     <div class="player-stamina-label">Stamina</div>
     <div class="poke-hp">${renderHpBar(currentHp, maxHp)}</div>
+    <div class="player-stat-grid">
+      ${statRows.map(([label, value]) => `<div><span>${label}</span><strong>${value}</strong></div>`).join('')}
+    </div>
   </div>`;
 }
 

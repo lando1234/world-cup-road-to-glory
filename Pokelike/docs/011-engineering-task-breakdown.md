@@ -5,7 +5,7 @@
 **Inputs:** [001](./001-codebase-discovery.md), [006B](./006B-technical-blueprint-revised.md), [007](./007-football-data-pack.md), [008](./008-meta-progression.md), [009](./009-gameplay-loop-node-system.md)  
 **Version:** v1.1  
 **Date:** 2026-06-10  
-**Last sync:** `main` @ this commit — Slice-complete presentation stats (T30)
+**Last sync:** `main` @ this commit — Football player card stat grid (T31)
 **Assumptions:** Single developer · existing Pokelike vanilla JS · browser game · no React · no backend changes
 
 ---
@@ -14,8 +14,8 @@
 
 | Metric | Count |
 |--------|------:|
-| **Done** | 43 |
-| **Partial** | 3 |
+| **Done** | 44 |
+| **Partial** | 2 |
 | **Not started** | 6 |
 | **Total tickets** | 52 |
 
@@ -57,7 +57,8 @@ Before continuing gameplay implementation, T0 establishes the repeatable validat
 | T27-001 | ✅ | Football chrome shows Album controls and hides deferred Achievements/Hall surfaces — `5ae457b` |
 | T28-001 | ✅ | Football visual battle log uses `GAME_THEME.battle.faint` while leaving `battle.js` math untouched — `efc947a` |
 | T29-001 | ✅ | Marquee Signing screen exposes collapsible Core Six style triangle guidance — `e038ae2` |
-| T30-001 | ✅ | Slice-complete screen shows squad snapshot, stamp progress, and slice album percentage — this commit |
+| T30-001 | ✅ | Slice-complete screen shows squad snapshot, stamp progress, and slice album percentage — `590cceb` |
+| T31-001 | ✅ | Football player cards render tier bar plus Stamina/Power/Defense/Technique/Vision/Pace grid — this commit |
 
 **Per-task Definition of Done from this point forward:**
 
@@ -120,7 +121,7 @@ Domain tasks should extend `Pokelike/scripts/validate-football-domain.mjs` inste
 | P1-034 | ✅ | Football full-squad flow uses Squad Registration copy, decline contract action, and DomainRecruit force-add — this commit |
 | P1-035 | ✅ | Slice-complete screen shows squad snapshot, 3-stamp progress, album signed count, and slice album percentage — this commit |
 | P1-036 | ✅ | `DomainSave.settleRunLite()` returns album patch + summary; settlement modal renders on slice complete and football game over — `959079b` |
-| P1-037 | 🟡 | `renderPlayerCard()` — `edabaa7`; **not all screens / stat labels unified** |
+| P1-037 | ✅ | `renderPlayerCard()` now drives football screens with portrait, styles, tier bar, and football stat labels — this commit |
 | P1-038 | ✅ | Title/map chrome shows Album controls, hides deferred Achievements/Hall/cloud/modes, and keeps Settings visible — this commit |
 | P1-039 | ✅ | Football visual battle log uses themed exhausted copy; battle engine remains theme-agnostic — this commit |
 | P1-040 | 🟡 | Portrait fallback in cards + battle — `a098829`; **T0 silhouette spec incomplete** |
@@ -210,7 +211,7 @@ P1-045  → cloud save suppress (finish P1-006 cloud slice) ✅
 ### Wave 5 — UI polish (close partials)
 
 ```
-P1-037  (finish) → unify all card call sites + football stat labels
+P1-037  (finish) → unify all card call sites + football stat labels ✅
 P1-038  (finish) → map HUD Album button + hide remaining Pokémon chrome ✅
 P1-039  (finish) → battle log faint/win/loss strings ✅
 P1-040  (finish) → T0 silhouette pipeline everywhere

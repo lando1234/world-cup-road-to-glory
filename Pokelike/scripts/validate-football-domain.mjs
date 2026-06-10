@@ -457,6 +457,19 @@ await runTest("marquee signing screen exposes core six style triangle", () => {
   assert(cssSource.includes(".core-six-triangle-grid"), "style.css should define Core Six triangle grid");
 });
 
+await runTest("football player cards expose tier and football stat labels", () => {
+  const uiSource = readText("js/ui.js");
+  const cssSource = readText("css/style.css");
+
+  assert(uiSource.includes("function renderPlayerCard"), "ui.js should define renderPlayerCard");
+  assert(uiSource.includes("player-tier-bar"), "player cards should render a skill tier bar");
+  for (const label of ["Stamina", "Power", "Defense", "Technique", "Vision", "Pace"]) {
+    assert(uiSource.includes(label), `player cards should render ${label} stat label`);
+  }
+  assert(cssSource.includes(".player-stat-grid"), "style.css should define football stat grid");
+  assert(cssSource.includes(".poke-card.player-card .player-tier-bar"), "style.css should define player tier bar");
+});
+
 await runTest("combat adapter creates browser-compatible football instances", () => {
   const instance = context.window.DomainCombatAdapter.createPlayerInstance(2, 5, { moveTier: 1 });
   assert(instance.profileId === 2, "instance.profileId must be 2");

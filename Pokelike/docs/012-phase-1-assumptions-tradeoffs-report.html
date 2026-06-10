@@ -1299,6 +1299,33 @@
         <li class="task-entry">
           <header>
             <div class="task-title">
+              <h3>T31 — Football player card stat grid</h3>
+              <span class="pill">Status: implemented</span>
+              <span class="pill">Review: PASS</span>
+            </div>
+          </header>
+          <div class="task-grid">
+            <div class="task-note">
+              <strong>Assumptions</strong>
+              <p>Phase 1 can keep legacy stat storage names internally while rendering football-facing labels in the shared player card.</p>
+            </div>
+            <div class="task-note">
+              <strong>Tradeoffs</strong>
+              <p>The card maps existing base stats to Stamina, Power, Defense, Technique, Vision, and Pace without changing combat math or save shape.</p>
+            </div>
+            <div class="task-note">
+              <strong>Design Decisions</strong>
+              <p><code>renderPlayerCard()</code> now includes a rarity tier bar and compact stat grid that all football card call sites inherit: marquee, scout, swap, battle-adjacent previews, and slice complete.</p>
+            </div>
+            <div class="task-note">
+              <strong>Risks / Follow-up</strong>
+              <p>Future balance work can tune labels and stat derivation; Phase 1 now removes legacy stat labels from the football card surface.</p>
+            </div>
+          </div>
+        </li>
+        <li class="task-entry">
+          <header>
+            <div class="task-title">
               <h3>P1-001 — Create <code>domain/features.js</code> with Phase 1 flags</h3>
               <span class="pill">Status: implemented</span>
             </div>
@@ -1833,7 +1860,7 @@
     </section>
 
     <footer>
-      Generated for the Pokelike World Cup Road to Glory vertical slice. Last updated 2026-06-10 — T30 Slice-complete presentation stats, T29 Core Six marquee tooltip, T28 Themed football faint log, T27 Football chrome album controls, T26 Squad Registration swap UX, T25 Scout Report contract UX, T24 Monotonic account patch applier, T23 Run save identity persistence, T22 Run identity ledger shape, T21 Cloud save suppression gate, T20 Game-over settlement order invariant, T19 Settlement lite domain API and modal, T18 Football dex facade album routing, T17 Album layout domain loader, T16 World Cup Album modal, T15 Football map weights and question routing, T14 City Stamp ceremony reskin, T13 Slice-complete trigger and minimal completion screen, T12 Phase 1 map cap and Host City HUD wiring, T11 Host City boss gameplay wiring, T10 Scout Report gameplay wiring, T9 recruitment contract API, T8 Map 0 forced scout override, T7 scout pool foundation, T6 boot-time migration wiring, T5 save v3 album migration, T4 DomainAlbum persistence API, T3 album layout data, T2 host city boss catalog, T1 boot and cloud gates, Node/npm automation baseline, T0 validation protocol, one-task-one-commit rule, visual-friction registry, bridges registry, migration guardrails, TheSportsDB release-risk notes.
+      Generated for the Pokelike World Cup Road to Glory vertical slice. Last updated 2026-06-10 — T31 Football player card stat grid, T30 Slice-complete presentation stats, T29 Core Six marquee tooltip, T28 Themed football faint log, T27 Football chrome album controls, T26 Squad Registration swap UX, T25 Scout Report contract UX, T24 Monotonic account patch applier, T23 Run save identity persistence, T22 Run identity ledger shape, T21 Cloud save suppression gate, T20 Game-over settlement order invariant, T19 Settlement lite domain API and modal, T18 Football dex facade album routing, T17 Album layout domain loader, T16 World Cup Album modal, T15 Football map weights and question routing, T14 City Stamp ceremony reskin, T13 Slice-complete trigger and minimal completion screen, T12 Phase 1 map cap and Host City HUD wiring, T11 Host City boss gameplay wiring, T10 Scout Report gameplay wiring, T9 recruitment contract API, T8 Map 0 forced scout override, T7 scout pool foundation, T6 boot-time migration wiring, T5 save v3 album migration, T4 DomainAlbum persistence API, T3 album layout data, T2 host city boss catalog, T1 boot and cloud gates, Node/npm automation baseline, T0 validation protocol, one-task-one-commit rule, visual-friction registry, bridges registry, migration guardrails, TheSportsDB release-risk notes.
     </footer>
   </main>
 </body>
