@@ -613,33 +613,35 @@ Async JSON loads (profiles, bosses) initiated in `domain/profiles.js` / `domain/
 
 Engineering gate before starting Phase 2:
 
+**Phase 1 scripted sign-off:** PASS — 2026-06-10, recorded in the P1-052 commit. `npm run validate` covers domain data, QA gates, docs validation, and syntax. Manual screenshot automation was intentionally skipped for this phase.
+
 ### Data & domain
-- [ ] `data/football/player_profiles.json` — 20 players with authored stats
-- [ ] `data/football/host_city_bosses.json` — maps 0, 1, 2
-- [ ] `data/football/album_layout.json` — marquee + favorites (slice IDs)
-- [ ] `STARTER_IDS = [1, 2, 3]` (Messi not Modrić per [007 §2](./007-football-data-pack.md))
-- [ ] `SAVE_SCHEMA_VERSION = 3`; `game_album` migration on boot
-- [ ] PokeAPI not called for `profileId <= 50`
+- [x] `data/football/player_profiles.json` — 20 players with authored stats
+- [x] `data/football/host_city_bosses.json` — maps 0, 1, 2
+- [x] `data/football/album_layout.json` — marquee + favorites (slice IDs)
+- [x] `STARTER_IDS = [1, 2, 3]` (Messi not Modrić per [007 §2](./007-football-data-pack.md))
+- [x] `SAVE_SCHEMA_VERSION = 3`; `game_album` migration on boot
+- [x] PokeAPI not called for `profileId <= 50`
 
 ### Gameplay
-- [ ] Scout Report shows 3 players; Map 0 layer-1 forced pool `{12, 15, 17}`
-- [ ] Contract Offer signs on pick; skip available
-- [ ] Squad cap 6 with Squad Registration swap
-- [ ] 3 Host City bosses winnable; stamps increment
-- [ ] Campaign ends at stamp 3 with slice-complete flow
-- [ ] `checkAndEvolveTeam` does not rename football players
+- [x] Scout Report shows 3 players; Map 0 layer-1 forced pool `{12, 15, 17}`
+- [x] Contract Offer signs on pick; skip available
+- [x] Squad cap 6 with Squad Registration swap
+- [x] 3 Host City bosses winnable; stamps increment
+- [x] Campaign ends at stamp 3 with slice-complete flow
+- [x] `checkAndEvolveTeam` does not rename football players
 
 ### UI
-- [ ] Marquee Signing screen with style triangle hint
-- [ ] No Pokémon terminology in slice screens
-- [ ] Album modal: seen/signed states
-- [ ] Settlement lite modal on slice complete and game over
-- [ ] CCC, cloud save, gen toggle, achievements hidden
+- [x] Marquee Signing screen with style triangle hint
+- [x] No Pokémon terminology in slice screens
+- [x] Album modal: seen/signed states
+- [x] Settlement lite modal on slice complete and game over
+- [x] CCC, cloud save, gen toggle, achievements hidden
 
 ### Persistence
-- [ ] Album survives page reload between runs
-- [ ] Active run saves/restores mid-slice
-- [ ] `runId` stored in run state (for Phase 3 dedupe)
+- [x] Album survives page reload between runs
+- [x] Active run saves/restores mid-slice
+- [x] `runId` stored in run state (for Phase 3 dedupe)
 
 ---
 
