@@ -324,6 +324,11 @@ function applyTitleScreenPresentation() {
   if (collectionBtn) collectionBtn.textContent = copy.collection;
   if (milestonesBtn) milestonesBtn.textContent = copy.milestones;
   if (archiveBtn) archiveBtn.textContent = copy.archive;
+  document.querySelectorAll('button[onclick="openPokedexModal()"]').forEach(btn => {
+    btn.title = copy.isFootball ? window.GAME_THEME.collectionLabel : 'Pokédex';
+    const img = btn.querySelector('img');
+    if (img) img.alt = copy.isFootball ? window.GAME_THEME.collectionLabel : 'Pokédex';
+  });
 
   _titleScreenSetVisible(screen.querySelector('.gen-toggle-wrap'), !copy.hideGenToggle);
   _titleScreenSetVisible(document.getElementById('btn-hard-run'), !copy.hideNuzlocke);
@@ -3718,7 +3723,144 @@ function openAchievementsModal() {
 
 // ---- Pokedex Modal ----
 
+let footballAlbumLayoutCache = null;
+
+function albumEscape(value) {
+  return String(value ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+function albumFlag(countryCode) {
+  if (typeof flagEmojiFromCountryCode === 'function') return flagEmojiFromCountryCode(countryCode);
+  return albumEscape(countryCode || '');
+}
+
+async function loadFootballAlbumLayout() {
+  if (footballAlbumLayoutCache) return footballAlbumLayoutCache;
+  const response = await fetch('data/football/album_layout.json');
+  if (!response.ok) {
+    throw new Error(`Failed to load album_layout.json: ${response.status} ${response.statusText}`);
+  }
+  footballAlbumLayoutCache = await response.json();
+  return footballAlbumLayoutCache;
+}
+
+function renderAlbumSlot(slot) {
+  const profile = window.DomainProfiles?.getProfile?.(slot.profileId);
+  const entryState = window.DomainAlbum?.getEntryState?.(slot.profileId) || 'unknown';
+  const label = albumEscape(slot.label || `Slot ${slot.slot}`);
+
+  if (!profile) {
+    return `<div class="album-card album-card--unknown">
+      <div class="album-slot-label">${label}</div>
+      <div class="album-silhouette">?</div>
+      <div class="album-player-name">???</div>
+    </div>`;
+  }
+
+  const flag = albumFlag(profile.nation);
+  const initial = albumEscape((profile.commonName || profile.displayName || '?').slice(0, 1).toUpperCase());
+  const primaryStyle = window.DomainStyles?.STYLE_LABELS?.[profile.primaryStyle] || profile.primaryStyle;
+  const secondaryStyle = window.DomainStyles?.STYLE_LABELS?.[profile.secondaryStyle] || profile.secondaryStyle;
+  const styleChips = [primaryStyle, secondaryStyle]
+    .filter(Boolean)
+    .map(style => `<span class="album-style-chip">${albumEscape(style)}</span>`)
+    .join('');
+
+  if (entryState === 'signed') {
+    const portrait = albumEscape(profile.portrait || '');
+    const imageHtml = portrait
+      ? `<img class="album-portrait" src="${portrait}" alt="${albumEscape(profile.displayName)}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+         <div class="album-silhouette album-silhouette--fallback" style="display:none;">${flag}</div>`
+      : `<div class="album-silhouette album-silhouette--fallback">${flag}</div>`;
+    return `<div class="album-card album-card--signed">
+      <div class="album-slot-label">${label}</div>
+      ${imageHtml}
+      <div class="album-player-name">${albumEscape(profile.commonName || profile.displayName)}</div>
+      <div class="album-player-meta">${albumEscape(profile.position)} · ${flag}</div>
+      <div class="album-style-row">${styleChips}</div>
+    </div>`;
+  }
+
+  if (entryState === 'seen') {
+    return `<div class="album-card album-card--seen">
+      <div class="album-slot-label">${label}</div>
+      <div class="album-silhouette"><span>${initial}</span></div>
+      <div class="album-player-name">${flag} ${initial}.</div>
+      <div class="album-player-meta">${albumEscape(profile.position)} · seen</div>
+    </div>`;
+  }
+
+  return `<div class="album-card album-card--unknown">
+    <div class="album-slot-label">${label}</div>
+    <div class="album-silhouette">?</div>
+    <div class="album-player-name">???</div>
+    <div class="album-player-meta">Hidden slot</div>
+  </div>`;
+}
+
+async function openAlbumModal(initialPageId = 'marquee') {
+  const existing = document.getElementById('pokedex-modal');
+  if (existing) { existing.remove(); return; }
+
+  await window.DomainProfiles?.initCatalog?.();
+  const layout = await loadFootballAlbumLayout();
+  const pages = Array.isArray(layout.pages) ? layout.pages : [];
+  const initialPage = pages.some(page => page.pageId === initialPageId) ? initialPageId : pages[0]?.pageId;
+  const signedCount = window.DomainAlbum?.countSigned?.() || 0;
+  const totalCount = window.DomainAlbum?.getSliceAlbumProfileIds?.().length || 0;
+
+  const modal = document.createElement('div');
+  modal.id = 'pokedex-modal';
+  modal.innerHTML = `
+    <div class="dex-modal-box album-modal-box">
+      <div class="dex-modal-header album-modal-header">
+        <div class="dex-tabs album-tabs">
+          ${pages.map(page => `<button class="dex-tab album-tab" data-page="${albumEscape(page.pageId)}">${albumEscape(page.title)}</button>`).join('')}
+        </div>
+        <span class="dex-counts" id="album-count-label">${signedCount} / ${totalCount}</span>
+        <button class="ach-modal-close" onclick="document.getElementById('pokedex-modal').remove()">x</button>
+      </div>
+      <div class="album-progress-wrap">
+        <div class="album-progress-bar"><div id="album-progress-fill" style="width:${totalCount ? Math.floor(signedCount / totalCount * 100) : 0}%"></div></div>
+        <span>${albumEscape(layout.volumeTitle || 'World Cup Album')}</span>
+      </div>
+      <div class="album-grid" id="album-grid-content"></div>
+      <div class="album-footer-note">Vol. 1 complete in full campaign</div>
+    </div>`;
+
+  function switchPage(pageId) {
+    const page = pages.find(candidate => candidate.pageId === pageId) || pages[0];
+    if (!page) return;
+    modal.querySelectorAll('.album-tab').forEach(btn => btn.classList.toggle('active', btn.dataset.page === page.pageId));
+    const grid = document.getElementById('album-grid-content');
+    if (grid) {
+      grid.innerHTML = `
+        <div class="album-page-heading">
+          <h3>${albumEscape(page.title)}</h3>
+          <p>${albumEscape(page.description || '')}</p>
+        </div>
+        ${page.slots.map(renderAlbumSlot).join('')}`;
+    }
+  }
+
+  modal.querySelectorAll('.album-tab').forEach(btn => {
+    btn.addEventListener('click', () => switchPage(btn.dataset.page));
+  });
+  modal.addEventListener('click', e => { if (e.target === modal) modal.remove(); });
+  document.body.appendChild(modal);
+  switchPage(initialPage);
+}
+
 async function openPokedexModal(initialTab = 'normal') {
+  if (window.FEATURES?.footballMode === true) {
+    return openAlbumModal(initialTab === 'shiny' ? 'favorites' : 'marquee');
+  }
+
   const existing = document.getElementById('pokedex-modal');
   if (existing) { existing.remove(); return; }
 

@@ -2168,6 +2168,151 @@ h1, h2, .pixel-font {
   color: #7a5800;
 }
 
+/* ---- World Cup Album ---- */
+.album-modal-box {
+  border-color: #2b8f6b;
+  background: #081612;
+}
+.album-modal-header {
+  background: #11684d;
+  border-bottom-color: #063827;
+}
+.album-tabs {
+  flex-wrap: wrap;
+}
+.album-tab {
+  background: #0b3f31;
+  border-color: #0f5b45;
+  color: rgba(255,255,255,0.72);
+}
+.album-tab:hover {
+  background: #12684f;
+  color: #fff;
+}
+.album-tab.active {
+  background: #f2fff9;
+  border-color: #f2fff9;
+  color: #0c5a42;
+}
+.album-progress-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  color: var(--text);
+  font-size: 9px;
+}
+.album-progress-bar {
+  flex: 1;
+  height: 16px;
+  border: 2px solid #0f5b45;
+  background: #061f18;
+  overflow: hidden;
+}
+#album-progress-fill {
+  height: 100%;
+  background: repeating-linear-gradient(60deg, #16a36f 0, #16a36f 14px, #33c990 14px, #33c990 28px);
+}
+.album-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(118px, 1fr));
+  gap: 8px;
+  padding: 10px;
+  overflow-y: auto;
+  background: #06100d;
+}
+.album-page-heading {
+  grid-column: 1 / -1;
+  padding: 4px 2px 6px;
+}
+.album-page-heading h3 {
+  margin: 0 0 4px;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 9px;
+  color: #77e0b5;
+}
+.album-page-heading p {
+  margin: 0;
+  color: var(--text-dim);
+  font-size: 9px;
+}
+.album-card {
+  min-height: 164px;
+  border: 2px solid #194f3d;
+  background: #0d211a;
+  padding: 7px 6px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  text-align: center;
+}
+.album-card--signed {
+  border-color: #27b67e;
+  background: #0c2b20;
+}
+.album-card--seen {
+  border-color: #7b8f2b;
+}
+.album-card--unknown {
+  opacity: 0.72;
+}
+.album-slot-label,
+.album-player-meta,
+.album-footer-note {
+  color: var(--text-dim);
+  font-size: 8px;
+}
+.album-portrait,
+.album-silhouette {
+  width: 58px;
+  height: 58px;
+  border: 2px solid #224f3e;
+  background: #08120f;
+}
+.album-portrait {
+  object-fit: cover;
+}
+.album-silhouette {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  filter: grayscale(1);
+  color: #7ba895;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 20px;
+}
+.album-silhouette--fallback {
+  filter: none;
+  font-size: 28px;
+}
+.album-player-name {
+  min-height: 18px;
+  color: var(--text);
+  font-family: 'Press Start 2P', monospace;
+  font-size: 7px;
+  line-height: 1.35;
+}
+.album-style-row {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 3px;
+}
+.album-style-chip {
+  border: 1px solid #2a7759;
+  color: #aee6cc;
+  background: #092219;
+  font-size: 7px;
+  padding: 1px 4px;
+}
+.album-footer-note {
+  padding: 8px 12px;
+  border-top: 2px solid #063827;
+  background: #08120f;
+  text-align: center;
+}
+
 /* ---- Shiny Dex ---- */
 #shiny-dex-modal {
   position: fixed; inset: 0; z-index: 300;

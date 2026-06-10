@@ -894,6 +894,33 @@
         <li class="task-entry">
           <header>
             <div class="task-title">
+              <h3>T16 — World Cup Album modal</h3>
+              <span class="pill">Status: implemented</span>
+              <span class="pill">Review: PASS</span>
+            </div>
+          </header>
+          <div class="task-grid">
+            <div class="task-note">
+              <strong>Assumptions</strong>
+              <p>The existing collection button can keep calling <code>openPokedexModal()</code> as a compatibility entrypoint while football mode delegates to a separate <code>openAlbumModal()</code>.</p>
+            </div>
+            <div class="task-note">
+              <strong>Tradeoffs</strong>
+              <p>P1-030 loads <code>album_layout.json</code> directly in UI instead of waiting for the P1-031 domain cache. That gets the user-facing album working now while leaving data ownership cleanup to the next task.</p>
+            </div>
+            <div class="task-note">
+              <strong>Design Decisions</strong>
+              <p>The modal renders Marquee Signings and Fan Favorites tabs from layout JSON, reads <code>DomainAlbum.getEntryState()</code>, and displays Unknown, Seen, and Signed states with distinct card treatments and style chips.</p>
+            </div>
+            <div class="task-note">
+              <strong>Risks / Follow-up</strong>
+              <p>Player portrait assets are not present locally yet, so signed cards include an image fallback. P1-031 should move layout loading into <code>DomainAlbum</code>, and Phase 2 should replace fallback presentation with final assets.</p>
+            </div>
+          </div>
+        </li>
+        <li class="task-entry">
+          <header>
+            <div class="task-title">
               <h3>P1-001 — Create <code>domain/features.js</code> with Phase 1 flags</h3>
               <span class="pill">Status: implemented</span>
             </div>
@@ -1428,7 +1455,7 @@
     </section>
 
     <footer>
-      Generated for the Pokelike World Cup Road to Glory vertical slice. Last updated 2026-06-10 — T15 Football map weights and question routing, T14 City Stamp ceremony reskin, T13 Slice-complete trigger and minimal completion screen, T12 Phase 1 map cap and Host City HUD wiring, T11 Host City boss gameplay wiring, T10 Scout Report gameplay wiring, T9 recruitment contract API, T8 Map 0 forced scout override, T7 scout pool foundation, T6 boot-time migration wiring, T5 save v3 album migration, T4 DomainAlbum persistence API, T3 album layout data, T2 host city boss catalog, T1 boot and cloud gates, Node/npm automation baseline, T0 validation protocol, one-task-one-commit rule, visual-friction registry, bridges registry, migration guardrails, TheSportsDB release-risk notes.
+      Generated for the Pokelike World Cup Road to Glory vertical slice. Last updated 2026-06-10 — T16 World Cup Album modal, T15 Football map weights and question routing, T14 City Stamp ceremony reskin, T13 Slice-complete trigger and minimal completion screen, T12 Phase 1 map cap and Host City HUD wiring, T11 Host City boss gameplay wiring, T10 Scout Report gameplay wiring, T9 recruitment contract API, T8 Map 0 forced scout override, T7 scout pool foundation, T6 boot-time migration wiring, T5 save v3 album migration, T4 DomainAlbum persistence API, T3 album layout data, T2 host city boss catalog, T1 boot and cloud gates, Node/npm automation baseline, T0 validation protocol, one-task-one-commit rule, visual-friction registry, bridges registry, migration guardrails, TheSportsDB release-risk notes.
     </footer>
   </main>
 </body>

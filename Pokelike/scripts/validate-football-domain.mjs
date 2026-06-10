@@ -302,6 +302,27 @@ await runTest("football stamp ceremony uses host city stamp presentation", () =>
   assert(cssSource.includes(".badge-stamp-flag"), "style.css should define badge-stamp-flag styles");
 });
 
+await runTest("football album modal replaces pokedex collection surface", () => {
+  const uiSource = readText("js/ui.js");
+  const cssSource = readText("css/style.css");
+  const albumLayoutSource = readText("data/football/album_layout.json");
+
+  assert(uiSource.includes("async function openAlbumModal"), "ui.js should define openAlbumModal");
+  assert(uiSource.includes("return openAlbumModal"), "openPokedexModal should delegate to openAlbumModal in football mode");
+  assert(uiSource.includes("data/football/album_layout.json"), "album modal should load album layout JSON");
+  assert(uiSource.includes("DomainAlbum?.getEntryState"), "album modal should read album entry states");
+  assert(uiSource.includes("album-card--unknown"), "album modal should render unknown state");
+  assert(uiSource.includes("album-card--seen"), "album modal should render seen state");
+  assert(uiSource.includes("album-card--signed"), "album modal should render signed state");
+  assert(albumLayoutSource.includes("Marquee Signings"), "album layout should include Marquee Signings page");
+  assert(albumLayoutSource.includes("Fan Favorites"), "album layout should include Fan Favorites page");
+  assert(uiSource.includes("Vol. 1 complete in full campaign"), "album modal should render full campaign footer note");
+  assert(uiSource.includes("window.GAME_THEME.collectionLabel"), "collection buttons should use GAME_THEME.collectionLabel in football mode");
+  assert(cssSource.includes(".album-modal-box"), "style.css should define album modal shell");
+  assert(cssSource.includes(".album-grid"), "style.css should define album grid");
+  assert(cssSource.includes(".album-style-chip"), "style.css should define album style chips");
+});
+
 await runTest("feature gates default to football slice mode", () => {
   const features = context.window.FEATURES;
   assert(features.footballMode === true, "FEATURES.footballMode must be true");
