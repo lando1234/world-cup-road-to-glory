@@ -208,27 +208,41 @@ await runTest("run identity ledger persists through current run save shape", () 
 
 await runTest("football catch node is wired to scout recruitment flow", () => {
   const gameSource = readText("js/game.js");
+  const htmlSource = readText("index.html");
+  const cssSource = readText("css/style.css");
   const doCatchIndex = gameSource.indexOf("async function doCatchNode(node)");
   const doScoutIndex = gameSource.indexOf("async function doScoutReportNode(node)");
+  const confirmScoutIndex = gameSource.indexOf("function confirmScoutContract");
   const signScoutIndex = gameSource.indexOf("function signScoutPlayer(player, node)");
   const catchPokemonIndex = gameSource.indexOf("function catchPokemon(pokemon, node)");
 
   assert(doCatchIndex !== -1, "game.js should define doCatchNode");
   assert(doScoutIndex !== -1, "game.js should define doScoutReportNode");
+  assert(confirmScoutIndex !== -1, "game.js should define confirmScoutContract");
   assert(signScoutIndex !== -1, "game.js should define signScoutPlayer");
   assert(catchPokemonIndex !== -1, "game.js should define legacy catchPokemon");
 
   const doCatchBlock = gameSource.slice(doCatchIndex, doScoutIndex);
-  const scoutBlock = gameSource.slice(doScoutIndex, signScoutIndex);
+  const scoutBlock = gameSource.slice(doScoutIndex, confirmScoutIndex);
+  const confirmBlock = gameSource.slice(confirmScoutIndex, signScoutIndex);
   const signBlock = gameSource.slice(signScoutIndex, catchPokemonIndex);
 
+  assert(htmlSource.includes('<h2>Scout Report</h2>'), "catch screen HTML should default to Scout Report");
+  assert(htmlSource.includes('id="catch-screen-subtitle"'), "catch screen should expose a subtitle element");
+  assert(htmlSource.includes('Pass on report'), "catch screen skip button should default to Pass on report");
   assert(doCatchBlock.includes("if (isFootballModeEnabled())"), "doCatchNode should branch for football mode");
   assert(doCatchBlock.includes("await doScoutReportNode(node);"), "football doCatchNode should delegate to doScoutReportNode");
   assert(scoutBlock.includes("DomainScout.initScoutPools"), "doScoutReportNode should initialize scout pools");
   assert(scoutBlock.includes("DomainScout.buildSliceReport"), "doScoutReportNode should build scout report");
   assert(scoutBlock.includes("DomainCombatAdapter.createPlayerInstance"), "doScoutReportNode should create football player instances");
   assert(scoutBlock.includes("DomainAlbum.markAlbumSeen"), "doScoutReportNode should mark displayed profiles as seen");
+  assert(scoutBlock.includes("Shortlist from"), "doScoutReportNode should render host city scout flavor");
+  assert(scoutBlock.includes("confirmScoutContract"), "scout cards should open a contract confirmation modal");
+  assert(scoutBlock.includes("scout-duplicate-hint"), "signed players should show a duplicate hint");
   assert(scoutBlock.includes("Pass on report"), "football skip label should be Pass on report");
+  assert(confirmBlock.includes("Offer contract to"), "contract modal should ask for confirmation");
+  assert(confirmBlock.includes("contract-stamp-pulse"), "contract confirmation should trigger stamp animation hook");
+  assert(cssSource.includes("@keyframes contractStampPulse"), "contract stamp animation CSS should exist");
   assert(signBlock.includes("DomainRecruit.offerContract"), "signScoutPlayer should offer contract through DomainRecruit");
   assert(signBlock.includes("showSwapScreen(player, node)"), "signScoutPlayer should route full squads to swap screen");
   assert(!signBlock.includes("markPokedexCaught"), "football scout signing should not write poke_dex");

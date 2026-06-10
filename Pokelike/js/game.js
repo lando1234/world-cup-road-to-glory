@@ -1335,6 +1335,12 @@ async function doCatchNode(node) {
 
   showScreen('catch-screen');
   renderTeamBar(state.team, document.getElementById('catch-team-bar'), true);
+  const title = document.querySelector('#catch-screen h2');
+  const subtitle = document.getElementById('catch-screen-subtitle');
+  const skipBtn = document.getElementById('btn-skip-catch');
+  if (title) title.textContent = '⬟ Wild Pokemon Appeared!';
+  if (subtitle) subtitle.textContent = 'Choose one Pokemon to add to your team';
+  if (skipBtn) skipBtn.textContent = 'Skip (flee)';
   const choicesEl = document.getElementById('catch-choices');
 
   let instances, rerollPool, level;
@@ -1502,6 +1508,12 @@ async function doScoutReportNode(node) {
 
   const title = document.querySelector('#catch-screen h2');
   if (title) title.textContent = 'Scout Report';
+  const subtitle = document.getElementById('catch-screen-subtitle');
+  const hostCity = window.DomainBosses?.getHostCity?.(state.currentMap);
+  if (subtitle) {
+    const city = hostCity?.hostCity || 'the next host city';
+    subtitle.textContent = `Shortlist from ${city}: compare form, style fit, and contract priority.`;
+  }
 
   const skipBtn = document.getElementById('btn-skip-catch');
   if (skipBtn) skipBtn.textContent = 'Pass on report';
@@ -1553,11 +1565,17 @@ async function doScoutReportNode(node) {
     card.style.cursor = 'pointer';
     card.setAttribute('role', 'button');
     card.setAttribute('tabindex', '0');
-    card.addEventListener('click', () => signScoutPlayer(inst, node));
-    card.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') signScoutPlayer(inst, node); });
+    card.addEventListener('click', () => confirmScoutContract(inst, node, card));
+    card.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') confirmScoutContract(inst, node, card); });
     const wrap = document.createElement('div');
     wrap.className = 'poke-choice-wrap';
     wrap.appendChild(card);
+    if (signed) {
+      const duplicateHint = document.createElement('div');
+      duplicateHint.className = 'scout-duplicate-hint';
+      duplicateHint.textContent = 'Already signed in album';
+      wrap.appendChild(duplicateHint);
+    }
     wrap.insertAdjacentHTML('beforeend', renderTraitPreview(inst, state.team));
     return wrap;
   }
@@ -1578,6 +1596,35 @@ async function doScoutReportNode(node) {
 
 function isFootballRuntimeInstance(instance) {
   return isFootballModeEnabled() && Number.isInteger(instance?.profileId);
+}
+
+function confirmScoutContract(player, node, cardEl = null) {
+  const profile = window.DomainProfiles?.getProfile?.(player.profileId);
+  const name = profile?.displayName || player.name || 'this player';
+  document.getElementById('scout-contract-modal')?.remove();
+
+  const modal = document.createElement('div');
+  modal.id = 'scout-contract-modal';
+  modal.className = 'item-equip-overlay';
+  modal.innerHTML = `
+    <div class="item-equip-box scout-contract-box">
+      <h3>Offer contract to ${name}?</h3>
+      <p class="scout-contract-copy">Signing adds this player to the current squad and records the contract in the World Cup Album.</p>
+      <div class="scout-contract-actions">
+        <button id="btn-confirm-scout-contract" class="btn-primary">Offer Contract</button>
+        <button id="btn-cancel-scout-contract" class="btn-secondary">Keep Scouting</button>
+      </div>
+    </div>
+  `;
+  document.body.appendChild(modal);
+
+  modal.querySelector('#btn-cancel-scout-contract').addEventListener('click', () => modal.remove());
+  modal.addEventListener('click', e => { if (e.target === modal) modal.remove(); });
+  modal.querySelector('#btn-confirm-scout-contract').addEventListener('click', () => {
+    modal.remove();
+    cardEl?.classList.add('contract-stamp-pulse');
+    setTimeout(() => signScoutPlayer(player, node), 1200);
+  });
 }
 
 function signScoutPlayer(player, node) {

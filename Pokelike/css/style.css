@@ -1008,11 +1008,50 @@ h1, h2, .pixel-font {
 /* ---- Catch Screen ---- */
 #catch-screen { gap: 16px; justify-content: center; align-items: center; }
 #catch-screen h2 { font-size: clamp(10px, 2.5vw, 14px); color: var(--green); text-align: center; }
+.catch-screen-subtitle {
+  text-align: center;
+  color: var(--text-dim);
+  font-size: 12px;
+  line-height: 1.55;
+  max-width: min(720px, 92vw);
+  margin: 0;
+}
 #catch-choices {
   display: flex;
   gap: 24px;
   justify-content: center;
   flex-wrap: wrap;
+}
+.scout-duplicate-hint {
+  margin-top: 6px;
+  color: var(--gold);
+  font-size: 8px;
+  text-align: center;
+  line-height: 1.45;
+}
+.scout-contract-box {
+  max-width: 420px;
+  text-align: center;
+}
+.scout-contract-copy {
+  color: var(--text-dim);
+  font-size: 10px;
+  line-height: 1.6;
+  margin: 10px 0 14px;
+}
+.scout-contract-actions {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.contract-stamp-pulse {
+  animation: contractStampPulse 1.2s ease both;
+}
+@keyframes contractStampPulse {
+  0% { transform: scale(1); box-shadow: 2px 2px 0 #000; }
+  35% { transform: scale(1.04); box-shadow: 0 0 0 4px rgba(244, 201, 93, 0.35), 2px 2px 0 #000; }
+  100% { transform: scale(1); box-shadow: 2px 2px 0 #000; }
 }
 
 /* ---- Trait preview under pick options ---- */
