@@ -511,6 +511,33 @@
         <li class="task-entry">
           <header>
             <div class="task-title">
+              <h3>P1-005 — Create <code>GAME_THEME</code> terminology object</h3>
+              <span class="pill">Status: implemented</span>
+              <span class="pill">Review: PASS</span>
+            </div>
+          </header>
+          <div class="task-grid">
+            <div class="task-note">
+              <strong>Assumptions</strong>
+              <p><code>GAME_THEME</code> is an infrastructure contract, not an active UI migration. Its values are football-facing and intentionally unused until later tasks replace visible copy.</p>
+            </div>
+            <div class="task-note">
+              <strong>Tradeoffs</strong>
+              <p>Keeping the object in <code>data.js</code> matches the current browser-global runtime and avoids touching UI files. The cost is another temporary global until the future React/domain split has a typed theme boundary.</p>
+            </div>
+            <div class="task-note">
+              <strong>Design Decisions</strong>
+              <p>The object is exposed as <code>window.GAME_THEME</code> and frozen with nested frozen sections for <code>battle</code> and <code>node</code>. P1-005 does not consume the object, so no visible copy or gameplay behavior changes in this task.</p>
+            </div>
+            <div class="task-note">
+              <strong>Risks / Follow-up</strong>
+              <p>Low runtime risk because there are no consumers yet. Future UI tasks must migrate strings from hardcoded Pokémon copy to <code>GAME_THEME</code> deliberately and should keep this report updated when they assume terminology not explicitly covered by SPEC 011.</p>
+            </div>
+          </div>
+        </li>
+        <li class="task-entry">
+          <header>
+            <div class="task-title">
               <h3>P1-010 — Implement <code>createPlayerInstance()</code> in <code>domain/combat-adapter.js</code></h3>
               <span class="pill">Status: implemented</span>
               <span class="pill">Review: PASS</span>

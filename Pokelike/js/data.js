@@ -21,6 +21,42 @@ const TYPE_CHART = {
   Steel:    { Normal:1,   Fire:0.5, Water:0.5, Electric:0.5, Grass:1,   Ice:2,   Fighting:1,   Poison:1,   Ground:1, Flying:1,   Psychic:1,   Bug:1,   Rock:2,   Ghost:1,   Dragon:1,   Dark:1,   Steel:0.5 },
 };
 
+/**
+ * Centralized football terminology for future UI migration.
+ * P1-005 only defines this object; later UI tasks will read from it.
+ */
+const GAME_THEME = Object.freeze({
+  title: "Road to Glory",
+  subtitle: "Build your World Cup squad",
+  collectionLabel: "World Cup Album",
+  managerLabel: "Manager",
+  starterScreenTitle: "Marquee Signing",
+  catchScreenTitle: "Contract Offer",
+  scoutReportTitle: "Scout Report",
+  swapScreenTitle: "Squad Registration",
+  recoveryCenterLabel: "Recovery Center",
+  cityStampLabel: "Host City Stamp",
+  sliceCompleteTitle: "Host City Complete",
+  battle: Object.freeze({
+    faint: "is exhausted",
+    injured: "is injured",
+    win: "Victory",
+    loss: "Defeat"
+  }),
+  node: Object.freeze({
+    scoutReport: "Scout Report",
+    friendlyMatch: "Friendly Match",
+    recoveryCenter: "Recovery Center",
+    gearCrate: "Gear Crate",
+    rivalNationalTeam: "Rival National Team",
+    hostCityChallenge: "Host City Challenge"
+  })
+});
+
+if (typeof window !== 'undefined') {
+  window.GAME_THEME = GAME_THEME;
+}
+
 function isFootballStyleMode() {
   return Boolean(window.FEATURES?.footballMode && window.STYLE_CHART);
 }
