@@ -147,12 +147,26 @@ function settleRunLite(runSnapshot = {}, accountState = {}) {
 }
 
 function applyAccountPatch(patch = {}) {
-  if (isPlainObject(patch.album)) {
-    localStorage.setItem(SAVE_ALBUM_STORAGE_KEY, JSON.stringify(patch.album));
+  if (!isPlainObject(patch.album)) return false;
+
+  const currentAlbum = readAlbumState();
+  const mergedAlbum = { ...currentAlbum };
+  let changedCount = 0;
+
+  for (const [profileId, patchState] of Object.entries(patch.album)) {
+    const normalizedProfileId = normalizeAlbumProfileId(profileId);
+    const normalizedPatchState = patchState === 1 || patchState === "1" || patchState === true ? 1 : 0;
+    if (!normalizedProfileId) continue;
+
+    const currentState = mergedAlbum[normalizedProfileId] === 1 ? 1 : 0;
+    const nextState = Math.max(currentState, normalizedPatchState);
+    if (mergedAlbum[normalizedProfileId] !== nextState) changedCount += 1;
+    mergedAlbum[normalizedProfileId] = nextState;
   }
-  return Object.freeze({
-    albumApplied: isPlainObject(patch.album)
-  });
+
+  localStorage.setItem(SAVE_ALBUM_STORAGE_KEY, JSON.stringify(mergedAlbum));
+  console.info?.(`[DomainSave] applyAccountPatch wrote ${changedCount} game_album keys.`);
+  return true;
 }
 
 const DomainSave = Object.freeze({

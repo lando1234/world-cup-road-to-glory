@@ -768,9 +768,34 @@ await runTest("settleRunLite returns album patch and summary without currency re
   assert(result.summary.scouts === 2, "settlement summary should include scout count");
   assert(result.summary.metaRewardsLabel === "Meta rewards coming soon", "settlement summary should avoid currency rewards");
 
-  context.window.DomainSave.applyAccountPatch(result.patch);
+  const applied = context.window.DomainSave.applyAccountPatch(result.patch);
   const album = JSON.parse(context.localStorage.getItem("game_album"));
+  assert(applied === true, "applyAccountPatch should return true when album patch is applied");
   assert(album["14"] === 1 && album["15"] === 1, "applyAccountPatch should write game_album patch");
+});
+
+await runTest("applyAccountPatch merges album monotonically without touching active run", () => {
+  const activeRun = JSON.stringify({ runId: "run-a", ledger: { signedProfileIds: [12] } });
+  context.localStorage.setItem("game_album", JSON.stringify({ "12": 1, "14": 0 }));
+  context.localStorage.setItem("poke_current_run", activeRun);
+
+  const applied = context.window.DomainSave.applyAccountPatch({
+    album: {
+      "12": 0,
+      "14": 1,
+      "15": true,
+      "bad-id": 1
+    }
+  });
+  const album = JSON.parse(context.localStorage.getItem("game_album"));
+
+  assert(applied === true, "applyAccountPatch should return true for valid album patches");
+  assert(album["12"] === 1, "signed album state must not regress to seen");
+  assert(album["14"] === 1, "seen album state should upgrade to signed");
+  assert(album["15"] === 1, "truthy patch state should normalize to signed");
+  assert(!("bad-id" in album), "invalid profile ids should be ignored");
+  assert(context.localStorage.getItem("poke_current_run") === activeRun, "applyAccountPatch must not touch active run save");
+  assert(context.window.DomainSave.applyAccountPatch({}) === false, "applyAccountPatch should return false when no account key is applied");
 });
 
 await runTest("settlement modal is wired before run clear", () => {
