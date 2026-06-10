@@ -117,6 +117,7 @@ const catalogJson = readJson("data/football/player_profiles.json");
 const catalog = context.window.DomainProfiles.loadCatalog(catalogJson);
 const hostCityBossesJson = readJson("data/football/host_city_bosses.json");
 const hostCityBossCatalog = context.window.DomainBosses.loadHostCityBosses(hostCityBossesJson);
+const albumLayoutJson = readJson("data/football/album_layout.json");
 
 await runTest("script load order keeps football domain before data.js", () => {
   const expected = [
@@ -214,6 +215,47 @@ await runTest("host city boss teams build battle-ready instances", () => {
     assert(member.skillTier === 1, `${member.name} should preserve boss skillTier`);
     assert(member.moveTier === 1, `${member.name} should pass skillTier to combat moveTier`);
     assert(typeof member.bossRole === "string" && member.bossRole.length > 0, `${member.name} should preserve boss role`);
+  }
+});
+
+await runTest("album layout defines Phase 1 slice pages", () => {
+  assert(albumLayoutJson.schemaVersion === 1, "album layout schemaVersion must be 1");
+  assert(albumLayoutJson.volumeTitle === "Road to the Trophy \u2014 Vol. 1", "album layout volumeTitle mismatch");
+  assert(Array.isArray(albumLayoutJson.pages), "album layout pages must be an array");
+
+  const pageIds = albumLayoutJson.pages.map(page => page.pageId);
+  assert(pageIds.join(",") === "marquee,favorites", `album layout pages mismatch: ${pageIds.join(",")}`);
+  assert(!pageIds.includes("host_city"), "Phase 1 album layout must not include host_city page");
+  assert(!pageIds.includes("knockout"), "Phase 1 album layout must not include knockout page");
+  assert(!pageIds.includes("legends"), "Phase 1 album layout must not include legends page");
+
+  const expectedSlotsByPage = {
+    marquee: [1, 2, 3],
+    favorites: [4, 6, 7, 9, 10, 12, 14, 15, 17, 18, 28]
+  };
+  const seenProfileIds = new Set();
+
+  for (const page of albumLayoutJson.pages) {
+    assert(typeof page.title === "string" && page.title.length > 0, `${page.pageId} title must be present`);
+    assert(page.hiddenUntil === null, `${page.pageId} should be always visible in Phase 1`);
+    assert(Array.isArray(page.slots), `${page.pageId} slots must be an array`);
+
+    const expectedProfileIds = expectedSlotsByPage[page.pageId];
+    assert(expectedProfileIds, `unexpected album page ${page.pageId}`);
+    assert(page.slots.map(slot => slot.profileId).join(",") === expectedProfileIds.join(","), `${page.pageId} profileIds mismatch`);
+
+    page.slots.forEach((slot, index) => {
+      const expectedSlot = index + 1;
+      assert(slot.slot === expectedSlot, `${page.pageId} slot ${index} must be numbered ${expectedSlot}`);
+      assert(typeof slot.label === "string" && slot.label.length > 0, `${page.pageId} slot ${expectedSlot} label must be present`);
+      assert(!seenProfileIds.has(slot.profileId), `album profileId ${slot.profileId} appears more than once in Phase 1 layout`);
+      seenProfileIds.add(slot.profileId);
+
+      const profile = context.window.DomainProfiles.getProfile(slot.profileId);
+      assert(profile, `${page.pageId} slot ${expectedSlot} profileId ${slot.profileId} must exist in player catalog`);
+      assert(profile.album.pageId === page.pageId, `profileId ${slot.profileId} album page mismatch`);
+      assert(profile.album.slot === expectedSlot, `profileId ${slot.profileId} album slot mismatch`);
+    });
   }
 });
 

@@ -5,7 +5,7 @@
 **Inputs:** [001](./001-codebase-discovery.md), [006B](./006B-technical-blueprint-revised.md), [007](./007-football-data-pack.md), [008](./008-meta-progression.md), [009](./009-gameplay-loop-node-system.md)  
 **Version:** v1.1  
 **Date:** 2026-06-10  
-**Last sync:** `main` @ this commit — host city boss catalog and `DomainBosses` loader (T2)
+**Last sync:** `main` @ this commit — Phase 1 album layout data (T3)
 **Assumptions:** Single developer · existing Pokelike vanilla JS · browser game · no React · no backend changes
 
 ---
@@ -14,9 +14,9 @@
 
 | Metric | Count |
 |--------|------:|
-| **Done** | 15 |
+| **Done** | 16 |
 | **Partial** | 6 |
-| **Not started** | 31 |
+| **Not started** | 30 |
 | **Total tickets** | 52 |
 
 **Legend:** ✅ Done · 🟡 Partial (shipped subset; acceptance not fully met) · ⬜ Not started
@@ -29,7 +29,8 @@ Before continuing gameplay implementation, T0 establishes the repeatable validat
 |----|--------|----------------|
 | T0-001 | ✅ | Node project baseline, validation harness, static server, Phase 2 visual frictions registry — `feb8f94` |
 | T1-001 | ✅ | Boot gate, slice node gates, and cloud-save shutdown — `db538b3` |
-| T2-001 | ✅ | Host city boss catalog, loader, boot gate, and Node boss-team validation — this commit |
+| T2-001 | ✅ | Host city boss catalog, loader, boot gate, and Node boss-team validation — `b75e23c` |
+| T3-001 | ✅ | Phase 1 `album_layout.json` and Node layout/profile validation — this commit |
 
 **Per-task Definition of Done from this point forward:**
 
@@ -62,13 +63,13 @@ Domain tasks should extend `Pokelike/scripts/validate-football-domain.mjs` inste
 | P1-004 | ✅ | `getTypeEffectiveness` football path — `f9ece79` |
 | P1-005 | ✅ | `GAME_THEME` object — `22e8632`, extended in battle/title passes |
 | P1-006 | ✅ | Title-screen hide + map trade/legendary gates + cloud-save no-op — `db538b3` |
-| P1-007 | ✅ | `DomainProfiles.initCatalog()` and `DomainBosses.initHostCityBosses()` both gate campaign start — this commit |
+| P1-007 | ✅ | `DomainProfiles.initCatalog()` and `DomainBosses.initHostCityBosses()` both gate campaign start — `b75e23c` |
 | P1-008 | ✅ | `player_profiles.json` — 20 slice roster — `94adb62` |
 | P1-009 | ✅ | Catalog loader + `getProfile()` — `eef0f66`; `isFootballProfileId` now catalog-backed |
 | P1-010 | ✅ | `createPlayerInstance()` — `9085c97` |
-| P1-011 | ✅ | `host_city_bosses.json` authored for maps 0–2 with spec rosters — this commit |
-| P1-012 | ✅ | `DomainBosses` loader, validation, lookup, and `buildBossTeam()` — this commit |
-| P1-013 | ⬜ | `album_layout.json` not authored |
+| P1-011 | ✅ | `host_city_bosses.json` authored for maps 0–2 with spec rosters — `b75e23c` |
+| P1-012 | ✅ | `DomainBosses` loader, validation, lookup, and `buildBossTeam()` — `b75e23c` |
+| P1-013 | ✅ | `album_layout.json` authored for marquee + favorites slice pages — this commit |
 | P1-014 | ✅ | PokeAPI guard + football `getFootballCatchChoices` — `f20ff1e`, `a098829` |
 | P1-015 | ✅ | `STARTER_IDS = [1, 2, 3]` — `c430a36` |
 | P1-016 | ⬜ | No `domain/scout.js`; interim BST replacement only |
@@ -144,6 +145,8 @@ P1-020  → runId + ledger on state init
 P1-042  → persist ledger in poke_current_run
 P1-043  → applyAccountPatch
 ```
+
+**Current:** P1-013 complete. Next implementation step is P1-027, followed by migration and boot wiring.
 
 **Exit:** `game_album` read/write path exists; mid-run reload preserves ledger shape.
 
@@ -1700,7 +1703,7 @@ Can we hand this build to a tester? All boxes must pass.
 
 - [ ] `player_profiles.json` — 20 players, Messi starter ID 2, stats match 007 §4.2
 - [x] `host_city_bosses.json` — 3 entries maps 0–2, rosters match 007 §7.1
-- [ ] `album_layout.json` — marquee + favorites slice slots
+- [x] `album_layout.json` — marquee + favorites slice slots
 - [ ] `STARTER_IDS = [1, 2, 3]`
 - [ ] PokeAPI not called for `profileId <= 50` (network tab clean)
 - [ ] `STYLE_CHART` matrix parity with `TYPE_CHART` values

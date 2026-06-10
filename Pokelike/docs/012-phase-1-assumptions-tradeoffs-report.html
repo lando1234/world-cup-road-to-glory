@@ -543,6 +543,33 @@
         <li class="task-entry">
           <header>
             <div class="task-title">
+              <h3>T3 — Phase 1 album layout data</h3>
+              <span class="pill">Status: implemented</span>
+              <span class="pill">Review: PASS</span>
+            </div>
+          </header>
+          <div class="task-grid">
+            <div class="task-note">
+              <strong>Assumptions</strong>
+              <p>The Phase 1 album should expose only the collection surfaces that can be exercised in the slice: marquee signings and scoutable favorites. Host-city, knockout, and legends pages remain Phase 2+ presentation work.</p>
+            </div>
+            <div class="task-note">
+              <strong>Tradeoffs</strong>
+              <p>The layout is static JSON and has no loader yet. That keeps P1-013 data-only, while P1-031 can later decide the runtime caching API inside <code>DomainAlbum</code>.</p>
+            </div>
+            <div class="task-note">
+              <strong>Design Decisions</strong>
+              <p><code>album_layout.json</code> uses ordered slots with labels, matching the <code>album.pageId</code> and <code>album.slot</code> metadata already authored in <code>player_profiles.json</code>. The Node validator cross-checks every slot against the profile catalog.</p>
+            </div>
+            <div class="task-note">
+              <strong>Risks / Follow-up</strong>
+              <p>Labels are implementation placeholders for the future album UI. P1-030 should revisit microcopy and visual hierarchy once the modal exists, then record any polish debt in the visual-friction registry.</p>
+            </div>
+          </div>
+        </li>
+        <li class="task-entry">
+          <header>
+            <div class="task-title">
               <h3>P1-001 — Create <code>domain/features.js</code> with Phase 1 flags</h3>
               <span class="pill">Status: implemented</span>
             </div>
@@ -1077,7 +1104,7 @@
     </section>
 
     <footer>
-      Generated for the Pokelike World Cup Road to Glory vertical slice. Last updated 2026-06-10 — T2 host city boss catalog, T1 boot and cloud gates, Node/npm automation baseline, T0 validation protocol, one-task-one-commit rule, visual-friction registry, bridges registry, migration guardrails, TheSportsDB release-risk notes.
+      Generated for the Pokelike World Cup Road to Glory vertical slice. Last updated 2026-06-10 — T3 album layout data, T2 host city boss catalog, T1 boot and cloud gates, Node/npm automation baseline, T0 validation protocol, one-task-one-commit rule, visual-friction registry, bridges registry, migration guardrails, TheSportsDB release-risk notes.
     </footer>
   </main>
 </body>

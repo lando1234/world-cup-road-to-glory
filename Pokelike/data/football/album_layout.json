@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "volumeTitle": "Road to the Trophy — Vol. 1",
+  "pages": [
+    {
+      "pageId": "marquee",
+      "title": "Marquee Signings",
+      "description": "Try all three icons across runs.",
+      "hiddenUntil": null,
+      "slots": [
+        { "slot": 1, "profileId": 1, "label": "High Press Icon" },
+        { "slot": 2, "profileId": 2, "label": "Possession Maestro" },
+        { "slot": 3, "profileId": 3, "label": "Defensive Anchor" }
+      ]
+    },
+    {
+      "pageId": "favorites",
+      "title": "Fan Favorites",
+      "description": "Core scout chase for the Phase 1 slice.",
+      "hiddenUntil": null,
+      "slots": [
+        { "slot": 1, "profileId": 4, "label": "Goal Machine" },
+        { "slot": 2, "profileId": 6, "label": "Midfield Metronome" },
+        { "slot": 3, "profileId": 7, "label": "Counter Outlet" },
+        { "slot": 4, "profileId": 9, "label": "Possession Reset" },
+        { "slot": 5, "profileId": 10, "label": "Box-to-Box Spark" },
+        { "slot": 6, "profileId": 12, "label": "Tempo Keeper" },
+        { "slot": 7, "profileId": 14, "label": "Engine Room" },
+        { "slot": 8, "profileId": 15, "label": "Aerial Enforcer" },
+        { "slot": 9, "profileId": 17, "label": "Composed Keeper" },
+        { "slot": 10, "profileId": 18, "label": "Wingback Artist" },
+        { "slot": 11, "profileId": 28, "label": "Cut Inside Threat" }
+      ]
+    }
+  ],
+  "deferredPages": [
+    "host_city",
+    "knockout",
+    "legends"
+  ]
+}
