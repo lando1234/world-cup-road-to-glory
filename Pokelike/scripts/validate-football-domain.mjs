@@ -668,6 +668,27 @@ await runTest("football slice gates trade and legendary map nodes", () => {
   }
 });
 
+await runTest("football map pacing keeps slice-safe weights and question routing", () => {
+  const mapSource = readText("js/map.js");
+  const gameSource = readText("js/game.js");
+
+  assert(mapSource.includes("{ battle: 25, catch: 30"), "layer 1 catch weight should be 30 for scout bias");
+  assert(mapSource.includes("function applyFootballSliceNodeGates(weights)"), "map.js should define football node gate helper");
+  assert(mapSource.includes("gatedWeights.trade = 0"), "football node gates should disable trade");
+  assert(mapSource.includes("gatedWeights.legendary = 0"), "football node gates should disable legendary");
+  assert(mapSource.includes("ci === contentCount - 1"), "map generation should preserve last content layer recovery center guarantee");
+
+  const resolveIndex = gameSource.indexOf("function resolveQuestionMark()");
+  const handlersIndex = gameSource.indexOf("// ---- Node Handlers ----");
+  assert(resolveIndex !== -1, "game.js should define resolveQuestionMark");
+  const resolveBlock = gameSource.slice(resolveIndex, handlersIndex);
+  assert(resolveBlock.includes("if (isFootballModeEnabled())"), "resolveQuestionMark should branch for football mode");
+  assert(resolveBlock.includes("NODE_TYPES.BATTLE : NODE_TYPES.TRAINER"), "football question routing should only choose battle or trainer");
+  const footballQuestionBranch = resolveBlock.slice(resolveBlock.indexOf("if (isFootballModeEnabled())"), resolveBlock.indexOf("const r = rng();"));
+  assert(!footballQuestionBranch.includes("shiny"), "football question routing must not include shiny events");
+  assert(!footballQuestionBranch.includes("mega"), "football question routing must not include mega events");
+});
+
 await runTest("football map labels use football terminology", () => {
   assert(context.getNodeLabel({ type: "catch" }) === "Scout Report", "catch node should display Scout Report");
   assert(context.getNodeLabel({ type: "pokecenter" }) === "Recovery Center", "pokecenter node should display Recovery Center");

@@ -867,6 +867,33 @@
         <li class="task-entry">
           <header>
             <div class="task-title">
+              <h3>T15 — Football map weights and question routing</h3>
+              <span class="pill">Status: implemented</span>
+              <span class="pill">Review: PASS</span>
+            </div>
+          </header>
+          <div class="task-grid">
+            <div class="task-note">
+              <strong>Assumptions</strong>
+              <p>The Phase 1 map can keep the existing graph generator as long as football mode explicitly gates unsupported node outcomes and routes ambiguous tournament events into safe match content.</p>
+            </div>
+            <div class="task-note">
+              <strong>Tradeoffs</strong>
+              <p>P1-026 leaves the base weight table mostly intact because layer-1 already carries the required scout bias. The targeted change is <code>resolveQuestionMark()</code>, which now prevents football runs from hitting shiny or mega legacy outcomes.</p>
+            </div>
+            <div class="task-note">
+              <strong>Design Decisions</strong>
+              <p><code>applyFootballSliceNodeGates()</code> remains the source of trade/legendary suppression, <code>getNodeLabel()</code> continues to source visible labels from <code>GAME_THEME</code>, and football question nodes resolve only to <code>NODE_TYPES.BATTLE</code> or <code>NODE_TYPES.TRAINER</code>.</p>
+            </div>
+            <div class="task-note">
+              <strong>Risks / Follow-up</strong>
+              <p>The icon art remains a Phase 2 polish item; gameplay routing and labels are now slice-safe, but sprite replacement still needs a dedicated visual pass.</p>
+            </div>
+          </div>
+        </li>
+        <li class="task-entry">
+          <header>
+            <div class="task-title">
               <h3>P1-001 — Create <code>domain/features.js</code> with Phase 1 flags</h3>
               <span class="pill">Status: implemented</span>
             </div>
@@ -1401,7 +1428,7 @@
     </section>
 
     <footer>
-      Generated for the Pokelike World Cup Road to Glory vertical slice. Last updated 2026-06-10 — T14 City Stamp ceremony reskin, T13 Slice-complete trigger and minimal completion screen, T12 Phase 1 map cap and Host City HUD wiring, T11 Host City boss gameplay wiring, T10 Scout Report gameplay wiring, T9 recruitment contract API, T8 Map 0 forced scout override, T7 scout pool foundation, T6 boot-time migration wiring, T5 save v3 album migration, T4 DomainAlbum persistence API, T3 album layout data, T2 host city boss catalog, T1 boot and cloud gates, Node/npm automation baseline, T0 validation protocol, one-task-one-commit rule, visual-friction registry, bridges registry, migration guardrails, TheSportsDB release-risk notes.
+      Generated for the Pokelike World Cup Road to Glory vertical slice. Last updated 2026-06-10 — T15 Football map weights and question routing, T14 City Stamp ceremony reskin, T13 Slice-complete trigger and minimal completion screen, T12 Phase 1 map cap and Host City HUD wiring, T11 Host City boss gameplay wiring, T10 Scout Report gameplay wiring, T9 recruitment contract API, T8 Map 0 forced scout override, T7 scout pool foundation, T6 boot-time migration wiring, T5 save v3 album migration, T4 DomainAlbum persistence API, T3 album layout data, T2 host city boss catalog, T1 boot and cloud gates, Node/npm automation baseline, T0 validation protocol, one-task-one-commit rule, visual-friction registry, bridges registry, migration guardrails, TheSportsDB release-risk notes.
     </footer>
   </main>
 </body>

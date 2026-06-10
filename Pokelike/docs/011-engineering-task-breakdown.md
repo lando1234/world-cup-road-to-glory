@@ -5,7 +5,7 @@
 **Inputs:** [001](./001-codebase-discovery.md), [006B](./006B-technical-blueprint-revised.md), [007](./007-football-data-pack.md), [008](./008-meta-progression.md), [009](./009-gameplay-loop-node-system.md)  
 **Version:** v1.1  
 **Date:** 2026-06-10  
-**Last sync:** `main` @ this commit — City Stamp ceremony reskin (T14)
+**Last sync:** `main` @ this commit — Football map weights and question routing (T15)
 **Assumptions:** Single developer · existing Pokelike vanilla JS · browser game · no React · no backend changes
 
 ---
@@ -14,9 +14,9 @@
 
 | Metric | Count |
 |--------|------:|
-| **Done** | 27 |
+| **Done** | 28 |
 | **Partial** | 8 |
-| **Not started** | 17 |
+| **Not started** | 16 |
 | **Total tickets** | 52 |
 
 **Legend:** ✅ Done · 🟡 Partial (shipped subset; acceptance not fully met) · ⬜ Not started
@@ -41,7 +41,8 @@ Before continuing gameplay implementation, T0 establishes the repeatable validat
 | T11-001 | ✅ | `doBossNode` football branch uses `DomainBosses.getHostCity()` and `buildBossTeam()` without `GYM_LEADERS` — `1edb6f0` |
 | T12-001 | ✅ | `startMap()` caps football slice maps at `FEATURES.maxMapIndex` and map HUD/tooltips use Host City boss data — `0aa0e18` |
 | T13-001 | ✅ | Third stamp routes to a minimal slice-complete screen and lightweight `settleRunLite()` before returning to title — `752d108` |
-| T14-001 | ✅ | `badge-screen` football branch renders City Stamp flag/copy/counts without legacy badge sprites — this commit |
+| T14-001 | ✅ | `badge-screen` football branch renders City Stamp flag/copy/counts without legacy badge sprites — `1e39698` |
+| T15-001 | ✅ | Football question nodes resolve only to battle/trainer, with slice-safe weights/gates validated — this commit |
 
 **Per-task Definition of Done from this point forward:**
 
@@ -92,8 +93,8 @@ Domain tasks should extend `Pokelike/scripts/validate-football-domain.mjs` inste
 | P1-022 | ✅ | Football `doBossNode` uses `DomainBosses.getHostCity()` + `buildBossTeam()`; legacy `GYM_LEADERS` path retained outside football — `1edb6f0` |
 | P1-023 | ✅ | `startMap()` normalizes maps above `FEATURES.maxMapIndex`; football HUD/tooltips show Host City names — `0aa0e18` |
 | P1-024 | ✅ | Third stamp shows `slice-complete-screen` instead of advancing to map 3 — `752d108` |
-| P1-025 | ✅ | `badge-screen` football branch shows City Stamp display name, host city, nation flag, and stamp counts — this commit |
-| P1-026 | ⬜ | `map.js` has no football weights / labels |
+| P1-025 | ✅ | `badge-screen` football branch shows City Stamp display name, host city, nation flag, and stamp counts — `1e39698` |
+| P1-026 | ✅ | Football slice gates trade/legendary, validates L1 scout weight, uses GAME_THEME labels, and restricts question nodes to battle/trainer — this commit |
 | P1-027 | ✅ | `DomainAlbum` `game_album` API implemented for seen/signed/count — `495ef23` |
 | P1-028 | ✅ | `migrateSaveV2toV3()` copies `poke_dex` to `game_album`, sets save v3, and preserves active runs — `94d3326` |
 | P1-029 | ⬜ | Dex writes not routed to album |
@@ -157,7 +158,7 @@ P1-042  → persist ledger in poke_current_run
 P1-043  → applyAccountPatch
 ```
 
-**Current:** P1-013, P1-027, P1-028, P1-041, P1-016, P1-017, P1-018, P1-019, P1-022, P1-023, P1-024, and P1-025 complete. P1-035/P1-036 have minimal shells and still need full product/domain passes. Next implementation step is P1-026 football map weights/question routing, then P1-030 album modal.
+**Current:** P1-013, P1-027, P1-028, P1-041, P1-016, P1-017, P1-018, P1-019, P1-022, P1-023, P1-024, P1-025, and P1-026 complete. P1-035/P1-036 have minimal shells and still need full product/domain passes. Next implementation step is P1-030 album modal.
 
 **Exit:** `game_album` read/write path exists; mid-run reload preserves ledger shape.
 
@@ -182,7 +183,7 @@ P1-022  → doBossNode → getHostCity ✅
 P1-023  → cap maps at maxMapIndex 2 ✅
 P1-024  → slice-complete at badges === 3 ✅
 P1-025  → City Stamp ceremony ✅
-P1-026  → football node weights + GAME_THEME tooltips
+P1-026  → football node weights + GAME_THEME tooltips ✅
 P1-035  → slice-complete screen
 P1-036  → settleRunLite + summary modal
 P1-044  → game over settlement before clearSavedRun

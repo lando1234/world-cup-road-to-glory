@@ -850,6 +850,10 @@ async function onNodeClick(node) {
 }
 
 function resolveQuestionMark() {
+  if (isFootballModeEnabled()) {
+    return rng() < 0.5 ? NODE_TYPES.BATTLE : NODE_TYPES.TRAINER;
+  }
+
   const r = rng();
   if (r < 0.22) return NODE_TYPES.BATTLE;
   if (r < 0.42) return NODE_TYPES.TRAINER;
