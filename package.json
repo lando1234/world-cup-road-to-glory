@@ -1,0 +1,16 @@
+{
+  "name": "world-cup-road-to-glory",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "serve": "node Pokelike/scripts/serve-static.mjs --root Pokelike --port 4173",
+    "validate": "npm run validate:domain && npm run validate:docs && npm run check:syntax",
+    "validate:domain": "node Pokelike/scripts/validate-football-domain.mjs",
+    "validate:docs": "node Pokelike/scripts/validate-docs.mjs",
+    "check:syntax": "node --check Pokelike/scripts/validate-football-domain.mjs && node --check Pokelike/scripts/validate-docs.mjs && node --check Pokelike/scripts/serve-static.mjs && node --check Pokelike/js/data.js && node --check Pokelike/js/game.js && node --check Pokelike/js/map.js && node --check Pokelike/js/ui.js"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

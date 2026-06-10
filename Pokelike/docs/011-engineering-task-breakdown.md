@@ -21,6 +21,35 @@
 
 **Legend:** ✅ Done · 🟡 Partial (shipped subset; acceptance not fully met) · ⬜ Not started
 
+### Execution Protocol Addendum
+
+Before continuing gameplay implementation, T0 establishes the repeatable validation baseline for the rest of Phase 1.
+
+| ID | Status | Notes / commit |
+|----|--------|----------------|
+| T0-001 | ✅ | Node project baseline, validation harness, static server, Phase 2 visual frictions registry — this commit |
+
+**Per-task Definition of Done from this point forward:**
+
+1. Mini-plan before edits
+2. Implementation
+3. Technical validation
+4. Test specific to the developed behavior
+5. Browser validation and screenshot when UI/gameplay is touched
+6. Update this task breakdown
+7. Update `012-phase-1-assumptions-tradeoffs-report.html`
+8. Update `013-phase-2-visual-frictions.html` when visual debt, sprite gaps, image issues, or UX friction are found
+9. Review diff
+10. One atomic commit, with validation evidence in the commit message
+
+**Default validation commands:**
+
+```bash
+rtk npm run validate
+```
+
+Domain tasks should extend `Pokelike/scripts/validate-football-domain.mjs` instead of relying only on manual browser playtests. Documentation or registry tasks should extend `Pokelike/scripts/validate-docs.mjs` when they add durable project docs.
+
 ### Task Status Registry
 
 | ID | Status | Notes / commit |
@@ -83,6 +112,14 @@
 ## Recommended Execution Flow
 
 Single-developer order from **current state** (`da6a262`). Finish partial tickets before starting dependents. Do **not** skip album/save foundation before recruitment UI.
+
+### Wave 0 — Validation baseline ✅
+
+```
+T0-001 → Node baseline + validation harness + static server + Phase 2 visual frictions registry
+```
+
+**Exit:** Every later task has a stable place for scripted tests, assumptions, task status, and deferred visual debt.
 
 ### Wave 1 — Boot & gating (close partials)
 

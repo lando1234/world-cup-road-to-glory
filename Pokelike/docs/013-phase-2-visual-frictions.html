@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Phase 2 Visual Frictions Registry</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #101417;
+      --panel: #182026;
+      --panel-2: #202a31;
+      --text: #edf3f5;
+      --muted: #9fb0b6;
+      --line: #344249;
+      --accent: #36c28a;
+      --warn: #f0b94b;
+      --risk: #ef6b6b;
+      --info: #65a8ff;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.5;
+    }
+
+    main {
+      width: min(1120px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 32px 0 56px;
+    }
+
+    header {
+      border-bottom: 1px solid var(--line);
+      margin-bottom: 28px;
+      padding-bottom: 20px;
+    }
+
+    h1, h2, h3 { margin: 0; line-height: 1.12; }
+    h1 { font-size: clamp(32px, 5vw, 56px); letter-spacing: 0; }
+    h2 { font-size: 22px; margin-bottom: 14px; }
+    h3 { font-size: 15px; }
+
+    p { margin: 0; color: var(--muted); }
+
+    section { margin-top: 28px; }
+
+    .subtitle {
+      max-width: 760px;
+      margin-top: 12px;
+      font-size: 16px;
+    }
+
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 18px;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      min-height: 26px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 3px 10px;
+      color: var(--muted);
+      background: rgba(255, 255, 255, 0.03);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .card {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      padding: 16px;
+      min-height: 150px;
+    }
+
+    .card strong {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 14px;
+    }
+
+    .registry {
+      display: grid;
+      gap: 12px;
+    }
+
+    .entry {
+      border: 1px solid var(--line);
+      border-left: 4px solid var(--info);
+      border-radius: 8px;
+      background: var(--panel);
+      padding: 16px;
+    }
+
+    .entry[data-priority="high"] { border-left-color: var(--risk); }
+    .entry[data-priority="medium"] { border-left-color: var(--warn); }
+    .entry[data-priority="low"] { border-left-color: var(--accent); }
+
+    .entry-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: flex-start;
+      margin-bottom: 12px;
+    }
+
+    .entry-body {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .field {
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      border-radius: 6px;
+      background: var(--panel-2);
+      padding: 10px;
+    }
+
+    .field span {
+      display: block;
+      margin-bottom: 5px;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .field p {
+      color: var(--text);
+      font-size: 13px;
+    }
+
+    code {
+      color: #dce8ea;
+      background: rgba(0, 0, 0, 0.24);
+      border-radius: 4px;
+      padding: 1px 4px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 0.94em;
+    }
+
+    footer {
+      margin-top: 36px;
+      padding-top: 18px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    @media (max-width: 860px) {
+      .grid,
+      .entry-body {
+        grid-template-columns: 1fr;
+      }
+
+      .entry-head {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <h1>Phase 2 Visual Frictions Registry</h1>
+      <p class="subtitle">
+        Running list of sprites, image issues, visual debt, and UX friction discovered while shipping the Phase 1 vertical slice. Phase 1 fixes blockers only; this registry protects polish work from being lost.
+      </p>
+      <div class="meta">
+        <span class="pill">Created: 2026-06-10</span>
+        <span class="pill">Owner: Phase 2 polish backlog</span>
+        <span class="pill">Scope: visuals, assets, UX friction</span>
+      </div>
+    </header>
+
+    <section>
+      <h2>Registry Rules</h2>
+      <div class="grid">
+        <article class="card">
+          <strong>Record, then continue</strong>
+          <p>Do not block Phase 1 implementation for non-blocking visual polish. Capture the issue here with enough context to reproduce it later.</p>
+        </article>
+        <article class="card">
+          <strong>Attach evidence when useful</strong>
+          <p>For UI or gameplay tasks, include browser screenshot paths or concise visual observations in the entry. Keep screenshots out of commits unless explicitly needed.</p>
+        </article>
+        <article class="card">
+          <strong>Separate blocker from polish</strong>
+          <p>Anything that prevents the slice from completing belongs in the active task. This file is for Phase 2 cleanup, asset replacement, and experience refinements.</p>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <h2>Open Frictions</h2>
+      <div class="registry">
+        <article class="entry" data-priority="high">
+          <div class="entry-head">
+            <h3>Real-player portrait licensing and art direction</h3>
+            <span class="pill">Priority: High</span>
+          </div>
+          <div class="entry-body">
+            <div class="field">
+              <span>Surface</span>
+              <p>Starter cards, battle portraits, album, squad UI.</p>
+            </div>
+            <div class="field">
+              <span>Friction</span>
+              <p>TheSportsDB cutouts are acceptable for internal demos only and use club-style source imagery.</p>
+            </div>
+            <div class="field">
+              <span>Phase 2 Direction</span>
+              <p>Replace with owned, licensed, or stylized football portraits with consistent national-team presentation.</p>
+            </div>
+            <div class="field">
+              <span>Evidence</span>
+              <p>See assumptions report legal-risk notes and portrait-source decisions.</p>
+            </div>
+          </div>
+        </article>
+
+        <article class="entry" data-priority="medium">
+          <div class="entry-head">
+            <h3>T0 silhouette fallback is functional, not final</h3>
+            <span class="pill">Priority: Medium</span>
+          </div>
+          <div class="entry-body">
+            <div class="field">
+              <span>Surface</span>
+              <p>Any card or battle slot with missing portrait URL.</p>
+            </div>
+            <div class="field">
+              <span>Friction</span>
+              <p>Nation-code fallback keeps layout stable but lacks jersey identity, pose, and visual reward.</p>
+            </div>
+            <div class="field">
+              <span>Phase 2 Direction</span>
+              <p>Create reusable silhouette/kit assets per nation and position bucket.</p>
+            </div>
+            <div class="field">
+              <span>Evidence</span>
+              <p>Rodri profile has historically required fallback handling due to source-data ambiguity.</p>
+            </div>
+          </div>
+        </article>
+
+        <article class="entry" data-priority="medium">
+          <div class="entry-head">
+            <h3>Legacy icon set still carries monster-game semantics</h3>
+            <span class="pill">Priority: Medium</span>
+          </div>
+          <div class="entry-body">
+            <div class="field">
+              <span>Surface</span>
+              <p>Map nodes, item sprites, badge/stamp ceremony, collection buttons.</p>
+            </div>
+            <div class="field">
+              <span>Friction</span>
+              <p>Several icons are mechanically useful but not football-native.</p>
+            </div>
+            <div class="field">
+              <span>Phase 2 Direction</span>
+              <p>Build a football icon pass for scout, friendly, recovery, gear, coach, and host city challenge nodes.</p>
+            </div>
+            <div class="field">
+              <span>Evidence</span>
+              <p>Current Phase 1 plan keeps sprite replacement secondary to gameplay correctness.</p>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <footer>
+      Update this file whenever a task discovers a non-blocking visual issue, sprite gap, image debt, or UX friction that should be addressed after the Phase 1 slice is playable.
+    </footer>
+  </main>
+</body>
+</html>

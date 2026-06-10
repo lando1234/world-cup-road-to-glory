@@ -351,7 +351,7 @@
         </article>
         <article class="card">
           <strong>Football-only slice</strong>
-          <p>Phase 1 assumes football mode is the active experience, but legacy Pokelike code paths stay in place behind feature gates rather than being deleted.</p>
+          <p>Phase 1 assumes football mode is the only player-facing experience. Legacy code may remain temporarily encapsulated during migration, but no Pokémon terminology or mechanics should remain visible in the slice.</p>
         </article>
       </div>
     </section>
@@ -360,8 +360,8 @@
       <h2>Assumptions Outside The Specs</h2>
       <ul class="assumption-list">
         <li class="item">
-          <span class="label">No build tooling will be introduced</span>
-          <span class="body">All new code should work through plain script tags, browser globals, and static JSON fetches. This keeps the Phase 1 demo aligned with the current project shape.</span>
+          <span class="label">Node is the project automation baseline</span>
+          <span class="body">The playable app still runs through plain script tags, browser globals, and static JSON fetches, but project automation now uses <code>package.json</code> scripts. This gives Phase 1 repeatable validation without blocking the future Next/React migration path.</span>
         </li>
         <li class="item">
           <span class="label">Domain modules use globals for now</span>
@@ -392,8 +392,12 @@
           <span class="body">TheSportsDB cutouts are real-player likeness from a third-party catalog, acceptable for internal slice demos only. Profiles declare <code>legal.likenessTier: 0</code>. Public release requires legal review and owned or licensed art — see “Temporary Bridges To Retire Later”.</span>
         </li>
         <li class="item">
-          <span class="label">Manual QA is acceptable for Phase 1</span>
-          <span class="body">Automated tests are valuable, but the task breakdown treats manual smoke tests as the Phase 1 gate. Test scripts should not block small implementation tickets unless a ticket asks for them.</span>
+          <span class="label">Scripted validation and manual QA are both required</span>
+          <span class="body">Each task must include targeted validation. Domain work should extend <code>Pokelike/scripts/validate-football-domain.mjs</code>; UI and gameplay work should also use browser validation and screenshots when the changed surface is visible.</span>
+        </li>
+        <li class="item">
+          <span class="label">One task, one commit</span>
+          <span class="body">Every implementation task should end in a single atomic commit that includes implementation, validation, tests, task breakdown updates, assumptions updates, and any relevant Phase 2 visual-friction notes.</span>
         </li>
         <li class="task-entry">
           <header>
@@ -455,6 +459,33 @@
     <section>
       <h2>Task-Level Assumption Log</h2>
       <ul class="task-list">
+        <li class="task-entry">
+          <header>
+            <div class="task-title">
+              <h3>T0-001 — Establish validation harness and visual-friction registry</h3>
+              <span class="pill">Status: implemented</span>
+              <span class="pill">Review: PASS</span>
+            </div>
+          </header>
+          <div class="task-grid">
+            <div class="task-note">
+              <strong>Assumptions</strong>
+              <p>The current no-build browser-global runtime can still support repeatable tests by evaluating domain scripts in a small Node <code>vm</code> context. Node/npm is the project automation baseline even before a future Next/React migration.</p>
+            </div>
+            <div class="task-note">
+              <strong>Tradeoffs</strong>
+              <p>The first harness validates domain contracts and script order, not full browser behavior. UI and gameplay tasks still need Browser-based smoke tests and screenshots when visible screens change.</p>
+            </div>
+            <div class="task-note">
+              <strong>Design Decisions</strong>
+              <p><code>package.json</code> defines <code>npm run validate</code>, <code>npm run serve</code>, domain validation, docs validation, and syntax checks. <code>validate-football-domain.mjs</code> starts with script order, feature gates, style chart, player catalog, and combat adapter checks. Later domain tasks should append focused checks for bosses, album, save migration, scout, and recruit behavior.</p>
+            </div>
+            <div class="task-note">
+              <strong>Risks / Follow-up</strong>
+              <p>The harness deliberately avoids loading <code>data.js</code> because that file has broad legacy side effects. As football domain boundaries improve, tests should shift from VM shims toward cleaner module-level validation.</p>
+            </div>
+          </div>
+        </li>
         <li class="task-entry">
           <header>
             <div class="task-title">
@@ -947,6 +978,10 @@
           <span class="label">Leave future systems unreachable</span>
           <span class="body">Legend fragments, Run Budget, knockout, named events, achievements, and full meta settlement should not be partially implemented during Phase 1 tasks that do not request them.</span>
         </li>
+        <li class="item">
+          <span class="label">Keep deferred visual debt visible</span>
+          <span class="body">Non-blocking sprite gaps, image issues, visual inconsistencies, and UX friction discovered during Phase 1 should be recorded in <code>013-phase-2-visual-frictions.html</code> instead of being silently deferred.</span>
+        </li>
       </ul>
     </section>
 
@@ -988,7 +1023,7 @@
     </section>
 
     <footer>
-      Generated for the Pokelike World Cup Road to Glory vertical slice. Last updated 2026-06-10 — bridges registry, data stability rule, migration guardrails, TheSportsDB release-risk notes.
+      Generated for the Pokelike World Cup Road to Glory vertical slice. Last updated 2026-06-10 — Node/npm automation baseline, T0 validation protocol, one-task-one-commit rule, visual-friction registry, bridges registry, migration guardrails, TheSportsDB release-risk notes.
     </footer>
   </main>
 </body>
