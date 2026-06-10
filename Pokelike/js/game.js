@@ -1192,6 +1192,11 @@ async function doGen2Elite4() {
 
 
 async function doCatchNode(node) {
+  if (isFootballModeEnabled()) {
+    await doScoutReportNode(node);
+    return;
+  }
+
   showScreen('catch-screen');
   renderTeamBar(state.team, document.getElementById('catch-team-bar'), true);
   const choicesEl = document.getElementById('catch-choices');
@@ -1355,6 +1360,110 @@ async function doCatchNode(node) {
   };
 }
 
+async function doScoutReportNode(node) {
+  showScreen('catch-screen');
+  renderTeamBar(state.team, document.getElementById('catch-team-bar'), true);
+
+  const title = document.querySelector('#catch-screen h2');
+  if (title) title.textContent = 'Scout Report';
+
+  const skipBtn = document.getElementById('btn-skip-catch');
+  if (skipBtn) skipBtn.textContent = 'Pass on report';
+
+  const choicesEl = document.getElementById('catch-choices');
+  let instances;
+  let level;
+
+  if (state.savedCatch?.nodeId === node.id && state.savedCatch.footballScout === true && Array.isArray(state.savedCatch.instances)) {
+    ({ instances, level } = state.savedCatch);
+  } else {
+    choicesEl.innerHTML = '<div class="loading">Preparing scout report...</div>';
+    if (!window.DomainScout || typeof window.DomainScout.initScoutPools !== 'function') {
+      throw new Error('DomainScout.initScoutPools is unavailable.');
+    }
+    if (!window.DomainCombatAdapter || typeof window.DomainCombatAdapter.createPlayerInstance !== 'function') {
+      throw new Error('DomainCombatAdapter.createPlayerInstance is unavailable.');
+    }
+    if (!window.DomainAlbum || typeof window.DomainAlbum.markAlbumSeen !== 'function') {
+      throw new Error('DomainAlbum.markAlbumSeen is unavailable.');
+    }
+
+    await window.DomainScout.initScoutPools();
+    const report = window.DomainScout.buildSliceReport(state.currentMap, state, { node });
+    level = Math.max(4, getLevelForNode(node));
+    instances = report.profileIds.map(profileId => {
+      window.DomainAlbum.markAlbumSeen(profileId);
+      return window.DomainCombatAdapter.createPlayerInstance(profileId, level, {
+        moveTier: getMoveТierForMap(state.currentMap)
+      });
+    });
+    state.savedCatch = {
+      nodeId: node.id,
+      footballScout: true,
+      profileIds: report.profileIds,
+      instances,
+      level,
+      reportFlags: report.flags
+    };
+    saveRun();
+  }
+
+  function renderScoutSlot(inst) {
+    loadBuffsIntoPokemon(inst);
+    const signed = window.DomainAlbum.getEntryState(inst.profileId) === 'signed';
+    const wrapper = document.createElement('div');
+    wrapper.innerHTML = renderPokemonCard(inst, true, false, signed, false);
+    const card = wrapper.querySelector('.poke-card');
+    card.style.cursor = 'pointer';
+    card.setAttribute('role', 'button');
+    card.setAttribute('tabindex', '0');
+    card.addEventListener('click', () => signScoutPlayer(inst, node));
+    card.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') signScoutPlayer(inst, node); });
+    const wrap = document.createElement('div');
+    wrap.className = 'poke-choice-wrap';
+    wrap.appendChild(card);
+    wrap.insertAdjacentHTML('beforeend', renderTraitPreview(inst, state.team));
+    return wrap;
+  }
+
+  choicesEl.innerHTML = '';
+  for (const inst of instances) {
+    choicesEl.appendChild(renderScoutSlot(inst));
+  }
+
+  document.getElementById('btn-skip-catch').onclick = () => {
+    if (window.DomainRecruit?.passOnReport) window.DomainRecruit.passOnReport(state);
+    state.savedCatch = null;
+    state.savedQuestionResolve = null;
+    advanceFromNode(state.map, node.id);
+    showMapScreen();
+  };
+}
+
+function isFootballRuntimeInstance(instance) {
+  return isFootballModeEnabled() && Number.isInteger(instance?.profileId);
+}
+
+function signScoutPlayer(player, node) {
+  if (!window.DomainRecruit || typeof window.DomainRecruit.offerContract !== 'function') {
+    throw new Error('DomainRecruit.offerContract is unavailable.');
+  }
+
+  const result = window.DomainRecruit.offerContract(player.profileId, state);
+  if (result.needsSwap) {
+    showSwapScreen(player, node);
+    return;
+  }
+
+  loadBuffsIntoPokemon(player);
+  state.team.push(player);
+  if (state.team.length > state.maxTeamSize) state.maxTeamSize = state.team.length;
+  state.savedCatch = null;
+  state.savedQuestionResolve = null;
+  advanceFromNode(state.map, node.id);
+  showMapScreen();
+}
+
 function checkStarterCollectionAchievements() {
   const stage = endlessState.stageNumber;
   const starterIds = REGION_STARTERS[stage];
@@ -1429,7 +1538,10 @@ function showSwapScreen(newPoke, node) {
   const hasRoom = state.team.length < 6;
   const h2 = document.querySelector('#swap-screen h2');
   if (h2) h2.textContent = hasRoom ? 'New Pokémon!' : 'Team Full!';
-  const swapCaught = _isDexCaught(getPokedex()[newPoke.speciesId]);
+  const isFootballIncoming = isFootballRuntimeInstance(newPoke);
+  const swapCaught = isFootballIncoming
+    ? window.DomainAlbum?.getEntryState?.(newPoke.profileId) === 'signed'
+    : _isDexCaught(getPokedex()[newPoke.speciesId]);
   document.getElementById('swap-incoming').innerHTML = `<div style="display:flex;justify-content:center;">${renderPokemonCard(newPoke, true, false, swapCaught)}</div>`;
   const el = document.getElementById('swap-choices');
   el.innerHTML = '';
@@ -1459,6 +1571,9 @@ function showSwapScreen(newPoke, node) {
     addBtn.textContent = `Add ${newPoke.name} to team!`;
     addBtn.addEventListener('click', () => {
       cleanup();
+      if (isFootballIncoming && window.DomainRecruit?.offerContract) {
+        window.DomainRecruit.offerContract(newPoke.profileId, state, { forceAdd: true });
+      }
       loadBuffsIntoPokemon(newPoke);
       state.team.push(newPoke);
       if (state.team.length > state.maxTeamSize) state.maxTeamSize = state.team.length;
@@ -1484,7 +1599,11 @@ function showSwapScreen(newPoke, node) {
     const idx = i;
     card.addEventListener('click', () => {
       cleanup();
-      if (newPoke.isShiny) markShinyDexCaught(newPoke.speciesId, newPoke.name, newPoke.types, newPoke.spriteUrl);
+      if (isFootballIncoming && window.DomainRecruit?.offerContract) {
+        window.DomainRecruit.offerContract(newPoke.profileId, state, { forceAdd: true });
+      } else if (newPoke.isShiny) {
+        markShinyDexCaught(newPoke.speciesId, newPoke.name, newPoke.types, newPoke.spriteUrl);
+      }
       const released = state.team[idx];
       if (released.heldItem) state.items.push(released.heldItem);
       loadBuffsIntoPokemon(newPoke);

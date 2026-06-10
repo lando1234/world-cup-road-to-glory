@@ -161,6 +161,34 @@ await runTest("game boot migrates save before run reads", () => {
   assert(migrationIndex < continueRunReadIndex, "save migration must run before initGame reads poke_current_run");
 });
 
+await runTest("football catch node is wired to scout recruitment flow", () => {
+  const gameSource = readText("js/game.js");
+  const doCatchIndex = gameSource.indexOf("async function doCatchNode(node)");
+  const doScoutIndex = gameSource.indexOf("async function doScoutReportNode(node)");
+  const signScoutIndex = gameSource.indexOf("function signScoutPlayer(player, node)");
+  const catchPokemonIndex = gameSource.indexOf("function catchPokemon(pokemon, node)");
+
+  assert(doCatchIndex !== -1, "game.js should define doCatchNode");
+  assert(doScoutIndex !== -1, "game.js should define doScoutReportNode");
+  assert(signScoutIndex !== -1, "game.js should define signScoutPlayer");
+  assert(catchPokemonIndex !== -1, "game.js should define legacy catchPokemon");
+
+  const doCatchBlock = gameSource.slice(doCatchIndex, doScoutIndex);
+  const scoutBlock = gameSource.slice(doScoutIndex, signScoutIndex);
+  const signBlock = gameSource.slice(signScoutIndex, catchPokemonIndex);
+
+  assert(doCatchBlock.includes("if (isFootballModeEnabled())"), "doCatchNode should branch for football mode");
+  assert(doCatchBlock.includes("await doScoutReportNode(node);"), "football doCatchNode should delegate to doScoutReportNode");
+  assert(scoutBlock.includes("DomainScout.initScoutPools"), "doScoutReportNode should initialize scout pools");
+  assert(scoutBlock.includes("DomainScout.buildSliceReport"), "doScoutReportNode should build scout report");
+  assert(scoutBlock.includes("DomainCombatAdapter.createPlayerInstance"), "doScoutReportNode should create football player instances");
+  assert(scoutBlock.includes("DomainAlbum.markAlbumSeen"), "doScoutReportNode should mark displayed profiles as seen");
+  assert(scoutBlock.includes("Pass on report"), "football skip label should be Pass on report");
+  assert(signBlock.includes("DomainRecruit.offerContract"), "signScoutPlayer should offer contract through DomainRecruit");
+  assert(signBlock.includes("showSwapScreen(player, node)"), "signScoutPlayer should route full squads to swap screen");
+  assert(!signBlock.includes("markPokedexCaught"), "football scout signing should not write poke_dex");
+});
+
 await runTest("feature gates default to football slice mode", () => {
   const features = context.window.FEATURES;
   assert(features.footballMode === true, "FEATURES.footballMode must be true");
@@ -428,6 +456,21 @@ await runTest("recruit contract full squad requests swap without signing", () =>
   assert(result.needsSwap === true, "full squad contract should request swap");
   assert(runState.ledger.signedProfileIds.length === 0, "full squad pending swap should not append signed ledger");
   assert(context.window.DomainAlbum.getEntryState(14) === "unknown", "full squad pending swap should not mark album signed");
+});
+
+await runTest("recruit forceAdd signs after swap confirmation", () => {
+  context.localStorage.removeItem("game_album");
+  const runState = {
+    team: Array.from({ length: 6 }, (_, index) => ({ profileId: index + 1 })),
+    ledger: { signedProfileIds: [], duplicateSignProfileIds: [] }
+  };
+
+  const result = context.window.DomainRecruit.offerContract(14, runState, { forceAdd: true });
+
+  assert(result.added === true, "forceAdd contract should sign after swap confirmation");
+  assert(result.needsSwap === false, "forceAdd contract should not request another swap");
+  assert(runState.ledger.signedProfileIds.join(",") === "14", "forceAdd should append signedProfileIds");
+  assert(context.window.DomainAlbum.getEntryState(14) === "signed", "forceAdd should mark album signed");
 });
 
 await runTest("recruit pass on report does not sign", () => {

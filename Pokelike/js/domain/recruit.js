@@ -66,7 +66,7 @@ function offerContract(profileId, runState, opts = {}) {
   const ledger = ensureRunLedger(runState);
   const teamSize = getTeamSize(runState);
   const maxSquadSize = getMaxSquadSize(runState, opts);
-  const needsSwap = teamSize >= maxSquadSize;
+  const needsSwap = !opts.forceAdd && teamSize >= maxSquadSize;
   const wasAlreadySigned = window.DomainAlbum.getEntryState(normalizedProfileId) === "signed";
 
   if (needsSwap) {

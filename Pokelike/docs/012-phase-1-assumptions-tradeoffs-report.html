@@ -732,6 +732,33 @@
         <li class="task-entry">
           <header>
             <div class="task-title">
+              <h3>T10 — Scout Report gameplay wiring</h3>
+              <span class="pill">Status: implemented</span>
+              <span class="pill">Review: PASS</span>
+            </div>
+          </header>
+          <div class="task-grid">
+            <div class="task-note">
+              <strong>Assumptions</strong>
+              <p>The existing catch screen can temporarily host the football Scout Report flow as long as the domain behavior is correct and player-facing text avoids the worst legacy terminology.</p>
+            </div>
+            <div class="task-note">
+              <strong>Tradeoffs</strong>
+              <p>The branch keeps legacy catch/reroll behavior for non-football modes and adds a separate football path instead of rewriting the whole catch function. This lowers regression risk but leaves UI polish for P1-033/P1-034.</p>
+            </div>
+            <div class="task-note">
+              <strong>Design Decisions</strong>
+              <p>Football <code>doCatchNode</code> now initializes <code>DomainScout</code>, builds a report with current node context, creates instances via <code>DomainCombatAdapter</code>, marks displayed IDs seen, and signs through <code>DomainRecruit</code>. Full squads route to swap without signing until the player confirms.</p>
+            </div>
+            <div class="task-note">
+              <strong>Risks / Follow-up</strong>
+              <p>The visible containers still use legacy IDs/classes such as <code>catch-screen</code> and <code>swap-screen</code>. P1-033 and P1-034 must finish copy/layout polish and remove remaining Pokémon presentation artifacts.</p>
+            </div>
+          </div>
+        </li>
+        <li class="task-entry">
+          <header>
+            <div class="task-title">
               <h3>P1-001 — Create <code>domain/features.js</code> with Phase 1 flags</h3>
               <span class="pill">Status: implemented</span>
             </div>
@@ -1266,7 +1293,7 @@
     </section>
 
     <footer>
-      Generated for the Pokelike World Cup Road to Glory vertical slice. Last updated 2026-06-10 — T9 recruitment contract API, T8 Map 0 forced scout override, T7 scout pool foundation, T6 boot-time migration wiring, T5 save v3 album migration, T4 DomainAlbum persistence API, T3 album layout data, T2 host city boss catalog, T1 boot and cloud gates, Node/npm automation baseline, T0 validation protocol, one-task-one-commit rule, visual-friction registry, bridges registry, migration guardrails, TheSportsDB release-risk notes.
+      Generated for the Pokelike World Cup Road to Glory vertical slice. Last updated 2026-06-10 — T10 Scout Report gameplay wiring, T9 recruitment contract API, T8 Map 0 forced scout override, T7 scout pool foundation, T6 boot-time migration wiring, T5 save v3 album migration, T4 DomainAlbum persistence API, T3 album layout data, T2 host city boss catalog, T1 boot and cloud gates, Node/npm automation baseline, T0 validation protocol, one-task-one-commit rule, visual-friction registry, bridges registry, migration guardrails, TheSportsDB release-risk notes.
     </footer>
   </main>
 </body>
