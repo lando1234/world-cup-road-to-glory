@@ -182,6 +182,10 @@ async function prepareFootballBootGate() {
       throw new Error('DomainProfiles.initCatalog is unavailable.');
     }
     await window.DomainProfiles.initCatalog();
+    if (!window.DomainAlbum || typeof window.DomainAlbum.initAlbumLayout !== 'function') {
+      throw new Error('DomainAlbum.initAlbumLayout is unavailable.');
+    }
+    await window.DomainAlbum.initAlbumLayout();
     if (!window.DomainBosses || typeof window.DomainBosses.initHostCityBosses !== 'function') {
       throw new Error('DomainBosses.initHostCityBosses is unavailable.');
     }

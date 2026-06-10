@@ -3723,8 +3723,6 @@ function openAchievementsModal() {
 
 // ---- Pokedex Modal ----
 
-let footballAlbumLayoutCache = null;
-
 function albumEscape(value) {
   return String(value ?? '')
     .replace(/&/g, '&amp;')
@@ -3737,16 +3735,6 @@ function albumEscape(value) {
 function albumFlag(countryCode) {
   if (typeof flagEmojiFromCountryCode === 'function') return flagEmojiFromCountryCode(countryCode);
   return albumEscape(countryCode || '');
-}
-
-async function loadFootballAlbumLayout() {
-  if (footballAlbumLayoutCache) return footballAlbumLayoutCache;
-  const response = await fetch('data/football/album_layout.json');
-  if (!response.ok) {
-    throw new Error(`Failed to load album_layout.json: ${response.status} ${response.statusText}`);
-  }
-  footballAlbumLayoutCache = await response.json();
-  return footballAlbumLayoutCache;
 }
 
 function renderAlbumSlot(slot) {
@@ -3808,8 +3796,9 @@ async function openAlbumModal(initialPageId = 'marquee') {
   if (existing) { existing.remove(); return; }
 
   await window.DomainProfiles?.initCatalog?.();
-  const layout = await loadFootballAlbumLayout();
-  const pages = Array.isArray(layout.pages) ? layout.pages : [];
+  await window.DomainAlbum?.initAlbumLayout?.();
+  const layout = window.DomainAlbum?.getAlbumLayoutConfig?.() || {};
+  const pages = window.DomainAlbum?.getAlbumLayout?.() || [];
   const initialPage = pages.some(page => page.pageId === initialPageId) ? initialPageId : pages[0]?.pageId;
   const signedCount = window.DomainAlbum?.countSigned?.() || 0;
   const totalCount = window.DomainAlbum?.getSliceAlbumProfileIds?.().length || 0;

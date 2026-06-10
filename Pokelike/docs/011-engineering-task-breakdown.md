@@ -5,7 +5,7 @@
 **Inputs:** [001](./001-codebase-discovery.md), [006B](./006B-technical-blueprint-revised.md), [007](./007-football-data-pack.md), [008](./008-meta-progression.md), [009](./009-gameplay-loop-node-system.md)  
 **Version:** v1.1  
 **Date:** 2026-06-10  
-**Last sync:** `main` @ this commit — World Cup Album modal (T16)
+**Last sync:** `main` @ this commit — Album layout domain loader (T17)
 **Assumptions:** Single developer · existing Pokelike vanilla JS · browser game · no React · no backend changes
 
 ---
@@ -14,9 +14,9 @@
 
 | Metric | Count |
 |--------|------:|
-| **Done** | 29 |
+| **Done** | 30 |
 | **Partial** | 8 |
-| **Not started** | 15 |
+| **Not started** | 14 |
 | **Total tickets** | 52 |
 
 **Legend:** ✅ Done · 🟡 Partial (shipped subset; acceptance not fully met) · ⬜ Not started
@@ -43,7 +43,8 @@ Before continuing gameplay implementation, T0 establishes the repeatable validat
 | T13-001 | ✅ | Third stamp routes to a minimal slice-complete screen and lightweight `settleRunLite()` before returning to title — `752d108` |
 | T14-001 | ✅ | `badge-screen` football branch renders City Stamp flag/copy/counts without legacy badge sprites — `1e39698` |
 | T15-001 | ✅ | Football question nodes resolve only to battle/trainer, with slice-safe weights/gates validated — `e0da8e5` |
-| T16-001 | ✅ | Football collection opens World Cup Album modal with layout pages and unknown/seen/signed states — this commit |
+| T16-001 | ✅ | Football collection opens World Cup Album modal with layout pages and unknown/seen/signed states — `f20e5d4` |
+| T17-001 | ✅ | `DomainAlbum` owns album layout fetch/cache plus ordered slot profile IDs — this commit |
 
 **Per-task Definition of Done from this point forward:**
 
@@ -99,8 +100,8 @@ Domain tasks should extend `Pokelike/scripts/validate-football-domain.mjs` inste
 | P1-027 | ✅ | `DomainAlbum` `game_album` API implemented for seen/signed/count — `495ef23` |
 | P1-028 | ✅ | `migrateSaveV2toV3()` copies `poke_dex` to `game_album`, sets save v3, and preserves active runs — `94d3326` |
 | P1-029 | ⬜ | Dex writes not routed to album |
-| P1-030 | ✅ | Football collection opens World Cup Album modal with Marquee/Favorites pages and unknown/seen/signed states — this commit |
-| P1-031 | ⬜ | `album_layout.json` loader not implemented |
+| P1-030 | ✅ | Football collection opens World Cup Album modal with Marquee/Favorites pages and unknown/seen/signed states — `f20e5d4` |
+| P1-031 | ✅ | `DomainAlbum` loads/caches `album_layout.json`, exposes pages and ordered slot profile IDs, and boot gate initializes layout — this commit |
 | P1-032 | 🟡 | Marquee Signing reskin — `5c2b3d8`; **Core Six style triangle tooltip missing** |
 | P1-033 | ⬜ | Catch screen still Pokémon UX |
 | P1-034 | ⬜ | Swap screen not reskinned |
@@ -159,7 +160,7 @@ P1-042  → persist ledger in poke_current_run
 P1-043  → applyAccountPatch
 ```
 
-**Current:** P1-013, P1-027, P1-028, P1-041, P1-016, P1-017, P1-018, P1-019, P1-022, P1-023, P1-024, P1-025, P1-026, and P1-030 complete. P1-035/P1-036 have minimal shells and still need full product/domain passes. Next implementation step is P1-031 album layout domain loader.
+**Current:** P1-013, P1-027, P1-028, P1-041, P1-016, P1-017, P1-018, P1-019, P1-022, P1-023, P1-024, P1-025, P1-026, P1-030, and P1-031 complete. P1-035/P1-036 have minimal shells and still need full product/domain passes. Next implementation step is P1-029 dex write routing or P1-036 settlement domain API.
 
 **Exit:** `game_album` read/write path exists; mid-run reload preserves ledger shape.
 
@@ -200,7 +201,7 @@ P1-037  (finish) → unify all card call sites + football stat labels
 P1-038  (finish) → map HUD Album button + hide remaining Pokémon chrome
 P1-039  (finish) → battle log faint/win/loss strings
 P1-040  (finish) → T0 silhouette pipeline everywhere
-P1-031  → album_layout loader
+P1-031  → album_layout loader ✅
 P1-030  → album modal (marquee + favorites pages) ✅
 P1-032  (finish) → Core Six style triangle on marquee
 ```
@@ -1570,7 +1571,7 @@ P1-001 → P1-002 → P1-003 → P1-004 → P1-005 → P1-007 → P1-008 → P1-
 ### Remaining critical spine (from current state)
 
 ```
-P1-031 → P1-036 → P1-044 → P1-046 → P1-052
+P1-029 → P1-036 → P1-044 → P1-046 → P1-052
 ```
 
 ### Parallelizable Tasks

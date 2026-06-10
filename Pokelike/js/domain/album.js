@@ -5,8 +5,12 @@
  * Owns the compact account-level sticker state stored in localStorage.
  */
 const ALBUM_STORAGE_KEY = "game_album";
+const ALBUM_LAYOUT_URL = "data/football/album_layout.json";
 const PHASE_1_ALBUM_PAGE_IDS = Object.freeze(["marquee", "favorites"]);
 const PHASE_1_ALBUM_PROFILE_IDS = Object.freeze([1, 2, 3, 4, 6, 7, 9, 10, 12, 14, 15, 17, 18, 28]);
+
+let albumLayout = null;
+let albumLayoutPromise = null;
 
 function isPlainObject(value) {
   return value !== null && typeof value === "object" && !Array.isArray(value);
@@ -51,6 +55,92 @@ function getSliceAlbumProfileIds() {
   return window.DomainProfiles.getAllProfiles()
     .filter(profile => PHASE_1_ALBUM_PAGE_IDS.includes(profile.album?.pageId))
     .map(profile => profile.profileId);
+}
+
+function freezeAlbumLayout(rawLayout) {
+  const pages = rawLayout.pages.map(page => Object.freeze({
+    ...page,
+    slots: Object.freeze(page.slots.map(slot => Object.freeze({ ...slot })))
+  }));
+
+  return Object.freeze({
+    ...rawLayout,
+    pages: Object.freeze(pages),
+    deferredPages: Object.freeze([...(rawLayout.deferredPages || [])])
+  });
+}
+
+function loadAlbumLayout(rawLayout) {
+  if (!isPlainObject(rawLayout)) {
+    throw new Error("Album layout must be an object.");
+  }
+  if (!Array.isArray(rawLayout.pages) || rawLayout.pages.length === 0) {
+    throw new Error("Album layout must define at least one page.");
+  }
+
+  const seenPageIds = new Set();
+  for (const page of rawLayout.pages) {
+    if (!isPlainObject(page) || typeof page.pageId !== "string" || page.pageId.trim() === "") {
+      throw new Error("Album layout pageId must be a non-empty string.");
+    }
+    if (seenPageIds.has(page.pageId)) {
+      throw new Error(`Duplicate album pageId: ${page.pageId}`);
+    }
+    seenPageIds.add(page.pageId);
+
+    if (!Array.isArray(page.slots) || page.slots.length === 0) {
+      throw new Error(`Album page ${page.pageId} must define slots.`);
+    }
+
+    page.slots.forEach((slot, index) => {
+      const expectedSlot = index + 1;
+      if (!isPlainObject(slot) || slot.slot !== expectedSlot) {
+        throw new Error(`Album page ${page.pageId} slot ${expectedSlot} is not contiguous.`);
+      }
+      const profileId = assertValidAlbumProfileId(slot.profileId);
+      const profile = getProfileOrNull(profileId);
+      if (profile && (profile.album?.pageId !== page.pageId || profile.album?.slot !== slot.slot)) {
+        throw new Error(`Album slot mismatch for profileId ${profileId} on page ${page.pageId}.`);
+      }
+    });
+  }
+
+  albumLayout = freezeAlbumLayout(rawLayout);
+  return albumLayout;
+}
+
+async function initAlbumLayout() {
+  if (albumLayout) return albumLayout;
+  if (albumLayoutPromise) return albumLayoutPromise;
+
+  albumLayoutPromise = fetch(ALBUM_LAYOUT_URL)
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`Failed to fetch ${ALBUM_LAYOUT_URL}: ${response.status} ${response.statusText}`);
+      }
+      return response.json();
+    })
+    .then(loadAlbumLayout)
+    .catch(error => {
+      albumLayoutPromise = null;
+      throw error;
+    });
+
+  return albumLayoutPromise;
+}
+
+function getAlbumLayoutConfig() {
+  return albumLayout;
+}
+
+function getAlbumLayout() {
+  return albumLayout?.pages || Object.freeze([]);
+}
+
+function getSlotProfileIds(pageId) {
+  const page = getAlbumLayout().find(candidate => candidate.pageId === pageId);
+  if (!page) return Object.freeze([]);
+  return Object.freeze(page.slots.map(slot => slot.profileId));
 }
 
 function readStoredAlbum() {
@@ -131,6 +221,13 @@ function countSigned(profileIds = getSliceAlbumProfileIds()) {
 
 const DomainAlbum = Object.freeze({
   ALBUM_STORAGE_KEY,
+  ALBUM_LAYOUT_URL,
+  initAlbumLayout,
+  initCatalog: initAlbumLayout,
+  loadAlbumLayout,
+  getAlbumLayoutConfig,
+  getAlbumLayout,
+  getSlotProfileIds,
   getAlbum,
   getEntryState,
   markAlbumSeen,

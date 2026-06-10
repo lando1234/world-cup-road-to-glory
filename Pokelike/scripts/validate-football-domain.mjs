@@ -151,6 +151,7 @@ await runTest("script load order keeps football domain before data.js", () => {
 await runTest("game boot migrates save before run reads", () => {
   const gameSource = readText("js/game.js");
   assert(gameSource.includes("migrateAccountSaveOnBoot();"), "initGame should call migrateAccountSaveOnBoot");
+  assert(gameSource.includes("DomainAlbum.initAlbumLayout"), "football boot gate should initialize album layout");
 
   const initGameIndex = gameSource.indexOf("async function initGame()");
   const migrationIndex = gameSource.indexOf("migrateAccountSaveOnBoot();", initGameIndex);
@@ -309,7 +310,8 @@ await runTest("football album modal replaces pokedex collection surface", () => 
 
   assert(uiSource.includes("async function openAlbumModal"), "ui.js should define openAlbumModal");
   assert(uiSource.includes("return openAlbumModal"), "openPokedexModal should delegate to openAlbumModal in football mode");
-  assert(uiSource.includes("data/football/album_layout.json"), "album modal should load album layout JSON");
+  assert(uiSource.includes("DomainAlbum?.initAlbumLayout"), "album modal should initialize layout through DomainAlbum");
+  assert(uiSource.includes("DomainAlbum?.getAlbumLayout"), "album modal should read layout through DomainAlbum");
   assert(uiSource.includes("DomainAlbum?.getEntryState"), "album modal should read album entry states");
   assert(uiSource.includes("album-card--unknown"), "album modal should render unknown state");
   assert(uiSource.includes("album-card--seen"), "album modal should render seen state");
@@ -439,6 +441,19 @@ await runTest("album layout defines Phase 1 slice pages", () => {
       assert(profile.album.slot === expectedSlot, `profileId ${slot.profileId} album slot mismatch`);
     });
   }
+});
+
+await runTest("album domain loads layout and exposes ordered slot ids", () => {
+  const layout = context.window.DomainAlbum.loadAlbumLayout(albumLayoutJson);
+  const pages = context.window.DomainAlbum.getAlbumLayout();
+  const marqueeIds = context.window.DomainAlbum.getSlotProfileIds("marquee");
+  const favoriteIds = context.window.DomainAlbum.getSlotProfileIds("favorites");
+
+  assert(layout.pages.length === 2, "loaded album layout should expose 2 pages");
+  assert(pages.map(page => page.pageId).join(",") === "marquee,favorites", "getAlbumLayout should expose ordered pages");
+  assert(marqueeIds.join(",") === "1,2,3", "getSlotProfileIds should return marquee slots in order");
+  assert(favoriteIds.join(",") === "4,6,7,9,10,12,14,15,17,18,28", "getSlotProfileIds should return favorite slots in order");
+  assert(context.window.DomainAlbum.getSlotProfileIds("missing").length === 0, "missing album page should return empty slot list");
 });
 
 await runTest("scout pools define Phase 1 stage bands", () => {
