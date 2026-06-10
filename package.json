@@ -8,7 +8,7 @@
     "validate": "npm run validate:domain && npm run validate:docs && npm run check:syntax",
     "validate:domain": "node Pokelike/scripts/validate-football-domain.mjs",
     "validate:docs": "node Pokelike/scripts/validate-docs.mjs",
-    "check:syntax": "node --check Pokelike/scripts/validate-football-domain.mjs && node --check Pokelike/scripts/validate-docs.mjs && node --check Pokelike/scripts/serve-static.mjs && node --check Pokelike/js/domain/album.js && node --check Pokelike/js/domain/save.js && node --check Pokelike/js/data.js && node --check Pokelike/js/game.js && node --check Pokelike/js/map.js && node --check Pokelike/js/ui.js && node --check Pokelike/js/cloud-save.js"
+    "check:syntax": "node --check Pokelike/scripts/validate-football-domain.mjs && node --check Pokelike/scripts/validate-docs.mjs && node --check Pokelike/scripts/serve-static.mjs && node --check Pokelike/js/domain/album.js && node --check Pokelike/js/domain/save.js && node --check Pokelike/js/domain/scout.js && node --check Pokelike/js/data.js && node --check Pokelike/js/game.js && node --check Pokelike/js/map.js && node --check Pokelike/js/ui.js && node --check Pokelike/js/cloud-save.js"
   },
   "engines": {
     "node": ">=20"

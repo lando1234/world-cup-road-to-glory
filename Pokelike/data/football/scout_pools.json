@@ -1,0 +1,46 @@
+{
+  "schemaVersion": 1,
+  "bands": [
+    {
+      "bandId": "early",
+      "mapMin": 0,
+      "mapMax": 1,
+      "profileIds": [10, 12, 15, 17, 18, 28],
+      "rarityMultipliers": {
+        "common": 1,
+        "uncommon": 1.4,
+        "rare": 1.2,
+        "elite": 0.6,
+        "legend": 0
+      }
+    },
+    {
+      "bandId": "mid",
+      "mapMin": 2,
+      "mapMax": 2,
+      "profileIds": [4, 6, 7, 9, 10, 12, 14, 15, 17, 18, 28],
+      "rarityMultipliers": {
+        "common": 1,
+        "uncommon": 1,
+        "rare": 1,
+        "elite": 1,
+        "legend": 0
+      }
+    }
+  ],
+  "rules": {
+    "choicesPerReport": 3,
+    "excludedStarterProfileIds": [1, 2, 3],
+    "maxPlayersPerNation": {
+      "BRA": 1
+    }
+  },
+  "forcedOverrides": [
+    {
+      "mapIndex": 0,
+      "layer": 1,
+      "nodeType": "catch",
+      "profileIds": [12, 15, 17]
+    }
+  ]
+}

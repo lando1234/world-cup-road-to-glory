@@ -651,6 +651,33 @@
         <li class="task-entry">
           <header>
             <div class="task-title">
+              <h3>T7 — Scout pool domain foundation</h3>
+              <span class="pill">Status: implemented</span>
+              <span class="pill">Review: PASS</span>
+            </div>
+          </header>
+          <div class="task-grid">
+            <div class="task-note">
+              <strong>Assumptions</strong>
+              <p>Phase 1 scouting only needs maps 0–2 and the authored slice roster. The report generator can return profile IDs now; form-level instance creation belongs to the later <code>doCatchNode</code> integration.</p>
+            </div>
+            <div class="task-note">
+              <strong>Tradeoffs</strong>
+              <p>The Map 0 forced override is stored in <code>scout_pools.json</code> as data, but not applied yet. P1-017 owns the node/layer-specific trigger so this task can stay focused on general pool validation and report generation.</p>
+            </div>
+            <div class="task-note">
+              <strong>Design Decisions</strong>
+              <p><code>DomainScout</code> validates all pool IDs against <code>DomainProfiles</code>, excludes marquee starters, enforces three unique choices, applies rarity multipliers, and caps Brazil to one player per report before padding from the same band.</p>
+            </div>
+            <div class="task-note">
+              <strong>Risks / Follow-up</strong>
+              <p>P1-019 still needs to route the legacy catch node into <code>DomainScout</code>, and P1-033 still needs the final Scout Report / Contract Offer UI polish. Until then, the domain behavior is tested but not player-facing.</p>
+            </div>
+          </div>
+        </li>
+        <li class="task-entry">
+          <header>
+            <div class="task-title">
               <h3>P1-001 — Create <code>domain/features.js</code> with Phase 1 flags</h3>
               <span class="pill">Status: implemented</span>
             </div>
@@ -1185,7 +1212,7 @@
     </section>
 
     <footer>
-      Generated for the Pokelike World Cup Road to Glory vertical slice. Last updated 2026-06-10 — T6 boot-time migration wiring, T5 save v3 album migration, T4 DomainAlbum persistence API, T3 album layout data, T2 host city boss catalog, T1 boot and cloud gates, Node/npm automation baseline, T0 validation protocol, one-task-one-commit rule, visual-friction registry, bridges registry, migration guardrails, TheSportsDB release-risk notes.
+      Generated for the Pokelike World Cup Road to Glory vertical slice. Last updated 2026-06-10 — T7 scout pool foundation, T6 boot-time migration wiring, T5 save v3 album migration, T4 DomainAlbum persistence API, T3 album layout data, T2 host city boss catalog, T1 boot and cloud gates, Node/npm automation baseline, T0 validation protocol, one-task-one-commit rule, visual-friction registry, bridges registry, migration guardrails, TheSportsDB release-risk notes.
     </footer>
   </main>
 </body>

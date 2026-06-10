@@ -95,6 +95,7 @@ runScript(context, "js/domain/album.js");
 runScript(context, "js/domain/bosses.js");
 runScript(context, "js/domain/combat-adapter.js");
 runScript(context, "js/domain/save.js");
+runScript(context, "js/domain/scout.js");
 
 context.window.GAME_THEME = {
   node: {
@@ -120,6 +121,8 @@ const catalog = context.window.DomainProfiles.loadCatalog(catalogJson);
 const hostCityBossesJson = readJson("data/football/host_city_bosses.json");
 const hostCityBossCatalog = context.window.DomainBosses.loadHostCityBosses(hostCityBossesJson);
 const albumLayoutJson = readJson("data/football/album_layout.json");
+const scoutPoolsJson = readJson("data/football/scout_pools.json");
+const scoutPoolCatalog = context.window.DomainScout.loadScoutPools(scoutPoolsJson);
 
 await runTest("script load order keeps football domain before data.js", () => {
   const expected = [
@@ -131,6 +134,7 @@ await runTest("script load order keeps football domain before data.js", () => {
     "js/domain/bosses.js",
     "js/domain/combat-adapter.js",
     "js/domain/save.js",
+    "js/domain/scout.js",
     "js/domain/recruit.js",
     "js/data.js"
   ];
@@ -272,6 +276,53 @@ await runTest("album layout defines Phase 1 slice pages", () => {
       assert(profile.album.slot === expectedSlot, `profileId ${slot.profileId} album slot mismatch`);
     });
   }
+});
+
+await runTest("scout pools define Phase 1 stage bands", () => {
+  assert(scoutPoolCatalog.config.bands.length === 2, `expected 2 scout bands, received ${scoutPoolCatalog.config.bands.length}`);
+  const early = context.window.DomainScout.getBandForMap(0);
+  const mid = context.window.DomainScout.getBandForMap(2);
+  assert(early.bandId === "early", "mapIndex 0 should use early scout band");
+  assert(mid.bandId === "mid", "mapIndex 2 should use mid scout band");
+  assert(early.profileIds.join(",") === "10,12,15,17,18,28", "early scout band profileIds mismatch");
+  assert(mid.profileIds.join(",") === "4,6,7,9,10,12,14,15,17,18,28", "mid scout band profileIds mismatch");
+  assert(scoutPoolCatalog.config.rules.excludedStarterProfileIds.join(",") === "1,2,3", "scout pools should exclude marquee starters");
+});
+
+await runTest("scout reports return three unique slice profiles", () => {
+  const sequence = [0.01, 0.99, 0.35, 0.72, 0.18, 0.55];
+  let index = 0;
+  const report = context.window.DomainScout.buildSliceReport(2, { flags: {} }, {
+    rng: () => sequence[index++ % sequence.length]
+  });
+
+  assert(report.mapIndex === 2, "scout report mapIndex should be preserved");
+  assert(report.bandId === "mid", "mapIndex 2 report should use mid band");
+  assert(report.profileIds.length === 3, "scout report should contain exactly 3 choices");
+  assert(new Set(report.profileIds).size === 3, "scout report choices should be unique");
+
+  for (const starterId of [1, 2, 3]) {
+    assert(!report.profileIds.includes(starterId), `scout report must exclude starter ${starterId}`);
+  }
+
+  for (const profileId of report.profileIds) {
+    const profile = context.window.DomainProfiles.getProfile(profileId);
+    assert(profile, `scout report profileId ${profileId} must exist`);
+    assert(profile.flags.scoutable === true, `scout report profileId ${profileId} must be scoutable`);
+  }
+});
+
+await runTest("scout reports enforce Brazil nation cap before padding", () => {
+  const report = context.window.DomainScout.buildSliceReport(2, { flags: {} }, {
+    rng: () => 0.999
+  });
+
+  const brazilCount = report.profileIds
+    .map(profileId => context.window.DomainProfiles.getProfile(profileId))
+    .filter(profile => profile.nation === "BRA")
+    .length;
+
+  assert(brazilCount <= 1, `scout report should include at most 1 Brazil player, received ${brazilCount}`);
 });
 
 await runTest("album API persists seen and signed states monotonically", () => {
