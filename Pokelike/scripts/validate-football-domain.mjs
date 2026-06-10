@@ -143,6 +143,19 @@ await runTest("script load order keeps football domain before data.js", () => {
   }
 });
 
+await runTest("game boot migrates save before run reads", () => {
+  const gameSource = readText("js/game.js");
+  assert(gameSource.includes("migrateAccountSaveOnBoot();"), "initGame should call migrateAccountSaveOnBoot");
+
+  const initGameIndex = gameSource.indexOf("async function initGame()");
+  const migrationIndex = gameSource.indexOf("migrateAccountSaveOnBoot();", initGameIndex);
+  const continueRunReadIndex = gameSource.indexOf("localStorage.getItem('poke_current_run')", initGameIndex);
+  assert(initGameIndex !== -1, "game.js should define initGame");
+  assert(migrationIndex !== -1, "initGame should call migrateAccountSaveOnBoot");
+  assert(continueRunReadIndex !== -1, "initGame should read poke_current_run for Continue Run");
+  assert(migrationIndex < continueRunReadIndex, "save migration must run before initGame reads poke_current_run");
+});
+
 await runTest("feature gates default to football slice mode", () => {
   const features = context.window.FEATURES;
   assert(features.footballMode === true, "FEATURES.footballMode must be true");
@@ -335,6 +348,18 @@ await runTest("save v3 migration preserves existing album", () => {
   assert(result.migrated === true, "migration should still set saveVersion when album exists");
   assert(result.albumCopied === false, "migration should not copy legacy dex over an existing album");
   assert(context.localStorage.getItem("game_album") === JSON.stringify({ "4": 1 }), "existing album must not be overwritten");
+});
+
+await runTest("save v3 migration initializes fresh account album", () => {
+  context.localStorage.removeItem("saveVersion");
+  context.localStorage.removeItem("game_album");
+  context.localStorage.removeItem("poke_dex");
+
+  const result = context.window.DomainSave.migrateSaveV2toV3();
+  assert(result.migrated === true, "fresh account migration should run");
+  assert(result.albumCopied === true, "fresh account migration should initialize album storage");
+  assert(context.localStorage.getItem("saveVersion") === "3", "fresh account migration should set saveVersion 3");
+  assert(context.localStorage.getItem("game_album") === "{}", "fresh account migration should initialize game_album as an empty object");
 });
 
 await runTest("football slice gates trade and legendary map nodes", () => {

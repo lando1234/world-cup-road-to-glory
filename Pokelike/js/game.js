@@ -130,6 +130,14 @@ function setCampaignControlsDisabled(disabled, message = '') {
   }
 }
 
+function migrateAccountSaveOnBoot() {
+  if (!isFootballModeEnabled()) return null;
+  if (!window.DomainSave || typeof window.DomainSave.migrateSaveV2toV3 !== 'function') {
+    throw new Error('DomainSave.migrateSaveV2toV3 is unavailable.');
+  }
+  return window.DomainSave.migrateSaveV2toV3();
+}
+
 async function prepareFootballBootGate() {
   if (!isFootballModeEnabled()) return true;
   setCampaignControlsDisabled(true, 'Loading World Cup data...');
@@ -155,6 +163,13 @@ async function prepareFootballBootGate() {
 async function initGame() {
   applyDarkMode();
   showScreen('title-screen');
+  try {
+    migrateAccountSaveOnBoot();
+  } catch (error) {
+    console.error('Football save migration failed:', error);
+    setCampaignControlsDisabled(true, 'World Cup save migration failed. Refresh and try again.');
+    return;
+  }
   const footballReady = await prepareFootballBootGate();
   // Await the cloud load so we don't fire a stale syncToCloud() in parallel
   // that overwrites another device's progress with the un-merged local save.

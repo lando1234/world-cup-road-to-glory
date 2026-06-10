@@ -5,7 +5,7 @@
 **Inputs:** [001](./001-codebase-discovery.md), [006B](./006B-technical-blueprint-revised.md), [007](./007-football-data-pack.md), [008](./008-meta-progression.md), [009](./009-gameplay-loop-node-system.md)  
 **Version:** v1.1  
 **Date:** 2026-06-10  
-**Last sync:** `main` @ this commit — save v3 album migration (T5)
+**Last sync:** `main` @ this commit — boot-time save v3 migration wiring (T6)
 **Assumptions:** Single developer · existing Pokelike vanilla JS · browser game · no React · no backend changes
 
 ---
@@ -14,9 +14,9 @@
 
 | Metric | Count |
 |--------|------:|
-| **Done** | 18 |
+| **Done** | 19 |
 | **Partial** | 6 |
-| **Not started** | 28 |
+| **Not started** | 27 |
 | **Total tickets** | 52 |
 
 **Legend:** ✅ Done · 🟡 Partial (shipped subset; acceptance not fully met) · ⬜ Not started
@@ -32,7 +32,8 @@ Before continuing gameplay implementation, T0 establishes the repeatable validat
 | T2-001 | ✅ | Host city boss catalog, loader, boot gate, and Node boss-team validation — `b75e23c` |
 | T3-001 | ✅ | Phase 1 `album_layout.json` and Node layout/profile validation — `73523ba` |
 | T4-001 | ✅ | `DomainAlbum` `game_album` seen/signed API and monotonic storage validation — `495ef23` |
-| T5-001 | ✅ | Save v3 album-only migration, cloud schema bump, and idempotency validation — this commit |
+| T5-001 | ✅ | Save v3 album-only migration, cloud schema bump, and idempotency validation — `94d3326` |
+| T6-001 | ✅ | Boot-time `migrateSaveV2toV3()` call before run reads and fresh-account validation — this commit |
 
 **Per-task Definition of Done from this point forward:**
 
@@ -86,7 +87,7 @@ Domain tasks should extend `Pokelike/scripts/validate-football-domain.mjs` inste
 | P1-025 | ⬜ | Badge screen still gym fantasy |
 | P1-026 | ⬜ | `map.js` has no football weights / labels |
 | P1-027 | ✅ | `DomainAlbum` `game_album` API implemented for seen/signed/count — `495ef23` |
-| P1-028 | ✅ | `migrateSaveV2toV3()` copies `poke_dex` to `game_album`, sets save v3, and preserves active runs — this commit |
+| P1-028 | ✅ | `migrateSaveV2toV3()` copies `poke_dex` to `game_album`, sets save v3, and preserves active runs — `94d3326` |
 | P1-029 | ⬜ | Dex writes not routed to album |
 | P1-030 | ⬜ | Album modal not built |
 | P1-031 | ⬜ | `album_layout.json` loader not implemented |
@@ -99,7 +100,7 @@ Domain tasks should extend `Pokelike/scripts/validate-football-domain.mjs` inste
 | P1-038 | 🟡 | Title reskin + hide deferred modes — `ec5e717`; **map HUD still opens Pokédex modal** |
 | P1-039 | 🟡 | Battle **field** copy only (Transfer Target, Form N) — `a098829`; **battle log strings untouched** |
 | P1-040 | 🟡 | Portrait fallback in cards + battle — `a098829`; **T0 silhouette spec incomplete** |
-| P1-041 | ⬜ | Migration not wired on boot |
+| P1-041 | ✅ | `initGame()` calls `migrateSaveV2toV3()` before Continue Run reads — this commit |
 | P1-042 | ⬜ | `runId` / `ledger` not in save shape |
 | P1-043 | ⬜ | `applyAccountPatch()` not implemented |
 | P1-044 | ⬜ | Game over settlement order not wired |
@@ -148,7 +149,7 @@ P1-042  → persist ledger in poke_current_run
 P1-043  → applyAccountPatch
 ```
 
-**Current:** P1-013, P1-027, and P1-028 complete. Next implementation step is P1-041 boot wiring.
+**Current:** P1-013, P1-027, P1-028, and P1-041 complete. Next implementation step is P1-016 scout foundation.
 
 **Exit:** `game_album` read/write path exists; mid-run reload preserves ledger shape.
 
@@ -1559,7 +1560,7 @@ P1-001 → P1-002 → P1-003 → P1-004 → P1-005 → P1-007 → P1-008 → P1-
 ### Remaining critical spine (from current state)
 
 ```
-P1-041 → P1-016 → P1-017 → P1-018
+P1-016 → P1-017 → P1-018
 → P1-019 → P1-022 → P1-023 → P1-024 → P1-030 → P1-036 → P1-044 → P1-046 → P1-052
 ```
 
@@ -1685,6 +1686,7 @@ Can we hand this build to a tester? All boxes must pass.
 ### Save checks
 
 - [x] `SAVE_SCHEMA_VERSION = 3`; `migrateSaveV2toV3()` idempotent on double boot
+- [x] Migration runs before Continue Run reads on `initGame()` boot
 - [ ] `game_album` persists across browser reload
 - [ ] Album from run 1 visible in run 2
 - [ ] `runId` + `ledger` persist in Continue Run mid-slice
