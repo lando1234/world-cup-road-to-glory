@@ -93,15 +93,72 @@ function backupSavedRunForReset() {
 
 // ---- Initialization ----
 
+function isFootballModeEnabled() {
+  return window.FEATURES?.footballMode === true;
+}
+
+function getTitleBootStatusEl() {
+  let el = document.getElementById('title-boot-status');
+  if (el) return el;
+  const titleScreen = document.getElementById('title-screen');
+  if (!titleScreen) return null;
+  el = document.createElement('div');
+  el.id = 'title-boot-status';
+  el.style.cssText = 'margin-top:8px;max-width:360px;text-align:center;color:var(--text-dim);font-size:8px;line-height:1.5;';
+  const cloudWrap = document.getElementById('title-cloud-wrap');
+  if (cloudWrap?.parentNode === titleScreen) {
+    titleScreen.insertBefore(el, cloudWrap);
+  } else {
+    titleScreen.appendChild(el);
+  }
+  return el;
+}
+
+function setCampaignControlsDisabled(disabled, message = '') {
+  for (const id of ['btn-new-run', 'btn-continue-run']) {
+    const btn = document.getElementById(id);
+    if (!btn) continue;
+    btn.disabled = disabled;
+    btn.style.opacity = disabled ? '0.55' : '';
+    btn.style.pointerEvents = disabled ? 'none' : '';
+  }
+  const statusEl = getTitleBootStatusEl();
+  if (statusEl) {
+    statusEl.textContent = message;
+    statusEl.style.display = message ? 'block' : 'none';
+    statusEl.style.color = disabled && message.toLowerCase().includes('failed') ? '#e05050' : 'var(--text-dim)';
+  }
+}
+
+async function prepareFootballBootGate() {
+  if (!isFootballModeEnabled()) return true;
+  setCampaignControlsDisabled(true, 'Loading World Cup data...');
+
+  try {
+    if (!window.DomainProfiles || typeof window.DomainProfiles.initCatalog !== 'function') {
+      throw new Error('DomainProfiles.initCatalog is unavailable.');
+    }
+    await window.DomainProfiles.initCatalog();
+    setCampaignControlsDisabled(false, '');
+    return true;
+  } catch (error) {
+    console.error('Football boot gate failed:', error);
+    setCampaignControlsDisabled(true, 'World Cup data failed to load. Refresh and try again.');
+    return false;
+  }
+}
+
 async function initGame() {
   applyDarkMode();
   showScreen('title-screen');
+  const footballReady = await prepareFootballBootGate();
   // Await the cloud load so we don't fire a stale syncToCloud() in parallel
   // that overwrites another device's progress with the un-merged local save.
   // initCloudSave handles the post-merge push itself.
-  if (typeof initCloudSave === 'function') await initCloudSave();
+  if (window.FEATURES?.cloudSave !== false && typeof initCloudSave === 'function') await initCloudSave();
   // Generation toggle — selection is read when Normal/Nuzlocke is clicked
   // and persists across reloads via localStorage.
+  const footballMode = isFootballModeEnabled();
   let selectedGen = Number(localStorage.getItem('poke_selected_gen')) === 2 ? 2 : 1;
   const syncGenButtons = () => {
     document.querySelectorAll('#gen-toggle .gen-btn').forEach(b =>
@@ -115,11 +172,18 @@ async function initGame() {
       syncGenButtons();
     };
   });
-  document.getElementById('btn-new-run').onclick  = () => startNewRun(false, selectedGen === 2);
-  document.getElementById('btn-hard-run').onclick = () => startNewRun(true,  selectedGen === 2);
+  document.getElementById('btn-new-run').onclick = footballReady
+    ? () => startNewRun(false, footballMode ? false : selectedGen === 2)
+    : null;
+  document.getElementById('btn-hard-run').onclick = (!footballMode && footballReady)
+    ? () => startNewRun(true, selectedGen === 2)
+    : null;
 
   const endlessBtn = document.getElementById('btn-endless-run');
-  if (endlessBtn) {
+  if (endlessBtn && footballMode) {
+    endlessBtn.onclick = null;
+    endlessBtn.style.display = 'none';
+  } else if (endlessBtn) {
     if (getHallOfFame().length > 0) {
       endlessBtn.onclick = () => showEndlessStageSelect();
       endlessBtn.disabled = false;
@@ -156,7 +220,10 @@ async function initGame() {
   }
 
   const continueEndlessBtn = document.getElementById('btn-continue-endless');
-  if (continueEndlessBtn) {
+  if (continueEndlessBtn && footballMode) {
+    continueEndlessBtn.onclick = null;
+    continueEndlessBtn.style.display = 'none';
+  } else if (continueEndlessBtn) {
     if (localStorage.getItem('poke_endless_state') && localStorage.getItem('poke_current_run')) {
       continueEndlessBtn.style.display = '';
       continueEndlessBtn.onclick = () => continueEndlessRun();
@@ -166,7 +233,7 @@ async function initGame() {
   }
 
   const continueBtn = document.getElementById('btn-continue-run');
-  if (localStorage.getItem('poke_current_run') && !localStorage.getItem('poke_endless_state')) {
+  if (footballReady && localStorage.getItem('poke_current_run') && !localStorage.getItem('poke_endless_state')) {
     continueBtn.style.display = '';
     continueBtn.onclick = async () => {
       if (!loadRun()) return;

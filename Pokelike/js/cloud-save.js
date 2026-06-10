@@ -1,6 +1,10 @@
 const SAVE_SERVER = 'https://save.pokelike.xyz';
 const SAVE_SCHEMA_VERSION = 2;
 
+function isCloudSaveEnabled() {
+  return window.FEATURES?.cloudSave !== false;
+}
+
 // Per-call-site timeouts (ms). Without these, a stalled or DDoSed server
 // hangs fetches indefinitely — freezing the title screen because initGame()
 // awaits initCloudSave() before wiring up the New Run / Hard Run handlers.
@@ -79,6 +83,7 @@ let _syncing = false;
 // caller to remember to bump a timestamp.
 (function patchSetItem() {
   if (typeof localStorage === 'undefined') return;
+  if (!isCloudSaveEnabled()) return;
   if (localStorage.__pokePatched) return;
   const origSet = localStorage.setItem.bind(localStorage);
   localStorage.setItem = function(key, val) {
@@ -296,6 +301,7 @@ function _applyCloudSave(save) {
 // (after a pull+merge) and by _loadFromServer (when the server has nothing or
 // the user declined to load).
 async function _pushLocal() {
+  if (!isCloudSaveEnabled()) return;
   const uuid = _getSaveUuid();
   if (!uuid) return;
   try {
@@ -321,6 +327,7 @@ async function _pushLocal() {
 // implementation only pushed, so a device with a stale local snapshot could
 // clobber progress another device had already uploaded.
 async function syncToCloud() {
+  if (!isCloudSaveEnabled()) return;
   const uuid = _getSaveUuid();
   if (!uuid || _syncing) return;
   _syncing = true;
@@ -352,6 +359,7 @@ async function syncToCloud() {
 }
 
 async function _loadFromServer() {
+  if (!isCloudSaveEnabled()) return;
   const uuid = _getSaveUuid();
   if (!uuid) return;
   try {
@@ -383,6 +391,12 @@ function _updateSyncUI() {
   const btn  = document.getElementById('btn-cloud-sync');
   const info = document.getElementById('cloud-sync-info');
   if (!btn) return;
+  if (!isCloudSaveEnabled()) {
+    btn.onclick = null;
+    btn.style.display = 'none';
+    if (info) info.style.display = 'none';
+    return;
+  }
   // Class is added/removed in every branch so transitioning out of loading
   // strips the cyan/pulse/spinner CSS automatically — no stale animation
   // when we land on online or offline.
@@ -528,6 +542,10 @@ function _showAccountModal() {
 }
 
 async function initCloudSave() {
+  if (!isCloudSaveEnabled()) {
+    _updateSyncUI();
+    return false;
+  }
   _updateSyncUI();
   if (_getSaveUuid()) await _loadFromServer();
 
@@ -545,4 +563,5 @@ async function initCloudSave() {
       if (document.visibilityState === 'visible' && _getSaveUuid()) syncToCloud();
     });
   }
+  return true;
 }

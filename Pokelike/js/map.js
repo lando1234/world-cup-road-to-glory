@@ -47,6 +47,19 @@ function weightedRandom(weights) {
   return Object.keys(weights)[0];
 }
 
+function isFootballSliceMode() {
+  return window.FEATURES?.footballMode === true && window.FEATURES?.sliceMode === true;
+}
+
+function applyFootballSliceNodeGates(weights) {
+  const gatedWeights = { ...weights };
+  if (isFootballSliceMode()) {
+    gatedWeights.trade = 0;
+    gatedWeights.legendary = 0;
+  }
+  return gatedWeights;
+}
+
 function generateMap(mapIndex, nuzlockeMode = false, gen2Mode = false) {
   // Layer sizes: start(1), catch/battle(2), content, boss(1)
   const CONTENT_SIZES = [3, 4, 3, 4, 3, 2]; // layers 2–7
@@ -81,12 +94,13 @@ function generateMap(mapIndex, nuzlockeMode = false, gen2Mode = false) {
 
   // Pick a weighted-random node type; ci = content layer index (0–5)
   const pickType = (ci) => {
-    const w = gen2Mode
+    let w = gen2Mode
       ? { ...GEN2_NODE_WEIGHTS }
       : { ...NODE_WEIGHTS[Math.min(ci, NODE_WEIGHTS.length - 1)] };
-    if (mapIndex >= 5 && ci >= 2 && !(typeof state !== 'undefined' && state.isEndlessMode)) w.legendary = 2;
+    if (!isFootballSliceMode() && mapIndex >= 5 && ci >= 2 && !(typeof state !== 'undefined' && state.isEndlessMode)) w.legendary = 2;
     if (nuzlockeMode) { w.catch = 0; w.trade = 0; }
     if (typeof state !== 'undefined' && state.isEndlessMode) { w.trade = 0; w.catch = Math.floor(w.catch / 2); }
+    w = applyFootballSliceNodeGates(w);
     const type = weightedRandom(w);
     // Endless region 3: 1/6 catch nodes become legendary encounters
     if (type === NODE_TYPES.CATCH &&
@@ -757,6 +771,24 @@ function getSilverHoverLabel() {
 
 function getNodeLabel(node) {
   if (node.visited) return 'Visited';
+  if (window.FEATURES?.footballMode === true) {
+    const themeNode = window.GAME_THEME?.node || {};
+    const footballLabels = {
+      [NODE_TYPES.START]:      'Start',
+      [NODE_TYPES.BATTLE]:     `${themeNode.friendlyMatch || 'Friendly Match'} — +1 Form Level`,
+      [NODE_TYPES.CATCH]:      themeNode.scoutReport || 'Scout Report',
+      [NODE_TYPES.ITEM]:       themeNode.gearCrate || 'Gear Crate',
+      [NODE_TYPES.QUESTION]:   'Tournament Event',
+      [NODE_TYPES.POKECENTER]: themeNode.recoveryCenter || 'Recovery Center',
+      [NODE_TYPES.TRAINER]:    `${themeNode.rivalNationalTeam || 'Rival National Team'} — +2 Form Levels`,
+      [NODE_TYPES.BOSS]:       themeNode.hostCityChallenge || 'Host City Challenge',
+      [NODE_TYPES.LEGENDARY]:  'Legendary Scouting',
+      [NODE_TYPES.MOVE_TUTOR]: 'Specialist Coach',
+      [NODE_TYPES.TRADE]:      'Transfer Market — Disabled in Phase 1',
+      [NODE_TYPES.SILVER]:     'Rival National Team',
+    };
+    return footballLabels[node.type] || node.type;
+  }
   if (node.type === NODE_TYPES.BOSS) {
     const mi = node.mapIndex ?? -1;
     const isGen2 = typeof state !== 'undefined' && state.gen2Mode;

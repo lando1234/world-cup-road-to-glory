@@ -5,7 +5,7 @@
 **Inputs:** [001](./001-codebase-discovery.md), [006B](./006B-technical-blueprint-revised.md), [007](./007-football-data-pack.md), [008](./008-meta-progression.md), [009](./009-gameplay-loop-node-system.md)  
 **Version:** v1.1  
 **Date:** 2026-06-10  
-**Last sync:** `main` @ `da6a262` — football evolution bypass (P1-021)  
+**Last sync:** `main` @ this commit — boot gates, slice node gates, and cloud-save shutdown (T1)
 **Assumptions:** Single developer · existing Pokelike vanilla JS · browser game · no React · no backend changes
 
 ---
@@ -14,8 +14,8 @@
 
 | Metric | Count |
 |--------|------:|
-| **Done** | 11 |
-| **Partial** | 8 |
+| **Done** | 12 |
+| **Partial** | 7 |
 | **Not started** | 33 |
 | **Total tickets** | 52 |
 
@@ -27,7 +27,7 @@ Before continuing gameplay implementation, T0 establishes the repeatable validat
 
 | ID | Status | Notes / commit |
 |----|--------|----------------|
-| T0-001 | ✅ | Node project baseline, validation harness, static server, Phase 2 visual frictions registry — this commit |
+| T0-001 | ✅ | Node project baseline, validation harness, static server, Phase 2 visual frictions registry — `feb8f94` |
 
 **Per-task Definition of Done from this point forward:**
 
@@ -35,7 +35,7 @@ Before continuing gameplay implementation, T0 establishes the repeatable validat
 2. Implementation
 3. Technical validation
 4. Test specific to the developed behavior
-5. Browser validation and screenshot when UI/gameplay is touched
+5. Browser or HTTP smoke validation when UI/gameplay is touched; automated screenshots are optional and only taken when explicitly requested
 6. Update this task breakdown
 7. Update `012-phase-1-assumptions-tradeoffs-report.html`
 8. Update `013-phase-2-visual-frictions.html` when visual debt, sprite gaps, image issues, or UX friction are found
@@ -59,8 +59,8 @@ Domain tasks should extend `Pokelike/scripts/validate-football-domain.mjs` inste
 | P1-003 | ✅ | `STYLE_CHART` + labels — `8c6b2a2` |
 | P1-004 | ✅ | `getTypeEffectiveness` football path — `f9ece79` |
 | P1-005 | ✅ | `GAME_THEME` object — `22e8632`, extended in battle/title passes |
-| P1-006 | 🟡 | Title-screen hide via `football-title` CSS + `applyTitleScreenPresentation`; **map weights / cloud skip not wired** |
-| P1-007 | 🟡 | `DomainProfiles.initCatalog()` loads profiles JSON; **no title boot gate, bosses JSON not loaded** |
+| P1-006 | ✅ | Title-screen hide + map trade/legendary gates + cloud-save no-op — this commit |
+| P1-007 | 🟡 | `DomainProfiles.initCatalog()` loads profiles JSON and title boot gate blocks failed starts; **bosses JSON not loaded** |
 | P1-008 | ✅ | `player_profiles.json` — 20 slice roster — `94adb62` |
 | P1-009 | ✅ | Catalog loader + `getProfile()` — `eef0f66`; `isFootballProfileId` now catalog-backed |
 | P1-010 | ✅ | `createPlayerInstance()` — `9085c97` |
@@ -124,13 +124,12 @@ T0-001 → Node baseline + validation harness + static server + Phase 2 visual f
 ### Wave 1 — Boot & gating (close partials)
 
 ```
-P1-007  (finish) → title boot gate + bosses JSON fetch in initCatalog
-P1-006  (finish) → map.js trade/legendary weight 0 + cloud-save no-op
+P1-007  (finish) → bosses JSON fetch in boot sequence
 P1-011  → host_city_bosses.json
 P1-012  → domain/bosses.js loader + buildBossTeam
 ```
 
-**Exit:** Catalog fully loaded before New Run; deferred modes unreachable in engine + UI.
+**Exit:** Catalogs fully loaded before New Run; deferred modes unreachable in engine + UI.
 
 ### Wave 2 — Album & run ledger (save foundation)
 
@@ -1596,9 +1595,9 @@ These can run concurrently with critical path segments when a second pass or con
 - [x] `initCatalog()` succeeds; `getProfile(2)` returns Messi
 - [x] `createPlayerInstance(2, 5)` returns valid battle instance with `speciesId: 2`
 - [x] Marquee screen renders 3 football cards without PokeAPI fetch
-- [ ] Title screen blocks New Run until catalog ready (P1-007)
+- [x] Title screen blocks New Run until catalog ready (P1-007)
 
-**Blocked by:** P1-007 (finish), optional P1-032 polish (style triangle)
+**Blocked by:** P1-011/P1-012 for boss catalog readiness, optional P1-032 polish (style triangle)
 
 **Expected effort:** ~0.5 day remaining
 

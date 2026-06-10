@@ -20,10 +20,22 @@ function readJson(relativePath) {
 function createBrowserLikeContext() {
   const storage = new Map();
   const window = {};
+  let rngSeed = 0x12345678;
   const context = {
     console,
     window,
+    AbortController,
+    setTimeout,
+    clearTimeout,
+    rng() {
+      rngSeed = (rngSeed + 0x6D2B79F5) | 0;
+      let t = Math.imul(rngSeed ^ (rngSeed >>> 15), 1 | rngSeed);
+      t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    },
     document: {
+      __pokeVisibilityHooked: false,
+      visibilityState: "visible",
       addEventListener() {},
       querySelectorAll() {
         return [];
@@ -48,6 +60,7 @@ function createBrowserLikeContext() {
   window.console = console;
   window.document = context.document;
   window.localStorage = context.localStorage;
+  window.FEATURES = undefined;
   return vm.createContext(context);
 }
 
@@ -60,9 +73,9 @@ function assert(condition, message) {
   if (!condition) throw new Error(message);
 }
 
-function runTest(name, fn) {
+async function runTest(name, fn) {
   try {
-    fn();
+    await fn();
     results.push({ name, status: "PASS" });
   } catch (error) {
     results.push({ name, status: "FAIL", error });
@@ -80,10 +93,29 @@ runScript(context, "js/domain/styles.js");
 runScript(context, "js/domain/profiles.js");
 runScript(context, "js/domain/combat-adapter.js");
 
+context.window.GAME_THEME = {
+  node: {
+    scoutReport: "Scout Report",
+    friendlyMatch: "Friendly Match",
+    recoveryCenter: "Recovery Center",
+    gearCrate: "Gear Crate",
+    rivalNationalTeam: "Rival National Team",
+    hostCityChallenge: "Host City Challenge"
+  }
+};
+context.TRAINER_SPRITE_KEYS = ["aceTrainer", "fisher"];
+context.GEN2_ONLY_TRAINER_KEYS = new Set();
+context.GEN1_ONLY_TRAINER_KEYS = new Set();
+context.TRAINER_SPRITE_NAMES = {};
+context.TRAINER_SPECIALTIES = {};
+context.TRAINER_SPECIALTIES_GEN2 = {};
+runScript(context, "js/map.js");
+runScript(context, "js/cloud-save.js");
+
 const catalogJson = readJson("data/football/player_profiles.json");
 const catalog = context.window.DomainProfiles.loadCatalog(catalogJson);
 
-runTest("script load order keeps football domain before data.js", () => {
+await runTest("script load order keeps football domain before data.js", () => {
   const expected = [
     "js/domain/features.js",
     "js/domain/styles.js",
@@ -105,7 +137,7 @@ runTest("script load order keeps football domain before data.js", () => {
   }
 });
 
-runTest("feature gates default to football slice mode", () => {
+await runTest("feature gates default to football slice mode", () => {
   const features = context.window.FEATURES;
   assert(features.footballMode === true, "FEATURES.footballMode must be true");
   assert(features.sliceMode === true, "FEATURES.sliceMode must be true");
@@ -113,7 +145,7 @@ runTest("feature gates default to football slice mode", () => {
   assert(features.cloudSave === false, "FEATURES.cloudSave must be false for Phase 1");
 });
 
-runTest("style chart exposes 18 complete football styles", () => {
+await runTest("style chart exposes 18 complete football styles", () => {
   const { STYLE_IDS, STYLE_CHART, STYLE_LABELS } = context.window.DomainStyles;
   assert(STYLE_IDS.length === 18, `expected 18 styles, received ${STYLE_IDS.length}`);
   for (const attackStyle of STYLE_IDS) {
@@ -126,7 +158,7 @@ runTest("style chart exposes 18 complete football styles", () => {
   }
 });
 
-runTest("player catalog validates Phase 1 roster", () => {
+await runTest("player catalog validates Phase 1 roster", () => {
   assert(catalog.profiles.length === 20, `expected 20 profiles, received ${catalog.profiles.length}`);
   for (const starterId of [1, 2, 3]) {
     const profile = context.window.DomainProfiles.getProfile(starterId);
@@ -136,13 +168,43 @@ runTest("player catalog validates Phase 1 roster", () => {
   assert(context.window.DomainProfiles.getProfile(2).commonName === "Messi", "profileId 2 must be Messi");
 });
 
-runTest("combat adapter creates browser-compatible football instances", () => {
+await runTest("combat adapter creates browser-compatible football instances", () => {
   const instance = context.window.DomainCombatAdapter.createPlayerInstance(2, 5, { moveTier: 1 });
   assert(instance.profileId === 2, "instance.profileId must be 2");
   assert(instance.speciesId === 2, "legacy speciesId bridge must remain profileId");
   assert(instance.name.includes("Messi"), "instance name should use profile displayName");
   assert(instance.currentHp === instance.maxHp, "fresh instance must start at max HP");
   assert(Array.isArray(instance.types) && instance.types.length > 0, "instance must expose legacy battle types");
+});
+
+await runTest("football slice gates trade and legendary map nodes", () => {
+  const gated = context.applyFootballSliceNodeGates({
+    battle: 1,
+    catch: 1,
+    trade: 99,
+    legendary: 99
+  });
+  assert(gated.trade === 0, "football slice must set trade weight to 0");
+  assert(gated.legendary === 0, "football slice must set legendary weight to 0");
+
+  for (let mapIndex = 0; mapIndex <= 7; mapIndex += 1) {
+    const map = context.generateMap(mapIndex, false, false);
+    const nodeTypes = Object.values(map.nodes).map(node => node.type);
+    assert(!nodeTypes.includes("trade"), `map ${mapIndex} should not include trade nodes in football slice`);
+    assert(!nodeTypes.includes("legendary"), `map ${mapIndex} should not include legendary nodes in football slice`);
+  }
+});
+
+await runTest("football map labels use football terminology", () => {
+  assert(context.getNodeLabel({ type: "catch" }) === "Scout Report", "catch node should display Scout Report");
+  assert(context.getNodeLabel({ type: "pokecenter" }) === "Recovery Center", "pokecenter node should display Recovery Center");
+  assert(context.getNodeLabel({ type: "boss" }) === "Host City Challenge", "boss node should display Host City Challenge");
+});
+
+await runTest("cloud save is disabled by football feature gate", async () => {
+  assert(context.isCloudSaveEnabled() === false, "cloud save should be disabled when FEATURES.cloudSave is false");
+  const result = await context.initCloudSave();
+  assert(result === false, "initCloudSave should no-op and return false when disabled");
 });
 
 const failed = results.filter(result => result.status === "FAIL");

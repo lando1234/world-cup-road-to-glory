@@ -393,7 +393,7 @@
         </li>
         <li class="item">
           <span class="label">Scripted validation and manual QA are both required</span>
-          <span class="body">Each task must include targeted validation. Domain work should extend <code>Pokelike/scripts/validate-football-domain.mjs</code>; UI and gameplay work should also use browser validation and screenshots when the changed surface is visible.</span>
+          <span class="body">Each task must include targeted validation. Domain work should extend <code>Pokelike/scripts/validate-football-domain.mjs</code>; UI and gameplay work should also use browser or HTTP smoke validation when the changed surface is visible. Automated screenshots are opt-in for now.</span>
         </li>
         <li class="item">
           <span class="label">One task, one commit</span>
@@ -474,7 +474,7 @@
             </div>
             <div class="task-note">
               <strong>Tradeoffs</strong>
-              <p>The first harness validates domain contracts and script order, not full browser behavior. UI and gameplay tasks still need Browser-based smoke tests and screenshots when visible screens change.</p>
+              <p>The first harness validates domain contracts and script order, not full browser behavior. UI and gameplay tasks still need Browser or HTTP smoke tests when visible screens change; automated screenshots are deferred until the tooling is worth the overhead.</p>
             </div>
             <div class="task-note">
               <strong>Design Decisions</strong>
@@ -483,6 +483,33 @@
             <div class="task-note">
               <strong>Risks / Follow-up</strong>
               <p>The harness deliberately avoids loading <code>data.js</code> because that file has broad legacy side effects. As football domain boundaries improve, tests should shift from VM shims toward cleaner module-level validation.</p>
+            </div>
+          </div>
+        </li>
+        <li class="task-entry">
+          <header>
+            <div class="task-title">
+              <h3>T1 — Boot gate, slice node gates, and cloud-save shutdown</h3>
+              <span class="pill">Status: implemented</span>
+              <span class="pill">Review: PASS</span>
+            </div>
+          </header>
+          <div class="task-grid">
+            <div class="task-note">
+              <strong>Assumptions</strong>
+              <p>Phase 1 should fail closed when football catalog data is unavailable. Starting a campaign with missing football profiles is worse than blocking New Campaign with a visible status message.</p>
+            </div>
+            <div class="task-note">
+              <strong>Tradeoffs</strong>
+              <p>The boot gate currently validates the profile catalog only. Boss catalog readiness remains intentionally deferred to the next boss-data task so this commit stays focused on gates, cloud shutdown, and map node availability.</p>
+            </div>
+            <div class="task-note">
+              <strong>Design Decisions</strong>
+              <p><code>initGame()</code> awaits <code>DomainProfiles.initCatalog()</code> in football mode before enabling campaign controls. <code>cloud-save.js</code> returns early when <code>FEATURES.cloudSave === false</code>. <code>map.js</code> zeroes Transfer Market and Legendary weights in slice mode and returns football labels for map tooltips.</p>
+            </div>
+            <div class="task-note">
+              <strong>Risks / Follow-up</strong>
+              <p>Cloud save is disabled rather than migrated. Future cloud support must be designed around <code>game_album</code> and the football account model, not the legacy sync key list.</p>
             </div>
           </div>
         </li>
@@ -1023,7 +1050,7 @@
     </section>
 
     <footer>
-      Generated for the Pokelike World Cup Road to Glory vertical slice. Last updated 2026-06-10 — Node/npm automation baseline, T0 validation protocol, one-task-one-commit rule, visual-friction registry, bridges registry, migration guardrails, TheSportsDB release-risk notes.
+      Generated for the Pokelike World Cup Road to Glory vertical slice. Last updated 2026-06-10 — T1 boot and cloud gates, Node/npm automation baseline, T0 validation protocol, one-task-one-commit rule, visual-friction registry, bridges registry, migration guardrails, TheSportsDB release-risk notes.
     </footer>
   </main>
 </body>
