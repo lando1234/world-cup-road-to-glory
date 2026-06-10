@@ -800,9 +800,27 @@ await runTest("football map labels use football terminology", () => {
 });
 
 await runTest("cloud save is disabled by football feature gate", async () => {
+  const cloudSource = readText("js/cloud-save.js");
+  const gameSource = readText("js/game.js");
+  let fetchCalls = 0;
+  context.localStorage.setItem("poke_save_uuid", "slice-demo");
+  context.fetch = async () => {
+    fetchCalls += 1;
+    throw new Error("cloud save should not fetch while disabled");
+  };
+
   assert(context.isCloudSaveEnabled() === false, "cloud save should be disabled when FEATURES.cloudSave is false");
+  assert(!context.localStorage.__pokePatched, "cloud disabled should not patch localStorage.setItem");
+  assert(!cloudSource.includes("'game_album'"), "game_album must stay out of cloud SYNC_KEYS while cloud save is disabled");
+  assert(
+    gameSource.includes("window.FEATURES?.cloudSave !== false && typeof initCloudSave === 'function'"),
+    "game boot should gate initCloudSave when cloudSave is false"
+  );
+
   const result = await context.initCloudSave();
   assert(result === false, "initCloudSave should no-op and return false when disabled");
+  await context.syncToCloud();
+  assert(fetchCalls === 0, "syncToCloud should not fetch while cloud save is disabled");
 });
 
 const failed = results.filter(result => result.status === "FAIL");

@@ -5,7 +5,7 @@
 **Inputs:** [001](./001-codebase-discovery.md), [006B](./006B-technical-blueprint-revised.md), [007](./007-football-data-pack.md), [008](./008-meta-progression.md), [009](./009-gameplay-loop-node-system.md)  
 **Version:** v1.1  
 **Date:** 2026-06-10  
-**Last sync:** `main` @ this commit — Game-over settlement order invariant (T20)
+**Last sync:** `main` @ this commit — Cloud save suppression gate (T21)
 **Assumptions:** Single developer · existing Pokelike vanilla JS · browser game · no React · no backend changes
 
 ---
@@ -14,9 +14,9 @@
 
 | Metric | Count |
 |--------|------:|
-| **Done** | 33 |
+| **Done** | 34 |
 | **Partial** | 7 |
-| **Not started** | 12 |
+| **Not started** | 11 |
 | **Total tickets** | 52 |
 
 **Legend:** ✅ Done · 🟡 Partial (shipped subset; acceptance not fully met) · ⬜ Not started
@@ -47,7 +47,8 @@ Before continuing gameplay implementation, T0 establishes the repeatable validat
 | T17-001 | ✅ | `DomainAlbum` owns album layout fetch/cache plus ordered slot profile IDs — `83e8b8a` |
 | T18-001 | ✅ | Football `markPokedexSeen/Caught` facades route to `DomainAlbum` before `poke_dex` writes — `2c9931a` |
 | T19-001 | ✅ | `DomainSave.settleRunLite()` + `applyAccountPatch()` feed settlement modal before returning to title — `959079b` |
-| T20-001 | ✅ | Game-over settlement path documents and validates patch-before-clear ordering — this commit |
+| T20-001 | ✅ | Game-over settlement path documents and validates patch-before-clear ordering — `2525cc8` |
+| T21-001 | ✅ | Cloud save stays disabled for football Phase 1, with no `game_album` cloud key or disabled-mode fetch — this commit |
 
 **Per-task Definition of Done from this point forward:**
 
@@ -117,8 +118,8 @@ Domain tasks should extend `Pokelike/scripts/validate-football-domain.mjs` inste
 | P1-041 | ✅ | `initGame()` calls `migrateSaveV2toV3()` before Continue Run reads — `011a3fa` |
 | P1-042 | ⬜ | `runId` / `ledger` not in save shape |
 | P1-043 | ⬜ | `applyAccountPatch()` not implemented |
-| P1-044 | ✅ | Football game over runs settlement/applyAccountPatch before `clearSavedRun()` with order invariant test — this commit |
-| P1-045 | ⬜ | Cloud save suppress incomplete |
+| P1-044 | ✅ | Football game over runs settlement/applyAccountPatch before `clearSavedRun()` with order invariant test — `2525cc8` |
+| P1-045 | ✅ | Cloud save remains feature-gated off; validation proves no `game_album` cloud key, no disabled-mode fetch, no boot auth modal — this commit |
 | P1-046 | ⬜ | QA — happy path |
 | P1-047 | ⬜ | QA — album persistence |
 | P1-048 | ⬜ | QA — game over settlement |
@@ -163,7 +164,7 @@ P1-042  → persist ledger in poke_current_run
 P1-043  → applyAccountPatch
 ```
 
-**Current:** P1-013, P1-027, P1-028, P1-041, P1-016, P1-017, P1-018, P1-019, P1-022, P1-023, P1-024, P1-025, P1-026, P1-029, P1-030, P1-031, P1-036, and P1-044 complete. P1-035 still has a minimal shell and needs full product presentation. Next implementation step is P1-046 run loop QA and release checklist alignment.
+**Current:** P1-013, P1-027, P1-028, P1-041, P1-016, P1-017, P1-018, P1-019, P1-022, P1-023, P1-024, P1-025, P1-026, P1-029, P1-030, P1-031, P1-036, P1-044, and P1-045 complete. P1-035 still has a minimal shell and needs full product presentation. Next implementation step is P1-046 run loop QA and release checklist alignment.
 
 **Exit:** `game_album` read/write path exists; mid-run reload preserves ledger shape.
 
@@ -192,7 +193,7 @@ P1-026  → football node weights + GAME_THEME tooltips ✅
 P1-035  → slice-complete screen
 P1-036  → settleRunLite + summary modal
 P1-044  → game over settlement before clearSavedRun ✅
-P1-045  → cloud save suppress (finish P1-006 cloud slice)
+P1-045  → cloud save suppress (finish P1-006 cloud slice) ✅
 ```
 
 **Exit:** 3-map campaign ends cleanly; settlement lite on win and loss.
