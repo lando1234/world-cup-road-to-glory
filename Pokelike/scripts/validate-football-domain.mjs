@@ -325,6 +325,38 @@ await runTest("scout reports enforce Brazil nation cap before padding", () => {
   assert(brazilCount <= 1, `scout report should include at most 1 Brazil player, received ${brazilCount}`);
 });
 
+await runTest("map 0 layer 1 catch scout uses forced report pool", () => {
+  const map = context.generateMap(0, false, false);
+  const forcedNode = Object.values(map.nodes).find(node => node.layer === 1 && node.type === "catch");
+  assert(forcedNode, "map 0 should expose a layer 1 catch node");
+
+  const report = context.window.DomainScout.buildSliceReport(0, { flags: {} }, {
+    node: forcedNode,
+    rng: () => 0.25
+  });
+  const sortedProfileIds = [...report.profileIds].sort((a, b) => a - b);
+
+  assert(report.flags.forcedOverrideApplied === true, "map 0 layer 1 catch report should apply forced override");
+  assert(sortedProfileIds.join(",") === "12,15,17", `forced scout pool mismatch: ${sortedProfileIds.join(",")}`);
+  assert(!report.profileIds.some(profileId => [1, 2, 3].includes(profileId)), "forced scout pool must not include starters");
+
+  const includesLegendOrElite = report.profileIds.some(profileId => {
+    const profile = context.window.DomainProfiles.getProfile(profileId);
+    return profile.flags.isLegend || profile.rarity === "elite";
+  });
+  assert(includesLegendOrElite === false, "forced scout pool must not include legends or elite breakers");
+});
+
+await runTest("map 0 forced scout override does not affect later catch nodes", () => {
+  const laterNode = { layer: 2, type: "catch" };
+  const report = context.window.DomainScout.buildSliceReport(0, { flags: {} }, {
+    node: laterNode,
+    rng: () => 0.01
+  });
+
+  assert(report.flags.forcedOverrideApplied === false, "map 0 non-layer-1 catch should not apply forced override");
+});
+
 await runTest("album API persists seen and signed states monotonically", () => {
   context.localStorage.removeItem("game_album");
   context.localStorage.removeItem("poke_dex");

@@ -5,7 +5,7 @@
 **Inputs:** [001](./001-codebase-discovery.md), [006B](./006B-technical-blueprint-revised.md), [007](./007-football-data-pack.md), [008](./008-meta-progression.md), [009](./009-gameplay-loop-node-system.md)  
 **Version:** v1.1  
 **Date:** 2026-06-10  
-**Last sync:** `main` @ this commit — scout pool domain foundation (T7)
+**Last sync:** `main` @ this commit — Map 0 forced scout override (T8)
 **Assumptions:** Single developer · existing Pokelike vanilla JS · browser game · no React · no backend changes
 
 ---
@@ -14,9 +14,9 @@
 
 | Metric | Count |
 |--------|------:|
-| **Done** | 20 |
+| **Done** | 21 |
 | **Partial** | 6 |
-| **Not started** | 26 |
+| **Not started** | 25 |
 | **Total tickets** | 52 |
 
 **Legend:** ✅ Done · 🟡 Partial (shipped subset; acceptance not fully met) · ⬜ Not started
@@ -34,7 +34,8 @@ Before continuing gameplay implementation, T0 establishes the repeatable validat
 | T4-001 | ✅ | `DomainAlbum` `game_album` seen/signed API and monotonic storage validation — `495ef23` |
 | T5-001 | ✅ | Save v3 album-only migration, cloud schema bump, and idempotency validation — `94d3326` |
 | T6-001 | ✅ | Boot-time `migrateSaveV2toV3()` call before run reads and fresh-account validation — `011a3fa` |
-| T7-001 | ✅ | `DomainScout` pool loader/report builder, `scout_pools.json`, and Node report validation — this commit |
+| T7-001 | ✅ | `DomainScout` pool loader/report builder, `scout_pools.json`, and Node report validation — `220747a` |
+| T8-001 | ✅ | Map 0 layer-1 catch forced scout override and Node validation — this commit |
 
 **Per-task Definition of Done from this point forward:**
 
@@ -76,8 +77,8 @@ Domain tasks should extend `Pokelike/scripts/validate-football-domain.mjs` inste
 | P1-013 | ✅ | `album_layout.json` authored for marquee + favorites slice pages — `73523ba` |
 | P1-014 | ✅ | PokeAPI guard + football `getFootballCatchChoices` — `f20ff1e`, `a098829` |
 | P1-015 | ✅ | `STARTER_IDS = [1, 2, 3]` — `c430a36` |
-| P1-016 | ✅ | `domain/scout.js` + `scout_pools.json` build 3-choice reports for maps 0–2 — this commit |
-| P1-017 | ⬜ | Map 0 layer-1 forced pool not implemented |
+| P1-016 | ✅ | `domain/scout.js` + `scout_pools.json` build 3-choice reports for maps 0–2 — `220747a` |
+| P1-017 | ✅ | Map 0 layer-1 catch report forces Pedri/Ramos/Alisson — this commit |
 | P1-018 | ⬜ | `domain/recruit.js` still stub |
 | P1-019 | ⬜ | `doCatchNode` still Pokémon catch flow |
 | P1-020 | ⬜ | No `runId` / `ledger` on run state |
@@ -150,7 +151,7 @@ P1-042  → persist ledger in poke_current_run
 P1-043  → applyAccountPatch
 ```
 
-**Current:** P1-013, P1-027, P1-028, P1-041, and P1-016 complete. Next implementation step is P1-017 Map 0 forced scout override.
+**Current:** P1-013, P1-027, P1-028, P1-041, P1-016, and P1-017 complete. Next implementation step is P1-018 recruit API.
 
 **Exit:** `game_album` read/write path exists; mid-run reload preserves ledger shape.
 
@@ -1561,7 +1562,7 @@ P1-001 → P1-002 → P1-003 → P1-004 → P1-005 → P1-007 → P1-008 → P1-
 ### Remaining critical spine (from current state)
 
 ```
-P1-017 → P1-018
+P1-018
 → P1-019 → P1-022 → P1-023 → P1-024 → P1-030 → P1-036 → P1-044 → P1-046 → P1-052
 ```
 
@@ -1615,7 +1616,7 @@ These can run concurrently with critical path segments when a second pass or con
 
 **Completion criteria:**
 - [ ] Scout Report node shows 3 real players with form levels
-- [ ] Map 0 layer-1 forced pool verified (G11)
+- [x] Map 0 layer-1 forced pool verified (G11 domain-level)
 - [ ] Contract Offer adds player to squad; Pass on report skips
 - [ ] `markAlbumSeen` fires on display; `markAlbumSigned` on accept
 
@@ -1675,7 +1676,7 @@ Can we hand this build to a tester? All boxes must pass.
 
 - [ ] Pick marquee signing: Mbappé, Messi, or Van Dijk enters squad at form level 5
 - [ ] Scout Report shows exactly 3 players; 100% sign on pick; skip works
-- [ ] Map 0 second node forced pool: Pedri, Ramos, Alisson
+- [x] Map 0 second node forced pool: Pedri, Ramos, Alisson
 - [ ] Squad cap 6; Squad Registration swap when full
 - [ ] Friendly, trainer, boss battles resolve without crash
 - [ ] 3 Host City bosses winnable at target difficulty (Map 0 boss ~85% dev win rate)

@@ -236,6 +236,18 @@ function getBandForMap(mapIndex) {
   return band;
 }
 
+function getForcedOverrideForNode(mapIndex, node = null) {
+  if (!node) return null;
+  const config = getScoutPoolConfig();
+  const normalizedMapIndex = normalizeMapIndex(mapIndex);
+
+  return config.forcedOverrides.find(override =>
+    override.mapIndex === normalizedMapIndex &&
+    override.layer === node.layer &&
+    override.nodeType === node.type
+  ) || null;
+}
+
 function passesNationCap(profileId, selectedProfileIds, maxPlayersPerNation) {
   const profile = getProfileOrNull(profileId);
   if (!profile) return false;
@@ -275,6 +287,15 @@ function weightedPick(candidates, rarityMultipliers, randomFn) {
   return weighted[weighted.length - 1].profileId;
 }
 
+function shuffledProfileIds(profileIds, randomFn) {
+  const shuffled = [...profileIds];
+  for (let index = shuffled.length - 1; index > 0; index -= 1) {
+    const swapIndex = Math.floor(randomFn() * (index + 1));
+    [shuffled[index], shuffled[swapIndex]] = [shuffled[swapIndex], shuffled[index]];
+  }
+  return shuffled;
+}
+
 function buildCandidatePool(band, config) {
   const excluded = new Set(config.rules.excludedStarterProfileIds);
   return band.profileIds.filter(profileId => {
@@ -289,6 +310,22 @@ function buildSliceReport(mapIndex, runState = {}, opts = {}) {
   const band = getBandForMap(mapIndex);
   const randomFn = getRandomFn(opts);
   const choicesPerReport = config.rules.choicesPerReport || SCOUT_DEFAULT_CHOICES;
+  const forcedOverride = getForcedOverrideForNode(mapIndex, opts.node || null);
+
+  if (forcedOverride) {
+    return Object.freeze({
+      mapIndex: normalizeMapIndex(mapIndex),
+      bandId: band.bandId,
+      profileIds: Object.freeze(shuffledProfileIds(forcedOverride.profileIds, randomFn).slice(0, choicesPerReport)),
+      flags: Object.freeze({
+        eliteGuaranteeApplied: false,
+        forcedOverrideApplied: true,
+        forcedOverrideId: `${forcedOverride.mapIndex}:${forcedOverride.layer}:${forcedOverride.nodeType}`,
+        eliteGuaranteeUsed: Boolean(runState?.flags?.eliteGuaranteeUsed)
+      })
+    });
+  }
+
   const selectedProfileIds = [];
   const baseCandidates = buildCandidatePool(band, config);
 
@@ -331,6 +368,7 @@ const DomainScout = Object.freeze({
   validateScoutPools,
   getScoutPoolConfig,
   getBandForMap,
+  getForcedOverrideForNode,
   buildSliceReport
 });
 
