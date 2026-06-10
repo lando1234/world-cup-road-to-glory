@@ -253,6 +253,16 @@ function loadCatalog(json) {
   });
 }
 
+async function enrichCatalogPortraits(catalogJson) {
+  const portraitSource = window.DomainPortraitSource;
+  if (!portraitSource?.fetchPortraitMap || !portraitSource?.applyPortraitMapToCatalog) {
+    return catalogJson;
+  }
+  const map = await portraitSource.fetchPortraitMap();
+  if (!map) return catalogJson;
+  return portraitSource.applyPortraitMapToCatalog(catalogJson, map);
+}
+
 async function initCatalog() {
   if (profileCatalog) {
     return Object.freeze({ profiles: profileCatalog, byId: profileIndex, warnings: Object.freeze([]) });
@@ -267,6 +277,7 @@ async function initCatalog() {
       }
       return response.json();
     })
+    .then(enrichCatalogPortraits)
     .then(loadCatalog)
     .catch(error => {
       catalogPromise = null;

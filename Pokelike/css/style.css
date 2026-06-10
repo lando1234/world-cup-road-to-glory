@@ -928,6 +928,28 @@ h1, h2, .pixel-font {
   object-position: center bottom;
   image-rendering: auto;
 }
+.football-portraits-fanart .battle-sprite-stack.football-battle-portrait {
+  width: 104px;
+  height: 88px;
+  overflow: hidden;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+}
+.football-portraits-fanart .battle-sprite-stack .football-battle-portrait-img {
+  max-width: none;
+  max-height: none;
+  object-fit: cover;
+  object-position: center 20%;
+}
+.football-portraits-fanart .poke-sprite-wrap {
+  overflow: hidden;
+  border-radius: 6px;
+}
+.football-portraits-fanart .poke-card.player-card .player-portrait {
+  object-fit: cover;
+  object-position: center 18%;
+  image-rendering: auto;
+}
 .battle-portrait-fallback {
   width: 88px;
   height: 88px;

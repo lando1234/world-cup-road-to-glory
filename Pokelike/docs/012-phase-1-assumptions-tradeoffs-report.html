@@ -339,8 +339,16 @@
           <span class="body">New football card, album, and stamp styles should avoid large rewrites of existing CSS. Legacy selectors can stay as long as football screens render correctly.</span>
         </li>
         <li class="item">
-          <span class="label">Manual QA is acceptable for Phase 1</span>
-          <span class="body">Automated tests are valuable, but the task breakdown treats manual smoke tests as the Phase 1 gate. Test scripts should not block small implementation tickets unless a ticket asks for them.</span>
+          <span class="label">Player portraits come from TheSportsDB at runtime</span>
+          <span class="body">Phase 1 no longer depends on local <code>/assets/players/{slug}.png</code> files. Portrait URLs are baked into <code>data/football/thesportsdb_portraits.json</code> and merged into the profile catalog on boot. The free API key <code>123</code> is used for sync scripts only; gameplay reads static JSON to avoid rate limits.</span>
+        </li>
+        <li class="item">
+          <span class="label">Cutout PNG is the chosen portrait style</span>
+          <span class="body"><code>strCutout</code> (transparent ~500×500 PNG) is the active style via <code>FEATURES.theSportsDbPortraitStyle: "cutout"</code>. <code>strFanart1</code>–<code>4</code> were evaluated (16:9 promotional art) and rejected for battle/card layout; fanart fields remain in the map for optional future use.</span>
+        </li>
+        <li class="item">
+          <span class="label">Third-party likeness remains a legal risk</span>
+          <span class="body">TheSportsDB cutouts are real-player likeness from a third-party catalog. Profiles still declare <code>legal.likenessTier: 0</code>. Production release requires legal review; this integration is a vertical-slice presentation shortcut only.</span>
         </li>
         <li class="task-entry">
           <header>
@@ -585,7 +593,87 @@
             </div>
             <div class="task-note">
               <strong>Risks / Follow-up</strong>
-              <p>Battle HUD and team bar still use legacy compact rendering. Starter screen title/copy remains Pokémon-themed until P1-032/P1-038. Missing portrait assets fall back to nation text until P1-040.</p>
+              <p>Battle HUD and team bar still use legacy compact rendering. Starter screen title/copy remains Pokémon-themed until P1-032/P1-038. Missing portraits fall back to nation-code text; Rodri (profileId 9) has no reliable TheSportsDB match on the free tier.</p>
+            </div>
+          </div>
+        </li>
+        <li class="task-entry">
+          <header>
+            <div class="task-title">
+              <h3>P1-040 — TheSportsDB portrait integration (<code>portrait-source.js</code>)</h3>
+              <span class="pill">Status: partial</span>
+              <span class="pill">Review: PASS (slice)</span>
+            </div>
+          </header>
+          <div class="task-grid">
+            <div class="task-note">
+              <strong>Assumptions</strong>
+              <p>Portrait URLs are resolved at catalog load, not fetched live during battles. <code>DomainProfiles.initCatalog()</code> fetches <code>player_profiles.json</code>, then <code>DomainPortraitSource.applyPortraitMapToCatalog()</code> overwrites each profile’s <code>portrait</code> field when <code>FEATURES.useTheSportsDbPortraits</code> is true. Script order: <code>features.js</code> → <code>portrait-source.js</code> → <code>profiles.js</code>.</p>
+            </div>
+            <div class="task-note">
+              <strong>Tradeoffs</strong>
+              <p>Baked JSON map avoids TheSportsDB free-tier limits (~30 req/min) and keeps offline play stable after first load. Cost: portraits go stale until <code>node scripts/sync-thesportsdb-portraits.mjs</code> is re-run. Search endpoint returns cutout/thumb only; sync must call <code>lookupplayer.php?id=</code> per known <code>idPlayer</code> to capture fanart fields.</p>
+            </div>
+            <div class="task-note">
+              <strong>Design Decisions</strong>
+              <p><code>theSportsDbPortraitStyle</code> supports <code>"cutout"</code> (active) and <code>"fanart"</code> (CSS class <code>football-portraits-fanart</code> with <code>object-fit: cover</code>). Primary field: <code>strCutout</code>; fallbacks: <code>thumb</code>, then nation badge in UI. Map schema v2 stores <code>fanart1</code>–<code>fanart4</code>, <code>cutout</code>, and <code>thumb</code> per profileId. Config flags live in <code>FEATURES</code>: <code>useTheSportsDbPortraits</code>, <code>theSportsDbApiKey</code>, <code>theSportsDbBaseUrl</code>, <code>theSportsDbPortraitStyle</code>.</p>
+            </div>
+            <div class="task-note">
+              <strong>Risks / Follow-up</strong>
+              <p>Rodri (9) missing from free search — manual <code>idPlayer</code> override needed in sync script <code>OVERRIDES</code>. Ambiguous search hits (e.g. “Rodri” → Jay Rodriguez) require lookup-by-id. Premium API key replaces <code>123</code> via env <code>THESPORTSDB_API_KEY</code> or <code>FEATURES.theSportsDbApiKey</code>. National-team kit variants do not exist as separate API fields; cutouts reflect current club kits.</p>
+            </div>
+          </div>
+        </li>
+        <li class="task-entry">
+          <header>
+            <div class="task-title">
+              <h3>P1-021 — Bypass Pokémon evolution for football profiles</h3>
+              <span class="pill">Status: implemented</span>
+              <span class="pill">Review: PASS</span>
+            </div>
+          </header>
+          <div class="task-grid">
+            <div class="task-note">
+              <strong>Assumptions</strong>
+              <p>Football players use form/level gains but never rename or swap sprites through the legacy <code>EVOLUTIONS</code> table. Any instance with a catalog <code>profileId</code> (or resolvable via <code>DomainProfiles.isFootballProfileId</code>) is evolution-blocked.</p>
+            </div>
+            <div class="task-note">
+              <strong>Tradeoffs</strong>
+              <p>Guards live in both <code>ui.js</code> (<code>checkAndEvolveTeam</code>) and <code>game.js</code> (<code>applyEvolution</code>, Moon Stone, <code>canTarget</code>, <code>canUseEvoStone</code>) so no path can force Ivysaur-style collisions (Messi profileId 2 vs Pokémon evolution id 2).</p>
+            </div>
+            <div class="task-note">
+              <strong>Design Decisions</strong>
+              <p><code>shouldSkipFootballEvolution()</code> / <code>isFootballEvolutionBlocked()</code> gate all evolution entry points when <code>footballMode</code> is on. Legacy Pokémon evolution unchanged when football mode is off.</p>
+            </div>
+            <div class="task-note">
+              <strong>Risks / Follow-up</strong>
+              <p>No cosmetic toast at form thresholds yet. Future item-evolution items must call the same guard if new evolution paths are added.</p>
+            </div>
+          </div>
+        </li>
+        <li class="task-entry">
+          <header>
+            <div class="task-title">
+              <h3>Battle presentation pass — football encounter UI</h3>
+              <span class="pill">Status: implemented</span>
+            </div>
+          </header>
+          <div class="task-grid">
+            <div class="task-note">
+              <strong>Assumptions</strong>
+              <p>Presentation changes are battle-field scoped only: wild title, form labels, portrait rendering, and scout pool routing. Combat math, save logic, and map generation are untouched.</p>
+            </div>
+            <div class="task-note">
+              <strong>Tradeoffs</strong>
+              <p>Wild encounters use scoutable profiles from <code>player_profiles.json</code> instead of BST buckets. Catalog-backed ID routing prevents treating every numeric id 1–50 as football (fixes <code>Unknown football profileId: 48</code>).</p>
+            </div>
+            <div class="task-note">
+              <strong>Design Decisions</strong>
+              <p>Wild copy: “Transfer Target Found”. Level plates: “Form N” not “Lv N”. Portraits: no mirror flip, <code>object-fit: contain</code>, nation-code fallback on image error. Marquee starters [1, 2, 3] excluded from wild scout pool.</p>
+            </div>
+            <div class="task-note">
+              <strong>Risks / Follow-up</strong>
+              <p>Battle log, trainer intros, and map HUD may still show Pokémon copy. Title screen reskin (P1-038) and full terminology migration (P1-039) remain open.</p>
             </div>
           </div>
         </li>
@@ -612,8 +700,12 @@
           <span class="body">Album-only settlement proves retention without pulling in credits, fragments, or achievements. The cost is a smaller reward moment until Phase 3.</span>
         </article>
         <article class="item tradeoff">
+          <span class="label">TheSportsDB cutouts over local art pipeline</span>
+          <span class="body">Remote cutout PNGs from a baked JSON map ship faster than exporting <code>/assets/players/*.png</code>. The cost is third-party likeness licensing, stale URLs until re-sync, and club-kit imagery instead of national-team kits.</span>
+        </article>
+        <article class="item tradeoff">
           <span class="label">T0 silhouettes over real portraits</span>
-          <span class="body">CSS fallbacks avoid broken images and legal exposure. The cost is lower presentation quality for the first playtest.</span>
+          <span class="body">Nation-code CSS fallbacks still apply when a portrait URL is missing (Rodri) or fails to load. TheSportsDB cutouts cover 19/20 slice players; full P1-040 local art export remains optional.</span>
         </article>
         <article class="item tradeoff">
           <span class="label">Small reports over broad refactors</span>
@@ -646,6 +738,14 @@
           <span class="body">If catalogs are not loaded, starting a run is disabled. A visible loading/error state is better than falling through to legacy data.</span>
         </li>
         <li class="item">
+          <span class="label">Load portraits before validating catalog consumers</span>
+          <span class="body"><code>portrait-source.js</code> must load before <code>profiles.js</code> so catalog enrichment can run inside <code>initCatalog()</code>. Missing script tag breaks football portraits silently (local JSON paths remain).</span>
+        </li>
+        <li class="item">
+          <span class="label">Regenerate portrait map out of band</span>
+          <span class="body">Run <code>node Pokelike/scripts/sync-thesportsdb-portraits.mjs</code> after roster changes. Expect HTTP 429 if hammering the free API; script retries with backoff and uses lookup-by-id only.</span>
+        </li>
+        <li class="item">
           <span class="label">Leave future systems unreachable</span>
           <span class="body">Legend fragments, Run Budget, knockout, named events, achievements, and full meta settlement should not be partially implemented during Phase 1 tasks that do not request them.</span>
         </li>
@@ -671,6 +771,14 @@
           <span class="label">Async catalog loading can race</span>
           <span class="body">Any code path that renders starters, scouts, bosses, or album slots must assume catalog readiness is enforced before user interaction begins.</span>
         </li>
+        <li class="item risk">
+          <span class="label">TheSportsDB rate limits and ambiguous search</span>
+          <span class="body">Free-tier search returns one player and omits fanart fields. Sync relies on a hard-coded <code>PLAYER_IDS</code> map plus <code>lookupplayer.php</code>. Wrong search matches must be overridden manually (Rodri, Pedri).</span>
+        </li>
+        <li class="item risk">
+          <span class="label">External portrait CDN dependency</span>
+          <span class="body">Gameplay loads images from <code>r2.thesportsdb.com</code> and <code>thesportsdb.com</code>. Offline or blocked CDN requests trigger nation-code fallbacks; there is no local mirror yet.</span>
+        </li>
       </ul>
     </section>
 
@@ -682,7 +790,7 @@
     </section>
 
     <footer>
-      Generated for the Pokelike World Cup Road to Glory vertical slice.
+      Generated for the Pokelike World Cup Road to Glory vertical slice. Last updated 2026-06-10 (TheSportsDB cutout portraits, P1-021 evolution guard, battle presentation pass).
     </footer>
   </main>
 </body>

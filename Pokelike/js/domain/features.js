@@ -12,7 +12,14 @@ const FEATURES = Object.freeze({
   continentalCup: false,
   cloudSave: false,
   nuzlocke: false,
-  trade: false
+  trade: false,
+  /** Use TheSportsDB URLs from data/football/thesportsdb_portraits.json */
+  useTheSportsDbPortraits: true,
+  /** Free tier keys: "123" or "3". Replace with your premium key from thesportsdb.com profile. */
+  theSportsDbApiKey: "123",
+  theSportsDbBaseUrl: "https://www.thesportsdb.com/api/v1/json",
+  /** "fanart" (strFanart1–4) or "cutout" (transparent PNG) */
+  theSportsDbPortraitStyle: "cutout"
 });
 
 window.FEATURES = FEATURES;

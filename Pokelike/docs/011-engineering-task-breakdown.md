@@ -3,9 +3,171 @@
 **Status:** Authoritative Phase 1 implementation tickets  
 **Authority:** Breaks down [010-vertical-slice-implementation-plan.md](./010-vertical-slice-implementation-plan.md) Phase 1 only  
 **Inputs:** [001](./001-codebase-discovery.md), [006B](./006B-technical-blueprint-revised.md), [007](./007-football-data-pack.md), [008](./008-meta-progression.md), [009](./009-gameplay-loop-node-system.md)  
-**Version:** v1.0  
-**Date:** 2026-06-06  
+**Version:** v1.1  
+**Date:** 2026-06-10  
+**Last sync:** `main` @ `da6a262` — football evolution bypass (P1-021)  
 **Assumptions:** Single developer · existing Pokelike vanilla JS · browser game · no React · no backend changes
+
+---
+
+## Progress Summary
+
+| Metric | Count |
+|--------|------:|
+| **Done** | 11 |
+| **Partial** | 8 |
+| **Not started** | 33 |
+| **Total tickets** | 52 |
+
+**Legend:** ✅ Done · 🟡 Partial (shipped subset; acceptance not fully met) · ⬜ Not started
+
+### Task Status Registry
+
+| ID | Status | Notes / commit |
+|----|--------|----------------|
+| P1-001 | ✅ | `features.js` + load order — `8af1c73` |
+| P1-002 | ✅ | Domain module shells — `923f225` |
+| P1-003 | ✅ | `STYLE_CHART` + labels — `8c6b2a2` |
+| P1-004 | ✅ | `getTypeEffectiveness` football path — `f9ece79` |
+| P1-005 | ✅ | `GAME_THEME` object — `22e8632`, extended in battle/title passes |
+| P1-006 | 🟡 | Title-screen hide via `football-title` CSS + `applyTitleScreenPresentation`; **map weights / cloud skip not wired** |
+| P1-007 | 🟡 | `DomainProfiles.initCatalog()` loads profiles JSON; **no title boot gate, bosses JSON not loaded** |
+| P1-008 | ✅ | `player_profiles.json` — 20 slice roster — `94adb62` |
+| P1-009 | ✅ | Catalog loader + `getProfile()` — `eef0f66`; `isFootballProfileId` now catalog-backed |
+| P1-010 | ✅ | `createPlayerInstance()` — `9085c97` |
+| P1-011 | ⬜ | `host_city_bosses.json` not authored |
+| P1-012 | ⬜ | `domain/bosses.js` still stub |
+| P1-013 | ⬜ | `album_layout.json` not authored |
+| P1-014 | ✅ | PokeAPI guard + football `getFootballCatchChoices` — `f20ff1e`, `a098829` |
+| P1-015 | ✅ | `STARTER_IDS = [1, 2, 3]` — `c430a36` |
+| P1-016 | ⬜ | No `domain/scout.js`; interim BST replacement only |
+| P1-017 | ⬜ | Map 0 layer-1 forced pool not implemented |
+| P1-018 | ⬜ | `domain/recruit.js` still stub |
+| P1-019 | ⬜ | `doCatchNode` still Pokémon catch flow |
+| P1-020 | ⬜ | No `runId` / `ledger` on run state |
+| P1-021 | ✅ | `checkAndEvolveTeam` + Moon Stone guards — `da6a262` |
+| P1-022 | ⬜ | `doBossNode` still uses `GYM_LEADERS` |
+| P1-023 | ⬜ | No `maxMapIndex` cap / slice end redirect |
+| P1-024 | ⬜ | No slice-complete trigger at 3 stamps |
+| P1-025 | ⬜ | Badge screen still gym fantasy |
+| P1-026 | ⬜ | `map.js` has no football weights / labels |
+| P1-027 | ⬜ | `domain/album.js` still stub |
+| P1-028 | ⬜ | No v3 album migration |
+| P1-029 | ⬜ | Dex writes not routed to album |
+| P1-030 | ⬜ | Album modal not built |
+| P1-031 | ⬜ | `album_layout.json` loader not implemented |
+| P1-032 | 🟡 | Marquee Signing reskin — `5c2b3d8`; **Core Six style triangle tooltip missing** |
+| P1-033 | ⬜ | Catch screen still Pokémon UX |
+| P1-034 | ⬜ | Swap screen not reskinned |
+| P1-035 | ⬜ | Slice-complete screen not created |
+| P1-036 | ⬜ | `settleRunLite` not implemented |
+| P1-037 | 🟡 | `renderPlayerCard()` — `edabaa7`; **not all screens / stat labels unified** |
+| P1-038 | 🟡 | Title reskin + hide deferred modes — `ec5e717`; **map HUD still opens Pokédex modal** |
+| P1-039 | 🟡 | Battle **field** copy only (Transfer Target, Form N) — `a098829`; **battle log strings untouched** |
+| P1-040 | 🟡 | Portrait fallback in cards + battle — `a098829`; **T0 silhouette spec incomplete** |
+| P1-041 | ⬜ | Migration not wired on boot |
+| P1-042 | ⬜ | `runId` / `ledger` not in save shape |
+| P1-043 | ⬜ | `applyAccountPatch()` not implemented |
+| P1-044 | ⬜ | Game over settlement order not wired |
+| P1-045 | ⬜ | Cloud save suppress incomplete |
+| P1-046 | ⬜ | QA — happy path |
+| P1-047 | ⬜ | QA — album persistence |
+| P1-048 | ⬜ | QA — game over settlement |
+| P1-049 | ⬜ | QA — terminology grep |
+| P1-050 | ⬜ | QA — battle regression |
+| P1-051 | ⬜ | QA — Map 0 scout script |
+| P1-052 | ⬜ | Phase 1 sign-off |
+
+---
+
+## Recommended Execution Flow
+
+Single-developer order from **current state** (`da6a262`). Finish partial tickets before starting dependents. Do **not** skip album/save foundation before recruitment UI.
+
+### Wave 1 — Boot & gating (close partials)
+
+```
+P1-007  (finish) → title boot gate + bosses JSON fetch in initCatalog
+P1-006  (finish) → map.js trade/legendary weight 0 + cloud-save no-op
+P1-011  → host_city_bosses.json
+P1-012  → domain/bosses.js loader + buildBossTeam
+```
+
+**Exit:** Catalog fully loaded before New Run; deferred modes unreachable in engine + UI.
+
+### Wave 2 — Album & run ledger (save foundation)
+
+```
+P1-013  → album_layout.json
+P1-027  → domain/album.js API
+P1-028  → migrateSaveV2toV3
+P1-041  → call migration on initGame boot
+P1-020  → runId + ledger on state init
+P1-042  → persist ledger in poke_current_run
+P1-043  → applyAccountPatch
+```
+
+**Exit:** `game_album` read/write path exists; mid-run reload preserves ledger shape.
+
+### Wave 3 — Recruitment loop (core slice gameplay)
+
+```
+P1-016  → domain/scout.js + scout_pools.json
+P1-017  → Map 0 layer-1 forced pool
+P1-018  → domain/recruit.js
+P1-019  → rewire doCatchNode
+P1-029  → route dex writes → album facades
+P1-033  → Scout Report / Contract Offer UI
+P1-034  → Squad Registration reskin
+```
+
+**Exit:** Catch nodes are football scout reports; album seen/signed updates on display/sign.
+
+### Wave 4 — Host city progression
+
+```
+P1-022  → doBossNode → getHostCity
+P1-023  → cap maps at maxMapIndex 2
+P1-024  → slice-complete at badges === 3
+P1-025  → City Stamp ceremony
+P1-026  → football node weights + GAME_THEME tooltips
+P1-035  → slice-complete screen
+P1-036  → settleRunLite + summary modal
+P1-044  → game over settlement before clearSavedRun
+P1-045  → cloud save suppress (finish P1-006 cloud slice)
+```
+
+**Exit:** 3-map campaign ends cleanly; settlement lite on win and loss.
+
+### Wave 5 — UI polish (close partials)
+
+```
+P1-037  (finish) → unify all card call sites + football stat labels
+P1-038  (finish) → map HUD Album button + hide remaining Pokémon chrome
+P1-039  (finish) → battle log faint/win/loss strings
+P1-040  (finish) → T0 silhouette pipeline everywhere
+P1-031  → album_layout loader
+P1-030  → album modal (marquee + favorites pages)
+P1-032  (finish) → Core Six style triangle on marquee
+```
+
+**Exit:** Grep gate (P1-049) likely passable on slice screens.
+
+### Wave 6 — QA & sign-off
+
+```
+P1-050 → P1-051 → P1-046 → P1-047 → P1-048 → P1-049 → P1-052
+```
+
+**Exit:** SPEC 010 §13 checklist green; handoff-ready vertical slice.
+
+### Parallel shortcuts (only if blocked)
+
+| If blocked on | Can prep in parallel |
+|---------------|---------------------|
+| P1-019 | P1-013 layout JSON, P1-033 HTML/CSS mock |
+| P1-022 | P1-011 boss JSON authoring |
+| P1-030 | P1-031 layout loader after P1-013 exists |
 
 ---
 
@@ -531,9 +693,11 @@ Phase 1 delivers a **vertical slice**: Marquee Signing → 3 host city legs → 
 
 ---
 
-### P1-021
+### P1-021 ✅
 
 **Title:** Bypass `checkAndEvolveTeam` rename for football profiles
+
+**Status:** ✅ Done — `da6a262` (`shouldSkipFootballEvolution` in `ui.js`; `isFootballEvolutionBlocked` in `game.js` for Moon Stone)
 
 **Objective:** Prevent evolution name-swap on form level thresholds for MVP roster.
 
@@ -1336,44 +1500,27 @@ Phase 1 delivers a **vertical slice**: Marquee Signing → 3 host city legs → 
 
 ## Dependency Graph
 
-### Critical Path
+### Critical Path (original — Day 1 plan)
 
-Exact sequential order for single developer — do not skip ahead:
+Historical sequential order from v1.0. **Superseded for remaining work** by [Recommended Execution Flow](#recommended-execution-flow) above, which reflects shipped progress at `da6a262`.
 
 ```
-P1-001
-→ P1-002
-→ P1-003
-→ P1-004
-→ P1-005
-→ P1-007
-→ P1-008
-→ P1-009
-→ P1-010
-→ P1-014
-→ P1-015
-→ P1-027
-→ P1-028
-→ P1-041
-→ P1-011
-→ P1-012
-→ P1-016
-→ P1-017
-→ P1-018
-→ P1-019
-→ P1-020
-→ P1-022
-→ P1-023
-→ P1-024
-→ P1-037
-→ P1-032
-→ P1-033
-→ P1-034
-→ P1-036
-→ P1-044
-→ P1-046
-→ P1-052
+P1-001 → P1-002 → P1-003 → P1-004 → P1-005 → P1-007 → P1-008 → P1-009 → P1-010
+→ P1-014 → P1-015 → P1-027 → P1-028 → P1-041 → P1-011 → P1-012 → P1-016 → P1-017
+→ P1-018 → P1-019 → P1-020 → P1-022 → P1-023 → P1-024 → P1-037 → P1-032 → P1-033
+→ P1-034 → P1-036 → P1-044 → P1-046 → P1-052
 ```
+
+**Already merged off critical path:** P1-021 ✅ · P1-032 🟡 · P1-037 🟡 · P1-038 🟡 · P1-039 🟡 (battle field) · P1-040 🟡
+
+### Remaining critical spine (from current state)
+
+```
+P1-007† → P1-011 → P1-012 → P1-027 → P1-028 → P1-041 → P1-016 → P1-017 → P1-018
+→ P1-019 → P1-022 → P1-023 → P1-024 → P1-030 → P1-036 → P1-044 → P1-046 → P1-052
+```
+
+† Finish partial (boot gate + bosses catalog)
 
 ### Parallelizable Tasks
 
@@ -1404,72 +1551,75 @@ These can run concurrently with critical path segments when a second pass or con
 
 ## Milestones
 
-### Milestone 1 — First football player can be loaded
+### Milestone 1 — First football player can be loaded 🟡
+
+**Status:** Mostly complete — marquee playable; boot gate incomplete.
 
 **Completion criteria:**
-- `initCatalog()` succeeds; `getProfile(2)` returns Messi
-- `createPlayerInstance(2, 5)` returns valid battle instance with `speciesId: 2`
-- Marquee screen renders 3 football cards without PokeAPI fetch
+- [x] `initCatalog()` succeeds; `getProfile(2)` returns Messi
+- [x] `createPlayerInstance(2, 5)` returns valid battle instance with `speciesId: 2`
+- [x] Marquee screen renders 3 football cards without PokeAPI fetch
+- [ ] Title screen blocks New Run until catalog ready (P1-007)
 
-**Blocked by:** P1-007, P1-008, P1-009, P1-010, P1-015, P1-032
+**Blocked by:** P1-007 (finish), optional P1-032 polish (style triangle)
+
+**Expected effort:** ~0.5 day remaining
+
+---
+
+### Milestone 2 — Scout Report works ⬜
+
+**Completion criteria:**
+- [ ] Scout Report node shows 3 real players with form levels
+- [ ] Map 0 layer-1 forced pool verified (G11)
+- [ ] Contract Offer adds player to squad; Pass on report skips
+- [ ] `markAlbumSeen` fires on display; `markAlbumSigned` on accept
+
+**Blocked by:** Milestone 1 finish + P1-016, P1-017, P1-018, P1-019, P1-027, P1-033
 
 **Expected effort:** 2–3 days
 
 ---
 
-### Milestone 2 — Scout Report works
+### Milestone 3 — Host City boss works ⬜
 
 **Completion criteria:**
-- Scout Report node shows 3 real players with form levels
-- Map 0 layer-1 forced pool verified (G11)
-- Contract Offer adds player to squad; Pass on report skips
-- `markAlbumSeen` fires on display; `markAlbumSigned` on accept
-
-**Blocked by:** Milestone 1 + P1-016, P1-017, P1-018, P1-019, P1-027, P1-033
-
-**Expected effort:** 2–3 days (cumulative ~5 days)
-
----
-
-### Milestone 3 — Host City boss works
-
-**Completion criteria:**
-- `doBossNode` loads JSON roster for maps 0–2
-- Boss win increments stamp; City Stamp ceremony displays
-- Map 2 win triggers slice complete (not map 3)
-- No `GYM_LEADERS` reference in football path
+- [ ] `doBossNode` loads JSON roster for maps 0–2
+- [ ] Boss win increments stamp; City Stamp ceremony displays
+- [ ] Map 2 win triggers slice complete (not map 3)
+- [ ] No `GYM_LEADERS` reference in football path
 
 **Blocked by:** Milestone 2 + P1-011, P1-012, P1-022, P1-023, P1-024, P1-025
 
-**Expected effort:** 1–2 days (cumulative ~7 days)
+**Expected effort:** 1–2 days
 
 ---
 
-### Milestone 4 — Album persists
+### Milestone 4 — Album persists ⬜
 
 **Completion criteria:**
-- `game_album` survives page reload and second run
-- Album modal shows seen/signed states for slice pages
-- `migrateSaveV2toV3` idempotent; `poke_dex` not written in football runs
-- Game over settlement applies album patch before run clear
+- [ ] `game_album` survives page reload and second run
+- [ ] Album modal shows seen/signed states for slice pages
+- [ ] `migrateSaveV2toV3` idempotent; `poke_dex` not written in football runs
+- [ ] Game over settlement applies album patch before run clear
 
 **Blocked by:** Milestone 2 + P1-028, P1-029, P1-030, P1-036, P1-041, P1-043, P1-044
 
-**Expected effort:** 2 days (cumulative ~9 days)
+**Expected effort:** 2 days
 
 ---
 
-### Milestone 5 — Vertical Slice complete
+### Milestone 5 — Vertical Slice complete ⬜
 
 **Completion criteria:**
-- Full loop: Title → Marquee → 3 maps → 3 stamps → slice complete → settlement → title
-- Pokémon UI hidden; grep gate passes
-- QA P1-046–P1-052 green; SPEC 010 §13 checklist complete
-- Ready for external playtest handoff
+- [ ] Full loop: Title → Marquee → 3 maps → 3 stamps → slice complete → settlement → title
+- [ ] Pokémon UI hidden; grep gate passes
+- [ ] QA P1-046–P1-052 green; SPEC 010 §13 checklist complete
+- [ ] Ready for external playtest handoff
 
-**Blocked by:** Milestone 3 + Milestone 4 + P1-038, P1-046–P1-052
+**Blocked by:** Milestone 3 + Milestone 4 + P1-038 (finish), P1-046–P1-052
 
-**Expected effort:** 2–3 days (cumulative **10–12 working days** / 1.5–2 weeks)
+**Estimated remaining:** ~8–10 working days from `da6a262`
 
 ---
 
@@ -1487,7 +1637,7 @@ Can we hand this build to a tester? All boxes must pass.
 - [ ] 3 Host City bosses winnable at target difficulty (Map 0 boss ~85% dev win rate)
 - [ ] Campaign ends at 3rd stamp with slice-complete screen
 - [ ] Game over before stamp 3 still shows settlement lite
-- [ ] `checkAndEvolveTeam` does not rename football players
+- [x] `checkAndEvolveTeam` does not rename football players (P1-021 ✅)
 - [ ] Trade, legendary, CCC, Nuzlocke unreachable in slice build
 
 ### Save checks
@@ -1520,4 +1670,4 @@ Can we hand this build to a tester? All boxes must pass.
 
 ---
 
-*End of SPEC 011 — Engineering Task Breakdown.*
+*End of SPEC 011 — Engineering Task Breakdown (v1.1).*
