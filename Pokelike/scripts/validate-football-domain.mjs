@@ -470,6 +470,18 @@ await runTest("football player cards expose tier and football stat labels", () =
   assert(cssSource.includes(".poke-card.player-card .player-tier-bar"), "style.css should define player tier bar");
 });
 
+await runTest("football portrait fallback renders jersey placeholder", () => {
+  const uiSource = readText("js/ui.js");
+  const cssSource = readText("css/style.css");
+
+  assert(uiSource.includes("data-nation"), "player card fallback should carry nation metadata");
+  assert(uiSource.includes("<strong>#${fallbackNumber}</strong>"), "player card fallback should render jersey number placeholder");
+  assert(uiSource.includes("getBattlePortraitFallbackLabel"), "battle portrait fallback helper should exist");
+  assert(uiSource.includes("<strong>#${number}</strong>"), "battle fallback should render jersey number placeholder");
+  assert(cssSource.includes(".poke-card.player-card .player-portrait-fallback strong"), "card fallback should style jersey number");
+  assert(cssSource.includes(".battle-portrait-fallback strong"), "battle fallback should style jersey number");
+});
+
 await runTest("combat adapter creates browser-compatible football instances", () => {
   const instance = context.window.DomainCombatAdapter.createPlayerInstance(2, 5, { moveTier: 1 });
   assert(instance.profileId === 2, "instance.profileId must be 2");

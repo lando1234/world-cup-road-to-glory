@@ -143,9 +143,9 @@ function getBattlePortraitUrl(entity) {
 
 function getBattlePortraitFallbackLabel(entity) {
   const profile = getProfileForCard(entity);
-  if (profile?.nation) return profile.nation;
-  if (profile?.commonName) return profile.commonName.slice(0, 3).toUpperCase();
-  return String(entity?.profileId ?? entity?.speciesId ?? '?');
+  const nation = profile?.nation || profile?.commonName?.slice(0, 3).toUpperCase() || 'XI';
+  const number = entity?.profileId ?? entity?.speciesId ?? '?';
+  return `<span>${nation}</span><strong>#${number}</strong>`;
 }
 
 function renderBattleSpriteHtml(entity) {
@@ -193,7 +193,8 @@ function renderPlayerCard(instance, onClick, selected) {
   const formLevel = instance.level ?? 5;
   const currentHp = instance.currentHp ?? instance.maxHp ?? 0;
   const maxHp = Math.max(1, instance.maxHp ?? 1);
-  const fallbackLabel = nation || String(instance.profileId ?? instance.speciesId ?? '?');
+  const fallbackNumber = instance.profileId ?? instance.speciesId ?? '?';
+  const fallbackLabel = `<span>${nation || 'XI'}</span><strong>#${fallbackNumber}</strong>`;
   const stats = profile?.baseStats || instance.baseStats || {};
   const vision = Math.round(((stats.special ?? 0) + (stats.spdef ?? 0)) / 2);
   const statRows = [
@@ -222,7 +223,7 @@ function renderPlayerCard(instance, onClick, selected) {
     <div class="poke-sprite-wrap">
       <img src="${portrait}" alt="${displayName}" class="poke-sprite player-portrait"
            onerror="this.style.display='none';var fb=this.nextElementSibling;if(fb)fb.style.display='flex';">
-      <div class="player-portrait-fallback" style="display:none" aria-hidden="true">${fallbackLabel}</div>
+      <div class="player-portrait-fallback" data-nation="${nation || 'XI'}" style="display:none" aria-hidden="true">${fallbackLabel}</div>
     </div>
     <div class="poke-name">${displayName}</div>
     ${metaHtml}
