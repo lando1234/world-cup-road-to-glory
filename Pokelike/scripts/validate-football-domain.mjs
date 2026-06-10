@@ -91,6 +91,7 @@ const context = createBrowserLikeContext();
 runScript(context, "js/domain/features.js");
 runScript(context, "js/domain/styles.js");
 runScript(context, "js/domain/profiles.js");
+runScript(context, "js/domain/bosses.js");
 runScript(context, "js/domain/combat-adapter.js");
 
 context.window.GAME_THEME = {
@@ -114,6 +115,8 @@ runScript(context, "js/cloud-save.js");
 
 const catalogJson = readJson("data/football/player_profiles.json");
 const catalog = context.window.DomainProfiles.loadCatalog(catalogJson);
+const hostCityBossesJson = readJson("data/football/host_city_bosses.json");
+const hostCityBossCatalog = context.window.DomainBosses.loadHostCityBosses(hostCityBossesJson);
 
 await runTest("script load order keeps football domain before data.js", () => {
   const expected = [
@@ -175,6 +178,43 @@ await runTest("combat adapter creates browser-compatible football instances", ()
   assert(instance.name.includes("Messi"), "instance name should use profile displayName");
   assert(instance.currentHp === instance.maxHp, "fresh instance must start at max HP");
   assert(Array.isArray(instance.types) && instance.types.length > 0, "instance must expose legacy battle types");
+});
+
+await runTest("host city boss catalog validates Phase 1 maps", () => {
+  assert(hostCityBossCatalog.bosses.length === 3, `expected 3 host city bosses, received ${hostCityBossCatalog.bosses.length}`);
+  const expected = [
+    { mapIndex: 0, hostCity: "S\u00e3o Paulo", stampId: "stamp_sao_paulo", profileIds: [29, 22, 17], levels: [14, 12, 13], tiers: [0, 0, 0] },
+    { mapIndex: 1, hostCity: "Berlin", stampId: "stamp_berlin", profileIds: [30, 16, 26], levels: [20, 18, 19], tiers: [1, 1, 1] },
+    { mapIndex: 2, hostCity: "Tokyo", stampId: "stamp_tokyo", profileIds: [31, 28, 7], levels: [25, 23, 24], tiers: [1, 1, 1] }
+  ];
+
+  for (const bossSpec of expected) {
+    const boss = context.window.DomainBosses.getHostCity(bossSpec.mapIndex);
+    assert(boss, `missing boss for mapIndex ${bossSpec.mapIndex}`);
+    assert(boss.hostCity === bossSpec.hostCity, `mapIndex ${bossSpec.mapIndex} hostCity mismatch`);
+    assert(boss.stamp.id === bossSpec.stampId, `mapIndex ${bossSpec.mapIndex} stamp mismatch`);
+    assert(boss.roster.map(slot => slot.profileId).join(",") === bossSpec.profileIds.join(","), `mapIndex ${bossSpec.mapIndex} roster ids mismatch`);
+    assert(boss.roster.map(slot => slot.formLevel).join(",") === bossSpec.levels.join(","), `mapIndex ${bossSpec.mapIndex} roster levels mismatch`);
+    assert(boss.roster.map(slot => slot.skillTier).join(",") === bossSpec.tiers.join(","), `mapIndex ${bossSpec.mapIndex} skill tiers mismatch`);
+  }
+
+  assert(context.window.DomainBosses.getHostCity(3) === null, "maxMapIndex gate should hide mapIndex 3");
+});
+
+await runTest("host city boss teams build battle-ready instances", () => {
+  const berlin = context.window.DomainBosses.getHostCity(1);
+  const team = context.window.DomainBosses.buildBossTeam(berlin);
+
+  assert(team.length === 3, `expected 3 boss team members, received ${team.length}`);
+  assert(team.map(player => player.profileId).join(",") === "30,16,26", "Berlin boss team profile ids mismatch");
+  assert(team.map(player => player.level).join(",") === "20,18,19", "Berlin boss team levels mismatch");
+
+  for (const member of team) {
+    assert(member.currentHp === member.maxHp, `${member.name} should start at max HP`);
+    assert(member.skillTier === 1, `${member.name} should preserve boss skillTier`);
+    assert(member.moveTier === 1, `${member.name} should pass skillTier to combat moveTier`);
+    assert(typeof member.bossRole === "string" && member.bossRole.length > 0, `${member.name} should preserve boss role`);
+  }
 });
 
 await runTest("football slice gates trade and legendary map nodes", () => {

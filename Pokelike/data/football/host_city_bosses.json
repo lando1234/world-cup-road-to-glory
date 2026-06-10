@@ -1,0 +1,77 @@
+{
+  "schemaVersion": 1,
+  "bosses": [
+    {
+      "mapIndex": 0,
+      "hostCity": "São Paulo",
+      "nation": "BRA",
+      "label": "Brazil Federation Challenge",
+      "managerName": null,
+      "primaryStyle": "compact_block",
+      "stamp": {
+        "id": "stamp_sao_paulo",
+        "displayName": "São Paulo Stamp"
+      },
+      "difficulty": 2,
+      "recommendedFormRange": [12, 16],
+      "balance": {
+        "targetDevWinRate": 0.85,
+        "notes": "Opening boss should reward a healthy marquee squad plus one scout signing."
+      },
+      "roster": [
+        { "profileId": 29, "formLevel": 14, "skillTier": 0, "heldItemId": null, "role": "Boss anchor" },
+        { "profileId": 22, "formLevel": 12, "skillTier": 0, "heldItemId": null, "role": "Wing overlap" },
+        { "profileId": 17, "formLevel": 13, "skillTier": 0, "heldItemId": null, "role": "GK" }
+      ],
+      "flavorText": "Samba structure — absorb pressure, then explode through Casemiro's shield."
+    },
+    {
+      "mapIndex": 1,
+      "hostCity": "Berlin",
+      "nation": "GER",
+      "label": "Germany Federation Challenge",
+      "managerName": null,
+      "primaryStyle": "possession_buildup",
+      "stamp": {
+        "id": "stamp_berlin",
+        "displayName": "Berlin Stamp"
+      },
+      "difficulty": 2,
+      "recommendedFormRange": [18, 22],
+      "balance": {
+        "targetDevWinRate": 0.75,
+        "notes": "Second boss checks whether the player has added depth beyond the marquee signing."
+      },
+      "roster": [
+        { "profileId": 30, "formLevel": 20, "skillTier": 1, "heldItemId": null, "role": "Boss anchor" },
+        { "profileId": 16, "formLevel": 18, "skillTier": 1, "heldItemId": null, "role": "GK sweeper" },
+        { "profileId": 26, "formLevel": 19, "skillTier": 1, "heldItemId": null, "role": "Libero" }
+      ],
+      "flavorText": "Mechanical control — Kroos dictates the tempo until you force errors."
+    },
+    {
+      "mapIndex": 2,
+      "hostCity": "Tokyo",
+      "nation": "JPN",
+      "label": "Japan Federation Challenge",
+      "managerName": null,
+      "primaryStyle": "rapid_counter",
+      "stamp": {
+        "id": "stamp_tokyo",
+        "displayName": "Tokyo Stamp"
+      },
+      "difficulty": 3,
+      "recommendedFormRange": [22, 27],
+      "balance": {
+        "targetDevWinRate": 0.65,
+        "notes": "Slice finale should pressure stamina and squad construction without requiring perfect pathing."
+      },
+      "roster": [
+        { "profileId": 31, "formLevel": 25, "skillTier": 1, "heldItemId": null, "role": "Boss anchor" },
+        { "profileId": 28, "formLevel": 23, "skillTier": 1, "heldItemId": null, "role": "Cut inside" },
+        { "profileId": 7, "formLevel": 24, "skillTier": 1, "heldItemId": null, "role": "Counter outlet" }
+      ],
+      "flavorText": "Precision transitions — Kubo leads lightning counters through tight spaces."
+    }
+  ]
+}

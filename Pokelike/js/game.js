@@ -139,6 +139,10 @@ async function prepareFootballBootGate() {
       throw new Error('DomainProfiles.initCatalog is unavailable.');
     }
     await window.DomainProfiles.initCatalog();
+    if (!window.DomainBosses || typeof window.DomainBosses.initHostCityBosses !== 'function') {
+      throw new Error('DomainBosses.initHostCityBosses is unavailable.');
+    }
+    await window.DomainBosses.initHostCityBosses();
     setCampaignControlsDisabled(false, '');
     return true;
   } catch (error) {

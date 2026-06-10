@@ -5,7 +5,7 @@
 **Inputs:** [001](./001-codebase-discovery.md), [006B](./006B-technical-blueprint-revised.md), [007](./007-football-data-pack.md), [008](./008-meta-progression.md), [009](./009-gameplay-loop-node-system.md)  
 **Version:** v1.1  
 **Date:** 2026-06-10  
-**Last sync:** `main` @ this commit — boot gates, slice node gates, and cloud-save shutdown (T1)
+**Last sync:** `main` @ this commit — host city boss catalog and `DomainBosses` loader (T2)
 **Assumptions:** Single developer · existing Pokelike vanilla JS · browser game · no React · no backend changes
 
 ---
@@ -14,9 +14,9 @@
 
 | Metric | Count |
 |--------|------:|
-| **Done** | 12 |
-| **Partial** | 7 |
-| **Not started** | 33 |
+| **Done** | 15 |
+| **Partial** | 6 |
+| **Not started** | 31 |
 | **Total tickets** | 52 |
 
 **Legend:** ✅ Done · 🟡 Partial (shipped subset; acceptance not fully met) · ⬜ Not started
@@ -28,6 +28,8 @@ Before continuing gameplay implementation, T0 establishes the repeatable validat
 | ID | Status | Notes / commit |
 |----|--------|----------------|
 | T0-001 | ✅ | Node project baseline, validation harness, static server, Phase 2 visual frictions registry — `feb8f94` |
+| T1-001 | ✅ | Boot gate, slice node gates, and cloud-save shutdown — `db538b3` |
+| T2-001 | ✅ | Host city boss catalog, loader, boot gate, and Node boss-team validation — this commit |
 
 **Per-task Definition of Done from this point forward:**
 
@@ -59,13 +61,13 @@ Domain tasks should extend `Pokelike/scripts/validate-football-domain.mjs` inste
 | P1-003 | ✅ | `STYLE_CHART` + labels — `8c6b2a2` |
 | P1-004 | ✅ | `getTypeEffectiveness` football path — `f9ece79` |
 | P1-005 | ✅ | `GAME_THEME` object — `22e8632`, extended in battle/title passes |
-| P1-006 | ✅ | Title-screen hide + map trade/legendary gates + cloud-save no-op — this commit |
-| P1-007 | 🟡 | `DomainProfiles.initCatalog()` loads profiles JSON and title boot gate blocks failed starts; **bosses JSON not loaded** |
+| P1-006 | ✅ | Title-screen hide + map trade/legendary gates + cloud-save no-op — `db538b3` |
+| P1-007 | ✅ | `DomainProfiles.initCatalog()` and `DomainBosses.initHostCityBosses()` both gate campaign start — this commit |
 | P1-008 | ✅ | `player_profiles.json` — 20 slice roster — `94adb62` |
 | P1-009 | ✅ | Catalog loader + `getProfile()` — `eef0f66`; `isFootballProfileId` now catalog-backed |
 | P1-010 | ✅ | `createPlayerInstance()` — `9085c97` |
-| P1-011 | ⬜ | `host_city_bosses.json` not authored |
-| P1-012 | ⬜ | `domain/bosses.js` still stub |
+| P1-011 | ✅ | `host_city_bosses.json` authored for maps 0–2 with spec rosters — this commit |
+| P1-012 | ✅ | `DomainBosses` loader, validation, lookup, and `buildBossTeam()` — this commit |
 | P1-013 | ⬜ | `album_layout.json` not authored |
 | P1-014 | ✅ | PokeAPI guard + football `getFootballCatchChoices` — `f20ff1e`, `a098829` |
 | P1-015 | ✅ | `STARTER_IDS = [1, 2, 3]` — `c430a36` |
@@ -111,7 +113,7 @@ Domain tasks should extend `Pokelike/scripts/validate-football-domain.mjs` inste
 
 ## Recommended Execution Flow
 
-Single-developer order from **current state** (`da6a262`). Finish partial tickets before starting dependents. Do **not** skip album/save foundation before recruitment UI.
+Single-developer order from **current state** after T2. Finish partial tickets before starting dependents. Do **not** skip album/save foundation before recruitment UI.
 
 ### Wave 0 — Validation baseline ✅
 
@@ -121,7 +123,7 @@ T0-001 → Node baseline + validation harness + static server + Phase 2 visual f
 
 **Exit:** Every later task has a stable place for scripted tests, assumptions, task status, and deferred visual debt.
 
-### Wave 1 — Boot & gating (close partials)
+### Wave 1 — Boot & gating ✅
 
 ```
 P1-007  (finish) → bosses JSON fetch in boot sequence
@@ -129,7 +131,7 @@ P1-011  → host_city_bosses.json
 P1-012  → domain/bosses.js loader + buildBossTeam
 ```
 
-**Exit:** Catalogs fully loaded before New Run; deferred modes unreachable in engine + UI.
+**Exit:** Catalogs fully loaded before New Run; deferred modes unreachable in engine + UI. Completed by T1 + T2.
 
 ### Wave 2 — Album & run ledger (save foundation)
 
@@ -1538,7 +1540,7 @@ Phase 1 delivers a **vertical slice**: Marquee Signing → 3 host city legs → 
 
 ### Critical Path (original — Day 1 plan)
 
-Historical sequential order from v1.0. **Superseded for remaining work** by [Recommended Execution Flow](#recommended-execution-flow) above, which reflects shipped progress at `da6a262`.
+Historical sequential order from v1.0. **Superseded for remaining work** by [Recommended Execution Flow](#recommended-execution-flow) above, which reflects shipped progress after T2.
 
 ```
 P1-001 → P1-002 → P1-003 → P1-004 → P1-005 → P1-007 → P1-008 → P1-009 → P1-010
@@ -1552,11 +1554,9 @@ P1-001 → P1-002 → P1-003 → P1-004 → P1-005 → P1-007 → P1-008 → P1-
 ### Remaining critical spine (from current state)
 
 ```
-P1-007† → P1-011 → P1-012 → P1-027 → P1-028 → P1-041 → P1-016 → P1-017 → P1-018
+P1-027 → P1-028 → P1-041 → P1-016 → P1-017 → P1-018
 → P1-019 → P1-022 → P1-023 → P1-024 → P1-030 → P1-036 → P1-044 → P1-046 → P1-052
 ```
-
-† Finish partial (boot gate + bosses catalog)
 
 ### Parallelizable Tasks
 
@@ -1587,19 +1587,20 @@ These can run concurrently with critical path segments when a second pass or con
 
 ## Milestones
 
-### Milestone 1 — First football player can be loaded 🟡
+### Milestone 1 — First football player can be loaded ✅
 
-**Status:** Mostly complete — marquee playable; boot gate incomplete.
+**Status:** Complete for catalog and boot readiness. Optional UI polish remains tracked outside this milestone.
 
 **Completion criteria:**
 - [x] `initCatalog()` succeeds; `getProfile(2)` returns Messi
 - [x] `createPlayerInstance(2, 5)` returns valid battle instance with `speciesId: 2`
 - [x] Marquee screen renders 3 football cards without PokeAPI fetch
 - [x] Title screen blocks New Run until catalog ready (P1-007)
+- [x] `DomainBosses.getHostCity(0)` and `buildBossTeam()` validate host city boss readiness
 
-**Blocked by:** P1-011/P1-012 for boss catalog readiness, optional P1-032 polish (style triangle)
+**Blocked by:** None for catalog readiness. Optional P1-032 polish (style triangle) remains in UI work.
 
-**Expected effort:** ~0.5 day remaining
+**Expected effort:** 0 for milestone scope
 
 ---
 
@@ -1625,7 +1626,7 @@ These can run concurrently with critical path segments when a second pass or con
 - [ ] Map 2 win triggers slice complete (not map 3)
 - [ ] No `GYM_LEADERS` reference in football path
 
-**Blocked by:** Milestone 2 + P1-011, P1-012, P1-022, P1-023, P1-024, P1-025
+**Blocked by:** Milestone 2 + P1-022, P1-023, P1-024, P1-025
 
 **Expected effort:** 1–2 days
 
@@ -1655,7 +1656,7 @@ These can run concurrently with critical path segments when a second pass or con
 
 **Blocked by:** Milestone 3 + Milestone 4 + P1-038 (finish), P1-046–P1-052
 
-**Estimated remaining:** ~8–10 working days from `da6a262`
+**Estimated remaining:** ~7–9 working days after T2
 
 ---
 
@@ -1698,7 +1699,7 @@ Can we hand this build to a tester? All boxes must pass.
 ### Content checks
 
 - [ ] `player_profiles.json` — 20 players, Messi starter ID 2, stats match 007 §4.2
-- [ ] `host_city_bosses.json` — 3 entries maps 0–2, rosters match 007 §7.1
+- [x] `host_city_bosses.json` — 3 entries maps 0–2, rosters match 007 §7.1
 - [ ] `album_layout.json` — marquee + favorites slice slots
 - [ ] `STARTER_IDS = [1, 2, 3]`
 - [ ] PokeAPI not called for `profileId <= 50` (network tab clean)

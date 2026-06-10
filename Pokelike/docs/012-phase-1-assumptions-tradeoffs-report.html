@@ -501,7 +501,7 @@
             </div>
             <div class="task-note">
               <strong>Tradeoffs</strong>
-              <p>The boot gate currently validates the profile catalog only. Boss catalog readiness remains intentionally deferred to the next boss-data task so this commit stays focused on gates, cloud shutdown, and map node availability.</p>
+              <p>The T1 boot gate initially validated the profile catalog only so the commit could stay focused on gates, cloud shutdown, and map node availability. T2 closes the boss catalog gap with a dedicated loader and validation pass.</p>
             </div>
             <div class="task-note">
               <strong>Design Decisions</strong>
@@ -510,6 +510,33 @@
             <div class="task-note">
               <strong>Risks / Follow-up</strong>
               <p>Cloud save is disabled rather than migrated. Future cloud support must be designed around <code>game_album</code> and the football account model, not the legacy sync key list.</p>
+            </div>
+          </div>
+        </li>
+        <li class="task-entry">
+          <header>
+            <div class="task-title">
+              <h3>T2 — Host city boss catalog and <code>DomainBosses</code> loader</h3>
+              <span class="pill">Status: implemented</span>
+              <span class="pill">Review: PASS</span>
+            </div>
+          </header>
+          <div class="task-grid">
+            <div class="task-note">
+              <strong>Assumptions</strong>
+              <p>The first three federation challenges can be represented as immutable data configs and converted into battle-ready legacy instances at runtime. Phase 1 only needs maps 0, 1, and 2 while retaining a schema that can grow to the full host-city set later.</p>
+            </div>
+            <div class="task-note">
+              <strong>Tradeoffs</strong>
+              <p><code>buildBossTeam()</code> now creates combat instances, but <code>doBossNode</code> still uses the legacy boss path. This keeps the data/loader task atomic and leaves battle-flow rewiring to P1-022.</p>
+            </div>
+            <div class="task-note">
+              <strong>Design Decisions</strong>
+              <p><code>host_city_bosses.json</code> includes roster levels, skill tiers, stamps, difficulty, and balance notes. <code>DomainBosses.loadHostCityBosses()</code> validates profile references, style IDs, contiguous map indexes, stamp uniqueness, and the <code>FEATURES.maxMapIndex</code> slice gate before exposing lookups.</p>
+            </div>
+            <div class="task-note">
+              <strong>Risks / Follow-up</strong>
+              <p>No battle simulation or playtest tuning was performed in this task. P1-022 must wire boss nodes to <code>DomainBosses</code>, then validate difficulty targets with manual gameplay and scripted regression checks.</p>
             </div>
           </div>
         </li>
@@ -1050,7 +1077,7 @@
     </section>
 
     <footer>
-      Generated for the Pokelike World Cup Road to Glory vertical slice. Last updated 2026-06-10 — T1 boot and cloud gates, Node/npm automation baseline, T0 validation protocol, one-task-one-commit rule, visual-friction registry, bridges registry, migration guardrails, TheSportsDB release-risk notes.
+      Generated for the Pokelike World Cup Road to Glory vertical slice. Last updated 2026-06-10 — T2 host city boss catalog, T1 boot and cloud gates, Node/npm automation baseline, T0 validation protocol, one-task-one-commit rule, visual-friction registry, bridges registry, migration guardrails, TheSportsDB release-risk notes.
     </footer>
   </main>
 </body>
