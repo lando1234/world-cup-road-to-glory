@@ -260,6 +260,43 @@
       color: #245044;
     }
 
+    .bridge-entry {
+      display: grid;
+      gap: 12px;
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: var(--card);
+    }
+
+    .bridge-entry h3 {
+      margin: 0;
+      font-size: 1rem;
+    }
+
+    .bridge-meta {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .bridge-meta .task-note {
+      margin: 0;
+    }
+
+    .summary-box {
+      padding: 22px;
+      border: 1px solid rgba(31, 122, 95, 0.35);
+      border-radius: 18px;
+      background: linear-gradient(135deg, var(--soft), #fff);
+      color: #1f4a3d;
+      font-size: 1.02rem;
+    }
+
+    .summary-box p + p {
+      margin-top: 12px;
+    }
+
     footer {
       margin-top: 28px;
       color: var(--muted);
@@ -271,6 +308,10 @@
       .grid,
       .split,
       .task-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .bridge-meta {
         grid-template-columns: 1fr;
       }
 
@@ -348,7 +389,11 @@
         </li>
         <li class="item">
           <span class="label">Third-party likeness remains a legal risk</span>
-          <span class="body">TheSportsDB cutouts are real-player likeness from a third-party catalog. Profiles still declare <code>legal.likenessTier: 0</code>. Production release requires legal review; this integration is a vertical-slice presentation shortcut only.</span>
+          <span class="body">TheSportsDB cutouts are real-player likeness from a third-party catalog, acceptable for internal slice demos only. Profiles declare <code>legal.likenessTier: 0</code>. Public release requires legal review and owned or licensed art — see “Temporary Bridges To Retire Later”.</span>
+        </li>
+        <li class="item">
+          <span class="label">Manual QA is acceptable for Phase 1</span>
+          <span class="body">Automated tests are valuable, but the task breakdown treats manual smoke tests as the Phase 1 gate. Test scripts should not block small implementation tickets unless a ticket asks for them.</span>
         </li>
         <li class="task-entry">
           <header>
@@ -620,7 +665,7 @@
             </div>
             <div class="task-note">
               <strong>Risks / Follow-up</strong>
-              <p>Rodri (9) missing from free search — manual <code>idPlayer</code> override needed in sync script <code>OVERRIDES</code>. Ambiguous search hits (e.g. “Rodri” → Jay Rodriguez) require lookup-by-id. Premium API key replaces <code>123</code> via env <code>THESPORTSDB_API_KEY</code> or <code>FEATURES.theSportsDbApiKey</code>. National-team kit variants do not exist as separate API fields; cutouts reflect current club kits.</p>
+              <p><strong>Internal slice only:</strong> TheSportsDB cutouts are acceptable for a private vertical-slice demo, not for public release without legal and licensing review. Club-kit cutouts are temporary presentation assets, not canonical national-team art. Rodri (9) missing from free search — manual <code>idPlayer</code> override in sync <code>OVERRIDES</code>. Any missing or broken image URL must fall back to nation-code / silhouette UI; never block gameplay. Re-sync via <code>node scripts/sync-thesportsdb-portraits.mjs</code> (expect HTTP 429 on free tier).</p>
             </div>
           </div>
         </li>
@@ -715,6 +760,159 @@
     </section>
 
     <section>
+      <h2>Temporary Bridges To Retire Later</h2>
+      <p class="subtitle" style="margin-bottom: 20px;">
+        These patterns exist to ship Phase 1 on the current no-build runtime. They are intentional shortcuts. Do not treat them as final architecture.
+      </p>
+      <ul class="assumption-list">
+        <li class="bridge-entry">
+          <h3>Browser globals on <code>window</code></h3>
+          <div class="bridge-meta">
+            <div class="task-note">
+              <strong>Why now</strong>
+              <p>The app loads plain scripts without a bundler. Domain modules attach <code>Domain*</code> namespaces to <code>window</code> so <code>data.js</code>, <code>game.js</code>, and <code>ui.js</code> can call them today.</p>
+            </div>
+            <div class="task-note">
+              <strong>Retire in</strong>
+              <p>Phase 2+ when the client moves to a typed module boundary (bundled app or explicit import graph).</p>
+            </div>
+            <div class="task-note">
+              <strong>Target replacement</strong>
+              <p>ES modules or a typed domain package with explicit exports; no mutable global registries.</p>
+            </div>
+          </div>
+        </li>
+        <li class="bridge-entry">
+          <h3><code>speciesId === profileId</code></h3>
+          <div class="bridge-meta">
+            <div class="task-note">
+              <strong>Why now</strong>
+              <p>The battle engine, save shape, and UI still key off legacy instance fields. Football instances mirror Pokémon instances so combat, team bars, and persistence work without a rewrite.</p>
+            </div>
+            <div class="task-note">
+              <strong>Retire in</strong>
+              <p>Phase 2 when save migration and battle adapters accept a first-class <code>profileId</code> (or equivalent) on every football entity.</p>
+            </div>
+            <div class="task-note">
+              <strong>Target replacement</strong>
+              <p>Football-native instance schema: explicit <code>profileId</code>, no overloaded <code>speciesId</code> for players; legacy Pokémon paths keep <code>speciesId</code> only.</p>
+            </div>
+          </div>
+        </li>
+        <li class="bridge-entry">
+          <h3><code>styleToLegacyType()</code></h3>
+          <div class="bridge-meta">
+            <div class="task-note">
+              <strong>Why now</strong>
+              <p><code>getTypeEffectiveness()</code> and move pools still consume legacy type strings. Styles project into the old chart so football combat works before native <code>StyleId</code> math lands everywhere.</p>
+            </div>
+            <div class="task-note">
+              <strong>Retire in</strong>
+              <p>Phase 2 when battle resolution reads <code>STYLE_CHART</code> directly and move data uses style keys end-to-end.</p>
+            </div>
+            <div class="task-note">
+              <strong>Target replacement</strong>
+              <p>Native style effectiveness in the battle layer; remove legacy type projection from football instances.</p>
+            </div>
+          </div>
+        </li>
+        <li class="bridge-entry">
+          <h3><code>LEGACY_STARTER_IDS</code></h3>
+          <div class="bridge-meta">
+            <div class="task-note">
+              <strong>Why now</strong>
+              <p><code>STARTER_IDS</code> now points at the football trio. A separate constant preserves Gen 1 starter behavior when <code>footballMode</code> is off.</p>
+            </div>
+            <div class="task-note">
+              <strong>Retire in</strong>
+              <p>Phase 2 if legacy Pokémon mode is split behind a dedicated mode flag or removed from this repo.</p>
+            </div>
+            <div class="task-note">
+              <strong>Target replacement</strong>
+              <p>Mode-specific starter catalogs loaded from JSON; no dual constants in <code>data.js</code>.</p>
+            </div>
+          </div>
+        </li>
+        <li class="bridge-entry">
+          <h3><code>GAME_THEME</code> in <code>data.js</code></h3>
+          <div class="bridge-meta">
+            <div class="task-note">
+              <strong>Why now</strong>
+              <p>Terminology contract was added next to existing data globals so later UI tasks can swap copy without inventing strings ad hoc.</p>
+            </div>
+            <div class="task-note">
+              <strong>Retire in</strong>
+              <p>Phase 2 UI migration (P1-039+) when screens consume theme strings consistently.</p>
+            </div>
+            <div class="task-note">
+              <strong>Target replacement</strong>
+              <p>Dedicated theme/i18n module (or React context) decoupled from gameplay data; <code>data.js</code> holds mechanics only.</p>
+            </div>
+          </div>
+        </li>
+        <li class="bridge-entry">
+          <h3>TheSportsDB portrait shortcut</h3>
+          <div class="bridge-meta">
+            <div class="task-note">
+              <strong>Why now</strong>
+              <p>Baked cutout URLs in <code>thesportsdb_portraits.json</code> ship player art faster than exporting local PNGs. Enrichment runs at catalog load, not during save/load.</p>
+            </div>
+            <div class="task-note">
+              <strong>Retire in</strong>
+              <p>Before any public release; target Phase 2 art pass (P1-040 completion) with owned or licensed assets.</p>
+            </div>
+            <div class="task-note">
+              <strong>Target replacement</strong>
+              <p>First-party <code>/assets/players/{slug}.png</code> (or CDN you control), optional silhouette tier per <code>legal.likenessTier</code>; no third-party likeness URLs in production builds.</p>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Data Stability Rule</h2>
+      <div class="callout">
+        <p><strong>Every <code>PlayerInstance</code> must be serializable and restorable without live network calls.</strong></p>
+        <p>Saved runs store stats, ids, HP, form level, and team composition — not portrait fetch state. Runtime portraits may request external URLs for display, but a failed or offline image must degrade to nation-code / silhouette UI only. Restore paths must never call TheSportsDB, PokeAPI, or any other remote service. If a portrait URL breaks after save, gameplay continues; only presentation changes.</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>Migration Guardrails</h2>
+      <ul class="decision-list">
+        <li class="item">
+          <span class="label">Never mutate active <code>poke_current_run</code> during Phase 1 migration</span>
+          <span class="body">Migration initializes missing football meta keys only. It does not rewrite an in-progress Pokémon run into a football run or alter team state mid-run.</span>
+        </li>
+        <li class="item">
+          <span class="label">Never dual-write <code>poke_dex</code> and <code>game_album</code></span>
+          <span class="body">Album progress lives in the football album model. Phase 1 must not mirror catches into legacy Pokédex keys or keep two sources of truth.</span>
+        </li>
+        <li class="item">
+          <span class="label">Migration must be idempotent</span>
+          <span class="body">Running migration twice on the same save must produce the same result. No cumulative patches, no duplicate stamps, no escalating rewards.</span>
+        </li>
+        <li class="item">
+          <span class="label">No retroactive rewards during Phase 1</span>
+          <span class="body">Migration adds structure, not loot. Signed album slots, credits, fragments, and achievement unlocks stay out of migration handlers until their spec tasks explicitly allow them.</span>
+        </li>
+        <li class="item">
+          <span class="label">Failed catalog load blocks new run start</span>
+          <span class="body">If player profiles, bosses, or required football JSON fail to load, the title screen shows a visible error and disables new campaigns. Silent fallback to Pokémon catalogs is forbidden.</span>
+        </li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Opinionated Summary</h2>
+      <div class="summary-box">
+        <p>Phase 1 assumptions are acceptable because they keep the vanilla loop playable while football content lands incrementally. Globals, legacy field names, style projection, and remote cutouts are scaffolding — not the destination architecture.</p>
+        <p>Treat every bridge in this report as debt with an owner and a phase boundary. Ship the slice, validate fun, then retire shortcuts before widening scope or publishing. If a shortcut survives because it is convenient, document why and schedule the replacement; do not normalize it by silence.</p>
+      </div>
+    </section>
+
+    <section>
       <h2>Design Decisions Taken</h2>
       <ul class="decision-list">
         <li class="item">
@@ -772,12 +970,12 @@
           <span class="body">Any code path that renders starters, scouts, bosses, or album slots must assume catalog readiness is enforced before user interaction begins.</span>
         </li>
         <li class="item risk">
-          <span class="label">TheSportsDB rate limits and ambiguous search</span>
-          <span class="body">Free-tier search returns one player and omits fanart fields. Sync relies on a hard-coded <code>PLAYER_IDS</code> map plus <code>lookupplayer.php</code>. Wrong search matches must be overridden manually (Rodri, Pedri).</span>
+          <span class="label">TheSportsDB: slice-only likeness shortcut</span>
+          <span class="body"><strong>Internal vertical slice only.</strong> Remote cutouts from TheSportsDB are not approved for public release without legal and licensing review. Club-kit PNGs are acceptable temporary presentation assets for demos; they are not canonical national-team art and must not ship as final player identity. Portrait URLs are display-only — saves never depend on them. Missing or broken images must always fall back to nation-code / silhouette UI; gameplay must never block on CDN success. Rate limits and ambiguous search (Rodri, Pedri overrides) affect sync scripts only, not runtime saves.</span>
         </li>
         <li class="item risk">
-          <span class="label">External portrait CDN dependency</span>
-          <span class="body">Gameplay loads images from <code>r2.thesportsdb.com</code> and <code>thesportsdb.com</code>. Offline or blocked CDN requests trigger nation-code fallbacks; there is no local mirror yet.</span>
+          <span class="label">TheSportsDB sync and CDN operations</span>
+          <span class="body">Free-tier sync uses lookup-by-id and retries on HTTP 429. Gameplay reads baked JSON; live API calls happen only during out-of-band sync. Blocked or stale CDN URLs degrade presentation only — verify fallbacks in battle, team bar, and starter select.</span>
         </li>
       </ul>
     </section>
@@ -790,7 +988,7 @@
     </section>
 
     <footer>
-      Generated for the Pokelike World Cup Road to Glory vertical slice. Last updated 2026-06-10 (TheSportsDB cutout portraits, P1-021 evolution guard, battle presentation pass).
+      Generated for the Pokelike World Cup Road to Glory vertical slice. Last updated 2026-06-10 — bridges registry, data stability rule, migration guardrails, TheSportsDB release-risk notes.
     </footer>
   </main>
 </body>
