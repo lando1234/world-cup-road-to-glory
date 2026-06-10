@@ -5,7 +5,7 @@
 **Inputs:** [001](./001-codebase-discovery.md), [006B](./006B-technical-blueprint-revised.md), [007](./007-football-data-pack.md), [008](./008-meta-progression.md), [009](./009-gameplay-loop-node-system.md)  
 **Version:** v1.1  
 **Date:** 2026-06-10  
-**Last sync:** `main` @ this commit — Jersey portrait fallback (T32)
+**Last sync:** `main` @ this commit — Phase 1 QA harness happy path (T33)
 **Assumptions:** Single developer · existing Pokelike vanilla JS · browser game · no React · no backend changes
 
 ---
@@ -14,9 +14,9 @@
 
 | Metric | Count |
 |--------|------:|
-| **Done** | 45 |
-| **Partial** | 1 |
-| **Not started** | 6 |
+| **Done** | 46 |
+| **Partial** | 0 |
+| **Not started** | 5 |
 | **Total tickets** | 52 |
 
 **Legend:** ✅ Done · 🟡 Partial (shipped subset; acceptance not fully met) · ⬜ Not started
@@ -59,7 +59,8 @@ Before continuing gameplay implementation, T0 establishes the repeatable validat
 | T29-001 | ✅ | Marquee Signing screen exposes collapsible Core Six style triangle guidance — `e038ae2` |
 | T30-001 | ✅ | Slice-complete screen shows squad snapshot, stamp progress, and slice album percentage — `590cceb` |
 | T31-001 | ✅ | Football player cards render tier bar plus Stamina/Power/Defense/Technique/Vision/Pace grid — `1f553b7` |
-| T32-001 | ✅ | Football portrait fallback renders nation plus jersey-number placeholder in cards and battle — this commit |
+| T32-001 | ✅ | Football portrait fallback renders nation plus jersey-number placeholder in cards and battle — `55aae1e` |
+| T33-001 | ✅ | Phase 1 QA harness added to `npm run validate`; P1-046 happy path structure gate passes — this commit |
 
 **Per-task Definition of Done from this point forward:**
 
@@ -131,7 +132,7 @@ Domain tasks should extend `Pokelike/scripts/validate-football-domain.mjs` inste
 | P1-043 | ✅ | `applyAccountPatch()` monotonic merge implemented; returns boolean and does not touch `poke_current_run` — this commit |
 | P1-044 | ✅ | Football game over runs settlement/applyAccountPatch before `clearSavedRun()` with order invariant test — `2525cc8` |
 | P1-045 | ✅ | Cloud save remains feature-gated off; validation proves no `game_album` cloud key, no disabled-mode fetch, no boot auth modal — this commit |
-| P1-046 | ⬜ | QA — happy path |
+| P1-046 | ✅ | QA harness validates 3 marquee starters, 3 host city bosses, third-stamp slice completion, and slice structure — this commit |
 | P1-047 | ⬜ | QA — album persistence |
 | P1-048 | ⬜ | QA — game over settlement |
 | P1-049 | ⬜ | QA — terminology grep |
@@ -175,7 +176,7 @@ P1-042  → persist ledger in poke_current_run ✅
 P1-043  → applyAccountPatch ✅
 ```
 
-**Current:** P1-013, P1-027, P1-028, P1-041, P1-016, P1-017, P1-018, P1-019, P1-020, P1-022, P1-023, P1-024, P1-025, P1-026, P1-029, P1-030, P1-031, P1-033, P1-034, P1-036, P1-042, P1-043, P1-044, and P1-045 complete. Next implementation step is P1-046 run loop QA and release checklist alignment.
+**Current:** Gameplay/UI implementation complete through P1-046. Remaining work is QA closure P1-047 through P1-052 using the Phase 1 QA harness.
 
 **Exit:** `game_album` read/write path exists; mid-run reload preserves ledger shape.
 
@@ -202,7 +203,7 @@ P1-024  → slice-complete at badges === 3 ✅
 P1-025  → City Stamp ceremony ✅
 P1-026  → football node weights + GAME_THEME tooltips ✅
 P1-035  → slice-complete screen ✅
-P1-036  → settleRunLite + summary modal
+P1-036  → settleRunLite + summary modal ✅
 P1-044  → game over settlement before clearSavedRun ✅
 P1-045  → cloud save suppress (finish P1-006 cloud slice) ✅
 ```
@@ -226,7 +227,7 @@ P1-032  (finish) → Core Six style triangle on marquee ✅
 ### Wave 6 — QA & sign-off
 
 ```
-P1-050 → P1-051 → P1-046 → P1-047 → P1-048 → P1-049 → P1-052
+P1-046 ✅ → P1-047 → P1-048 → P1-049 → P1-050 → P1-051 → P1-052
 ```
 
 **Exit:** SPEC 010 §13 checklist green; handoff-ready vertical slice.
@@ -1581,12 +1582,12 @@ P1-001 → P1-002 → P1-003 → P1-004 → P1-005 → P1-007 → P1-008 → P1-
 → P1-034 → P1-036 → P1-044 → P1-046 → P1-052
 ```
 
-**Already merged off critical path:** P1-021 ✅ · P1-032 🟡 · P1-037 🟡 · P1-038 🟡 · P1-039 🟡 (battle field) · P1-040 🟡
+**Already merged off critical path:** P1-021 ✅ · P1-032 ✅ · P1-037 ✅ · P1-038 ✅ · P1-039 ✅ · P1-040 ✅
 
 ### Remaining critical spine (from current state)
 
 ```
-P1-046 → P1-052
+P1-047 → P1-052
 ```
 
 ### Parallelizable Tasks
