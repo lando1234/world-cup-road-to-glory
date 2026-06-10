@@ -1907,6 +1907,10 @@ function _isDexCaught(entry) {
 }
 function _isDexSeen(entry) { return entry !== undefined && entry !== null; }
 
+function _isFootballAlbumProfileId(id) {
+  return window.FEATURES?.footballMode === true && window.DomainProfiles?.isFootballProfileId?.(id) === true;
+}
+
 function getPokedex() {
   let dex;
   try { dex = JSON.parse(localStorage.getItem('poke_dex') || '{}'); }
@@ -1924,6 +1928,10 @@ function getPokedex() {
 
 function markPokedexSeen(id /* name, types, spriteUrl — derivable, ignored */) {
   if (!id) return;
+  if (_isFootballAlbumProfileId(id)) {
+    window.DomainAlbum?.markAlbumSeen?.(id);
+    return;
+  }
   const dex = getPokedex();
   if (dex[id] === undefined) {
     dex[id] = 0;
@@ -1933,6 +1941,10 @@ function markPokedexSeen(id /* name, types, spriteUrl — derivable, ignored */)
 
 function markPokedexCaught(id /* name, types, spriteUrl — derivable, ignored */) {
   if (!id) return;
+  if (_isFootballAlbumProfileId(id)) {
+    window.DomainAlbum?.markAlbumSigned?.(id);
+    return;
+  }
   const dex = getPokedex();
   if (dex[id] !== 1) {
     dex[id] = 1;

@@ -566,6 +566,26 @@ await runTest("album API persists seen and signed states monotonically", () => {
   assert(rejectedUnknownProfile, "album API should reject profileIds outside the loaded catalog");
 });
 
+await runTest("football dex facades write album instead of poke_dex", () => {
+  const dataSource = readText("js/data.js");
+  const seenIndex = dataSource.indexOf("function markPokedexSeen");
+  const caughtIndex = dataSource.indexOf("function markPokedexCaught");
+  const shinyIndex = dataSource.indexOf("function getShinyDex");
+  assert(dataSource.includes("function _isFootballAlbumProfileId"), "data.js should define football album profile guard");
+  assert(seenIndex !== -1, "data.js should define markPokedexSeen");
+  assert(caughtIndex !== -1, "data.js should define markPokedexCaught");
+  assert(shinyIndex !== -1, "data.js should define getShinyDex after dex write facades");
+
+  const seenBlock = dataSource.slice(seenIndex, caughtIndex);
+  const caughtBlock = dataSource.slice(caughtIndex, shinyIndex);
+  assert(seenBlock.includes("_isFootballAlbumProfileId(id)"), "markPokedexSeen should branch for football profile ids");
+  assert(seenBlock.includes("DomainAlbum?.markAlbumSeen?.(id)"), "markPokedexSeen should write album seen state in football mode");
+  assert(seenBlock.indexOf("DomainAlbum?.markAlbumSeen?.(id)") < seenBlock.indexOf("localStorage.setItem('poke_dex'"), "football seen branch should return before poke_dex write");
+  assert(caughtBlock.includes("_isFootballAlbumProfileId(id)"), "markPokedexCaught should branch for football profile ids");
+  assert(caughtBlock.includes("DomainAlbum?.markAlbumSigned?.(id)"), "markPokedexCaught should write album signed state in football mode");
+  assert(caughtBlock.indexOf("DomainAlbum?.markAlbumSigned?.(id)") < caughtBlock.indexOf("localStorage.setItem('poke_dex'"), "football caught branch should return before poke_dex write");
+});
+
 await runTest("recruit contract signs player and appends ledger", () => {
   context.localStorage.removeItem("game_album");
   const runState = { team: [{ profileId: 1 }], ledger: {} };
