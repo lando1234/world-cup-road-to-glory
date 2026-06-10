@@ -1,0 +1,23 @@
+Pokelike/docs/012-phase-1-assumptions-tradeoffs-report.html
+  s_3267f40cfa83dd::t_f8d45bee9d6d71 565-591
+Pokelike/js/ui.js
+  s_3267f40cfa83dd::t_09f9864201e795 85-153,155-161
+Pokelike/css/style.css
+  s_3267f40cfa83dd::t_2a14de3c7d2e86 378-419
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.6",
+  "base_commit_sha": "edabaa73e223a6b247129a98c6b98ca94a795ba8",
+  "prompts": {},
+  "sessions": {
+    "s_3267f40cfa83dd": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "129a5347-c081-49f2-95df-0d3bf451bf24",
+        "model": "composer-2.5"
+      },
+      "human_author": "Matias Landau <landaumatias@gmail.com>"
+    }
+  }
+}
