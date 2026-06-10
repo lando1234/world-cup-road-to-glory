@@ -5,7 +5,7 @@
 **Inputs:** [001](./001-codebase-discovery.md), [006B](./006B-technical-blueprint-revised.md), [007](./007-football-data-pack.md), [008](./008-meta-progression.md), [009](./009-gameplay-loop-node-system.md)  
 **Version:** v1.1  
 **Date:** 2026-06-10  
-**Last sync:** `main` @ this commit — Terminology grep QA (T36)
+**Last sync:** `main` @ this commit — Battle regression QA (T37)
 **Assumptions:** Single developer · existing Pokelike vanilla JS · browser game · no React · no backend changes
 
 ---
@@ -14,9 +14,9 @@
 
 | Metric | Count |
 |--------|------:|
-| **Done** | 49 |
+| **Done** | 50 |
 | **Partial** | 0 |
-| **Not started** | 2 |
+| **Not started** | 1 |
 | **Total tickets** | 52 |
 
 **Legend:** ✅ Done · 🟡 Partial (shipped subset; acceptance not fully met) · ⬜ Not started
@@ -63,7 +63,8 @@ Before continuing gameplay implementation, T0 establishes the repeatable validat
 | T33-001 | ✅ | Phase 1 QA harness added to `npm run validate`; P1-046 happy path structure gate passes — `d592b83` |
 | T34-001 | ✅ | P1-047 album persistence QA passes via Phase 1 harness — `7fbf42f` |
 | T35-001 | ✅ | P1-048 game-over settlement QA passes via Phase 1 harness — `ff19b75` |
-| T36-001 | ✅ | P1-049 slice-facing terminology grep gate passes via Phase 1 harness — this commit |
+| T36-001 | ✅ | P1-049 slice-facing terminology grep gate passes via Phase 1 harness — `f39b767` |
+| T37-001 | ✅ | P1-050 battle regression smoke passes via Phase 1 harness — this commit |
 
 **Per-task Definition of Done from this point forward:**
 
@@ -139,7 +140,7 @@ Domain tasks should extend `Pokelike/scripts/validate-football-domain.mjs` inste
 | P1-047 | ✅ | QA harness validates album modal route, run ledger persistence, and no football `poke_dex` writes — this commit |
 | P1-048 | ✅ | QA harness validates football game over routes through settlement and applies account patch before clear — this commit |
 | P1-049 | ✅ | QA harness grep gate passes for football/slice player-facing HTML blocks and render literals — this commit |
-| P1-050 | ⬜ | QA — battle regression |
+| P1-050 | ✅ | QA harness validates `battle.js` remains theme/domain-adapter agnostic and exposes battle core functions — this commit |
 | P1-051 | ⬜ | QA — Map 0 scout script |
 | P1-052 | ⬜ | Phase 1 sign-off |
 
@@ -179,7 +180,7 @@ P1-042  → persist ledger in poke_current_run ✅
 P1-043  → applyAccountPatch ✅
 ```
 
-**Current:** Gameplay/UI implementation complete through P1-049. Remaining work is QA closure P1-050 through P1-052 using the Phase 1 QA harness.
+**Current:** Gameplay/UI implementation complete through P1-050. Remaining work is QA closure P1-051 through P1-052 using the Phase 1 QA harness.
 
 **Exit:** `game_album` read/write path exists; mid-run reload preserves ledger shape.
 
@@ -230,7 +231,7 @@ P1-032  (finish) → Core Six style triangle on marquee ✅
 ### Wave 6 — QA & sign-off
 
 ```
-P1-046 ✅ → P1-047 ✅ → P1-048 ✅ → P1-049 ✅ → P1-050 → P1-051 → P1-052
+P1-046 ✅ → P1-047 ✅ → P1-048 ✅ → P1-049 ✅ → P1-050 ✅ → P1-051 → P1-052
 ```
 
 **Exit:** SPEC 010 §13 checklist green; handoff-ready vertical slice.
@@ -1590,7 +1591,7 @@ P1-001 → P1-002 → P1-003 → P1-004 → P1-005 → P1-007 → P1-008 → P1-
 ### Remaining critical spine (from current state)
 
 ```
-P1-050 → P1-052
+P1-051 → P1-052
 ```
 
 ### Parallelizable Tasks
