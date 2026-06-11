@@ -551,6 +551,27 @@
           </div>
         </div>
       </article>
+      <article class="task" style="margin-top: 12px;">
+        <h3>P2-007 — HTTP smoke script</h3>
+        <div class="task-grid">
+          <div class="field">
+            <span>Assumption</span>
+            <p>Runtime boot confidence can improve without automated screenshots by verifying the local static server and critical app/data assets over HTTP.</p>
+          </div>
+          <div class="field">
+            <span>Tradeoff</span>
+            <p>The smoke script checks file availability and content markers, not rendered layout. Manual QA still owns visual judgement.</p>
+          </div>
+          <div class="field">
+            <span>Validation</span>
+            <p><code>npm run smoke:http</code> starts <code>serve-static.mjs</code>, checks key HTML/JS/CSS/football JSON routes, and exits.</p>
+          </div>
+          <div class="field">
+            <span>Owner Note</span>
+            <p>Future UI tasks should run smoke after implementation when they touch boot, static assets, or player-facing runtime files.</p>
+          </div>
+        </div>
+      </article>
     </section>
 
     <section>
@@ -572,7 +593,7 @@
     </section>
 
     <footer>
-      Generated for Pokelike World Cup Road to Glory Phase 2. Last updated 2026-06-10 — P2-006 manual QA runbook, P2-002 QA harness shell, P2-001 ledger/protocol, baseline assumptions, tradeoffs, frictions, asset gaps, decision gates, and owner watchlist.
+      Generated for Pokelike World Cup Road to Glory Phase 2. Last updated 2026-06-10 — P2-007 HTTP smoke script, P2-006 manual QA runbook, P2-002 QA harness shell, P2-001 ledger/protocol, baseline assumptions, tradeoffs, frictions, asset gaps, decision gates, and owner watchlist.
     </footer>
   </main>
 </body>

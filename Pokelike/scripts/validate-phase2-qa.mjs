@@ -25,6 +25,7 @@ function runTest(name, fn) {
 }
 
 const packageJson = JSON.parse(readText("../package.json"));
+const smokeHttpSource = readText("scripts/smoke-http.mjs");
 const phase2Spec = readText("docs/014-phase-2-polish-debt-retirement-and-football-native-ux-plan.md");
 const phase2Ledger = readText("docs/015-phase-2-engineering-task-breakdown.md");
 const phase2Report = readText("docs/020-phase-2-assumptions-tradeoffs-assets-report.html");
@@ -56,6 +57,19 @@ runTest("P2-002 cloud save remains disabled during Phase 2 foundation", () => {
   assert(featuresSource.includes("cloudSave: false"), "FEATURES.cloudSave should remain false");
   assert(cloudSaveSource.includes("window.FEATURES?.cloudSave !== false"), "cloud-save gate should still read the feature flag");
   assert(!packageJson.scripts.validate.includes("serve"), "validation should not require a long-running dev server");
+});
+
+runTest("P2-007 HTTP smoke command is available for runtime UI tasks", () => {
+  assert(
+    packageJson.scripts["smoke:http"] === "node Pokelike/scripts/smoke-http.mjs",
+    "smoke:http should run the HTTP smoke script"
+  );
+  assert(packageJson.scripts["check:syntax"].includes("smoke-http.mjs"), "syntax check should include smoke-http.mjs");
+  assert(smokeHttpSource.includes("serve-static.mjs"), "HTTP smoke should use the local static server");
+  assert(smokeHttpSource.includes("player_profiles.json"), "HTTP smoke should verify football profile JSON");
+  assert(smokeHttpSource.includes("host_city_bosses.json"), "HTTP smoke should verify host city JSON");
+  assert(smokeHttpSource.includes("scout_pools.json"), "HTTP smoke should verify scout pool JSON");
+  assert(smokeHttpSource.includes("album_layout.json"), "HTTP smoke should verify album layout JSON");
 });
 
 const failed = results.filter(result => result.status === "FAIL");
