@@ -719,6 +719,27 @@
           </div>
         </div>
       </article>
+      <article class="task" style="margin-top: 12px;">
+        <h3>P2-011 — Scout Report component wrapper</h3>
+        <div class="task-grid">
+          <div class="field">
+            <span>Assumption</span>
+            <p>The Scout Report can become football-native at the presentation layer while preserving the existing catch-screen IDs as event-handler anchors.</p>
+          </div>
+          <div class="field">
+            <span>Tradeoff</span>
+            <p>Legacy IDs remain temporarily to avoid rewriting keyboard and click plumbing. New <code>scout-report-*</code> classes own the visible UX and can later replace the ID bridge when routing is retired.</p>
+          </div>
+          <div class="field">
+            <span>Validation</span>
+            <p>Phase 2 QA asserts the HTML, CSS, and Scout Report runtime path use football-native wrappers while the classic catch path still selects classic presentation explicitly.</p>
+          </div>
+          <div class="field">
+            <span>Owner Note</span>
+            <p>This does not redesign the Contract Offer modal. P2-012 remains responsible for CTA hierarchy, duplicate copy, and signed-state feedback.</p>
+          </div>
+        </div>
+      </article>
     </section>
 
     <section>
@@ -740,7 +761,7 @@
     </section>
 
     <footer>
-      Generated for Pokelike World Cup Road to Glory Phase 2. Last updated 2026-06-10 — P2-010 football node icon registry, P2-021 runtime no-live-API gate, P2-009 local portrait manifest, P2-005 football album write call sites, P2-004 album facade names, P2-003 bridge inventory, P2-008 portrait strategy, P2-007 HTTP smoke script, P2-006 manual QA runbook, P2-002 QA harness shell, P2-001 ledger/protocol, baseline assumptions, tradeoffs, frictions, asset gaps, decision gates, and owner watchlist.
+      Generated for Pokelike World Cup Road to Glory Phase 2. Last updated 2026-06-10 — P2-011 Scout Report wrapper, P2-010 football node icon registry, P2-021 runtime no-live-API gate, P2-009 local portrait manifest, P2-005 football album write call sites, P2-004 album facade names, P2-003 bridge inventory, P2-008 portrait strategy, P2-007 HTTP smoke script, P2-006 manual QA runbook, P2-002 QA harness shell, P2-001 ledger/protocol, baseline assumptions, tradeoffs, frictions, asset gaps, decision gates, and owner watchlist.
     </footer>
   </main>
 </body>

@@ -85,7 +85,7 @@ runTest("P1-048 game over settlement applies account patch before clearing run",
 runTest("P1-049 slice-facing terminology grep gate passes", () => {
   const prohibited = ["Pokémon", "Pokemon", "Pokédex", "Gym", "Elite Four", "Poké"];
   const blocks = [
-    extractBetween(htmlSource, "<!-- ===== CATCH SCREEN ===== -->", "<!-- ===== ITEM SCREEN ===== -->"),
+    extractBetween(htmlSource, "<!-- ===== SCOUT REPORT / CATCH COMPATIBILITY SCREEN ===== -->", "<!-- ===== ITEM SCREEN ===== -->"),
     extractBetween(htmlSource, "<!-- ===== SWAP SCREEN ===== -->", "<!-- ===== TRADE SCREEN ===== -->"),
     extractBetween(htmlSource, "<!-- ===== SLICE COMPLETE SCREEN ===== -->", "<!-- ===== WIN SCREEN ===== -->"),
     stringLiterals(extractBetween(uiSource, "if (window.FEATURES?.footballMode === true && window.GAME_THEME)", "return {")),

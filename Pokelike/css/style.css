@@ -1093,10 +1093,21 @@ h1, h2, .pixel-font {
 #btn-continue-battle:active { box-shadow: 1px 1px 0 0 #181410; transform: translate(1px,1px); }
 
 
-/* ---- Catch Screen ---- */
-#catch-screen { gap: 16px; justify-content: center; align-items: center; }
-#catch-screen h2 { font-size: clamp(10px, 2.5vw, 14px); color: var(--green); text-align: center; }
-.catch-screen-subtitle {
+/* ---- Scout Report / Catch compatibility surface ---- */
+.scout-report-screen,
+.legacy-catch-screen {
+  gap: 16px;
+  justify-content: center;
+  align-items: center;
+}
+.scout-report-title,
+.legacy-catch-title {
+  font-size: clamp(10px, 2.5vw, 14px);
+  color: var(--green);
+  text-align: center;
+}
+.scout-report-subtitle,
+.legacy-catch-subtitle {
   text-align: center;
   color: var(--text-dim);
   font-size: 12px;
@@ -1104,11 +1115,22 @@ h1, h2, .pixel-font {
   max-width: min(720px, 92vw);
   margin: 0;
 }
+.scout-report-choices,
+.legacy-catch-choices,
 #catch-choices {
   display: flex;
   gap: 24px;
   justify-content: center;
   flex-wrap: wrap;
+}
+.scout-report-actions {
+  text-align: center;
+  margin-top: 12px;
+}
+.scout-report-choice {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 .scout-duplicate-hint {
   margin-top: 6px;
@@ -3390,6 +3412,8 @@ body.dark-mode #btn-hard-run:hover { box-shadow: 4px 4px 0 0 #cc2222; }
 
 /* â”€â”€ Mobile catch / item screens: 3-in-a-row â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 @media (max-width: 768px) {
+  .scout-report-choices,
+  .legacy-catch-choices,
   #catch-choices {
     display: grid;
     grid-template-columns: repeat(3, 1fr);

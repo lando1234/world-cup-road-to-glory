@@ -227,8 +227,8 @@ await runTest("football catch node is wired to scout recruitment flow", () => {
   const confirmBlock = gameSource.slice(confirmScoutIndex, signScoutIndex);
   const signBlock = gameSource.slice(signScoutIndex, catchPokemonIndex);
 
-  assert(htmlSource.includes('<h2>Scout Report</h2>'), "catch screen HTML should default to Scout Report");
-  assert(htmlSource.includes('id="catch-screen-subtitle"'), "catch screen should expose a subtitle element");
+  assert(htmlSource.includes('<h2 class="scout-report-title">Scout Report</h2>'), "catch screen HTML should default to Scout Report");
+  assert(htmlSource.includes('id="catch-screen-subtitle" class="scout-report-subtitle"'), "catch screen should expose a Scout Report subtitle element");
   assert(htmlSource.includes('Pass on report'), "catch screen skip button should default to Pass on report");
   assert(doCatchBlock.includes("if (isFootballModeEnabled())"), "doCatchNode should branch for football mode");
   assert(doCatchBlock.includes("await doScoutReportNode(node);"), "football doCatchNode should delegate to doScoutReportNode");

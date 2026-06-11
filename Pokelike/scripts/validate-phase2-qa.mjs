@@ -38,6 +38,8 @@ const phase2Spec = readText("docs/014-phase-2-polish-debt-retirement-and-footbal
 const bridgeInventory = readText("docs/016-phase-2-bridge-inventory.md");
 const phase2Ledger = readText("docs/015-phase-2-engineering-task-breakdown.md");
 const phase2Report = readText("docs/020-phase-2-assumptions-tradeoffs-assets-report.html");
+const indexSource = readText("index.html");
+const styleSource = readText("css/style.css");
 const portraitManifest = JSON.parse(readText("data/football/portrait_manifest.json"));
 const playerProfiles = JSON.parse(readText("data/football/player_profiles.json"));
 const dataSource = readText("js/data.js");
@@ -168,6 +170,24 @@ runTest("P2-010 football map node presentation uses native registry", () => {
   assert(spriteBlock.includes("if (getFootballNodePresentation(node)) return null;"), "football map nodes should avoid legacy sprite icons");
   assert(mapSource.includes("return footballPresentation.color"), "football node colors should come from the registry");
   assert(mapSource.includes("return footballPresentation.icon"), "football node icons should come from the registry");
+});
+
+runTest("P2-011 Scout Report surface uses football-native wrappers", () => {
+  const scoutBlock = extractBetween(gameSource, "async function doScoutReportNode", "function isFootballRuntimeInstance");
+  const classicCatchBlock = extractBetween(gameSource, "async function doCatchNode", "function setCatchSurfacePresentation");
+
+  assert(indexSource.includes("scout-report-screen"), "Scout Report screen should have a football-native screen class");
+  assert(indexSource.includes("scout-report-title"), "Scout Report title should have a football-native class");
+  assert(indexSource.includes("scout-report-subtitle"), "Scout Report subtitle should have a football-native class");
+  assert(indexSource.includes("scout-report-choices"), "Scout Report choices should have a football-native class");
+  assert(indexSource.includes("scout-report-actions"), "Scout Report actions should have a football-native class");
+  assert(styleSource.includes(".scout-report-screen"), "CSS should style the football-native Scout Report screen class");
+  assert(styleSource.includes(".scout-report-choice"), "CSS should style individual Scout Report choices");
+  assert(gameSource.includes("function setCatchSurfacePresentation"), "game.js should define the Scout/Catch compatibility presentation helper");
+  assert(classicCatchBlock.includes("setCatchSurfacePresentation('classic')"), "Classic catch flow should explicitly set classic presentation");
+  assert(scoutBlock.includes("setCatchSurfacePresentation('scout')"), "Scout Report flow should explicitly set scout presentation");
+  assert(scoutBlock.includes("scout-report-choice"), "Scout Report slots should expose football-native choice wrappers");
+  assert(scoutBlock.includes("for (const inst of instances)"), "Scout Report should still render each report instance");
 });
 
 const failed = results.filter(result => result.status === "FAIL");

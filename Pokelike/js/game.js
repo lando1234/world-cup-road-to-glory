@@ -1351,6 +1351,7 @@ async function doCatchNode(node) {
   }
 
   showScreen('catch-screen');
+  setCatchSurfacePresentation('classic');
   renderTeamBar(state.team, document.getElementById('catch-team-bar'), true);
   const title = document.querySelector('#catch-screen h2');
   const subtitle = document.getElementById('catch-screen-subtitle');
@@ -1519,8 +1520,26 @@ async function doCatchNode(node) {
   };
 }
 
+function setCatchSurfacePresentation(mode) {
+  const scoutMode = mode === 'scout';
+  const screen = document.getElementById('catch-screen');
+  const title = document.querySelector('#catch-screen h2');
+  const subtitle = document.getElementById('catch-screen-subtitle');
+  const choices = document.getElementById('catch-choices');
+
+  screen?.classList.toggle('scout-report-screen', scoutMode);
+  screen?.classList.toggle('legacy-catch-screen', !scoutMode);
+  title?.classList.toggle('scout-report-title', scoutMode);
+  title?.classList.toggle('legacy-catch-title', !scoutMode);
+  subtitle?.classList.toggle('scout-report-subtitle', scoutMode);
+  subtitle?.classList.toggle('legacy-catch-subtitle', !scoutMode);
+  choices?.classList.toggle('scout-report-choices', scoutMode);
+  choices?.classList.toggle('legacy-catch-choices', !scoutMode);
+}
+
 async function doScoutReportNode(node) {
   showScreen('catch-screen');
+  setCatchSurfacePresentation('scout');
   renderTeamBar(state.team, document.getElementById('catch-team-bar'), true);
 
   const title = document.querySelector('#catch-screen h2');
@@ -1585,7 +1604,7 @@ async function doScoutReportNode(node) {
     card.addEventListener('click', () => confirmScoutContract(inst, node, card));
     card.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') confirmScoutContract(inst, node, card); });
     const wrap = document.createElement('div');
-    wrap.className = 'poke-choice-wrap';
+    wrap.className = 'poke-choice-wrap scout-report-choice';
     wrap.appendChild(card);
     if (signed) {
       const duplicateHint = document.createElement('div');
