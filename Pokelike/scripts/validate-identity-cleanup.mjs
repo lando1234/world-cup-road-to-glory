@@ -103,9 +103,30 @@ runTest("RC-004 GAME_THEME collection label is football-native", () => {
 });
 
 runTest("RC-004 tracked identity blockers remain documented", () => {
-  for (const blockerId of ["RC-B01", "RC-B03", "RC-B07", "RC-B13"]) {
+  for (const blockerId of ["RC-B01", "RC-B03", "RC-B07", "RC-B13", "RC-B16"]) {
     assert(identityAudit.includes(blockerId), `identity audit should track ${blockerId}`);
   }
+});
+
+runTest("RC-007 index.html static fallbacks are football-native", () => {
+  assert(!htmlSource.includes("Pokemon Roguelike"), "index subtitle fallback should not say Pokemon Roguelike");
+  assert(!htmlSource.includes(">POKELIKE<"), "index logo fallback should not say POKELIKE");
+  assert(htmlSource.includes("World Cup Album"), "index should use World Cup Album label");
+  assert(htmlSource.includes("Marquee Signing"), "starter fallback should be Marquee Signing");
+  assert(htmlSource.includes("Friendly Match"), "battle title fallback should be Friendly Match");
+  assert(htmlSource.includes("City Stamp earned"), "stamp ceremony fallback should be football-native");
+  assert(htmlSource.includes("CITY STAMPS"), "map HUD should say CITY STAMPS");
+});
+
+runTest("RC-010 GAME_THEME battle copy is football-native", () => {
+  assert(dataSource.includes("rivalChallengeTitle"), "GAME_THEME should define rival challenge title");
+  assert(dataSource.includes("friendlyMatchTitle"), "GAME_THEME should define friendly match title");
+  assert(!dataSource.match(/rivalChallengeTitle:\s*"[^"]*Pokémon/), "rival challenge title must not mention Pokémon");
+});
+
+runTest("RC-010 trainer battle uses football NPC builder", () => {
+  assert(gameSource.includes("function buildFootballNpcTeam"), "game.js should build football NPC teams");
+  assert(gameSource.includes("getRivalNationalTeamBattleCopy"), "trainer battles should use football-native copy");
 });
 
 const failed = results.filter(result => result.status === "FAIL");

@@ -46,7 +46,11 @@ const GAME_THEME = Object.freeze({
     injured: "is injured",
     win: "Victory",
     loss: "Defeat",
-    scoutingTitle: "Transfer Target Found"
+    scoutingTitle: "Transfer Target Found",
+    friendlyMatchTitle: "Friendly Match",
+    rivalChallengeTitle: "Rival National Team challenges you!",
+    rivalChallengeSubtitle: "{count} players — Form ~{level}",
+    oppositionLabel: "Opposition"
   }),
   node: Object.freeze({
     scoutReport: "Scout Report",

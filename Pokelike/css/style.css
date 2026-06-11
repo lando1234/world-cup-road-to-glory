@@ -1,4 +1,4 @@
-/* style.css - Pokemon Roguelike Retro Theme */
+/* style.css - World Cup Road to Glory retro football theme */
 
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 
@@ -1028,6 +1028,12 @@ h1, h2, .pixel-font {
   object-position: center 18%;
   image-rendering: auto;
 }
+.battle-sprite-stack .battle-portrait-fallback {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
 .battle-portrait-fallback {
   width: 88px;
   height: 88px;
@@ -1055,6 +1061,7 @@ h1, h2, .pixel-font {
   transform: translateX(-50%);
 }
 .battle-poke-name { font-size: 7px; font-family: 'Press Start 2P', monospace; color: #fff; -webkit-text-stroke: 2px #000; paint-order: stroke fill; margin-bottom: 8px; }
+.battle-poke-name .battle-form-level { display: block; font-size: 6px; color: #c8e6ff; margin-top: 2px; -webkit-text-stroke: 1px #000; }
 .battle-stages { position: absolute; bottom: 4px; left: 4px; display: flex; flex-direction: column; align-items: flex-start; gap: 2px; z-index: 4; }
 .battle-stage-badge { font-family: 'Press Start 2P', monospace; font-size: 5px; padding: 1px 3px; border-radius: 2px; box-shadow: 1px 1px 0 0 #000; }
 .stage-up   { background: #1a3a1a; color: #5af055; border: 1px solid #5af055; }

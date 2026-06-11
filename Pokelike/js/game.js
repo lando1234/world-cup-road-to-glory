@@ -705,7 +705,16 @@ function showMapScreen() {
   if (typeof hideEndlessTraitPanel === 'function') hideEndlessTraitPanel();
   const regionPanel = document.getElementById('endless-region-panel');
   if (regionPanel) regionPanel.style.display = 'none';
-  document.querySelectorAll('.map-badges-label').forEach(el => el.style.display = '');
+  document.querySelectorAll('.map-badges-label').forEach(el => {
+    el.style.display = '';
+    el.textContent = isFootballModeEnabled() ? 'CITY STAMPS' : 'BADGES';
+  });
+  const enemyLabel = document.getElementById('enemy-side-label');
+  if (enemyLabel && isFootballModeEnabled()) {
+    enemyLabel.textContent = window.GAME_THEME?.battle?.oppositionLabel || 'Opposition';
+  } else if (enemyLabel) {
+    enemyLabel.textContent = 'Enemy';
+  }
   showScreen('map-screen');
   const mapInfo = document.getElementById('map-info');
   if (mapInfo) {
@@ -1070,7 +1079,49 @@ function getLevelForNode(node) {
   return Math.min(maxL, Math.max(minL, base + Math.floor(rng() * spread)));
 }
 
+function buildFootballNpcTeam(mapIndex, teamSize, level, moveTier, node) {
+  const report = window.DomainScout.buildSliceReport(mapIndex, state, { node });
+  const pool = [...report.profileIds];
+  const profileIds = [];
+  for (let i = 0; i < teamSize; i += 1) {
+    profileIds.push(pool[i % pool.length]);
+  }
+  return profileIds.map(profileId =>
+    window.DomainCombatAdapter.createPlayerInstance(profileId, level, { moveTier })
+  );
+}
+
 async function doBattleNode(node) {
+  if (isFootballModeEnabled()) {
+    const level = Math.max(1, getLevelForNode(node));
+    const moveTier = getMoveТierForMap(state.currentMap);
+    let enemy;
+    try {
+      const team = buildFootballNpcTeam(state.currentMap, 1, level, moveTier, node);
+      enemy = team[0];
+    } catch (error) {
+      console.error('Football friendly match failed to build opponent:', error);
+      advanceFromNode(state.map, node.id);
+      showMapScreen();
+      return;
+    }
+    const titleEl = document.getElementById('battle-title');
+    const subEl = document.getElementById('battle-subtitle');
+    const wildCopy = typeof getWildEncounterBattleCopy === 'function'
+      ? getWildEncounterBattleCopy(enemy)
+      : { title: 'Friendly Match', subtitle: `Form ${enemy.level}` };
+    if (titleEl) titleEl.textContent = wildCopy.title;
+    if (subEl) subEl.textContent = wildCopy.subtitle;
+    const won = await new Promise(resolve => {
+      runBattleScreen([enemy], false, () => resolve(true), () => resolve(false), null, [], 1);
+    });
+    if (!won) { showGameOver(); return; }
+    if (state.isEndlessMode) await applyEndlessBugTrait();
+    advanceFromNode(state.map, node.id);
+    showMapScreen();
+    return;
+  }
+
   // Gen 2: wild Pokemon scale below the node's level on a stair-step curve —
   // -1 from map 2, -2 from map 4, -3 from map 6, -4 from map 8 onward.
   // Other modes keep the legacy -1 from map 2 onward.
@@ -2409,6 +2460,33 @@ async function doTrainerNode(node) {
     : 0;
   const level = Math.max(1, getLevelForNode(node) - trainerReduction);
   const moveTier = getMoveТierForMap(state.currentMap);
+
+  if (isFootballModeEnabled()) {
+    let enemyTeam;
+    try {
+      enemyTeam = buildFootballNpcTeam(state.currentMap, teamSize, level, moveTier, node);
+    } catch (error) {
+      console.error('Football rival national team failed to build opponent:', error);
+      advanceFromNode(state.map, node.id);
+      showMapScreen();
+      return;
+    }
+    const titleEl = document.getElementById('battle-title');
+    const subEl = document.getElementById('battle-subtitle');
+    const copy = typeof getRivalNationalTeamBattleCopy === 'function'
+      ? getRivalNationalTeamBattleCopy(enemyTeam.length, level)
+      : { title: 'Rival National Team challenges you!', subtitle: `${enemyTeam.length} players — Form ~${level}` };
+    if (titleEl) titleEl.textContent = copy.title;
+    if (subEl) subEl.textContent = copy.subtitle;
+    const won = await new Promise(resolve => {
+      runBattleScreen(enemyTeam, false, () => resolve(true), () => resolve(false), config.sprite, [], 2, true);
+    });
+    if (!won) { showGameOver(); return; }
+    if (state.isEndlessMode) await applyEndlessBugTrait();
+    advanceFromNode(state.map, node.id);
+    showMapScreen();
+    return;
+  }
 
   let speciesList;
   const activePool = (state.gen2Mode && config.gen2Pool) ? config.gen2Pool : config.pool;

@@ -28,8 +28,8 @@
 <!-- ===== TITLE SCREEN ===== -->
 <div id="title-screen" class="screen">
   <div class="title-hero">
-    <div class="game-logo">POKELIKE</div>
-    <div class="game-subtitle">Pokemon Roguelike</div>
+    <div class="game-logo">Road to Glory</div>
+    <div class="game-subtitle">Build your World Cup squad</div>
   </div>
   <div class="title-menu-panel">
   <div style="color:var(--text-dim);font-size:9px;margin-bottom:6px;cursor:pointer;" onclick="openPatchNotesModal()">v1.8 — patch notes</div>
@@ -42,11 +42,11 @@
       <button class="gen-btn" data-gen="2" aria-label="Gen 2 (Johto)">II</button>
     </div>
   </div>
-  <button id="btn-new-run" class="btn-primary">Normal Mode</button>
+  <button id="btn-new-run" class="btn-primary">New Campaign</button>
   <button id="btn-hard-run" class="btn-primary" style="margin-top:6px;" title="Hardcore mode — any Pokémon that faints in battle is lost permanently. Exception: rival (Silver) battles won't permanently faint your team if you win.">Nuzlocke</button>
   <button id="btn-endless-run" class="btn-primary" style="margin-top:6px;">Battle Tower</button>
   <div style="display:flex;gap:8px;margin-top:8px;">
-    <button id="title-btn-collection" onclick="openPokedexModal()" class="btn-secondary">📖 Pokédex</button>
+    <button id="title-btn-collection" onclick="openPokedexModal()" class="btn-secondary">📖 World Cup Album</button>
     <button id="title-btn-milestones" onclick="openAchievementsModal()" class="btn-secondary">🏆 Achievements</button>
   </div>
   <div style="display:flex;gap:8px;margin-top:6px;">
@@ -66,7 +66,7 @@
     <a href="privacy.html" style="color:var(--text-dim);font-size:8px;text-decoration:none;">Privacy Policy</a>
   </div>
   </div>
-  <div id="title-pokemon-disclaimer" style="margin-top:10px;max-width:340px;color:var(--text-dim);font-size:8px;opacity:0.6;line-height:1.4;text-align:center;padding:0 10px;">
+  <div id="title-pokemon-disclaimer" style="display:none;margin-top:10px;max-width:340px;color:var(--text-dim);font-size:8px;opacity:0.6;line-height:1.4;text-align:center;padding:0 10px;">
     Fan-made project. Not affiliated with, endorsed by, or sponsored by Nintendo, Game Freak, or The Pokémon Company. All Pokémon names and sprites are property of their respective owners.
   </div>
 </div>
@@ -88,7 +88,7 @@
 
 <!-- ===== STARTER SELECT ===== -->
 <div id="starter-screen" class="screen">
-  <h2 id="starter-screen-title">Choose Your Starter!</h2>
+  <h2 id="starter-screen-title">Marquee Signing</h2>
   <p id="starter-screen-subtitle" class="starter-screen-subtitle" hidden></p>
   <div id="starter-layout">
     <div id="starter-choices"></div>
@@ -110,7 +110,7 @@
     <div id="map-info"></div>
     <div style="display:flex;align-items:center;gap:8px;">
       <div id="badge-count"></div>
-      <button onclick="openPokedexModal()" class="btn-icon-sm" title="Pokédex"><img src="ui/pokedex.png" alt="Pokédex"></button>
+      <button onclick="openPokedexModal()" class="btn-icon-sm" title="World Cup Album"><img src="ui/pokedex.png" alt="World Cup Album"></button>
       <button onclick="openAchievementsModal()" class="btn-icon-sm" title="Achievements"><img src="ui/achievements.png" alt="Achievements"></button>
       <button onclick="openSettingsModal()" class="btn-icon-sm" title="Settings"><img src="ui/settings.png" alt="Settings"></button>
       <button onclick="confirmResetRun()" class="btn-icon-sm btn-icon-glyph" title="Restart run">↻</button>
@@ -119,7 +119,7 @@
 
   <!-- Desktop-only top-right buttons -->
   <div class="map-actions">
-    <button onclick="openPokedexModal()" class="btn-icon-sm" title="Pokédex"><img src="ui/pokedex.png" alt="Pokédex"></button>
+    <button onclick="openPokedexModal()" class="btn-icon-sm" title="World Cup Album"><img src="ui/pokedex.png" alt="World Cup Album"></button>
     <button onclick="openAchievementsModal()" class="btn-icon-sm" title="Achievements"><img src="ui/achievements.png" alt="Achievements"></button>
     <button onclick="openSettingsModal()" class="btn-icon-sm" title="Settings"><img src="ui/settings.png" alt="Settings"></button>
     <button onclick="confirmResetRun()" class="btn-icon-sm btn-icon-glyph" title="Restart run">↻</button>
@@ -134,7 +134,7 @@
     <div class="hud-box map-panel-right">
       <div class="hud-label">ITEMS</div>
       <div id="item-bar"></div>
-      <div class="hud-label map-badges-label">BADGES</div>
+      <div class="hud-label map-badges-label">CITY STAMPS</div>
       <div id="badge-count-panel"></div>
     </div>
     <div id="endless-region-panel" class="hud-box map-panel-region" style="display:none;"></div>
@@ -146,7 +146,7 @@
 <!-- ===== BATTLE SCREEN ===== -->
 <div id="battle-screen" class="screen">
   <div class="battle-header">
-    <h2 id="battle-title">Wild Battle!</h2>
+    <h2 id="battle-title">Friendly Match</h2>
     <p id="battle-subtitle"></p>
   </div>
 
@@ -164,7 +164,7 @@
     </div>
     <div class="battle-side">
       <div class="battle-trainer" id="enemy-trainer-icon"></div>
-      <div class="battle-side-label" id="enemy-side-label">Enemy</div>
+      <div class="battle-side-label" id="enemy-side-label">Opposition</div>
       <div id="enemy-battle-traits" class="battle-trait-bar battle-trait-bar-right"></div>
       <div id="enemy-side"></div>
     </div>
@@ -231,9 +231,9 @@
 <div id="badge-screen" class="screen city-stamp-screen">
   <img id="badge-icon-img" class="badge-icon city-stamp-legacy-badge-icon" src="" alt="Badge">
   <div id="badge-stamp-flag" class="badge-stamp-flag city-stamp-emblem" style="display:none;"></div>
-  <div id="badge-msg" class="city-stamp-message">Badge Earned!</div>
+  <div id="badge-msg" class="city-stamp-message">City Stamp earned</div>
   <div id="badge-leader" class="city-stamp-host"></div>
-  <div id="badge-count-display" class="city-stamp-progress">Badges: 0/8</div>
+  <div id="badge-count-display" class="city-stamp-progress">Stamps: 0/8</div>
   <button id="btn-next-map" class="btn-primary">Next Map →</button>
 </div>
 

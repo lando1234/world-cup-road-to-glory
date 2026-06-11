@@ -109,13 +109,16 @@ function formatBattleLevelLabel(level) {
 }
 
 function formatBattleNamePlate(name, level) {
+  if (isFootballBattlePresentation()) {
+    return `${name} <span class="battle-form-level">${formatBattleLevelLabel(level)}</span>`;
+  }
   return `${name} ${formatBattleLevelLabel(level)}`;
 }
 
 function getWildEncounterBattleCopy(enemy) {
   if (isFootballBattlePresentation()) {
     const displayName = enemy?.nickname || enemy?.name || 'Unknown';
-    const title = window.GAME_THEME?.battle?.scoutingTitle || 'Transfer Target Found';
+    const title = window.GAME_THEME?.battle?.friendlyMatchTitle || 'Friendly Match';
     return {
       title,
       subtitle: `${formatBattleLevelLabel(enemy?.level ?? 1)} — ${displayName}`
@@ -125,6 +128,20 @@ function getWildEncounterBattleCopy(enemy) {
     title: `Wild ${enemy?.name || 'Pokémon'} appeared!`,
     subtitle: `Level ${enemy?.level ?? 1}`
   };
+}
+
+function getRivalNationalTeamBattleCopy(playerCount, formLevel) {
+  const theme = window.GAME_THEME?.battle || {};
+  const title = theme.rivalChallengeTitle || 'Rival National Team challenges you!';
+  const template = theme.rivalChallengeSubtitle || '{count} players — Form ~{level}';
+  const subtitle = template
+    .replace('{count}', String(playerCount))
+    .replace('{level}', String(formLevel));
+  return { title, subtitle };
+}
+
+if (typeof window !== 'undefined') {
+  window.getRivalNationalTeamBattleCopy = getRivalNationalTeamBattleCopy;
 }
 
 function formatBattleFaintLog(name) {
