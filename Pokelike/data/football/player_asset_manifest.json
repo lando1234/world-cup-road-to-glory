@@ -498,6 +498,51 @@
       },
       "fallback": "nation_position_jersey"
     },
+    "37": {
+      "slug": "juan-schiaffino",
+      "assetTier": "T1",
+      "releaseCritical": false,
+      "paths": {
+        "portrait": "assets/players/juan-schiaffino/portrait.svg",
+        "form1": "assets/players/juan-schiaffino/form-1.png",
+        "form2": "assets/players/juan-schiaffino/form-2.png",
+        "form3": "assets/players/juan-schiaffino/form-3.png",
+        "album": "assets/players/juan-schiaffino/album.svg",
+        "battle": "assets/players/juan-schiaffino/battle.svg",
+        "squad": "assets/players/juan-schiaffino/squad.svg"
+      },
+      "fallback": "nation_position_jersey"
+    },
+    "38": {
+      "slug": "jairzinho",
+      "assetTier": "T1",
+      "releaseCritical": false,
+      "paths": {
+        "portrait": "assets/players/jairzinho/portrait.svg",
+        "form1": "assets/players/jairzinho/form-1.png",
+        "form2": "assets/players/jairzinho/form-2.png",
+        "form3": "assets/players/jairzinho/form-3.png",
+        "album": "assets/players/jairzinho/album.svg",
+        "battle": "assets/players/jairzinho/battle.svg",
+        "squad": "assets/players/jairzinho/squad.svg"
+      },
+      "fallback": "nation_position_jersey"
+    },
+    "39": {
+      "slug": "jorge-burruchaga",
+      "assetTier": "T1",
+      "releaseCritical": false,
+      "paths": {
+        "portrait": "assets/players/jorge-burruchaga/portrait.svg",
+        "form1": "assets/players/jorge-burruchaga/form-1.png",
+        "form2": "assets/players/jorge-burruchaga/form-2.png",
+        "form3": "assets/players/jorge-burruchaga/form-3.png",
+        "album": "assets/players/jorge-burruchaga/album.svg",
+        "battle": "assets/players/jorge-burruchaga/battle.svg",
+        "squad": "assets/players/jorge-burruchaga/squad.svg"
+      },
+      "fallback": "nation_position_jersey"
+    },
     "40": {
       "slug": "lilian-thuram",
       "assetTier": "T1",
@@ -510,6 +555,156 @@
         "album": "assets/players/lilian-thuram/album.svg",
         "battle": "assets/players/lilian-thuram/battle.svg",
         "squad": "assets/players/lilian-thuram/squad.svg"
+      },
+      "fallback": "nation_position_jersey"
+    },
+    "41": {
+      "slug": "alcides-ghiggia",
+      "assetTier": "T1",
+      "releaseCritical": false,
+      "paths": {
+        "portrait": "assets/players/alcides-ghiggia/portrait.svg",
+        "form1": "assets/players/alcides-ghiggia/form-1.png",
+        "form2": "assets/players/alcides-ghiggia/form-2.png",
+        "form3": "assets/players/alcides-ghiggia/form-3.png",
+        "album": "assets/players/alcides-ghiggia/album.svg",
+        "battle": "assets/players/alcides-ghiggia/battle.svg",
+        "squad": "assets/players/alcides-ghiggia/squad.svg"
+      },
+      "fallback": "nation_position_jersey"
+    },
+    "42": {
+      "slug": "pele",
+      "assetTier": "T1",
+      "releaseCritical": false,
+      "paths": {
+        "portrait": "assets/players/pele/portrait.svg",
+        "form1": "assets/players/pele/form-1.png",
+        "form2": "assets/players/pele/form-2.png",
+        "form3": "assets/players/pele/form-3.png",
+        "album": "assets/players/pele/album.svg",
+        "battle": "assets/players/pele/battle.svg",
+        "squad": "assets/players/pele/squad.svg"
+      },
+      "fallback": "nation_position_jersey"
+    },
+    "43": {
+      "slug": "diego-maradona",
+      "assetTier": "T1",
+      "releaseCritical": false,
+      "paths": {
+        "portrait": "assets/players/diego-maradona/portrait.svg",
+        "form1": "assets/players/diego-maradona/form-1.png",
+        "form2": "assets/players/diego-maradona/form-2.png",
+        "form3": "assets/players/diego-maradona/form-3.png",
+        "album": "assets/players/diego-maradona/album.svg",
+        "battle": "assets/players/diego-maradona/battle.svg",
+        "squad": "assets/players/diego-maradona/squad.svg"
+      },
+      "fallback": "nation_position_jersey"
+    },
+    "44": {
+      "slug": "zinedine-zidane",
+      "assetTier": "T1",
+      "releaseCritical": false,
+      "paths": {
+        "portrait": "assets/players/zinedine-zidane/portrait.svg",
+        "form1": "assets/players/zinedine-zidane/form-1.png",
+        "form2": "assets/players/zinedine-zidane/form-2.png",
+        "form3": "assets/players/zinedine-zidane/form-3.png",
+        "album": "assets/players/zinedine-zidane/album.svg",
+        "battle": "assets/players/zinedine-zidane/battle.svg",
+        "squad": "assets/players/zinedine-zidane/squad.svg"
+      },
+      "fallback": "nation_position_jersey"
+    },
+    "45": {
+      "slug": "angel-di-maria",
+      "assetTier": "T1",
+      "releaseCritical": false,
+      "paths": {
+        "portrait": "assets/players/angel-di-maria/portrait.svg",
+        "form1": "assets/players/angel-di-maria/form-1.png",
+        "form2": "assets/players/angel-di-maria/form-2.png",
+        "form3": "assets/players/angel-di-maria/form-3.png",
+        "album": "assets/players/angel-di-maria/album.svg",
+        "battle": "assets/players/angel-di-maria/battle.svg",
+        "squad": "assets/players/angel-di-maria/squad.svg"
+      },
+      "fallback": "nation_position_jersey"
+    },
+    "46": {
+      "slug": "ronaldo-nazario",
+      "assetTier": "T1",
+      "releaseCritical": false,
+      "paths": {
+        "portrait": "assets/players/ronaldo-nazario/portrait.svg",
+        "form1": "assets/players/ronaldo-nazario/form-1.png",
+        "form2": "assets/players/ronaldo-nazario/form-2.png",
+        "form3": "assets/players/ronaldo-nazario/form-3.png",
+        "album": "assets/players/ronaldo-nazario/album.svg",
+        "battle": "assets/players/ronaldo-nazario/battle.svg",
+        "squad": "assets/players/ronaldo-nazario/squad.svg"
+      },
+      "fallback": "nation_position_jersey"
+    },
+    "47": {
+      "slug": "ronaldinho",
+      "assetTier": "T1",
+      "releaseCritical": false,
+      "paths": {
+        "portrait": "assets/players/ronaldinho/portrait.svg",
+        "form1": "assets/players/ronaldinho/form-1.png",
+        "form2": "assets/players/ronaldinho/form-2.png",
+        "form3": "assets/players/ronaldinho/form-3.png",
+        "album": "assets/players/ronaldinho/album.svg",
+        "battle": "assets/players/ronaldinho/battle.svg",
+        "squad": "assets/players/ronaldinho/squad.svg"
+      },
+      "fallback": "nation_position_jersey"
+    },
+    "48": {
+      "slug": "emiliano-martinez",
+      "assetTier": "T1",
+      "releaseCritical": false,
+      "paths": {
+        "portrait": "assets/players/emiliano-martinez/portrait.svg",
+        "form1": "assets/players/emiliano-martinez/form-1.png",
+        "form2": "assets/players/emiliano-martinez/form-2.png",
+        "form3": "assets/players/emiliano-martinez/form-3.png",
+        "album": "assets/players/emiliano-martinez/album.svg",
+        "battle": "assets/players/emiliano-martinez/battle.svg",
+        "squad": "assets/players/emiliano-martinez/squad.svg"
+      },
+      "fallback": "nation_position_jersey"
+    },
+    "49": {
+      "slug": "carlos-alberto",
+      "assetTier": "T1",
+      "releaseCritical": false,
+      "paths": {
+        "portrait": "assets/players/carlos-alberto/portrait.svg",
+        "form1": "assets/players/carlos-alberto/form-1.png",
+        "form2": "assets/players/carlos-alberto/form-2.png",
+        "form3": "assets/players/carlos-alberto/form-3.png",
+        "album": "assets/players/carlos-alberto/album.svg",
+        "battle": "assets/players/carlos-alberto/battle.svg",
+        "squad": "assets/players/carlos-alberto/squad.svg"
+      },
+      "fallback": "nation_position_jersey"
+    },
+    "50": {
+      "slug": "cristiano-ronaldo",
+      "assetTier": "T1",
+      "releaseCritical": false,
+      "paths": {
+        "portrait": "assets/players/cristiano-ronaldo/portrait.svg",
+        "form1": "assets/players/cristiano-ronaldo/form-1.png",
+        "form2": "assets/players/cristiano-ronaldo/form-2.png",
+        "form3": "assets/players/cristiano-ronaldo/form-3.png",
+        "album": "assets/players/cristiano-ronaldo/album.svg",
+        "battle": "assets/players/cristiano-ronaldo/battle.svg",
+        "squad": "assets/players/cristiano-ronaldo/squad.svg"
       },
       "fallback": "nation_position_jersey"
     }

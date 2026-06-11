@@ -172,10 +172,62 @@
       "portrait": "assets/players/bobby-charlton/portrait.svg",
       "fallback": "ENG_CM"
     },
+    "37": {
+      "assetTier": "T1",
+      "portrait": "assets/players/juan-schiaffino/portrait.svg"
+    },
+    "38": {
+      "assetTier": "T1",
+      "portrait": "assets/players/jairzinho/portrait.svg"
+    },
+    "39": {
+      "assetTier": "T1",
+      "portrait": "assets/players/jorge-burruchaga/portrait.svg"
+    },
     "40": {
       "assetTier": "T1",
       "portrait": "assets/players/lilian-thuram/portrait.svg",
       "fallback": "FRA_CB"
+    },
+    "41": {
+      "assetTier": "T1",
+      "portrait": "assets/players/alcides-ghiggia/portrait.svg"
+    },
+    "42": {
+      "assetTier": "T1",
+      "portrait": "assets/players/pele/portrait.svg"
+    },
+    "43": {
+      "assetTier": "T1",
+      "portrait": "assets/players/diego-maradona/portrait.svg"
+    },
+    "44": {
+      "assetTier": "T1",
+      "portrait": "assets/players/zinedine-zidane/portrait.svg"
+    },
+    "45": {
+      "assetTier": "T1",
+      "portrait": "assets/players/angel-di-maria/portrait.svg"
+    },
+    "46": {
+      "assetTier": "T1",
+      "portrait": "assets/players/ronaldo-nazario/portrait.svg"
+    },
+    "47": {
+      "assetTier": "T1",
+      "portrait": "assets/players/ronaldinho/portrait.svg"
+    },
+    "48": {
+      "assetTier": "T1",
+      "portrait": "assets/players/emiliano-martinez/portrait.svg"
+    },
+    "49": {
+      "assetTier": "T1",
+      "portrait": "assets/players/carlos-alberto/portrait.svg"
+    },
+    "50": {
+      "assetTier": "T1",
+      "portrait": "assets/players/cristiano-ronaldo/portrait.svg"
     }
   }
 }

@@ -26,8 +26,24 @@ for (const profile of targets) {
     portrait: portraitPath
   };
 
-  const entry = playerManifest.players[id];
-  if (entry) {
+  if (!playerManifest.players[id]) {
+    playerManifest.players[id] = {
+      slug: profile.slug,
+      assetTier: "T1",
+      releaseCritical: false,
+      paths: {
+        portrait: portraitPath,
+        form1: `assets/players/${profile.slug}/form-1.png`,
+        form2: `assets/players/${profile.slug}/form-2.png`,
+        form3: `assets/players/${profile.slug}/form-3.png`,
+        album: `assets/players/${profile.slug}/album.svg`,
+        battle: `assets/players/${profile.slug}/battle.svg`,
+        squad: `assets/players/${profile.slug}/squad.svg`
+      },
+      fallback: playerManifest.defaultFallback || "nation_position_jersey"
+    };
+  } else {
+    const entry = playerManifest.players[id];
     entry.assetTier = "T1";
     entry.paths.portrait = portraitPath;
     entry.paths.album = `assets/players/${profile.slug}/album.svg`;
