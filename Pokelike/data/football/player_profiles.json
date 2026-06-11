@@ -840,6 +840,41 @@
         "nameOk": true,
         "likenessTier": 0
       }
+    },
+    {
+      "profileId": 36,
+      "slug": "bobby-charlton",
+      "displayName": "Bobby Charlton",
+      "commonName": "Charlton",
+      "nation": "ENG",
+      "position": "CM",
+      "primaryStyle": "power_strike",
+      "secondaryStyle": "tactical_control",
+      "baseStats": {
+        "hp": 78,
+        "atk": 95,
+        "def": 75,
+        "special": 92,
+        "spdef": 85,
+        "speed": 78
+      },
+      "rarity": "elite",
+      "portrait": "/assets/players/bobby-charlton.png",
+      "flavorText": "London leg — long-range thunder and World Cup-winning composure.",
+      "flags": {
+        "isMarquee": false,
+        "isLegend": false,
+        "scoutable": true,
+        "bossExclusive": false
+      },
+      "album": {
+        "pageId": "host_city",
+        "slot": 8
+      },
+      "legal": {
+        "nameOk": true,
+        "likenessTier": 0
+      }
     }
   ]
 }

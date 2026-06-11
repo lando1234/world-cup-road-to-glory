@@ -131,6 +131,11 @@
       "assetTier": "T0",
       "portrait": "",
       "fallback": "MEX_ST"
+    },
+    "36": {
+      "assetTier": "T0",
+      "portrait": "",
+      "fallback": "ENG_CM"
     }
   }
 }
