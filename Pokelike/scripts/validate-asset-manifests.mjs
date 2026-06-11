@@ -112,6 +112,26 @@ runTest("RC-005 ui asset manifest schema and fallbacks", () => {
   assert(uiManifest.ui?.album?.slotUnknown?.paths?.default, "album unknown slot path required");
 });
 
+runTest("RC-062 primary UI asset SVGs exist on disk", () => {
+  const criticalPaths = [
+    uiManifest.ui?.titleLogo?.paths?.default,
+    uiManifest.ui?.collectionButton?.paths?.default,
+    uiManifest.ui?.settlement?.paths?.default,
+    uiManifest.ui?.trophyRoadMilestone?.paths?.default,
+    uiManifest.ui?.emptyState?.paths?.default,
+    uiManifest.ui?.album?.slotUnknown?.paths?.default,
+    uiManifest.ui?.album?.slotScouted?.paths?.default,
+    uiManifest.ui?.album?.slotSigned?.paths?.default,
+    uiManifest.ui?.album?.frameMarquee?.paths?.default,
+    uiManifest.ui?.album?.frameFavorites?.paths?.default,
+    uiManifest.ui?.album?.frameHostCity?.paths?.default
+  ];
+  for (const relativePath of criticalPaths) {
+    assert(relativePath, "ui manifest critical path must be defined");
+    assert(fs.existsSync(path.join(projectRoot, relativePath)), `missing ui asset: ${relativePath}`);
+  }
+});
+
 runTest("RC-005 release-critical stamp paths are local", () => {
   const paths = collectPathStrings(stampManifest);
   for (const relativePath of paths) {

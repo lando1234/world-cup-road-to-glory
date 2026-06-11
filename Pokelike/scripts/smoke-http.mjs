@@ -39,7 +39,9 @@ const routes = [
   { path: "/assets/stamps/mexico-city-stamp.svg", includes: "Mexico City Stamp" },
   { path: "/assets/stamps/london-stamp.svg", includes: "London City Stamp" },
   { path: "/assets/nodes/scout-report.svg", includes: "Scout Report" },
-  { path: "/assets/nodes/host-city-challenge.svg", includes: "Host City Challenge" }
+  { path: "/assets/nodes/host-city-challenge.svg", includes: "Host City Challenge" },
+  { path: "/assets/ui/logo.svg", includes: "Road to Glory" },
+  { path: "/assets/ui/settlement-trophy.svg", includes: "Settlement Trophy" }
 ];
 
 function wait(ms) {

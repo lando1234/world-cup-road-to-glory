@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 32" role="img" aria-label="Trophy Road Milestone">
+  <path d="M4 20h40" stroke="#7ec8ff" stroke-width="3" stroke-linecap="round"/>
+  <circle cx="12" cy="20" r="5" fill="#1a2a4a" stroke="#ffd54f" stroke-width="2"/>
+  <circle cx="24" cy="20" r="5" fill="#ffd54f" stroke="#1a2a4a" stroke-width="2"/>
+  <circle cx="36" cy="20" r="5" fill="#1a2a4a" stroke="#7ec8ff" stroke-width="2"/>
+  <path d="M22 8l2 4 4.5.5-3.5 3 1 4.5L24 17l-4 2 1-4.5-3.5-3 4.5-.5z" fill="#ffd54f" stroke="#1a2a4a" stroke-width="1"/>
+</svg>
