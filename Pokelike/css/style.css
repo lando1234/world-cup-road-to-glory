@@ -1324,11 +1324,84 @@ h1, h2, .pixel-font {
 .item-name { font-family: 'Press Start 2P', monospace; font-size: 10px; color: var(--text); margin-bottom: 8px; }
 .item-desc { font-size: 12px; color: var(--text-dim); line-height: 1.6; }
 
-/* ---- Swap Screen ---- */
-#swap-screen { gap: 16px; }
-#swap-screen h2 { font-size: clamp(10px, 2.5vw, 14px); color: var(--accent2); text-align: center; }
-.swap-prompt { text-align: center; color: var(--text-dim); font-size: 12px; margin: 0; }
-#swap-choices { display: grid; grid-template-columns: repeat(3, auto); gap: 12px; justify-content: center; }
+/* ---- Squad Registration / Swap compatibility surface ---- */
+.squad-registration-screen { gap: 16px; }
+.squad-registration-title {
+  font-size: clamp(10px, 2.5vw, 14px);
+  color: var(--accent2);
+  text-align: center;
+}
+.swap-prompt,
+.squad-registration-prompt {
+  text-align: center;
+  color: var(--text-dim);
+  font-size: 12px;
+  margin: 0;
+}
+.squad-registration-layout {
+  width: min(1040px, 96vw);
+  display: grid;
+  grid-template-columns: minmax(220px, 280px) minmax(0, 1fr);
+  gap: 16px;
+  align-items: start;
+}
+.squad-registration-incoming,
+.squad-registration-roster {
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.03);
+  padding: 12px;
+}
+.squad-registration-section-label {
+  color: var(--gold);
+  font-size: 8px;
+  text-align: center;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+.squad-registration-incoming-card {
+  display: flex;
+  justify-content: center;
+}
+.squad-registration-slots,
+#swap-choices {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(160px, auto));
+  gap: 12px;
+  justify-content: center;
+}
+.squad-registration-slot {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+}
+.squad-registration-slot-label {
+  color: var(--text-dim);
+  font-size: 7px;
+  text-align: center;
+}
+.squad-registration-direct-add {
+  width: 100%;
+  margin-bottom: 10px;
+}
+.squad-registration-actions {
+  text-align: center;
+  margin-top: 12px;
+}
+
+@media (max-width: 900px) {
+  .squad-registration-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .squad-registration-slots,
+  #swap-choices {
+    grid-template-columns: repeat(2, minmax(140px, 1fr));
+  }
+}
 
 /* ---- Trade Screen ---- */
 #trade-screen { gap: 10px; }

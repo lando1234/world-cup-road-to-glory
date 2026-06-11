@@ -258,7 +258,7 @@ await runTest("football swap screen is reskinned as squad registration", () => {
 
   const swapBlock = gameSource.slice(swapIndex, itemIndex);
 
-  assert(htmlSource.includes('<h2>Squad Registration</h2>'), "swap screen HTML should default to Squad Registration");
+  assert(htmlSource.includes('<h2 class="squad-registration-title">Squad Registration</h2>'), "swap screen HTML should default to Squad Registration");
   assert(htmlSource.includes("Decline contract"), "swap screen cancel button should default to Decline contract");
   assert(swapBlock.includes("isFootballRuntimeInstance(newPoke)"), "swap screen should detect football incoming players");
   assert(swapBlock.includes("'Squad Registration'"), "football swap title should be Squad Registration");

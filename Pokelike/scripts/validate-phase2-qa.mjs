@@ -207,6 +207,23 @@ runTest("P2-012 Contract Offer UX separates sign, skip, and duplicate states", (
   assert(signBlock.includes("DomainRecruit.offerContract"), "Signing should remain delegated to DomainRecruit.offerContract");
 });
 
+runTest("P2-013 Squad Registration uses six-slot football layout", () => {
+  const swapBlock = extractBetween(gameSource, "function showSwapScreen", "function doItemNode");
+
+  assert(indexSource.includes("squad-registration-screen"), "Squad Registration screen should have a football-native class");
+  assert(indexSource.includes("squad-registration-layout"), "Squad Registration should define a two-panel layout");
+  assert(indexSource.includes("squad-registration-incoming"), "Squad Registration should expose incoming signing panel");
+  assert(indexSource.includes("squad-registration-slots"), "Squad Registration should expose registered squad slots");
+  assert(styleSource.includes(".squad-registration-slots"), "CSS should style Squad Registration slots");
+  assert(styleSource.includes("repeat(3, minmax(160px, auto))"), "desktop Squad Registration should scan as six slots over two rows");
+  assert(swapBlock.includes("squad-registration-incoming-card"), "runtime should render incoming signing in its panel");
+  assert(swapBlock.includes("squad-registration-slot-label"), "runtime should label replacement slots");
+  assert(swapBlock.includes("Replace squad slot"), "runtime should expose slot replacement aria labels");
+  assert(swapBlock.includes("slot.addEventListener('click', replaceSlot)"), "slot wrapper should preserve click replacement");
+  assert(swapBlock.includes("slot.addEventListener('keydown'"), "slot wrapper should preserve keyboard replacement");
+  assert(swapBlock.includes("DomainRecruit.offerContract(newPoke.profileId, state, { forceAdd: true })"), "replacement should still force-add through DomainRecruit");
+});
+
 const failed = results.filter(result => result.status === "FAIL");
 for (const result of results) {
   if (result.status === "PASS") {

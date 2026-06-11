@@ -1781,7 +1781,7 @@ function showSwapScreen(newPoke, node) {
   const swapCaught = isFootballIncoming
     ? window.DomainAlbum?.getEntryState?.(newPoke.profileId) === 'signed'
     : _isDexCaught(getPokedex()[newPoke.speciesId]);
-  document.getElementById('swap-incoming').innerHTML = `<div style="display:flex;justify-content:center;">${renderPokemonCard(newPoke, true, false, swapCaught)}</div>`;
+  document.getElementById('swap-incoming').innerHTML = `<div class="squad-registration-incoming-card">${renderPokemonCard(newPoke, true, false, swapCaught)}</div>`;
   const el = document.getElementById('swap-choices');
   el.innerHTML = '';
   const swapPrompt = document.getElementById('swap-prompt');
@@ -1815,8 +1815,7 @@ function showSwapScreen(newPoke, node) {
 
   if (hasRoom) {
     const addBtn = document.createElement('button');
-    addBtn.className = 'btn-primary';
-    addBtn.style.cssText = 'width:100%;margin-bottom:10px;';
+    addBtn.className = 'btn-primary squad-registration-direct-add';
     addBtn.textContent = isFootballIncoming
       ? `Register ${newPoke.name}`
       : `Add ${newPoke.name} to team!`;
@@ -1844,11 +1843,15 @@ function showSwapScreen(newPoke, node) {
     const wrapper = document.createElement('div');
     wrapper.innerHTML = renderPokemonCard(p, true, false);
     const card = wrapper.querySelector('.poke-card');
-    card.style.cursor = 'pointer';
-    card.setAttribute('role', 'button');
-    card.setAttribute('tabindex', '0');
+    const slot = document.createElement('div');
+    slot.className = 'squad-registration-slot';
+    slot.setAttribute('role', 'button');
+    slot.setAttribute('tabindex', '0');
+    slot.setAttribute('aria-label', `Replace squad slot ${i + 1} with ${newPoke.name}`);
+    slot.insertAdjacentHTML('beforeend', `<div class="squad-registration-slot-label">Slot ${i + 1}</div>`);
+    slot.appendChild(card);
     const idx = i;
-    card.addEventListener('click', () => {
+    const replaceSlot = () => {
       cleanup();
       if (isFootballIncoming && window.DomainRecruit?.offerContract) {
         window.DomainRecruit.offerContract(newPoke.profileId, state, { forceAdd: true });
@@ -1864,9 +1867,16 @@ function showSwapScreen(newPoke, node) {
       advanceFromNode(state.map, node.id);
       state.currentNode = null;
       showMapScreen();
+    };
+    slot.addEventListener('click', replaceSlot);
+    slot.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        replaceSlot();
+      }
     });
     if (traitOverlay) {
-      card.addEventListener('mouseenter', () => {
+      slot.addEventListener('mouseenter', () => {
         const hypothetical = state.team.map((m, j) => j === idx ? newPoke : m);
         const cur  = getTraitDisplayData(state.team);
         const next = getTraitDisplayData(hypothetical);
@@ -1894,9 +1904,9 @@ function showSwapScreen(newPoke, node) {
           ${rows || '<div style="font-size:6px;color:var(--text-dim);">No active traits</div>'}`;
         traitOverlay.style.display = 'block';
       });
-      card.addEventListener('mouseleave', () => { traitOverlay.style.display = 'none'; });
+      slot.addEventListener('mouseleave', () => { traitOverlay.style.display = 'none'; });
     }
-    el.appendChild(card);
+    el.appendChild(slot);
   }
 
   document.getElementById('btn-cancel-swap').onclick = () => {

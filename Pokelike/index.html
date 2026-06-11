@@ -193,13 +193,21 @@
   <div id="item-team-bar" class="screen-team-bar"></div>
 </div>
 
-<!-- ===== SWAP SCREEN ===== -->
-<div id="swap-screen" class="screen">
-  <h2>Squad Registration</h2>
-  <p id="swap-prompt" class="swap-prompt"></p>
-  <div id="swap-choices"></div>
-  <div id="swap-incoming"></div>
-  <div style="text-align:center;margin-top:12px;">
+<!-- ===== SQUAD REGISTRATION / SWAP COMPATIBILITY SCREEN ===== -->
+<div id="swap-screen" class="screen squad-registration-screen">
+  <h2 class="squad-registration-title">Squad Registration</h2>
+  <p id="swap-prompt" class="swap-prompt squad-registration-prompt"></p>
+  <div class="squad-registration-layout">
+    <section class="squad-registration-incoming" aria-label="Incoming signing">
+      <div class="squad-registration-section-label">Incoming Signing</div>
+      <div id="swap-incoming"></div>
+    </section>
+    <section class="squad-registration-roster" aria-label="Registered squad slots">
+      <div class="squad-registration-section-label">Registered Squad</div>
+      <div id="swap-choices" class="squad-registration-slots"></div>
+    </section>
+  </div>
+  <div class="squad-registration-actions">
     <button id="btn-cancel-swap" class="btn-secondary">Decline contract</button>
   </div>
 </div>
