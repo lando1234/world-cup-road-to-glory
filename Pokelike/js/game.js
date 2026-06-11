@@ -642,9 +642,13 @@ async function showStarterSelect() {
 }
 
 async function selectStarter(pokemon) {
-  const normalUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.speciesId}.png`;
-  markPokedexCaught(pokemon.speciesId, pokemon.name, pokemon.types, normalUrl);
-  if (pokemon.isShiny) markShinyDexCaught(pokemon.speciesId, pokemon.name, pokemon.types, pokemon.spriteUrl);
+  if (window.FEATURES?.footballMode === true && window.DomainProfiles?.isFootballProfileId?.(pokemon.profileId ?? pokemon.speciesId) === true) {
+    markAlbumSigned(pokemon.profileId ?? pokemon.speciesId);
+  } else {
+    const normalUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.speciesId}.png`;
+    markPokedexCaught(pokemon.speciesId, pokemon.name, pokemon.types, normalUrl);
+    if (pokemon.isShiny) markShinyDexCaught(pokemon.speciesId, pokemon.name, pokemon.types, pokemon.spriteUrl);
+  }
   loadBuffsIntoPokemon(pokemon);
   state.team = [pokemon];
   state.starterSpeciesId = pokemon.speciesId;
@@ -1545,15 +1549,15 @@ async function doScoutReportNode(node) {
     if (!window.DomainCombatAdapter || typeof window.DomainCombatAdapter.createPlayerInstance !== 'function') {
       throw new Error('DomainCombatAdapter.createPlayerInstance is unavailable.');
     }
-    if (!window.DomainAlbum || typeof window.DomainAlbum.markAlbumSeen !== 'function') {
-      throw new Error('DomainAlbum.markAlbumSeen is unavailable.');
+    if (typeof markAlbumSeen !== 'function') {
+      throw new Error('markAlbumSeen is unavailable.');
     }
 
     await window.DomainScout.initScoutPools();
     const report = window.DomainScout.buildSliceReport(state.currentMap, state, { node });
     level = Math.max(4, getLevelForNode(node));
     instances = report.profileIds.map(profileId => {
-      window.DomainAlbum.markAlbumSeen(profileId);
+      markAlbumSeen(profileId);
       return window.DomainCombatAdapter.createPlayerInstance(profileId, level, {
         moveTier: getMoveТierForMap(state.currentMap)
       });

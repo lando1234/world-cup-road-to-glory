@@ -235,7 +235,7 @@ await runTest("football catch node is wired to scout recruitment flow", () => {
   assert(scoutBlock.includes("DomainScout.initScoutPools"), "doScoutReportNode should initialize scout pools");
   assert(scoutBlock.includes("DomainScout.buildSliceReport"), "doScoutReportNode should build scout report");
   assert(scoutBlock.includes("DomainCombatAdapter.createPlayerInstance"), "doScoutReportNode should create football player instances");
-  assert(scoutBlock.includes("DomainAlbum.markAlbumSeen"), "doScoutReportNode should mark displayed profiles as seen");
+  assert(scoutBlock.includes("markAlbumSeen(profileId)"), "doScoutReportNode should mark displayed profiles as seen through album facade");
   assert(scoutBlock.includes("Shortlist from"), "doScoutReportNode should render host city scout flavor");
   assert(scoutBlock.includes("confirmScoutContract"), "scout cards should open a contract confirmation modal");
   assert(scoutBlock.includes("scout-duplicate-hint"), "signed players should show a duplicate hint");

@@ -24,6 +24,14 @@ function runTest(name, fn) {
   }
 }
 
+function extractBetween(source, start, end) {
+  const startIndex = source.indexOf(start);
+  const endIndex = source.indexOf(end, startIndex + start.length);
+  assert(startIndex !== -1, `missing start marker ${start}`);
+  assert(endIndex !== -1, `missing end marker ${end}`);
+  return source.slice(startIndex, endIndex);
+}
+
 const packageJson = JSON.parse(readText("../package.json"));
 const smokeHttpSource = readText("scripts/smoke-http.mjs");
 const phase2Spec = readText("docs/014-phase-2-polish-debt-retirement-and-football-native-ux-plan.md");
@@ -31,6 +39,7 @@ const bridgeInventory = readText("docs/016-phase-2-bridge-inventory.md");
 const phase2Ledger = readText("docs/015-phase-2-engineering-task-breakdown.md");
 const phase2Report = readText("docs/020-phase-2-assumptions-tradeoffs-assets-report.html");
 const dataSource = readText("js/data.js");
+const gameSource = readText("js/game.js");
 const featuresSource = readText("js/domain/features.js");
 const cloudSaveSource = readText("js/cloud-save.js");
 
@@ -94,6 +103,21 @@ runTest("P2-004 album-named facade APIs exist alongside legacy dex aliases", () 
   assert(dataSource.includes("DomainAlbum?.markAlbumSigned?.(id)"), "markAlbumSigned should delegate to DomainAlbum.markAlbumSigned");
   assert(dataSource.includes("function markPokedexSeen"), "legacy markPokedexSeen alias should remain");
   assert(dataSource.includes("function markPokedexCaught"), "legacy markPokedexCaught alias should remain");
+});
+
+runTest("P2-005 football gameplay writes prefer album-named APIs", () => {
+  const selectStarterBlock = extractBetween(gameSource, "async function selectStarter", "// ---- Map Management ----");
+  const scoutBlock = extractBetween(gameSource, "async function doScoutReportNode", "function isFootballRuntimeInstance");
+
+  assert(selectStarterBlock.includes("markAlbumSigned"), "football starter selection should write through markAlbumSigned");
+  assert(selectStarterBlock.includes("markPokedexCaught"), "legacy starter selection should keep markPokedexCaught");
+  assert(
+    selectStarterBlock.indexOf("markAlbumSigned") < selectStarterBlock.indexOf("markPokedexCaught"),
+    "football starter album write should happen before legacy dex fallback branch"
+  );
+  assert(scoutBlock.includes("markAlbumSeen(profileId)"), "Scout Report should mark seen profiles through markAlbumSeen");
+  assert(!scoutBlock.includes("markPokedexSeen"), "Scout Report football branch should not call markPokedexSeen");
+  assert(!scoutBlock.includes("markPokedexCaught"), "Scout Report football branch should not call markPokedexCaught");
 });
 
 const failed = results.filter(result => result.status === "FAIL");
