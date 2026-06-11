@@ -6,7 +6,7 @@
 **Mode:** One task, one validation pass, one commit  
 **Branch:** `main` unless explicitly changed  
 **Governance HTML:** [022-phase-3-assumptions-tradeoffs-assets-report.html](./022-phase-3-assumptions-tradeoffs-assets-report.html)  
-**Last sync:** P3-019 (this commit)
+**Last sync:** P3-020 (this commit)
 
 ---
 
@@ -64,7 +64,7 @@ The default task loop is:
 | P3-002 | ✅ | A | P3-001 | this commit |
 | P3-003 | ✅ | A | P3-001 | `3dc6620` |
 | P3-004 | ⬜ | A | P3-001 | |
-| P3-005 | ⬜ | A | P3-002 | |
+| P3-005 | ✅ | A | P3-002 | d4d39d1 |
 | P3-006 | ⬜ | E | P3-002 | |
 | P3-007 | ⬜ | A | P3-003 | |
 | P3-008 | ⬜ | A | P3-003 | |
@@ -77,9 +77,9 @@ The default task loop is:
 | P3-015 | ✅ | B | P3-014 | `eb212ac` |
 | P3-016 | ✅ | B | P3-015 | `b9b6d05` |
 | P3-017 | ✅ | B | P3-016 | `d1e99cd` |
-| P3-018 | ✅ | B | P3-017 | this commit |
+| P3-018 | ✅ | B | P3-017 | cd7b99f |
 | P3-019 | ✅ | B | P3-016 | this commit |
-| P3-020 | ⬜ | B | P3-013 | |
+| P3-020 | ✅ | B | P3-013 | this commit |
 | P3-021 | ⬜ | C | P3-013 | |
 | P3-022 | ⬜ | C | P3-016, P3-021 | |
 | P3-029 | ⬜ | C | P3-014 | |

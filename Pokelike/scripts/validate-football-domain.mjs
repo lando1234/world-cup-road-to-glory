@@ -547,14 +547,14 @@ await runTest("album layout defines Phase 1 slice pages", () => {
   assert(Array.isArray(albumLayoutJson.pages), "album layout pages must be an array");
 
   const pageIds = albumLayoutJson.pages.map(page => page.pageId);
-  assert(pageIds.join(",") === "marquee,favorites", `album layout pages mismatch: ${pageIds.join(",")}`);
-  assert(!pageIds.includes("host_city"), "Phase 1 album layout must not include host_city page");
-  assert(!pageIds.includes("knockout"), "Phase 1 album layout must not include knockout page");
-  assert(!pageIds.includes("legends"), "Phase 1 album layout must not include legends page");
+  assert(pageIds.join(",") === "marquee,favorites,host_city", `album layout pages mismatch: ${pageIds.join(",")}`);
+  assert(!pageIds.includes("knockout"), "album layout must not include knockout page");
+  assert(!pageIds.includes("legends"), "album layout must not include legends page");
 
   const expectedSlotsByPage = {
     marquee: [1, 2, 3],
-    favorites: [4, 6, 7, 9, 10, 12, 14, 15, 17, 18, 28]
+    favorites: [4, 6, 7, 9, 10, 12, 14, 15, 17, 18, 28],
+    host_city: [29, 30, 31, 32, 33, 34, 35, 36]
   };
   const seenProfileIds = new Set();
 
@@ -588,8 +588,8 @@ await runTest("album domain loads layout and exposes ordered slot ids", () => {
   const marqueeIds = context.window.DomainAlbum.getSlotProfileIds("marquee");
   const favoriteIds = context.window.DomainAlbum.getSlotProfileIds("favorites");
 
-  assert(layout.pages.length === 2, "loaded album layout should expose 2 pages");
-  assert(pages.map(page => page.pageId).join(",") === "marquee,favorites", "getAlbumLayout should expose ordered pages");
+  assert(layout.pages.length === 3, "loaded album layout should expose 3 pages");
+  assert(pages.map(page => page.pageId).join(",") === "marquee,favorites,host_city", "getAlbumLayout should expose ordered pages");
   assert(marqueeIds.join(",") === "1,2,3", "getSlotProfileIds should return marquee slots in order");
   assert(favoriteIds.join(",") === "4,6,7,9,10,12,14,15,17,18,28", "getSlotProfileIds should return favorite slots in order");
   assert(context.window.DomainAlbum.getSlotProfileIds("missing").length === 0, "missing album page should return empty slot list");
@@ -1088,10 +1088,10 @@ await runTest("album expansion layout prepares deferred pages without enabling r
     deferredPages: []
   });
   const sliceLayout = readJson("data/football/album_layout.json");
-  assert(sliceLayout.pages.every(page => ["marquee", "favorites"].includes(page.pageId)),
-    "runtime album layout must keep only slice pages visible");
+  assert(sliceLayout.pages.every(page => ["marquee", "favorites", "host_city"].includes(page.pageId)),
+    "runtime album layout must keep slice and host_city pages visible");
   assert(sliceLayout.deferredPages.join(",") === "host_city,knockout,legends",
-    "runtime album layout should keep expansion pages deferred");
+    "runtime album layout should keep knockout and legends deferred");
 });
 
 await runTest("cloud save is disabled by football feature gate", async () => {

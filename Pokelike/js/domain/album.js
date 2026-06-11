@@ -7,7 +7,7 @@
 const ALBUM_STORAGE_KEY = "game_album";
 const ALBUM_LAYOUT_URL = "data/football/album_layout.json";
 const PHASE_1_ALBUM_PAGE_IDS = Object.freeze(["marquee", "favorites"]);
-const PHASE_1_ALBUM_PROFILE_IDS = Object.freeze([1, 2, 3, 4, 6, 7, 9, 10, 12, 14, 15, 17, 18, 28]);
+const PHASE_1_ALBUM_PROFILE_IDS = Object.freeze([1, 2, 3, 4, 6, 7, 9, 10, 12, 14, 15, 17, 18, 28, 29, 30, 31, 32, 33, 34, 35, 36]);
 
 let albumLayout = null;
 let albumLayoutPromise = null;

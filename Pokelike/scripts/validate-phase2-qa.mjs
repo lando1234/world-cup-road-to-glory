@@ -380,7 +380,9 @@ runTest("P2-027 album page expansion guard prepares deferred pages", () => {
   assert(expansionPageIds.includes("host_city"), "album expansion should prepare host_city page");
   assert(expansionPageIds.includes("knockout"), "album expansion should prepare knockout page");
   assert(expansionPageIds.includes("legends"), "album expansion should prepare legends page");
-  assert(sliceLayout.deferredPages.includes("host_city"), "runtime album layout should keep host_city deferred");
+  assert(sliceLayout.pages.some(page => page.pageId === "host_city"), "runtime album layout should include merged host_city page");
+  assert(sliceLayout.deferredPages.includes("knockout"), "runtime album layout should keep knockout deferred");
+  assert(sliceLayout.deferredPages.includes("legends"), "runtime album layout should keep legends deferred");
   assert(smokeHttpSource.includes("album_layout_expansion.json"), "HTTP smoke should verify album layout expansion JSON");
 });
 
