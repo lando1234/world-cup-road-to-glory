@@ -1,11 +1,11 @@
 # SPEC 014B — Release Candidate Hardening Task Breakdown
 
-**Status:** Wave 0 complete — RC execution not started  
-**Last sync:** Wave 0 planning commit  
+**Status:** Wave 0 complete — Wave 1 in progress  
+**Last sync:** RC-011/016/019 identity cleanup  
 **Authority:** [026 — Identity Audit](./026-release-candidate-identity-audit.md) · [028 — Asset Pipeline](./028-asset-pipeline-and-art-direction.md)  
 **Date:** 2026-06-10  
 **Mode:** One atomic task per commit · Playable after every commit  
-**Governance:** Update [030](./030-release-candidate-validation-report.md) at sign-off
+**Governance:** Update [032](./032-release-candidate-validation-report.md) at sign-off · [030](./030-release-candidate-bridge-retirement-plan.md) for bridges
 
 ---
 
@@ -14,8 +14,8 @@
 | Metric | Count |
 |--------|------:|
 | **Done** | 10 |
-| **In progress** | 0 |
-| **Not started** | 42 |
+| **In progress** | 4 |
+| **Not started** | 38 |
 | **Total** | 52 |
 
 **Legend:** ✅ Done · 🟡 Partial · ⬜ Not started

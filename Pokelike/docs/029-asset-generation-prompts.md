@@ -139,6 +139,31 @@ Flat vector, 2-color + neutral, consistent stroke width with existing UI.
 
 ---
 
+## 9. Title Logo Prompt
+
+```text
+Wordmark logo for football manager roguelike "Road to Glory".
+Typography: bold retro sports poster, World Cup tournament energy.
+No FIFA logo, no federation crests, no club marks, no Pokémon references.
+SVG preferred; flat 2–3 colors on transparent background.
+Readable at 32px height in title screen.
+{GLOBAL_NEGATIVE}
+```
+
+---
+
+## 10. Empty State Illustration Prompt
+
+```text
+Empty-state illustration for football campaign UI: {CONTEXT}.
+Examples: empty squad slot, unsigned album page, no stamps yet, settlement with zero patches.
+Minimal flat vector, hopeful tone, single focal object (jersey silhouette, blank sticker, passport page).
+No text in artwork. Transparent PNG 512×512.
+{GLOBAL_NEGATIVE}
+```
+
+---
+
 ## Consistency Batch Checklist
 
 When generating a batch:

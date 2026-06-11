@@ -31,7 +31,9 @@ const phase3ValidationReport = readText("docs/023-phase-3-validation-report.md")
 const rcIdentityAudit = readText("docs/026-release-candidate-identity-audit.md");
 const rcTaskBreakdown = readText("docs/027-release-candidate-hardening-task-breakdown.md");
 const rcAssetPipeline = readText("docs/028-asset-pipeline-and-art-direction.md");
-const rcValidationReport = readText("docs/030-release-candidate-validation-report.md");
+const rcBridgePlan = readText("docs/030-release-candidate-bridge-retirement-plan.md");
+const rcManualQaRunbook = readText("docs/031-release-candidate-manual-qa-runbook.md");
+const rcValidationReport = readText("docs/032-release-candidate-validation-report.md");
 
 const frictionEntries = (visualFrictionsHtml.match(/class="entry"/g) || []).length;
 
@@ -113,6 +115,9 @@ assert(rcIdentityAudit.includes("SPEC 014A"), "RC identity audit must include SP
 assert(rcTaskBreakdown.includes("SPEC 014B"), "RC task breakdown must include SPEC 014B heading");
 assert(rcTaskBreakdown.includes("RC-001"), "RC task breakdown must include RC-001");
 assert(rcAssetPipeline.includes("SPEC 014C"), "RC asset pipeline must include SPEC 014C heading");
+assert(rcBridgePlan.includes("Bridge Retirement Plan"), "RC bridge retirement plan must include expected heading");
+assert(rcManualQaRunbook.includes("Release Candidate Manual QA Runbook"), "RC manual QA runbook must include expected heading");
+assert(rcManualQaRunbook.includes("Full 8-City Path"), "RC manual QA runbook must include 8-city path");
 assert(rcValidationReport.includes("Release Candidate Validation Report"), "RC validation report must include expected heading");
 assert(fs.existsSync(path.join(projectRoot, "data/football/player_asset_manifest.json")), "player asset manifest must exist");
 assert(fs.existsSync(path.join(projectRoot, "scripts/validate-identity-cleanup.mjs")), "identity cleanup harness must exist");

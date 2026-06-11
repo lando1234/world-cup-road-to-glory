@@ -48,13 +48,15 @@ Full-repo search for monster-game / Pokémon / Pokelike identity residue. Goal: 
 
 | Code | Meaning |
 |------|---------|
-| **1** | Player-facing blocker — visible or likely visible in football campaign |
-| **2** | Internal bridge allowed temporarily — DOM id / function alias with football delegate |
-| **3** | Legacy compatibility code — Classic mode only; hidden when `footballMode` |
-| **4** | Historical docs only — Phase 1–3 specs; no runtime effect |
-| **5** | Test/harness term — validation scripts reference legacy names intentionally |
-| **6** | Must rename now — blocks external demo even if football path mostly clean |
-| **7** | Defer with reason — safe until Phase 4 / save v4 / Classic split |
+| **1** | Player-facing blocker — visible in football campaign |
+| **2** | Visible but acceptable only in Classic / internal mode |
+| **3** | Internal bridge allowed temporarily — DOM id / function alias with football delegate |
+| **4** | Legacy compatibility code — Classic only; hidden when `footballMode` |
+| **5** | Save / key compatibility — `poke_*`, `speciesId` serialization |
+| **6** | Test / harness terminology — validators reference legacy names intentionally |
+| **7** | Historical docs only — Phase 1–3 specs; no runtime effect |
+| **8** | Must rename now — blocks external demo |
+| **9** | Defer with reason — Phase 4 / save v4 / Classic split |
 
 ---
 
@@ -77,6 +79,7 @@ Full-repo search for monster-game / Pokémon / Pokelike identity residue. Goal: 
 | RC-B13 | `css/style.css` L1 | File header `Pokemon Roguelike Retro Theme` | RC-021 |
 | RC-B14 | Player profile `portrait` paths | `/assets/players/{slug}.png` referenced but **no files on disk** (T0 fallback only) | RC-030+ |
 | RC-B15 | `ui.js` remote URLs | PokeAPI sprite URLs in legacy card/evolution paths | RC-022 (football path must never hit) |
+| RC-B16 | `game.js` `doTrainerNode` / `doBattleNode` | Trainer battles still spawn Pokémon (`Fisherman wants to battle`, Psyduck); friendly match uses National Dex pool | RC-019 |
 
 **P1-049 green surfaces (already football-native):** Scout Report, Squad Registration, Slice Complete, football `GAME_THEME` branch, `doScoutReportNode` strings.
 
@@ -183,7 +186,7 @@ External demo **GO** requires all of:
 - [ ] Player forms described as **Form Level** / **Career Form** — never “evolution” player-facing
 - [ ] No remote asset URLs on football-critical paths (PokeAPI, Showdown, TheSportsDB runtime)
 - [ ] `validate-identity-cleanup.mjs` and `validate-asset-manifests.mjs` green
-- [ ] Manual RC runbook PASS (see 030)
+- [ ] Manual RC runbook PASS (see [031](./031-release-candidate-manual-qa-runbook.md))
 - [ ] Release invariants unchanged (knockout off, cloud off, battle math)
 
 ---
