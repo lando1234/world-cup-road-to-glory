@@ -1,0 +1,79 @@
+{
+  "schemaVersion": 1,
+  "releaseCritical": true,
+  "remoteRuntimeDependency": false,
+  "defaultFallback": "nation_flag_emoji",
+  "campaignComplete": {
+    "id": "stamp_campaign_complete",
+    "paths": {
+      "unsigned": "assets/stamps/campaign-complete-unsigned.svg",
+      "signed": "assets/stamps/campaign-complete-signed.svg"
+    }
+  },
+  "stamps": {
+    "stamp_sao_paulo": {
+      "mapIndex": 0,
+      "hostCity": "São Paulo",
+      "paths": {
+        "unsigned": "assets/stamps/sao-paulo-stamp.svg",
+        "signed": "assets/stamps/sao-paulo-stamp.svg"
+      }
+    },
+    "stamp_berlin": {
+      "mapIndex": 1,
+      "hostCity": "Berlin",
+      "paths": {
+        "unsigned": "assets/stamps/berlin-stamp.svg",
+        "signed": "assets/stamps/berlin-stamp.svg"
+      }
+    },
+    "stamp_tokyo": {
+      "mapIndex": 2,
+      "hostCity": "Tokyo",
+      "paths": {
+        "unsigned": "assets/stamps/tokyo-stamp.svg",
+        "signed": "assets/stamps/tokyo-stamp.svg"
+      }
+    },
+    "stamp_madrid": {
+      "mapIndex": 3,
+      "hostCity": "Madrid",
+      "paths": {
+        "unsigned": "assets/stamps/madrid-stamp.svg",
+        "signed": "assets/stamps/madrid-stamp.svg"
+      }
+    },
+    "stamp_milan": {
+      "mapIndex": 4,
+      "hostCity": "Milan",
+      "paths": {
+        "unsigned": "assets/stamps/milan-stamp.svg",
+        "signed": "assets/stamps/milan-stamp.svg"
+      }
+    },
+    "stamp_amsterdam": {
+      "mapIndex": 5,
+      "hostCity": "Amsterdam",
+      "paths": {
+        "unsigned": "assets/stamps/amsterdam-stamp.svg",
+        "signed": "assets/stamps/amsterdam-stamp.svg"
+      }
+    },
+    "stamp_mexico_city": {
+      "mapIndex": 6,
+      "hostCity": "Mexico City",
+      "paths": {
+        "unsigned": "assets/stamps/mexico-city-stamp.svg",
+        "signed": "assets/stamps/mexico-city-stamp.svg"
+      }
+    },
+    "stamp_london": {
+      "mapIndex": 7,
+      "hostCity": "London",
+      "paths": {
+        "unsigned": "assets/stamps/london-stamp.svg",
+        "signed": "assets/stamps/london-stamp.svg"
+      }
+    }
+  }
+}

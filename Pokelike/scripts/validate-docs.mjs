@@ -28,6 +28,10 @@ const phase2BridgeInventory = readText("docs/016-phase-2-bridge-inventory.md");
 const phase3ManualQaRunbook = readText("docs/025-phase-3-manual-qa-runbook.md");
 const phase3AssumptionsHtml = readText("docs/022-phase-3-assumptions-tradeoffs-assets-report.html");
 const phase3ValidationReport = readText("docs/023-phase-3-validation-report.md");
+const rcIdentityAudit = readText("docs/026-release-candidate-identity-audit.md");
+const rcTaskBreakdown = readText("docs/027-release-candidate-hardening-task-breakdown.md");
+const rcAssetPipeline = readText("docs/028-asset-pipeline-and-art-direction.md");
+const rcValidationReport = readText("docs/030-release-candidate-validation-report.md");
 
 const frictionEntries = (visualFrictionsHtml.match(/class="entry"/g) || []).length;
 
@@ -105,5 +109,13 @@ assert(
 );
 assert(phase3ValidationReport.includes("Phase 3 Validation Report"), "Phase 3 validation report must include the expected heading");
 assert(phase3ValidationReport.includes("Go / No-Go"), "Phase 3 validation report must include go/no-go verdict");
+assert(rcIdentityAudit.includes("SPEC 014A"), "RC identity audit must include SPEC 014A heading");
+assert(rcTaskBreakdown.includes("SPEC 014B"), "RC task breakdown must include SPEC 014B heading");
+assert(rcTaskBreakdown.includes("RC-001"), "RC task breakdown must include RC-001");
+assert(rcAssetPipeline.includes("SPEC 014C"), "RC asset pipeline must include SPEC 014C heading");
+assert(rcValidationReport.includes("Release Candidate Validation Report"), "RC validation report must include expected heading");
+assert(fs.existsSync(path.join(projectRoot, "data/football/player_asset_manifest.json")), "player asset manifest must exist");
+assert(fs.existsSync(path.join(projectRoot, "scripts/validate-identity-cleanup.mjs")), "identity cleanup harness must exist");
+assert(fs.existsSync(path.join(projectRoot, "scripts/validate-asset-manifests.mjs")), "asset manifest harness must exist");
 
 console.log(`PASS docs validation: ${frictionEntries} visual friction entries`);

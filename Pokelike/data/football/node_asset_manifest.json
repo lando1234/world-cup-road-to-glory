@@ -1,0 +1,80 @@
+{
+  "schemaVersion": 1,
+  "releaseCritical": false,
+  "remoteRuntimeDependency": false,
+  "defaultFallback": "text_icon_code",
+  "nodes": {
+    "start": {
+      "label": "Arrival",
+      "iconCode": "KO",
+      "paths": { "icon": "assets/nodes/arrival.svg" }
+    },
+    "catch": {
+      "label": "Scout Report",
+      "iconCode": "SR",
+      "paths": { "icon": "assets/nodes/scout-report.svg" }
+    },
+    "battle": {
+      "label": "Friendly Match",
+      "iconCode": "⚽",
+      "paths": { "icon": "assets/nodes/friendly-match.svg" }
+    },
+    "trainer": {
+      "label": "Rival National Team",
+      "iconCode": "RN",
+      "paths": { "icon": "assets/nodes/rival-national-team.svg" }
+    },
+    "silver": {
+      "label": "Rival National Team",
+      "iconCode": "RN",
+      "paths": { "icon": "assets/nodes/rival-national-team.svg" }
+    },
+    "pokecenter": {
+      "label": "Recovery Center",
+      "iconCode": "+",
+      "paths": { "icon": "assets/nodes/recovery-center.svg" }
+    },
+    "item": {
+      "label": "Gear Crate",
+      "iconCode": "GE",
+      "paths": { "icon": "assets/nodes/gear-crate.svg" }
+    },
+    "move_tutor": {
+      "label": "Specialist Coach",
+      "iconCode": "SC",
+      "paths": { "icon": "assets/nodes/specialist-coach.svg" }
+    },
+    "question": {
+      "label": "Tournament Event",
+      "iconCode": "EV",
+      "paths": { "icon": "assets/nodes/mystery-event.svg" }
+    },
+    "boss": {
+      "label": "Host City Challenge",
+      "iconCode": "HC",
+      "paths": { "icon": "assets/nodes/host-city-challenge.svg" }
+    },
+    "legendary": {
+      "label": "Legend Scouting",
+      "iconCode": "LG",
+      "paths": { "icon": "assets/nodes/legend-scouting.svg" },
+      "footballMode": "disabled"
+    },
+    "trade": {
+      "label": "Transfer Market",
+      "iconCode": "TM",
+      "paths": { "icon": "assets/nodes/transfer-market.svg" },
+      "footballMode": "disabled"
+    },
+    "final_locked": {
+      "label": "Final Challenge Locked",
+      "iconCode": "🔒",
+      "paths": { "icon": "assets/nodes/final-challenge-locked.svg" }
+    },
+    "rest_site": {
+      "label": "Rest Site",
+      "iconCode": "RS",
+      "paths": { "icon": "assets/nodes/rest-site.svg" }
+    }
+  }
+}

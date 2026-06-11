@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "releaseCritical": false,
+  "remoteRuntimeDependency": false,
+  "defaultFallback": "emoji_or_text",
+  "ui": {
+    "titleLogo": {
+      "paths": { "default": "assets/ui/logo.svg" },
+      "fallback": { "type": "text", "value": "Road to Glory" }
+    },
+    "collectionButton": {
+      "paths": { "default": "assets/ui/album-icon.svg" },
+      "fallback": { "type": "legacy", "value": "ui/pokedex.png" }
+    },
+    "settlement": {
+      "paths": { "default": "assets/ui/settlement-trophy.svg" },
+      "fallback": { "type": "emoji", "value": "🏆" }
+    },
+    "trophyRoadMilestone": {
+      "paths": { "default": "assets/ui/trophy-road-milestone.svg" },
+      "fallback": { "type": "emoji", "value": "🛣️" }
+    },
+    "emptyState": {
+      "paths": { "default": "assets/ui/empty-squad.svg" },
+      "fallback": { "type": "emoji", "value": "⚽" }
+    },
+    "album": {
+      "slotUnknown": { "paths": { "default": "assets/ui/album/slot-unknown.svg" } },
+      "slotScouted": { "paths": { "default": "assets/ui/album/slot-scouted.svg" } },
+      "slotSigned": { "paths": { "default": "assets/ui/album/slot-signed.svg" } },
+      "frameMarquee": { "paths": { "default": "assets/ui/album/frame-marquee.svg" } },
+      "frameFavorites": { "paths": { "default": "assets/ui/album/frame-favorites.svg" } },
+      "frameHostCity": { "paths": { "default": "assets/ui/album/frame-host-city.svg" } }
+    },
+    "buttons": {
+      "primary": { "paths": { "default": "assets/ui/button-primary.svg" } },
+      "secondary": { "paths": { "default": "assets/ui/button-secondary.svg" } }
+    }
+  }
+}
