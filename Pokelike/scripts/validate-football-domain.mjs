@@ -883,6 +883,38 @@ await runTest("applyAccountPatch merges album monotonically without touching act
   assert(context.window.DomainSave.applyAccountPatch({}) === false, "applyAccountPatch should return false when no account key is applied");
 });
 
+await runTest("account model validator accepts absent future keys and rejects bad shapes", () => {
+  const { DomainSave } = context.window;
+
+  const valid = DomainSave.validateAccountModel({
+    album: { "12": 1, "14": "0", "bad-id": 1 },
+    runsStarted: "2",
+    runsCompleted: 1,
+    footballCredits: 0,
+    legendFragments: "3",
+    lastSettledRunId: "run-123"
+  });
+
+  assert(valid.valid === true, "valid account model should pass");
+  assert(valid.normalized.album["12"] === 1, "validator should preserve signed album entry");
+  assert(valid.normalized.album["14"] === 0, "validator should normalize seen album entry");
+  assert(!("bad-id" in valid.normalized.album), "validator should drop invalid album profile ids");
+  assert(valid.normalized.counters.runsStarted === 2, "validator should normalize optional counters");
+  assert(valid.normalized.futureMeta.legendFragments === 3, "validator should normalize optional future meta keys");
+  assert(valid.normalized.lastSettledRunId === "run-123", "validator should preserve valid settled run id");
+
+  const absentFutureKeys = DomainSave.validateAccountModel({ album: {} });
+  assert(absentFutureKeys.valid === true, "future meta keys should be optional");
+
+  const invalid = DomainSave.validateAccountModel({
+    runsStarted: -1,
+    footballCredits: "NaN",
+    lastSettledRunId: ""
+  });
+  assert(invalid.valid === false, "invalid account model should fail");
+  assert(invalid.issues.length === 3, "invalid account model should report all bad optional fields");
+});
+
 await runTest("settlement modal is wired before run clear", () => {
   const gameSource = readText("js/game.js");
   const uiSource = readText("js/ui.js");

@@ -94,6 +94,78 @@ function readAlbumState() {
   return readJsonStorage(SAVE_ALBUM_STORAGE_KEY, {});
 }
 
+function normalizeAlbumState(albumState) {
+  if (!isPlainObject(albumState)) return {};
+
+  const album = {};
+  for (const [profileId, entryState] of Object.entries(albumState)) {
+    const normalizedProfileId = normalizeAlbumProfileId(profileId);
+    if (!normalizedProfileId) continue;
+    if (entryState === 1 || entryState === "1" || entryState === true) {
+      album[normalizedProfileId] = 1;
+    } else if (entryState === 0 || entryState === "0" || entryState === false) {
+      album[normalizedProfileId] = 0;
+    }
+  }
+  return album;
+}
+
+function normalizeOptionalNonNegativeInteger(value) {
+  if (value === undefined || value === null || value === "") return null;
+  const numericValue = Number(value);
+  if (!Number.isInteger(numericValue) || numericValue < 0) return null;
+  return numericValue;
+}
+
+function validateAccountModel(accountState = {}) {
+  const source = isPlainObject(accountState) ? accountState : {};
+  const issues = [];
+  const normalized = {
+    album: normalizeAlbumState(source.album),
+    counters: {},
+    futureMeta: {}
+  };
+
+  for (const key of ["runsStarted", "runsCompleted", "runsLost"]) {
+    if (!(key in source)) continue;
+    const value = normalizeOptionalNonNegativeInteger(source[key]);
+    if (value === null) {
+      issues.push(`${key} must be a non-negative integer when present`);
+    } else {
+      normalized.counters[key] = value;
+    }
+  }
+
+  for (const key of ["footballCredits", "legendFragments"]) {
+    if (!(key in source)) continue;
+    const value = normalizeOptionalNonNegativeInteger(source[key]);
+    if (value === null) {
+      issues.push(`${key} must be a non-negative integer when present`);
+    } else {
+      normalized.futureMeta[key] = value;
+    }
+  }
+
+  if ("lastSettledRunId" in source) {
+    if (typeof source.lastSettledRunId === "string" && source.lastSettledRunId.trim()) {
+      normalized.lastSettledRunId = source.lastSettledRunId;
+    } else {
+      issues.push("lastSettledRunId must be a non-empty string when present");
+    }
+  }
+
+  return Object.freeze({
+    valid: issues.length === 0,
+    issues: Object.freeze(issues),
+    normalized: Object.freeze({
+      album: Object.freeze(normalized.album),
+      counters: Object.freeze(normalized.counters),
+      futureMeta: Object.freeze(normalized.futureMeta),
+      ...(normalized.lastSettledRunId ? { lastSettledRunId: normalized.lastSettledRunId } : {})
+    })
+  });
+}
+
 function getProfileName(profileId) {
   try {
     const profile = window.DomainProfiles?.getProfile?.(profileId);
@@ -173,6 +245,7 @@ const DomainSave = Object.freeze({
   SAVE_SCHEMA_VERSION: DOMAIN_SAVE_SCHEMA_VERSION,
   migrateSaveV2toV3,
   compactLegacyDexToAlbum,
+  validateAccountModel,
   settleRunLite,
   applyAccountPatch
 });

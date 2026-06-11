@@ -887,6 +887,27 @@
           </div>
         </div>
       </article>
+      <article class="task" style="margin-top: 12px;">
+        <h3>P2-019 — Account model shape validator</h3>
+        <div class="task-grid">
+          <div class="field">
+            <span>Assumption</span>
+            <p>Phase 2 needs an account-shape contract before dedupe and future meta keys, but does not need a save v4 migration.</p>
+          </div>
+          <div class="field">
+            <span>Tradeoff</span>
+            <p>The validator is pure and absent-or-valid for future keys. It normalizes shape for tests without writing storage or enabling economy/cloud behavior.</p>
+          </div>
+          <div class="field">
+            <span>Validation</span>
+            <p>Domain tests cover valid and invalid shapes. Phase 2 QA asserts optional meta keys, <code>lastSettledRunId</code>, purity, schema v3, and cloud-save disconnection.</p>
+          </div>
+          <div class="field">
+            <span>Owner Note</span>
+            <p>This prepares P2-020 local settlement dedupe. It does not create account rewards, cloud sync, or a new persistence schema.</p>
+          </div>
+        </div>
+      </article>
     </section>
 
     <section>
@@ -908,7 +929,7 @@
     </section>
 
     <footer>
-      Generated for Pokelike World Cup Road to Glory Phase 2. Last updated 2026-06-10 — P2-018 Settlement Lite UX, P2-017 Slice Complete milestone, P2-016 Album visual model, P2-015 City Stamp placeholders, P2-014 City Stamp selectors, P2-013 Squad Registration layout, P2-012 Contract Offer UX polish, P2-011 Scout Report wrapper, P2-010 football node icon registry, P2-021 runtime no-live-API gate, P2-009 local portrait manifest, P2-005 football album write call sites, P2-004 album facade names, P2-003 bridge inventory, P2-008 portrait strategy, P2-007 HTTP smoke script, P2-006 manual QA runbook, P2-002 QA harness shell, P2-001 ledger/protocol, baseline assumptions, tradeoffs, frictions, asset gaps, decision gates, and owner watchlist.
+      Generated for Pokelike World Cup Road to Glory Phase 2. Last updated 2026-06-10 — P2-019 Account model validator, P2-018 Settlement Lite UX, P2-017 Slice Complete milestone, P2-016 Album visual model, P2-015 City Stamp placeholders, P2-014 City Stamp selectors, P2-013 Squad Registration layout, P2-012 Contract Offer UX polish, P2-011 Scout Report wrapper, P2-010 football node icon registry, P2-021 runtime no-live-API gate, P2-009 local portrait manifest, P2-005 football album write call sites, P2-004 album facade names, P2-003 bridge inventory, P2-008 portrait strategy, P2-007 HTTP smoke script, P2-006 manual QA runbook, P2-002 QA harness shell, P2-001 ledger/protocol, baseline assumptions, tradeoffs, frictions, asset gaps, decision gates, and owner watchlist.
     </footer>
   </main>
 </body>

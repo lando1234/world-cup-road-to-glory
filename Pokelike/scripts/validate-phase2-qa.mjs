@@ -49,6 +49,7 @@ const profilesSource = readText("js/domain/profiles.js");
 const featuresSource = readText("js/domain/features.js");
 const cloudSaveSource = readText("js/cloud-save.js");
 const portraitSource = readText("js/domain/portrait-source.js");
+const saveSource = readText("js/domain/save.js");
 
 runTest("P2-002 Phase 2 governance documents are present", () => {
   assert(phase2Spec.includes("SPEC 012"), "Phase 2 plan should keep the SPEC 012 heading");
@@ -310,6 +311,20 @@ runTest("P2-018 Settlement Lite UX clarifies patch summary and return flow", () 
   assert(settlementBlock.includes("onContinue();"), "Settlement modal should still call provided continuation callback");
   assert(styleSource.includes(".settlement-lite-grid"), "CSS should style settlement summary grid");
   assert(styleSource.includes(".settlement-lite-rewards"), "CSS should style settlement reward note");
+});
+
+runTest("P2-019 account model validator is pure and Phase 2 scoped", () => {
+  const validatorBlock = extractBetween(saveSource, "function validateAccountModel", "function getProfileName");
+
+  assert(saveSource.includes("function validateAccountModel"), "DomainSave should define validateAccountModel");
+  assert(saveSource.includes("validateAccountModel,"), "DomainSave should export validateAccountModel");
+  assert(validatorBlock.includes("footballCredits"), "validator should accept optional future footballCredits key");
+  assert(validatorBlock.includes("legendFragments"), "validator should accept optional future legendFragments key");
+  assert(validatorBlock.includes("lastSettledRunId"), "validator should validate optional lastSettledRunId key");
+  assert(validatorBlock.includes("runsStarted"), "validator should validate optional run counters");
+  assert(!validatorBlock.includes("localStorage.setItem"), "account validator should be pure and not write storage");
+  assert(saveSource.includes("const DOMAIN_SAVE_SCHEMA_VERSION = 3"), "P2-019 must not introduce save v4 migration");
+  assert(!cloudSaveSource.includes("game_album"), "cloud save should remain disconnected from album/account keys");
 });
 
 const failed = results.filter(result => result.status === "FAIL");
