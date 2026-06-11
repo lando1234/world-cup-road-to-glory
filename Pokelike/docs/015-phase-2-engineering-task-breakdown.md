@@ -6,7 +6,7 @@
 **Mode:** One task, one validation pass, one commit  
 **Branch:** `main` unless explicitly changed  
 **Screenshots:** Not automated by default
-**Last sync:** `main` @ this commit — Football album write call sites (P2-005)
+**Last sync:** `main` @ this commit — Local portrait manifest contract (P2-009)
 
 ---
 
@@ -14,9 +14,9 @@
 
 | Metric | Count |
 |--------|------:|
-| **Done** | 8 |
+| **Done** | 9 |
 | **Partial** | 0 |
-| **Not started** | 22 |
+| **Not started** | 21 |
 | **Total tickets** | 30 |
 
 **Legend:** ✅ Done · 🟡 Partial · ⬜ Not started
@@ -273,11 +273,11 @@ Closeout requires a validation report, manual QA result, no-cloud assertion, no-
 | P2-002 | ✅ | A | P2-001 | Batch 1 | `d64f18b` |
 | P2-003 | ✅ | B | P2-002 | Batch 2 root | `47a1d51` |
 | P2-004 | ✅ | B | P2-003 | Batch 2 | `6cf74b6` |
-| P2-005 | ✅ | B | P2-004 | Batch 2 | this commit |
+| P2-005 | ✅ | B | P2-004 | Batch 2 | `c14f768` |
 | P2-006 | ✅ | A | P2-001 | Batch 1 | `5b7f083` |
 | P2-007 | ✅ | A | P2-002 | Batch 1 | `231a81f` |
 | P2-008 | ✅ | C | P2-001 | Batch 1 | `cad24b2` |
-| P2-009 | ⬜ | C | P2-008 | Batch 2/3 | |
+| P2-009 | ✅ | C | P2-008 | Batch 2/3 | this commit |
 | P2-010 | ⬜ | E | P2-003 | Batch 4/5 | |
 | P2-011 | ⬜ | D | P2-005, P2-007 | Batch 4 | |
 | P2-012 | ⬜ | D | P2-011 | Batch 4 | |

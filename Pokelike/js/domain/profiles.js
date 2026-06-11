@@ -6,6 +6,7 @@
  * created later by the combat adapter task.
  */
 const PROFILE_CATALOG_URL = "data/football/player_profiles.json";
+const PORTRAIT_MANIFEST_URL = "data/football/portrait_manifest.json";
 
 const PHASE_1_PROFILE_IDS = Object.freeze([
   1, 2, 3, 4, 6, 7, 9, 10, 12, 14, 15, 17, 18, 28, 29, 30, 31, 16, 22, 26
@@ -48,10 +49,13 @@ const VALID_RARITIES = Object.freeze(["common", "uncommon", "rare", "elite", "le
 const VALID_POSITIONS = Object.freeze(["GK", "CB", "FB", "DM", "CM", "AM", "W", "ST"]);
 const REQUIRED_FLAG_KEYS = Object.freeze(["isMarquee", "isLegend", "scoutable", "bossExclusive"]);
 const VALID_LEGAL_TIERS = Object.freeze([0, 1, 2]);
+const VALID_PORTRAIT_TIERS = Object.freeze(["T0", "T1", "T2", "T3"]);
 
 let profileCatalog = null;
 let profileIndex = null;
 let catalogPromise = null;
+let portraitManifest = null;
+let portraitManifestPromise = null;
 
 function isPlainObject(value) {
   return value !== null && typeof value === "object" && !Array.isArray(value);
@@ -253,6 +257,96 @@ function loadCatalog(json) {
   });
 }
 
+function validatePortraitManifest(manifest, catalogJson) {
+  const errors = [];
+
+  if (!isPlainObject(manifest)) {
+    return ["Portrait manifest must be an object."];
+  }
+  if (manifest.schemaVersion !== 1) {
+    errors.push(`Portrait manifest schemaVersion must be 1; received ${manifest.schemaVersion}.`);
+  }
+  if (manifest.strategy !== "stylized_non_likeness_jersey_avatars") {
+    errors.push("Portrait manifest strategy must be stylized_non_likeness_jersey_avatars.");
+  }
+  if (manifest.remoteRuntimeDependency !== false) {
+    errors.push("Portrait manifest must not require a remote runtime dependency.");
+  }
+  if (!isPlainObject(manifest.players)) {
+    errors.push("Portrait manifest players must be an object.");
+  }
+
+  if (isPlainObject(manifest.players) && Array.isArray(catalogJson?.profiles)) {
+    for (const profile of catalogJson.profiles) {
+      const entry = manifest.players[String(profile.profileId)];
+      if (!isPlainObject(entry)) {
+        errors.push(`Portrait manifest missing profileId ${profile.profileId}.`);
+        continue;
+      }
+      if (!VALID_PORTRAIT_TIERS.includes(entry.assetTier)) {
+        errors.push(`Portrait manifest profileId ${profile.profileId} has invalid assetTier ${entry.assetTier}.`);
+      }
+      if (typeof entry.portrait !== "string") {
+        errors.push(`Portrait manifest profileId ${profile.profileId} portrait must be a string.`);
+      }
+    }
+  }
+
+  return errors;
+}
+
+function applyPortraitManifestToCatalog(catalogJson, manifest) {
+  const errors = validatePortraitManifest(manifest, catalogJson);
+  if (errors.length > 0) {
+    throw new Error(`Portrait manifest validation failed: ${errors.join(" | ")}`);
+  }
+
+  const profiles = catalogJson.profiles.map(profile => {
+    const entry = manifest.players[String(profile.profileId)];
+    return {
+      ...profile,
+      portrait: entry.portrait || manifest.defaultPortrait || ""
+    };
+  });
+
+  return { ...catalogJson, profiles };
+}
+
+async function initPortraitManifest(catalogJson) {
+  if (portraitManifest) return applyPortraitManifestToCatalog(catalogJson, portraitManifest);
+  if (portraitManifestPromise) {
+    const manifest = await portraitManifestPromise;
+    return applyPortraitManifestToCatalog(catalogJson, manifest);
+  }
+
+  portraitManifestPromise = fetch(PORTRAIT_MANIFEST_URL)
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`Failed to fetch ${PORTRAIT_MANIFEST_URL}: ${response.status} ${response.statusText}`);
+      }
+      return response.json();
+    })
+    .then(manifest => {
+      const errors = validatePortraitManifest(manifest, catalogJson);
+      if (errors.length > 0) {
+        throw new Error(`Portrait manifest validation failed: ${errors.join(" | ")}`);
+      }
+      portraitManifest = Object.freeze({
+        ...manifest,
+        assetTiers: Object.freeze({ ...manifest.assetTiers }),
+        players: Object.freeze({ ...manifest.players })
+      });
+      return portraitManifest;
+    })
+    .catch(error => {
+      portraitManifestPromise = null;
+      throw error;
+    });
+
+  const manifest = await portraitManifestPromise;
+  return applyPortraitManifestToCatalog(catalogJson, manifest);
+}
+
 async function enrichCatalogPortraits(catalogJson) {
   const portraitSource = window.DomainPortraitSource;
   if (!portraitSource?.fetchPortraitMap || !portraitSource?.applyPortraitMapToCatalog) {
@@ -277,6 +371,7 @@ async function initCatalog() {
       }
       return response.json();
     })
+    .then(initPortraitManifest)
     .then(enrichCatalogPortraits)
     .then(loadCatalog)
     .catch(error => {
@@ -330,6 +425,7 @@ function getScoutableProfileIds(excludeProfileIds = []) {
 const DomainProfiles = Object.freeze({
   initCatalog,
   loadCatalog,
+  initPortraitManifest,
   getProfile,
   getProfileOrThrow,
   getAllProfiles,

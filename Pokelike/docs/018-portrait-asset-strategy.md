@@ -77,7 +77,24 @@ This decision does not require:
 
 ---
 
-## 6. Open Questions
+## 6. P2-009 Manifest Baseline
+
+P2-009 creates `data/football/portrait_manifest.json` as the runtime contract for release-safe portraits.
+
+Current baseline:
+
+- Covers every profile currently present in `player_profiles.json`.
+- Uses `strategy: stylized_non_likeness_jersey_avatars`.
+- Sets `remoteRuntimeDependency: false`.
+- Uses T0 fallback entries until final T1 artwork exists.
+- Disables `FEATURES.useTheSportsDbPortraits` by default.
+- Keeps TheSportsDB tooling as internal/demo-only reference, not a critical runtime display path.
+
+This is intentionally a contract-first implementation. Final avatar art can land later without changing save shape or profile identity.
+
+---
+
+## 7. Open Questions
 
 | Question | Owner | Blocks |
 |----------|-------|--------|
@@ -88,7 +105,7 @@ This decision does not require:
 
 ---
 
-## 7. Acceptance For P2-008
+## 8. Acceptance For P2-008
 
 - Decision recorded: T1 local stylized non-likeness jersey avatars.
 - TheSportsDB remains internal-demo/reference only.

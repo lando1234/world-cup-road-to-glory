@@ -19,6 +19,7 @@ const routes = [
   { path: "/js/game.js", includes: "showSliceCompleteScreen" },
   { path: "/js/ui.js", includes: "openAlbumModal" },
   { path: "/data/football/player_profiles.json", includes: "\"profiles\"" },
+  { path: "/data/football/portrait_manifest.json", includes: "stylized_non_likeness_jersey_avatars" },
   { path: "/data/football/host_city_bosses.json", includes: "\"bosses\"" },
   { path: "/data/football/scout_pools.json", includes: "\"forcedOverrides\"" },
   { path: "/data/football/album_layout.json", includes: "\"pages\"" }

@@ -38,8 +38,11 @@ const phase2Spec = readText("docs/014-phase-2-polish-debt-retirement-and-footbal
 const bridgeInventory = readText("docs/016-phase-2-bridge-inventory.md");
 const phase2Ledger = readText("docs/015-phase-2-engineering-task-breakdown.md");
 const phase2Report = readText("docs/020-phase-2-assumptions-tradeoffs-assets-report.html");
+const portraitManifest = JSON.parse(readText("data/football/portrait_manifest.json"));
+const playerProfiles = JSON.parse(readText("data/football/player_profiles.json"));
 const dataSource = readText("js/data.js");
 const gameSource = readText("js/game.js");
+const profilesSource = readText("js/domain/profiles.js");
 const featuresSource = readText("js/domain/features.js");
 const cloudSaveSource = readText("js/cloud-save.js");
 
@@ -118,6 +121,25 @@ runTest("P2-005 football gameplay writes prefer album-named APIs", () => {
   assert(scoutBlock.includes("markAlbumSeen(profileId)"), "Scout Report should mark seen profiles through markAlbumSeen");
   assert(!scoutBlock.includes("markPokedexSeen"), "Scout Report football branch should not call markPokedexSeen");
   assert(!scoutBlock.includes("markPokedexCaught"), "Scout Report football branch should not call markPokedexCaught");
+});
+
+runTest("P2-009 local portrait manifest covers the runtime profile catalog", () => {
+  assert(portraitManifest.schemaVersion === 1, "portrait manifest schemaVersion should be 1");
+  assert(
+    portraitManifest.strategy === "stylized_non_likeness_jersey_avatars",
+    "portrait manifest should use the approved Phase 2 strategy"
+  );
+  assert(portraitManifest.remoteRuntimeDependency === false, "portrait manifest should not require remote runtime dependency");
+  for (const profile of playerProfiles.profiles) {
+    const entry = portraitManifest.players[String(profile.profileId)];
+    assert(entry, `portrait manifest should include profileId ${profile.profileId}`);
+    assert(["T0", "T1", "T2", "T3"].includes(entry.assetTier), `profileId ${profile.profileId} should have a valid asset tier`);
+    assert(typeof entry.portrait === "string", `profileId ${profile.profileId} portrait should be a string`);
+  }
+  assert(featuresSource.includes("useTheSportsDbPortraits: false"), "TheSportsDB portraits should be disabled by default");
+  assert(profilesSource.includes("PORTRAIT_MANIFEST_URL"), "DomainProfiles should define a portrait manifest URL");
+  assert(profilesSource.includes("initPortraitManifest"), "DomainProfiles should initialize the local portrait manifest");
+  assert(smokeHttpSource.includes("portrait_manifest.json"), "HTTP smoke should verify portrait_manifest.json");
 });
 
 const failed = results.filter(result => result.status === "FAIL");

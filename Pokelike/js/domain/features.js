@@ -13,8 +13,8 @@ const FEATURES = Object.freeze({
   cloudSave: false,
   nuzlocke: false,
   trade: false,
-  /** Use TheSportsDB URLs from data/football/thesportsdb_portraits.json */
-  useTheSportsDbPortraits: true,
+  /** Internal/demo-only shortcut. Public-critical runtime uses local portrait_manifest.json. */
+  useTheSportsDbPortraits: false,
   /** Free tier keys: "123" or "3". Replace with your premium key from thesportsdb.com profile. */
   theSportsDbApiKey: "123",
   theSportsDbBaseUrl: "https://www.thesportsdb.com/api/v1/json",
