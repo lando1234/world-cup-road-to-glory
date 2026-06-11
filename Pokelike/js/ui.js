@@ -3867,7 +3867,7 @@ async function openAlbumModal(initialPageId = 'marquee') {
   await window.DomainProfiles?.initCatalog?.();
   await window.DomainAlbum?.initAlbumLayout?.();
   const layout = window.DomainAlbum?.getAlbumLayoutConfig?.() || {};
-  const pages = window.DomainAlbum?.getAlbumLayout?.() || [];
+  const pages = window.DomainAlbum?.getVisiblePages?.() || window.DomainAlbum?.getAlbumLayout?.() || [];
   const initialPage = pages.some(page => page.pageId === initialPageId) ? initialPageId : pages[0]?.pageId;
   const signedCount = window.DomainAlbum?.countSigned?.() || 0;
   const totalCount = window.DomainAlbum?.getSliceAlbumProfileIds?.().length || 0;
@@ -4122,6 +4122,18 @@ function showSettlementLiteModal(summary = {}, onContinue = () => {}) {
     ? summary.newSigns.map(sign => `<li>${albumEscape(sign.name || `Profile ${sign.profileId}`)}</li>`).join('')
     : '<li>No new signings this run</li>';
 
+  const creditsRows = Array.isArray(summary.creditsBreakdown) && summary.creditsBreakdown.length
+    ? summary.creditsBreakdown.map(row => `<li>${albumEscape(row.label)} <strong>+${Number(row.amount || 0)}</strong></li>`).join('')
+    : '';
+
+  const fragmentRows = Array.isArray(summary.fragments) && summary.fragments.length
+    ? summary.fragments.map(row => `<li>Legend #${row.legendId} <strong>+${Number(row.amount || 0)}</strong> (${albumEscape(row.source || 'run')})</li>`).join('')
+    : '';
+
+  const legendUnlocks = Array.isArray(summary.legendsUnlocked) && summary.legendsUnlocked.length
+    ? summary.legendsUnlocked.map(id => `<li>Legend profile ${id} unlocked</li>`).join('')
+    : '';
+
   const modal = document.createElement('div');
   modal.id = 'settlement-lite-modal';
   modal.className = 'settlement-lite-overlay';
@@ -4131,15 +4143,21 @@ function showSettlementLiteModal(summary = {}, onContinue = () => {}) {
       <h2>Road to Glory Summary</h2>
       <div class="settlement-lite-grid">
         <div><span>City Stamps</span><strong>${Number(summary.stampsEarned || 0)}</strong></div>
+        <div><span>Knockout Gates</span><strong>${Number(summary.gatesCleared || 0)}</strong></div>
         <div><span>Album Patch</span><strong>${Number(summary.albumSignedCount || 0)} / ${Number(summary.albumTotal || 0)}</strong></div>
         <div><span>Host City Album</span><strong>${Number(summary.hostCitySignedCount || 0)} / ${Number(summary.hostCityTotal || 0)}</strong></div>
         <div><span>Matches</span><strong>${Number(summary.battles || 0)}</strong></div>
         <div><span>Scout Reports</span><strong>${Number(summary.scouts || 0)}</strong></div>
+        <div><span>Campaign Wins</span><strong>${Number(summary.campaignWins || 0)}</strong></div>
+        <div><span>Total Runs</span><strong>${Number(summary.runCount || 0)}</strong></div>
       </div>
       <div class="settlement-lite-signings">
         <div>New Signings Applied</div>
         <ul>${newSigns}</ul>
       </div>
+      ${creditsRows ? `<div class="settlement-lite-signings"><div>Football Credits</div><ul>${creditsRows}</ul></div>` : ''}
+      ${fragmentRows ? `<div class="settlement-lite-signings"><div>Legend Fragments</div><ul>${fragmentRows}</ul></div>` : ''}
+      ${legendUnlocks ? `<div class="settlement-lite-signings"><div>Legends Unlocked</div><ul>${legendUnlocks}</ul></div>` : ''}
       <div class="settlement-lite-rewards">${albumEscape(summary.metaRewardsLabel || 'Meta rewards coming soon')}</div>
       <div class="settlement-lite-actions">
         <button id="btn-settlement-lite-continue" class="btn-primary">Return to Title</button>
@@ -4150,6 +4168,51 @@ function showSettlementLiteModal(summary = {}, onContinue = () => {}) {
     modal.remove();
     onContinue();
   };
+}
+
+function openTrophyRoomModal() {
+  const existing = document.getElementById('trophy-room-modal');
+  if (existing) { existing.remove(); return; }
+
+  const account = window.DomainMeta?.readAccountState?.() || {};
+  const flags = account.accountFlags || {};
+  const albumMeta = account.gameAlbumMeta || {};
+  const sliceProfileIds = window.DomainAlbum?.getSliceAlbumProfileIds?.() || [];
+  const signedCount = window.DomainAlbum?.countSigned?.(sliceProfileIds) || 0;
+  const totalCount = sliceProfileIds.length || 1;
+  const albumPct = Math.round((signedCount / Math.max(1, totalCount)) * 100);
+  const history = Array.isArray(account.runHistory) ? account.runHistory.slice(0, 5) : [];
+  const theme = window.GAME_THEME || {};
+
+  const historyHtml = history.length
+    ? history.map(entry => `<li>${albumEscape(entry.endedAt?.slice(0, 10) || 'Run')} — ${entry.stamps || 0} stamps, ${entry.gatesCleared || 0} gates${entry.wonWorldCup ? ', World Cup lifted' : ''}</li>`).join('')
+    : '<li>No settled runs yet</li>';
+
+  const modal = document.createElement('div');
+  modal.id = 'trophy-room-modal';
+  modal.innerHTML = `
+    <div class="dex-modal-box album-modal-box">
+      <div class="dex-modal-header album-modal-header">
+        <h3 style="margin:0;font-size:12px;">${albumEscape(theme.trophyRoomTitle || 'Trophy Room')}</h3>
+        <button class="ach-modal-close" onclick="document.getElementById('trophy-room-modal').remove()">x</button>
+      </div>
+      <div class="settlement-lite-grid" style="margin:12px 0;">
+        <div><span>World Cup Wins</span><strong>${Number(account.campaignWins || 0)}</strong></div>
+        <div><span>Total Runs</span><strong>${Number(account.runCount || 0)}</strong></div>
+        <div><span>Football Credits</span><strong>${Number(account.footballCredits || 0)}</strong></div>
+        <div><span>Album Signed</span><strong>${signedCount} / ${totalCount} (${albumPct}%)</strong></div>
+        <div><span>Reached Knockout</span><strong>${flags.reachedKnockout ? 'Yes' : 'No'}</strong></div>
+        <div><span>Reached Final</span><strong>${flags.reachedFinal ? 'Yes' : 'No'}</strong></div>
+        <div><span>Knockout Album</span><strong>${albumMeta.knockoutPageUnlocked ? 'Unlocked' : 'Locked'}</strong></div>
+        <div><span>Legends Vault</span><strong>${albumMeta.legendsPageUnlocked ? 'Unlocked' : 'Locked'}</strong></div>
+      </div>
+      <div class="settlement-lite-signings">
+        <div>Recent Runs</div>
+        <ul>${historyHtml}</ul>
+      </div>
+    </div>`;
+  modal.addEventListener('click', e => { if (e.target === modal) modal.remove(); });
+  document.body.appendChild(modal);
 }
 
 function openDexDetailModal(speciesId, name, spriteUrl, shinySpriteUrl, types) {
