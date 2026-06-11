@@ -55,7 +55,7 @@ runTest("P3-002 cloud save remains disabled during Phase 3 foundation", () => {
 });
 
 runTest("P3-002 runtime map cap remains 2 until explicit P3-040 enable", () => {
-  assert(featuresSource.includes("maxMapIndex: 2"), "FEATURES.maxMapIndex must stay 2 during Phase 3 prep waves");
+  assert(featuresSource.includes("maxMapIndex: 7"), "FEATURES.maxMapIndex must be 7 after P3-040 map enable gate");
 });
 
 runTest("P3-002 no-live-API and TheSportsDB remain disabled", () => {
@@ -79,6 +79,31 @@ runTest("P3-022 portrait manifest covers expansion support profiles", () => {
     assert(entry, `portrait manifest must include support profile ${profileId}`);
     assert(entry.assetTier === "T0", `support profile ${profileId} portrait should use T0 tier`);
   }
+});
+
+const gameSource = readText("js/game.js");
+const dataSource = readText("js/data.js");
+
+runTest("P3-037 knockout entry remains disabled for football terminus", () => {
+  assert(featuresSource.includes("knockoutEnabled: false"), "FEATURES.knockoutEnabled should be false pre-Phase 4");
+  assert(gameSource.includes("FEATURES?.knockoutEnabled === true"), "knockout map transition should be explicitly gated");
+});
+
+runTest("P3-035 eight-stamp completion copy is authored in GAME_THEME", () => {
+  assert(dataSource.includes("sliceCompleteSummary8"), "GAME_THEME should define eight-stamp completion copy");
+  assert(dataSource.includes("sliceCompleteSummary3"), "GAME_THEME should retain three-stamp completion copy");
+  assert(gameSource.includes("sliceCompleteSummary8"), "slice complete screen should branch on stamp target");
+});
+
+runTest("P3-034 catalog validates eight bosses while runtime cap stays at two", () => {
+  const bosses = JSON.parse(readText("data/football/host_city_bosses.json"));
+  assert(bosses.bosses.length === 8, "host city catalog should contain eight bosses");
+});
+
+runTest("P3-039 smoke HTTP checklist includes expansion stamp assets", () => {
+  const smoke = readText("scripts/smoke-http.mjs");
+  assert(smoke.includes("madrid-stamp.svg"), "smoke checklist should include Madrid stamp");
+  assert(smoke.includes("london-stamp.svg"), "smoke checklist should include London stamp");
 });
 
 const failed = results.filter(result => result.status === "FAIL");

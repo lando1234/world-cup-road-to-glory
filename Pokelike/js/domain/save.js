@@ -197,7 +197,9 @@ function settleRunLite(runSnapshot = {}, accountState = {}) {
   }
 
   const sliceProfileIds = window.DomainAlbum?.getSliceAlbumProfileIds?.() || [];
+  const hostCityProfileIds = window.DomainAlbum?.getSlotProfileIds?.("host_city") || [];
   const signedCount = window.DomainAlbum?.countSigned?.(sliceProfileIds) || Object.values(albumPatch).filter(state => state === 1).length;
+  const hostCitySignedCount = window.DomainAlbum?.countSigned?.(hostCityProfileIds) || 0;
   const newSignIds = [...new Set(signedProfileIds.map(Number).filter(Number.isInteger))];
 
   return Object.freeze({
@@ -215,6 +217,8 @@ function settleRunLite(runSnapshot = {}, accountState = {}) {
       }))),
       albumSignedCount: signedCount,
       albumTotal: sliceProfileIds.length || Object.keys(albumPatch).length,
+      hostCitySignedCount,
+      hostCityTotal: hostCityProfileIds.length,
       battles: Number(runSnapshot.ledger?.battleCount || 0),
       scouts: getScoutCount(runSnapshot.ledger),
       metaRewardsLabel: "Meta rewards coming soon"

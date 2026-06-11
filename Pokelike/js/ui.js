@@ -4114,6 +4114,7 @@ function showSettlementLiteModal(summary = {}, onContinue = () => {}) {
       <div class="settlement-lite-grid">
         <div><span>City Stamps</span><strong>${Number(summary.stampsEarned || 0)}</strong></div>
         <div><span>Album Patch</span><strong>${Number(summary.albumSignedCount || 0)} / ${Number(summary.albumTotal || 0)}</strong></div>
+        <div><span>Host City Album</span><strong>${Number(summary.hostCitySignedCount || 0)} / ${Number(summary.hostCityTotal || 0)}</strong></div>
         <div><span>Matches</span><strong>${Number(summary.battles || 0)}</strong></div>
         <div><span>Scout Reports</span><strong>${Number(summary.scouts || 0)}</strong></div>
       </div>

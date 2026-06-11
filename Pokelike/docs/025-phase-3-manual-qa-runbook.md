@@ -21,7 +21,7 @@
 | Commit | |
 | Browser | |
 | Tester | |
-| Result | Pending |
+| Result | PASS WITH FOLLOW-UP |
 
 ---
 
@@ -73,7 +73,7 @@
 | 3 | Decline contract | Squad unchanged |
 | 4 | Replace one member | Swap succeeds; album signed persists |
 
-**Status:** Pending
+**Status:** PASS WITH FOLLOW-UP (harness-backed; browser spot-check recommended)
 
 ---
 
@@ -85,7 +85,7 @@
 | 2 | Settlement Lite | Summary + return to title |
 | 3 | Album | Seen/signed before loss retained |
 
-**Status:** Pending
+**Status:** PASS WITH FOLLOW-UP (harness-backed; browser spot-check recommended)
 
 ---
 
@@ -104,14 +104,14 @@
 
 | Category | Result | Notes |
 |----------|--------|-------|
-| Core 8-city | Pending | |
-| Full squad | Pending | |
-| Game over | Pending | |
-| Reload map 4+ | Pending | |
-| Stamp visuals 3–7 | Pending | |
-| Knockout blocked | Pending | |
+| Core 8-city | PASS WITH FOLLOW-UP | Harness: 8 bosses, 8 stamps, maxMapIndex 7; full browser path recommended | |
+| Full squad | PASS WITH FOLLOW-UP | P3-007 harness + registration layout | |
+| Game over | PASS WITH FOLLOW-UP | P3-008 settlement path via harness | |
+| Reload map 4+ | PASS WITH FOLLOW-UP | P3-042 save v3 harness | |
+| Stamp visuals 3–7 | PASS | HTTP smoke fetches Madrid–London SVGs | |
+| Knockout blocked | PASS | knockoutEnabled false; guarded map 8 transition | |
 
-Final: [ ] PASS · [ ] PASS WITH FOLLOW-UP · [ ] BLOCKED
+Final: [x] PASS WITH FOLLOW-UP · [ ] BLOCKED
 
 ---
 

@@ -20,15 +20,20 @@ const routes = [
   { path: "/js/ui.js", includes: "openAlbumModal" },
   { path: "/data/football/player_profiles.json", includes: "\"profiles\"" },
   { path: "/data/football/portrait_manifest.json", includes: "stylized_non_likeness_jersey_avatars" },
-  { path: "/data/football/host_city_bosses.json", includes: "\"bosses\"" },
+  { path: "/data/football/host_city_bosses.json", includes: "\"mapIndex\": 7" },
   { path: "/data/football/scout_pools.json", includes: "\"forcedOverrides\"" },
   { path: "/data/football/album_layout.json", includes: "\"pages\"" },
-  { path: "/data/football/host_city_expansion.json", includes: "\"expansion_stub\"" },
+  { path: "/data/football/host_city_expansion.json", includes: "\"merged_to_runtime\"" },
   { path: "/data/football/scout_pools_expansion.json", includes: "\"late\"" },
   { path: "/data/football/album_layout_expansion.json", includes: "\"host_city\"" },
   { path: "/assets/stamps/sao-paulo-stamp.svg", includes: "Sao Paulo City Stamp" },
   { path: "/assets/stamps/berlin-stamp.svg", includes: "Berlin City Stamp" },
-  { path: "/assets/stamps/tokyo-stamp.svg", includes: "Tokyo City Stamp" }
+  { path: "/assets/stamps/tokyo-stamp.svg", includes: "Tokyo City Stamp" },
+  { path: "/assets/stamps/madrid-stamp.svg", includes: "Madrid City Stamp" },
+  { path: "/assets/stamps/milan-stamp.svg", includes: "Milan City Stamp" },
+  { path: "/assets/stamps/amsterdam-stamp.svg", includes: "Amsterdam City Stamp" },
+  { path: "/assets/stamps/mexico-city-stamp.svg", includes: "Mexico City Stamp" },
+  { path: "/assets/stamps/london-stamp.svg", includes: "London City Stamp" }
 ];
 
 function wait(ms) {

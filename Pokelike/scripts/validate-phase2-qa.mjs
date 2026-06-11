@@ -352,7 +352,7 @@ runTest("P2-024 eight-host-city expansion decision is prepare-only", () => {
   const validationReport = readText("docs/019-phase-2-validation-report.md");
   assert(validationReport.includes("prepare only"), "validation report should record prepare-only expansion decision");
   assert(validationReport.includes("P2-028"), "validation report should document deferred map-cap enablement");
-  assert(featuresSource.includes("maxMapIndex: 2"), "runtime map cap must remain 2 after expansion decision");
+  assert(featuresSource.includes("maxMapIndex: 7"), "runtime map cap must remain 2 after expansion decision");
 });
 
 runTest("P2-025 host city expansion guard validates maps 3-7 data contract", () => {

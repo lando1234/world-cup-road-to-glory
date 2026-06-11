@@ -122,7 +122,7 @@ runTest("P1-051 map 0 forced scout script is locked", () => {
 runTest("P1-052 sign-off prerequisites are present", () => {
   assert(albumLayout.pages.length >= 2, "album layout should include Phase 1 pages");
   assert(uiSource.includes("showSettlementLiteModal"), "settlement modal should be present");
-  assert(featuresSource.includes("maxMapIndex: 2"), "slice map cap should be configured");
+  assert(featuresSource.includes("maxMapIndex: 7"), "slice map cap should be configured");
   assert(mapSource.includes("applyFootballSliceNodeGates"), "football map gates should be present");
 });
 

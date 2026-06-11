@@ -171,7 +171,12 @@ function flagEmojiFromCountryCode(countryCode) {
 const FOOTBALL_STAMP_ASSETS = Object.freeze({
   stamp_sao_paulo: 'assets/stamps/sao-paulo-stamp.svg',
   stamp_berlin: 'assets/stamps/berlin-stamp.svg',
-  stamp_tokyo: 'assets/stamps/tokyo-stamp.svg'
+  stamp_tokyo: 'assets/stamps/tokyo-stamp.svg',
+  stamp_madrid: 'assets/stamps/madrid-stamp.svg',
+  stamp_milan: 'assets/stamps/milan-stamp.svg',
+  stamp_amsterdam: 'assets/stamps/amsterdam-stamp.svg',
+  stamp_mexico_city: 'assets/stamps/mexico-city-stamp.svg',
+  stamp_london: 'assets/stamps/london-stamp.svg'
 });
 
 function getFootballStampAsset(stamp) {
@@ -2930,10 +2935,10 @@ function showBadgeScreen(leader) {
       showSliceCompleteScreen();
       return;
     }
-    if (state.currentMap >= 7) {
+    if (state.currentMap >= 7 && window.FEATURES?.knockoutEnabled === true) {
       state.eliteIndex = 0;
       startMap(8);
-    } else {
+    } else if (state.currentMap < getFootballMaxMapIndex()) {
       startMap(state.currentMap + 1);
     }
   };
@@ -2978,15 +2983,23 @@ function showSliceCompleteScreen() {
   const signedCount = window.DomainAlbum?.countSigned?.(sliceProfileIds) || 0;
   const totalCount = sliceProfileIds.length || state.team.length || 1;
   const albumPct = Math.round((signedCount / Math.max(1, totalCount)) * 100);
+  const stampTarget = getFootballSliceStampTarget();
+  const hostCityIds = window.DomainAlbum?.getSlotProfileIds?.('host_city') || [];
+  const hostCitySigned = window.DomainAlbum?.countSigned?.(hostCityIds) || 0;
+  const theme = window.GAME_THEME || {};
 
   if (titleEl) titleEl.textContent = window.GAME_THEME?.sliceCompleteTitle || 'Trophy Road: First Leg Complete';
   if (summaryEl) {
-    summaryEl.textContent = `Three Host City Challenges cleared. Your squad, stamps, and album progress are locked for settlement.`;
+    const summaryTemplate = stampTarget >= 8
+      ? (theme.sliceCompleteSummary8 || 'Eight Host City Challenges cleared. Your squad, stamps, and album progress are locked for settlement.')
+      : (theme.sliceCompleteSummary3 || 'Three Host City Challenges cleared. Your squad, stamps, and album progress are locked for settlement.');
+    summaryEl.textContent = summaryTemplate;
   }
   if (statsEl) {
     statsEl.innerHTML = `
       <div><span>City Stamps</span><strong>${Math.min(state.badges, target)} / ${target}</strong></div>
       <div><span>Signed Album</span><strong>${signedCount} / ${totalCount}</strong></div>
+      <div><span>Host City Heroes</span><strong>${hostCitySigned} / ${hostCityIds.length || 8}</strong></div>
       <div><span>Completion</span><strong>${albumPct}%</strong></div>
     `;
   }

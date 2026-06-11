@@ -424,7 +424,7 @@ await runTest("feature gates default to football slice mode", () => {
   const features = context.window.FEATURES;
   assert(features.footballMode === true, "FEATURES.footballMode must be true");
   assert(features.sliceMode === true, "FEATURES.sliceMode must be true");
-  assert(features.maxMapIndex === 2, "FEATURES.maxMapIndex must be 2 for Phase 1");
+  assert(features.maxMapIndex === 7, "FEATURES.maxMapIndex must be 2 for Phase 1");
   assert(features.cloudSave === false, "FEATURES.cloudSave must be false for Phase 1");
 });
 
@@ -505,7 +505,7 @@ await runTest("full host city catalog validates eight bosses offline", () => {
 });
 
 await runTest("host city boss catalog validates Phase 1 maps", () => {
-  assert(hostCityBossCatalog.bosses.length === 3, `expected 3 host city bosses, received ${hostCityBossCatalog.bosses.length}`);
+  assert(hostCityBossCatalog.bosses.length === 8, `expected 3 host city bosses, received ${hostCityBossCatalog.bosses.length}`);
   const expected = [
     { mapIndex: 0, hostCity: "S\u00e3o Paulo", stampId: "stamp_sao_paulo", profileIds: [29, 22, 17], levels: [14, 12, 13], tiers: [0, 0, 0] },
     { mapIndex: 1, hostCity: "Berlin", stampId: "stamp_berlin", profileIds: [30, 16, 26], levels: [20, 18, 19], tiers: [1, 1, 1] },
@@ -522,7 +522,7 @@ await runTest("host city boss catalog validates Phase 1 maps", () => {
     assert(boss.roster.map(slot => slot.skillTier).join(",") === bossSpec.tiers.join(","), `mapIndex ${bossSpec.mapIndex} skill tiers mismatch`);
   }
 
-  assert(context.window.DomainBosses.getHostCity(3) === null, "maxMapIndex gate should hide mapIndex 3");
+  assert(context.window.DomainBosses.getHostCity(3) !== null, "maxMapIndex gate should expose mapIndex 3 after P3-040 enable");
 });
 
 await runTest("host city boss teams build battle-ready instances", () => {
@@ -541,7 +541,7 @@ await runTest("host city boss teams build battle-ready instances", () => {
   }
 });
 
-await runTest("album layout defines Phase 1 slice pages", () => {
+await runTest("album layout defines slice and host_city pages", () => {
   assert(albumLayoutJson.schemaVersion === 1, "album layout schemaVersion must be 1");
   assert(albumLayoutJson.volumeTitle === "Road to the Trophy \u2014 Vol. 1", "album layout volumeTitle mismatch");
   assert(Array.isArray(albumLayoutJson.pages), "album layout pages must be an array");
@@ -587,11 +587,13 @@ await runTest("album domain loads layout and exposes ordered slot ids", () => {
   const pages = context.window.DomainAlbum.getAlbumLayout();
   const marqueeIds = context.window.DomainAlbum.getSlotProfileIds("marquee");
   const favoriteIds = context.window.DomainAlbum.getSlotProfileIds("favorites");
+  const hostCityIds = context.window.DomainAlbum.getSlotProfileIds("host_city");
 
   assert(layout.pages.length === 3, "loaded album layout should expose 3 pages");
   assert(pages.map(page => page.pageId).join(",") === "marquee,favorites,host_city", "getAlbumLayout should expose ordered pages");
   assert(marqueeIds.join(",") === "1,2,3", "getSlotProfileIds should return marquee slots in order");
   assert(favoriteIds.join(",") === "4,6,7,9,10,12,14,15,17,18,28", "getSlotProfileIds should return favorite slots in order");
+  assert(hostCityIds.join(",") === "29,30,31,32,33,34,35,36", "getSlotProfileIds should return host_city slots in order");
   assert(context.window.DomainAlbum.getSlotProfileIds("missing").length === 0, "missing album page should return empty slot list");
 });
 
@@ -1054,8 +1056,8 @@ await runTest("host city expansion catalog validates maps 3-7 while runtime cap 
   });
   assert(validation.valid, `host city expansion validation failed: ${validation.errors.join(" | ")}`);
   assert(expansion.bosses.length === 5, "expansion catalog should define maps 3-7");
-  assert(context.window.FEATURES.maxMapIndex === 2, "runtime maxMapIndex must remain 2 during prepare-only expansion");
-  assert(context.window.DomainBosses.getHostCity(3) === null, "runtime must not expose map 3 boss while cap is 2");
+  assert(context.window.FEATURES.maxMapIndex === 7, "runtime maxMapIndex must be 7 after P3-040 enable");
+  assert(context.window.DomainBosses.getHostCity(3) !== null, "runtime must not expose map 3 boss while cap is 7");
 });
 
 await runTest("scout pool expansion bands validate without changing slice bands", async () => {
@@ -1090,7 +1092,7 @@ await runTest("album expansion layout prepares deferred pages without enabling r
   const sliceLayout = readJson("data/football/album_layout.json");
   assert(sliceLayout.pages.every(page => ["marquee", "favorites", "host_city"].includes(page.pageId)),
     "runtime album layout must keep slice and host_city pages visible");
-  assert(sliceLayout.deferredPages.join(",") === "host_city,knockout,legends",
+  assert(sliceLayout.deferredPages.join(",") === "knockout,legends",
     "runtime album layout should keep knockout and legends deferred");
 });
 

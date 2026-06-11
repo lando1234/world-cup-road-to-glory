@@ -39,6 +39,8 @@ const GAME_THEME = Object.freeze({
   recoveryCenterLabel: "Recovery Center",
   cityStampLabel: "Host City Stamp",
   sliceCompleteTitle: "Host City Complete",
+  sliceCompleteSummary3: "Three Host City Challenges cleared. Your squad, stamps, and album progress are locked for settlement.",
+  sliceCompleteSummary8: "Eight Host City Challenges cleared. Your squad, stamps, and album progress are locked for settlement.",
   battle: Object.freeze({
     faint: "is exhausted",
     injured: "is injured",

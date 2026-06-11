@@ -87,10 +87,57 @@
           "label": "Cut Inside Threat"
         }
       ]
+    },
+    {
+      "pageId": "host_city",
+      "title": "Host City Heroes",
+      "description": "Boss anchors and federation faces from each host city leg.",
+      "hiddenUntil": null,
+      "slots": [
+        {
+          "slot": 1,
+          "profileId": 29,
+          "label": "São Paulo Anchor"
+        },
+        {
+          "slot": 2,
+          "profileId": 30,
+          "label": "Berlin Metronome"
+        },
+        {
+          "slot": 3,
+          "profileId": 31,
+          "label": "Tokyo Spark"
+        },
+        {
+          "slot": 4,
+          "profileId": 32,
+          "label": "Madrid Maestro"
+        },
+        {
+          "slot": 5,
+          "profileId": 33,
+          "label": "Milan Poacher"
+        },
+        {
+          "slot": 6,
+          "profileId": 34,
+          "label": "Amsterdam Artist"
+        },
+        {
+          "slot": 7,
+          "profileId": 35,
+          "label": "Mexico City Finisher"
+        },
+        {
+          "slot": 8,
+          "profileId": 36,
+          "label": "London Legend"
+        }
+      ]
     }
   ],
   "deferredPages": [
-    "host_city",
     "knockout",
     "legends"
   ]
