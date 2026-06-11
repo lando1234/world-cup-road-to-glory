@@ -1926,6 +1926,16 @@ function getPokedex() {
   return dex;
 }
 
+function markAlbumSeen(id) {
+  if (!id) return undefined;
+  return window.DomainAlbum?.markAlbumSeen?.(id);
+}
+
+function markAlbumSigned(id) {
+  if (!id) return undefined;
+  return window.DomainAlbum?.markAlbumSigned?.(id);
+}
+
 function markPokedexSeen(id /* name, types, spriteUrl — derivable, ignored */) {
   if (!id) return;
   if (_isFootballAlbumProfileId(id)) {

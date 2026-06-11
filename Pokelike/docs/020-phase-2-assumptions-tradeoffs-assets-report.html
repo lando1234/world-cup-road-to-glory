@@ -614,6 +614,27 @@
           </div>
         </div>
       </article>
+      <article class="task" style="margin-top: 12px;">
+        <h3>P2-004 — Album facade names</h3>
+        <div class="task-grid">
+          <div class="field">
+            <span>Assumption</span>
+            <p>Football-facing write APIs should be available before moving call sites away from dex-named compatibility functions.</p>
+          </div>
+          <div class="field">
+            <span>Tradeoff</span>
+            <p>Both <code>markAlbum*</code> and <code>markPokedex*</code> names coexist temporarily, reducing regression risk at the cost of short-lived API duplication.</p>
+          </div>
+          <div class="field">
+            <span>Validation</span>
+            <p><code>validate-phase2-qa.mjs</code> checks album-named facades delegate to <code>DomainAlbum</code> and that legacy aliases remain available.</p>
+          </div>
+          <div class="field">
+            <span>Next Step</span>
+            <p>P2-005 should move football-specific gameplay writes to the album-named APIs while preserving legacy behavior.</p>
+          </div>
+        </div>
+      </article>
     </section>
 
     <section>
@@ -635,7 +656,7 @@
     </section>
 
     <footer>
-      Generated for Pokelike World Cup Road to Glory Phase 2. Last updated 2026-06-10 — P2-003 bridge inventory, P2-008 portrait strategy, P2-007 HTTP smoke script, P2-006 manual QA runbook, P2-002 QA harness shell, P2-001 ledger/protocol, baseline assumptions, tradeoffs, frictions, asset gaps, decision gates, and owner watchlist.
+      Generated for Pokelike World Cup Road to Glory Phase 2. Last updated 2026-06-10 — P2-004 album facade names, P2-003 bridge inventory, P2-008 portrait strategy, P2-007 HTTP smoke script, P2-006 manual QA runbook, P2-002 QA harness shell, P2-001 ledger/protocol, baseline assumptions, tradeoffs, frictions, asset gaps, decision gates, and owner watchlist.
     </footer>
   </main>
 </body>

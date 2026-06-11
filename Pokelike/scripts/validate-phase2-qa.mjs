@@ -30,6 +30,7 @@ const phase2Spec = readText("docs/014-phase-2-polish-debt-retirement-and-footbal
 const bridgeInventory = readText("docs/016-phase-2-bridge-inventory.md");
 const phase2Ledger = readText("docs/015-phase-2-engineering-task-breakdown.md");
 const phase2Report = readText("docs/020-phase-2-assumptions-tradeoffs-assets-report.html");
+const dataSource = readText("js/data.js");
 const featuresSource = readText("js/domain/features.js");
 const cloudSaveSource = readText("js/cloud-save.js");
 
@@ -84,6 +85,15 @@ runTest("P2-003 bridge inventory is ready before bridge retirement", () => {
   assert(bridgeInventory.includes("TYPE_CHART"), "bridge inventory should include style projection bridge");
   assert(bridgeInventory.includes("TheSportsDB"), "bridge inventory should include TheSportsDB bridge");
   assert(bridgeInventory.includes("Cloud save module"), "bridge inventory should include cloud save bridge");
+});
+
+runTest("P2-004 album-named facade APIs exist alongside legacy dex aliases", () => {
+  assert(dataSource.includes("function markAlbumSeen"), "data.js should expose markAlbumSeen");
+  assert(dataSource.includes("function markAlbumSigned"), "data.js should expose markAlbumSigned");
+  assert(dataSource.includes("DomainAlbum?.markAlbumSeen?.(id)"), "markAlbumSeen should delegate to DomainAlbum.markAlbumSeen");
+  assert(dataSource.includes("DomainAlbum?.markAlbumSigned?.(id)"), "markAlbumSigned should delegate to DomainAlbum.markAlbumSigned");
+  assert(dataSource.includes("function markPokedexSeen"), "legacy markPokedexSeen alias should remain");
+  assert(dataSource.includes("function markPokedexCaught"), "legacy markPokedexCaught alias should remain");
 });
 
 const failed = results.filter(result => result.status === "FAIL");
