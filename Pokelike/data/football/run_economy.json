@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "credits": {
+    "newAlbumEntry": 50,
+    "duplicateByRarity": {
+      "uncommon": 15,
+      "rare": 25,
+      "elite": 40,
+      "legend": 75
+    },
+    "perHostCityStamp": 25,
+    "perKnockoutGate": 40,
+    "reachedKnockoutBonus": 30,
+    "reachedFinalBonus": 50,
+    "wonWorldCupBonus": 150,
+    "lossParticipation": 20
+  },
+  "maxCreditsPerRun": 400,
+  "legendFragmentThreshold": 20,
+  "fragmentPerKnockoutGate": 2,
+  "fragmentPerWorldCupWin": 5
+}
