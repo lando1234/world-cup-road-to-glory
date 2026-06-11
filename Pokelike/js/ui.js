@@ -3792,6 +3792,7 @@ function renderAlbumSlot(slot) {
   if (!profile) {
     return `<div class="album-card album-card--unknown">
       <div class="album-slot-label">${label}</div>
+      <div class="album-card-status album-card-status--unknown">Unknown</div>
       <div class="album-silhouette">?</div>
       <div class="album-player-name">???</div>
     </div>`;
@@ -3814,6 +3815,7 @@ function renderAlbumSlot(slot) {
       : `<div class="album-silhouette album-silhouette--fallback">${flag}</div>`;
     return `<div class="album-card album-card--signed">
       <div class="album-slot-label">${label}</div>
+      <div class="album-card-status album-card-status--signed">Signed</div>
       ${imageHtml}
       <div class="album-player-name">${albumEscape(profile.commonName || profile.displayName)}</div>
       <div class="album-player-meta">${albumEscape(profile.position)} · ${flag}</div>
@@ -3824,6 +3826,7 @@ function renderAlbumSlot(slot) {
   if (entryState === 'seen') {
     return `<div class="album-card album-card--seen">
       <div class="album-slot-label">${label}</div>
+      <div class="album-card-status album-card-status--seen">Scouted</div>
       <div class="album-silhouette"><span>${initial}</span></div>
       <div class="album-player-name">${flag} ${initial}.</div>
       <div class="album-player-meta">${albumEscape(profile.position)} · seen</div>
@@ -3832,6 +3835,7 @@ function renderAlbumSlot(slot) {
 
   return `<div class="album-card album-card--unknown">
     <div class="album-slot-label">${label}</div>
+    <div class="album-card-status album-card-status--unknown">Unknown</div>
     <div class="album-silhouette">?</div>
     <div class="album-player-name">???</div>
     <div class="album-player-meta">Hidden slot</div>
@@ -3849,6 +3853,7 @@ async function openAlbumModal(initialPageId = 'marquee') {
   const initialPage = pages.some(page => page.pageId === initialPageId) ? initialPageId : pages[0]?.pageId;
   const signedCount = window.DomainAlbum?.countSigned?.() || 0;
   const totalCount = window.DomainAlbum?.getSliceAlbumProfileIds?.().length || 0;
+  const signedPct = totalCount ? Math.floor(signedCount / totalCount * 100) : 0;
 
   const modal = document.createElement('div');
   modal.id = 'pokedex-modal';
@@ -3862,8 +3867,11 @@ async function openAlbumModal(initialPageId = 'marquee') {
         <button class="ach-modal-close" onclick="document.getElementById('pokedex-modal').remove()">x</button>
       </div>
       <div class="album-progress-wrap">
-        <div class="album-progress-bar"><div id="album-progress-fill" style="width:${totalCount ? Math.floor(signedCount / totalCount * 100) : 0}%"></div></div>
-        <span>${albumEscape(layout.volumeTitle || 'World Cup Album')}</span>
+        <div class="album-progress-copy">
+          <span>${albumEscape(layout.volumeTitle || 'World Cup Album')}</span>
+          <strong>${signedPct}% signed</strong>
+        </div>
+        <div class="album-progress-bar"><div id="album-progress-fill" style="width:${signedPct}%"></div></div>
       </div>
       <div class="album-grid" id="album-grid-content"></div>
       <div class="album-footer-note">Vol. 1 complete in full campaign</div>

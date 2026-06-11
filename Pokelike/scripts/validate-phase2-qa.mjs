@@ -265,6 +265,21 @@ runTest("P2-015 City Stamp artwork uses owned local placeholders", () => {
   assert(smokeHttpSource.includes("sao-paulo-stamp.svg"), "HTTP smoke should cover stamp assets");
 });
 
+runTest("P2-016 Album visual model distinguishes unknown, scouted, and signed", () => {
+  const albumSlotBlock = extractBetween(gameSource + "\n" + readText("js/ui.js"), "function renderAlbumSlot", "async function openAlbumModal");
+  const albumModalBlock = extractBetween(readText("js/ui.js"), "async function openAlbumModal", "function openPokedexModal");
+
+  assert(albumSlotBlock.includes("album-card-status--unknown"), "Album unknown cards should expose explicit unknown status");
+  assert(albumSlotBlock.includes("album-card-status--seen"), "Album seen cards should expose explicit scouted status");
+  assert(albumSlotBlock.includes("album-card-status--signed"), "Album signed cards should expose explicit signed status");
+  assert(albumSlotBlock.includes("Scouted"), "Album seen state should use football-native scouted copy");
+  assert(albumModalBlock.includes("signedPct"), "Album modal should calculate signed percentage for progress display");
+  assert(albumModalBlock.includes("% signed"), "Album modal should display signed percentage copy");
+  assert(styleSource.includes(".album-card-status--signed"), "CSS should style signed album status");
+  assert(styleSource.includes(".album-progress-copy"), "CSS should style album progress copy");
+  assert(!albumSlotBlock.includes("localStorage.setItem"), "Album visual rendering should not write persistence");
+});
+
 const failed = results.filter(result => result.status === "FAIL");
 for (const result of results) {
   if (result.status === "PASS") {
