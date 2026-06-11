@@ -6,7 +6,7 @@
 **Mode:** One task, one validation pass, one commit  
 **Branch:** `main` unless explicitly changed  
 **Governance HTML:** [022-phase-3-assumptions-tradeoffs-assets-report.html](./022-phase-3-assumptions-tradeoffs-assets-report.html)  
-**Last sync:** P3-016 (`b9b6d05`)
+**Last sync:** P3-017 (`d1e99cd`)
 
 ---
 
@@ -14,9 +14,9 @@
 
 | Metric | Count |
 |--------|------:|
-| **Done** | 11 |
+| **Done** | 12 |
 | **Partial** | 0 |
-| **Not started** | 30 |
+| **Not started** | 29 |
 | **Total tickets** | 51 |
 
 **Legend:** ✅ Done · 🟡 Partial · ⬜ Not started
@@ -76,7 +76,7 @@ The default task loop is:
 | P3-014 | ✅ | B | P3-013 | `319cd42` |
 | P3-015 | ✅ | B | P3-014 | `eb212ac` |
 | P3-016 | ✅ | B | P3-015 | `b9b6d05` |
-| P3-017 | ⬜ | B | P3-016 | |
+| P3-017 | ✅ | B | P3-016 | `d1e99cd` |
 | P3-018 | ⬜ | B | P3-017 | |
 | P3-019 | ⬜ | B | P3-016 | |
 | P3-020 | ⬜ | B | P3-013 | |

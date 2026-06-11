@@ -82,9 +82,9 @@
       }
     },
     {
-      "bandId": "late",
-      "mapMin": 3,
-      "mapMax": 5,
+      "bandId": "finale",
+      "mapMin": 6,
+      "mapMax": 7,
       "profileIds": [
         4,
         6,
@@ -96,27 +96,32 @@
         14,
         15,
         16,
+        17,
         18,
         19,
         21,
         22,
         23,
         24,
+        25,
         26,
         27,
         28,
         29,
         30,
+        31,
         32,
         33,
         34,
+        35,
+        36,
         40
       ],
       "rarityMultipliers": {
-        "common": 0.8,
-        "uncommon": 1,
-        "rare": 1.2,
-        "elite": 1.4,
+        "common": 0.6,
+        "uncommon": 0.9,
+        "rare": 1.1,
+        "elite": 1.6,
         "legend": 0
       }
     }

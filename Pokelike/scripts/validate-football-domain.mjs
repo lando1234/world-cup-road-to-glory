@@ -588,15 +588,22 @@ await runTest("album domain loads layout and exposes ordered slot ids", () => {
   assert(context.window.DomainAlbum.getSlotProfileIds("missing").length === 0, "missing album page should return empty slot list");
 });
 
-await runTest("scout pools define Phase 1 stage bands", () => {
+await runTest("scout pools define slice and late stage bands", () => {
   assert(scoutPoolCatalog.config.bands.length === scoutPoolsJson.bands.length, `scout band count mismatch: loaded ${scoutPoolCatalog.config.bands.length}, json ${scoutPoolsJson.bands.length}`);
   const early = context.window.DomainScout.getBandForMap(0);
   const mid = context.window.DomainScout.getBandForMap(2);
+  const late = context.window.DomainScout.getBandForMap(3);
   assert(early.bandId === "early", "mapIndex 0 should use early scout band");
   assert(mid.bandId === "mid", "mapIndex 2 should use mid scout band");
+  assert(late.bandId === "late", "mapIndex 3 should use late scout band");
   assert(early.profileIds.join(",") === "10,12,15,17,18,28", "early scout band profileIds mismatch");
   assert(mid.profileIds.join(",") === "4,6,7,9,10,12,14,15,17,18,28", "mid scout band profileIds mismatch");
+  assert(late.mapMin === 3 && late.mapMax === 5, "late scout band should cover maps 3-5");
   assert(scoutPoolCatalog.config.rules.excludedStarterProfileIds.join(",") === "1,2,3", "scout pools should exclude marquee starters");
+
+  const map3Report = context.window.DomainScout.buildSliceReport(3, {}, { node: { layer: 1, type: "catch" } });
+  assert(map3Report.profileIds.length === 3, "map 3 scout report should return three choices");
+  assert(map3Report.profileIds.every(id => late.profileIds.includes(id)), "map 3 scout choices must come from late band");
 });
 
 await runTest("scout reports return three unique slice profiles", () => {
