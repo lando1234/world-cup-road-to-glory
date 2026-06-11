@@ -125,15 +125,17 @@ A **blocker** is any player-visible string, asset, or flow that:
 
 | Area | Tester | Date | PASS/FAIL | Notes |
 |------|--------|------|-----------|-------|
-| Title | | | | |
-| Signing | | | | |
-| Map | | | | |
-| Scout/Contract | | | | |
-| Battle | | | | |
-| Stamp | | | | |
-| Album | | | | |
-| Settlement | | | | |
-| 8-city | | | | |
+| Title | Agent/browser | 2026-06-11 | PASS | football-boot; no Pokémon controls |
+| Signing | Agent/browser | 2026-06-11 | PASS | Marquee trio + Form Level |
+| Map | Agent/browser | 2026-06-11 | PASS | HUD after signing |
+| Scout/Contract | Harness | 2026-06-11 | PASS | P1-049 + domain checks |
+| Battle | Harness | 2026-06-11 | PASS | Football NPC builder |
+| Stamp | Harness | 2026-06-11 | PASS | 8 stamps on disk |
+| Album | Harness | 2026-06-11 | PASS | World Cup Album modal wired |
+| Settlement | Harness | 2026-06-11 | PASS | P1-048 dedupe |
+| 8-city | — | 2026-06-11 | FOLLOW-UP | Full human path recommended pre-launch |
+
+**Overall:** PASS WITH FOLLOW-UP (no blockers)
 
 ---
 
