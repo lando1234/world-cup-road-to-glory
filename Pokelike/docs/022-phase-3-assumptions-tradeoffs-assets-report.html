@@ -1,0 +1,373 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SPEC 013 Phase 3 Assumptions, Tradeoffs, Frictions, and Asset Gaps</title>
+  <style>
+    :root {
+      --bg: #f4f7f5;
+      --panel: #ffffff;
+      --ink: #18202c;
+      --muted: #62707c;
+      --line: #d7ded8;
+      --accent: #176f55;
+      --accent-2: #2357a5;
+      --warn: #a86513;
+      --risk: #9f3636;
+      --soft: #edf8f3;
+      --soft-2: #eef4ff;
+      --soft-3: #fff7e8;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at top left, rgba(23, 111, 85, 0.14), transparent 34rem),
+        radial-gradient(circle at bottom right, rgba(35, 87, 165, 0.12), transparent 30rem),
+        linear-gradient(180deg, #fbfcfa, var(--bg));
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.55;
+    }
+    main { max-width: 1180px; margin: 0 auto; padding: 44px 24px 72px; }
+    header, section {
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.9);
+      box-shadow: 0 18px 50px rgba(24, 32, 44, 0.06);
+    }
+    header { padding: 32px; border-radius: 24px; }
+    section { margin-top: 24px; padding: 26px; border-radius: 20px; }
+    h1, h2, h3 { margin: 0; line-height: 1.15; }
+    h1 { font-size: clamp(2rem, 4vw, 3.2rem); }
+    h2 { margin-bottom: 16px; font-size: 1.5rem; }
+    p { margin: 0; color: var(--muted); }
+    code {
+      padding: 1px 5px;
+      border-radius: 4px;
+      background: rgba(24, 32, 44, 0.08);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 0.94em;
+    }
+    .eyebrow {
+      display: inline-flex;
+      margin-bottom: 16px;
+      color: var(--accent);
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+    .subtitle { max-width: 860px; margin-top: 16px; font-size: 1.05rem; }
+    .meta { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      min-height: 30px;
+      padding: 5px 11px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: #fff;
+      color: var(--muted);
+      font-size: 0.83rem;
+      font-weight: 700;
+    }
+    .grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+    .split { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .card, .item, .task {
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: var(--panel);
+      padding: 16px;
+    }
+    .card strong, .item .label {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--accent);
+      font-size: 0.76rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .list { display: grid; gap: 12px; margin: 0; padding: 0; list-style: none; }
+    .risk { border-color: rgba(159, 54, 54, 0.36); background: #fff4f4; }
+    .tradeoff { border-color: rgba(168, 101, 19, 0.34); background: var(--soft-3); }
+    .asset { border-color: rgba(35, 87, 165, 0.28); background: var(--soft-2); }
+    .assumption { background: var(--soft); }
+    .gogreen { border-color: rgba(23, 111, 85, 0.4); background: var(--soft); }
+    .gored { border-color: rgba(159, 54, 54, 0.4); background: #fff4f4; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      overflow: hidden;
+      background: #fff;
+    }
+    th, td {
+      padding: 11px 12px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+      font-size: 0.92rem;
+    }
+    th {
+      color: var(--accent);
+      background: var(--soft);
+      font-size: 0.76rem;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+    }
+    tr:last-child td { border-bottom: 0; }
+    footer { margin-top: 30px; padding-top: 18px; border-top: 1px solid var(--line); color: var(--muted); font-size: 0.86rem; }
+    @media (max-width: 900px) {
+      .grid, .split { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <span class="eyebrow">SPEC 013 · Phase 3 Governance</span>
+      <h1>Phase 3 Assumptions, Tradeoffs, Frictions, and Asset Gaps</h1>
+      <p class="subtitle">
+        Living governance report for the 8-host-city expansion. Update after every Phase 3 task. Authority: <code>021-phase-3-expansion-content-release-hardening-plan.md</code>.
+      </p>
+      <div class="meta">
+        <span class="pill">Created: 2026-06-10</span>
+        <span class="pill">Status: In progress</span>
+        <span class="pill">Slice: 3 cities (maps 0–2) until P3-040</span>
+        <span class="pill">Target: 8 host cities</span>
+        <span class="pill">maxMapIndex: 2</span>
+        <span class="pill">Cloud save: disabled</span>
+        <span class="pill">P3-GOV: P3-001 baseline</span>
+      </div>
+    </header>
+
+    <section>
+      <h2>Executive Read</h2>
+      <div class="grid">
+        <article class="card">
+          <strong>What Phase 3 is doing</strong>
+          <p>Expanding the playable football campaign from three to eight Host City Challenges with final catalog content, stamp assets, runtime guards, and a single explicit <code>maxMapIndex</code> enable gate — without knockout, legends, economy, or cloud save.</p>
+        </article>
+        <article class="card risk">
+          <strong>Biggest blocker today</strong>
+          <p>Missing profiles 32–36 and boss roster support IDs. Expansion JSON exists as stubs only. Maps 3–7 must not enable until content + assets + QA pass.</p>
+        </article>
+        <article class="card">
+          <strong>Release posture</strong>
+          <p>Phase 2 release-safety invariants carry forward: local portraits (T0), no live APIs, battle math frozen, save v3 only, cloud save off.</p>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <h2>Go / No-Go Status</h2>
+      <div class="split">
+        <article class="card gogreen">
+          <strong>3-city slice</strong>
+          <p><strong>GO</strong> — Phase 2 sign-off stands. Playable maps 0–2 with settlement lite.</p>
+        </article>
+        <article class="card gored">
+          <strong>8-city runtime</strong>
+          <p><strong>NO-GO</strong> until P3-040 gate: content, stamps, guards, manual QA, and validation report complete.</p>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <h2>Core Assumptions</h2>
+      <ul class="list">
+        <li class="item assumption">
+          <span class="label">A1 · maxMapIndex gate is singular</span>
+          <p>Only task <strong>P3-040</strong> may change <code>FEATURES.maxMapIndex</code> from <code>2</code> to <code>7</code>.</p>
+        </li>
+        <li class="item assumption">
+          <span class="label">A2 · Knockout deferred</span>
+          <p>Eighth stamp routes to completion/settlement, not <code>startMap(8)</code> knockout flow.</p>
+        </li>
+        <li class="item assumption">
+          <span class="label">A3 · T0 portraits acceptable</span>
+          <p>Jersey fallbacks per <code>018-portrait-asset-strategy.md</code> until T1 art pipeline approved.</p>
+        </li>
+        <li class="item assumption">
+          <span class="label">A4 · One task, one commit</span>
+          <p>Never mix content merge, UI, save, QA recording, and runtime enable in one commit.</p>
+        </li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Tradeoffs</h2>
+      <ul class="list">
+        <li class="item tradeoff">
+          <span class="label">Offline expansion JSON before runtime merge</span>
+          <p>Phase 2 prepared stubs so Phase 3 can validate schemas early. Cost: duplicate files until P3-019 merge.</p>
+        </li>
+        <li class="item tradeoff">
+          <span class="label">Slice-complete screen reused for 8 stamps</span>
+          <p>Keeps bridge IDs stable. Copy updates in P3-035 instead of new screen type.</p>
+        </li>
+        <li class="item tradeoff">
+          <span class="label">Incremental profile authoring</span>
+          <p>Profiles 32–36 land as separate commits for atomic validation rather than one 50-player dump.</p>
+        </li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Known Frictions</h2>
+      <table>
+        <thead>
+          <tr><th>Surface</th><th>Friction</th><th>Phase 3 handling</th><th>Risk</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Document title</td>
+            <td>Still <code>Pokemon Roguelike</code></td>
+            <td>P3-006</td>
+            <td>Low</td>
+          </tr>
+          <tr>
+            <td>Full-squad QA</td>
+            <td>Not manually exercised in P2-022</td>
+            <td>P3-007</td>
+            <td>Medium</td>
+          </tr>
+          <tr>
+            <td>Game-over QA</td>
+            <td>Harness only in P2</td>
+            <td>P3-008</td>
+            <td>Medium</td>
+          </tr>
+          <tr>
+            <td>Stamp ceremony maps 3–7</td>
+            <td>Flag emoji fallback only</td>
+            <td>P3-029–P3-033</td>
+            <td>Medium</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>Missing Assets And Ownership</h2>
+      <table>
+        <thead>
+          <tr><th>Asset</th><th>Status</th><th>Task</th><th>Owner</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>madrid-stamp.svg</td><td>Missing</td><td>P3-029</td><td>Engineering + art</td></tr>
+          <tr><td>milan-stamp.svg</td><td>Missing</td><td>P3-030</td><td>Engineering + art</td></tr>
+          <tr><td>amsterdam-stamp.svg</td><td>Missing</td><td>P3-031</td><td>Engineering + art</td></tr>
+          <tr><td>mexico-city-stamp.svg</td><td>Missing</td><td>P3-032</td><td>Engineering + art</td></tr>
+          <tr><td>london-stamp.svg</td><td>Missing</td><td>P3-033</td><td>Engineering + art</td></tr>
+          <tr><td>Portrait manifest 32–36</td><td>Missing</td><td>P3-021</td><td>Engineering</td></tr>
+          <tr><td>T1 stylized avatars</td><td>Deferred</td><td>Phase 4+</td><td>Product/legal</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>Content Gaps</h2>
+      <table>
+        <thead>
+          <tr><th>Gap</th><th>IDs / files</th><th>Blocking enable?</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Host city heroes</td><td>Profiles 32–36</td><td>Yes</td></tr>
+          <tr><td>Boss roster support</td><td>13, 19, 21, 23–25, 27, 40</td><td>Yes</td></tr>
+          <tr><td>Final boss rosters maps 3–7</td><td><code>host_city_bosses.json</code></td><td>Yes</td></tr>
+          <tr><td>Late/finale scout bands</td><td><code>scout_pools.json</code></td><td>Yes</td></tr>
+          <tr><td>Host city album page</td><td><code>album_layout.json</code></td><td>Should</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>Bridges Still Open</h2>
+      <p>See <code>016-phase-2-bridge-inventory.md</code>. Phase 3 does not mass-retire <code>catch-screen</code>, <code>badge-screen</code>, <code>speciesId</code>, or <code>markPokedex*</code> aliases.</p>
+    </section>
+
+    <section>
+      <h2>Release Risks</h2>
+      <ul class="list">
+        <li class="item risk">
+          <span class="label">Early maxMapIndex flip</span>
+          <p>Enabling maps 3–7 before catalog completeness causes boss load failures mid-campaign.</p>
+        </li>
+        <li class="item risk">
+          <span class="label">Knockout leak after map 7</span>
+          <p><code>game.js</code> can call <code>startMap(8)</code> unless P3-037 guard lands before P3-040.</p>
+        </li>
+        <li class="item risk">
+          <span class="label">Cloud save temptation</span>
+          <p>Account patches must remain local; no <code>game_album</code> cloud key.</p>
+        </li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Expansion Readiness</h2>
+      <table>
+        <thead>
+          <tr><th>Gate</th><th>Status</th><th>Exit task</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Content</td><td>Not ready</td><td>P3-009–P3-020</td></tr>
+          <tr><td>Assets</td><td>Not ready</td><td>P3-021–P3-033</td></tr>
+          <tr><td>Guards</td><td>Not ready</td><td>P3-034–P3-039</td></tr>
+          <tr><td>Manual QA</td><td>Not started</td><td>P3-041</td></tr>
+          <tr><td>Runtime enable</td><td>Blocked</td><td>P3-040</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>Manual QA Notes</h2>
+      <p>Runbook: <code>025-phase-3-manual-qa-runbook.md</code> (created P3-003). Phase 2 follow-ups P3-007 and P3-008 must PASS before P3-040.</p>
+    </section>
+
+    <section>
+      <h2>Task-Level Notes</h2>
+      <article class="task">
+        <h3>P3-001 — Phase 3 ledger and governance baseline</h3>
+        <p>Created <code>024-phase-3-engineering-task-breakdown.md</code> and this governance HTML. Phase 3 execution loop active. <code>maxMapIndex</code> unchanged at 2.</p>
+      </article>
+    </section>
+
+    <section>
+      <h2>Deferred Backlog (Phase 4+)</h2>
+      <ul class="list">
+        <li class="item asset"><span class="label">Knockout stage</span><p>Gates 0–4, historical XIs, prep screens.</p></li>
+        <li class="item asset"><span class="label">Legends + economy</span><p>Fragments, Football Credits, legends album page.</p></li>
+        <li class="item asset"><span class="label">Cloud save</span><p>Formal decision + merge policy required.</p></li>
+        <li class="item asset"><span class="label">Full 50-player catalog</span><p>Beyond Phase 3 minimum roster support.</p></li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>What The Owner Should Know</h2>
+      <div class="grid">
+        <article class="card">
+          <strong>Playable today</strong>
+          <p>3-city slice only. Third stamp → Slice Complete → Settlement. Safe for demo within maps 0–2.</p>
+        </article>
+        <article class="card">
+          <strong>Not playable yet</strong>
+          <p>Maps 3–7 (Madrid through London). Enabling without content is a hard NO-GO.</p>
+        </article>
+        <article class="card">
+          <strong>Decision needed</strong>
+          <p>Document title string (P3-006). Stamp art style approval before P3-029 if brand review required.</p>
+        </article>
+      </div>
+    </section>
+
+    <footer>
+      Update this file after every Phase 3 task. Ledger: <code>024-phase-3-engineering-task-breakdown.md</code> · Plan: <code>021-phase-3-expansion-content-release-hardening-plan.md</code>
+    </footer>
+  </main>
+</body>
+</html>

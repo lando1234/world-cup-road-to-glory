@@ -22,6 +22,9 @@ const phase2ManualQaRunbook = readText("docs/017-phase-2-manual-qa-runbook.md");
 const portraitAssetStrategy = readText("docs/018-portrait-asset-strategy.md");
 const phase2AssumptionsHtml = readText("docs/020-phase-2-assumptions-tradeoffs-assets-report.html");
 const phase2ValidationReport = readText("docs/019-phase-2-validation-report.md");
+const phase3Plan = readText("docs/021-phase-3-expansion-content-release-hardening-plan.md");
+const phase3Ledger = readText("docs/024-phase-3-engineering-task-breakdown.md");
+const phase3AssumptionsHtml = readText("docs/022-phase-3-assumptions-tradeoffs-assets-report.html");
 
 const frictionEntries = (visualFrictionsHtml.match(/class="entry"/g) || []).length;
 
@@ -70,5 +73,23 @@ assert(phase2ValidationReport.includes("Phase 2 Validation Report"), "Phase 2 va
 assert(phase2ValidationReport.includes("Go / No-Go"), "Phase 2 validation report must include go/no-go verdict");
 assert(phase2ValidationReport.includes("prepare only"), "Phase 2 validation report must record expansion decision");
 assert(phase2AssumptionsHtml.includes("Phase 2 Sign-Off"), "Phase 2 assumptions report must include sign-off section");
+assert(phase3Plan.includes("SPEC 013"), "Phase 3 plan must include the SPEC 013 heading");
+assert(phase3Plan.includes("P3-040"), "Phase 3 plan must include the maxMapIndex enable gate task");
+assert(phase3Ledger.includes("SPEC 013A"), "Phase 3 task breakdown must include the SPEC 013A heading");
+assert(phase3Ledger.includes("Progress Summary"), "Phase 3 task breakdown must include a progress summary");
+assert(phase3Ledger.includes("Task Registry"), "Phase 3 task breakdown must include the task registry");
+assert(phase3Ledger.includes("P3-001"), "Phase 3 task breakdown must include P3-001");
+assert(phase3Ledger.includes("P3-040"), "Phase 3 task breakdown must include P3-040");
+assert(
+  phase3Ledger.includes("022-phase-3-assumptions-tradeoffs-assets-report.html"),
+  "Phase 3 task breakdown must reference the Phase 3 governance HTML"
+);
+assert(
+  phase3AssumptionsHtml.includes("Phase 3 Assumptions, Tradeoffs, Frictions, and Asset Gaps"),
+  "Phase 3 assumptions report must include the expected h1"
+);
+assert(phase3AssumptionsHtml.includes("Go / No-Go Status"), "Phase 3 assumptions report must document go/no-go");
+assert(phase3AssumptionsHtml.includes("Expansion Readiness"), "Phase 3 assumptions report must document expansion readiness");
+assert(phase3AssumptionsHtml.includes("P3-GOV"), "Phase 3 assumptions report must include the governance ledger note");
 
 console.log(`PASS docs validation: ${frictionEntries} visual friction entries`);
