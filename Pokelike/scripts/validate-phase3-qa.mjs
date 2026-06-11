@@ -62,6 +62,25 @@ runTest("P3-002 no-live-API and TheSportsDB remain disabled", () => {
   assert(featuresSource.includes("useTheSportsDbPortraits: false"), "TheSportsDB portraits must stay disabled");
 });
 
+const portraitManifest = JSON.parse(readText("data/football/portrait_manifest.json"));
+
+runTest("P3-021 portrait manifest covers host city heroes 32-36", () => {
+  for (const profileId of [32, 33, 34, 35, 36]) {
+    const entry = portraitManifest.players[String(profileId)];
+    assert(entry, `portrait manifest must include profile ${profileId}`);
+    assert(entry.assetTier === "T0", `profile ${profileId} portrait should use T0 tier`);
+    assert(entry.portrait === "", `profile ${profileId} portrait URL should stay empty for T0 fallback`);
+  }
+});
+
+runTest("P3-022 portrait manifest covers expansion support profiles", () => {
+  for (const profileId of [13, 19, 21, 23, 24, 25, 27, 40]) {
+    const entry = portraitManifest.players[String(profileId)];
+    assert(entry, `portrait manifest must include support profile ${profileId}`);
+    assert(entry.assetTier === "T0", `support profile ${profileId} portrait should use T0 tier`);
+  }
+});
+
 const failed = results.filter(result => result.status === "FAIL");
 for (const result of results) {
   if (result.status === "PASS") {

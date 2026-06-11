@@ -14,9 +14,9 @@
 
 | Metric | Count |
 |--------|------:|
-| **Done** | 14 |
+| **Done** | 17 |
 | **Partial** | 0 |
-| **Not started** | 27 |
+| **Not started** | 24 |
 | **Total tickets** | 51 |
 
 **Legend:** ✅ Done · 🟡 Partial · ⬜ Not started
@@ -80,8 +80,8 @@ The default task loop is:
 | P3-018 | ✅ | B | P3-017 | cd7b99f |
 | P3-019 | ✅ | B | P3-016 | this commit |
 | P3-020 | ✅ | B | P3-013 | this commit |
-| P3-021 | ⬜ | C | P3-013 | |
-| P3-022 | ⬜ | C | P3-016, P3-021 | |
+| P3-021 | ✅ | C | P3-013 | |
+| P3-022 | ✅ | C | P3-016, P3-021 | |
 | P3-029 | ⬜ | C | P3-014 | |
 | P3-030 | ⬜ | C | P3-029 | |
 | P3-031 | ⬜ | C | P3-030 | |
