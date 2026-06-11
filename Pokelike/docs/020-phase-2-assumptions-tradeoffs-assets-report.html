@@ -250,10 +250,13 @@
       </p>
       <div class="meta">
         <span class="pill">Created: 2026-06-10</span>
-        <span class="pill">Scope: Phase 2</span>
+        <span class="pill">Signed off: 2026-06-10</span>
+        <span class="pill">Scope: Phase 2 complete</span>
         <span class="pill">Runtime: vanilla JS</span>
+        <span class="pill">Slice: 3 host cities (maps 0–2)</span>
         <span class="pill">Cloud save: disabled</span>
         <span class="pill">Live APIs: blocked for runtime-critical paths</span>
+        <span class="pill">Expansion: prepare only</span>
       </div>
     </header>
 
@@ -930,26 +933,183 @@
         </div>
       </article>
       <article class="task" style="margin-top: 12px;">
-        <h3>P2-022 — Manual QA pass 1 blocked</h3>
+        <h3>P2-022 — Manual QA pass (browser)</h3>
         <div class="task-grid">
           <div class="field">
-            <span>Assumption</span>
-            <p>Manual QA requires a local server/browser pass; automated validation alone is not enough to approve expansion.</p>
+            <span>Result</span>
+            <p><strong>PASS WITH FOLLOW-UP.</strong> Browser pass verified boot, Marquee Signing, Map 0 forced scout pool, sign flow, album writes, and reload persistence via Continue Campaign.</p>
           </div>
           <div class="field">
-            <span>Blocker</span>
-            <p>The Codex environment currently blocks escalated local-server approval via usage limit, so the interactive runbook could not start.</p>
+            <span>Follow-up</span>
+            <p>Full-squad replacement, game-over settlement, and complete 3-stamp boss loop were not manually replayed end-to-end in this session. Harness coverage remains the safety net.</p>
           </div>
           <div class="field">
             <span>Validation</span>
-            <p><code>rtk npm run validate</code> passed after P2-020 with 47 domain checks, 7 Phase 1 QA checks, 20 Phase 2 QA checks, docs validation, and syntax checks. HTTP smoke/browser execution remains blocked.</p>
+            <p><code>rtk npm run validate</code> and <code>rtk npm run smoke:http</code> both pass at closeout. Evidence recorded in <code>017-phase-2-manual-qa-runbook.md</code> Attempt 2.</p>
           </div>
           <div class="field">
             <span>Owner Note</span>
-            <p>Do not treat this as a product pass. Re-run the manual QA runbook before enabling 8-host-city runtime expansion or Phase 2 signoff.</p>
+            <p>No product blockers were found. This is sufficient for Phase 2 sign-off on the 3-city slice, not for enabling 8-city runtime.</p>
           </div>
         </div>
       </article>
+      <article class="task" style="margin-top: 12px;">
+        <h3>P2-023 — QA blocker buffer</h3>
+        <div class="task-grid">
+          <div class="field">
+            <span>Outcome</span>
+            <p>No dedicated bug-fix commits were required. Manual QA did not surface a blocker that needed atomic remediation.</p>
+          </div>
+          <div class="field">
+            <span>Tradeoff</span>
+            <p>Follow-up items (document title, hidden legacy headings, longer playthrough) are tracked as polish debt rather than Phase 2 defects.</p>
+          </div>
+        </div>
+      </article>
+      <article class="task" style="margin-top: 12px;">
+        <h3>P2-024 — Eight-host-city expansion decision</h3>
+        <div class="task-grid">
+          <div class="field">
+            <span>Decision</span>
+            <p><strong>Prepare only.</strong> Author expansion data contracts now; defer runtime enablement to Phase 3.</p>
+          </div>
+          <div class="field">
+            <span>Rationale</span>
+            <p>Manual QA is green enough for the 3-city slice, but final boss profiles 32–36, stamp art for maps 3–7, and an 8-city manual pass are not ready.</p>
+          </div>
+          <div class="field">
+            <span>Owner Note</span>
+            <p><code>FEATURES.maxMapIndex</code> stays <code>2</code>. Enabling map 3+ is explicitly P2-028 / Phase 3 work.</p>
+          </div>
+        </div>
+      </article>
+      <article class="task" style="margin-top: 12px;">
+        <h3>P2-025 / P2-026 / P2-027 — Expansion guards</h3>
+        <div class="task-grid">
+          <div class="field">
+            <span>Artifacts</span>
+            <p><code>host_city_expansion.json</code>, <code>scout_pools_expansion.json</code>, <code>album_layout_expansion.json</code> validate offline without changing runtime loaders.</p>
+          </div>
+          <div class="field">
+            <span>Asset Gap</span>
+            <p>Expansion boss rosters use provisional placeholders from the current catalog. Final federation teams from 007 still need profiles 32–36.</p>
+          </div>
+          <div class="field">
+            <span>Validation</span>
+            <p>Domain and Phase 2 QA assert map 0 forced scout pool, slice album pages, and <code>maxMapIndex: 2</code> remain unchanged.</p>
+          </div>
+        </div>
+      </article>
+      <article class="task" style="margin-top: 12px;">
+        <h3>P2-028 — Optional map-cap enable</h3>
+        <div class="task-grid">
+          <div class="field">
+            <span>Status</span>
+            <p><strong>Deferred to Phase 3</strong> per prepare-only decision. No runtime flag flip in Phase 2.</p>
+          </div>
+          <div class="field">
+            <span>Gate</span>
+            <p>Requires green 8-city manual QA, final expansion rosters, stamp assets, and explicit product approval.</p>
+          </div>
+        </div>
+      </article>
+      <article class="task" style="margin-top: 12px;">
+        <h3>P2-029 / P2-030 — Validation report and sign-off</h3>
+        <div class="task-grid">
+          <div class="field">
+            <span>Deliverable</span>
+            <p><code>019-phase-2-validation-report.md</code> records automated + manual evidence, release-safety assertions, and go/no-go.</p>
+          </div>
+          <div class="field">
+            <span>Verdict</span>
+            <p><strong>GO</strong> for Phase 2 complete on the 3-city slice. <strong>NO-GO</strong> for 8-city runtime until Phase 3.</p>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <section>
+      <h2>Phase 2 Sign-Off</h2>
+      <div class="grid">
+        <article class="card">
+          <strong>What shipped</strong>
+          <p>Football-native recruitment UX, City Stamp presentation, album/settlement polish, album API cleanup, local portrait manifest, no-live-API gate, account validator, and settlement dedupe.</p>
+        </article>
+        <article class="card">
+          <strong>What did not ship</strong>
+          <p>8-host-city runtime, knockout flow, cloud save, meta economy, final portrait/stamp art pack, or React migration.</p>
+        </article>
+        <article class="card">
+          <strong>Validation state</strong>
+          <p>50 domain + 7 Phase 1 + 27 Phase 2 automated checks; manual QA PASS WITH FOLLOW-UP; HTTP smoke on 19 routes.</p>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <h2>Bridges Still Open (Phase 3)</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Bridge</th>
+            <th>Why it remains</th>
+            <th>Retire when</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>markPokedex*</code> aliases</td>
+            <td>Classic mode and shared starter path still reference dex-named APIs.</td>
+            <td>Classic mode split or dedicated legacy flag removal.</td>
+          </tr>
+          <tr>
+            <td><code>catch-screen</code> / <code>badge-screen</code> IDs</td>
+            <td>Event handlers and keyboard routing still anchor on legacy IDs.</td>
+            <td>Scout/City Stamp flows fully migrate handlers to football-native IDs.</td>
+          </tr>
+          <tr>
+            <td><code>speciesId</code> combat projection</td>
+            <td>Battle engine remains domain-agnostic via style projection.</td>
+            <td>Explicit balance task approves native football combat math.</td>
+          </tr>
+          <tr>
+            <td>Document title / hidden Classic headings</td>
+            <td>Compatibility with dual-mode DOM; not player-visible on football path.</td>
+            <td>Title/theme pass when Classic is isolated or removed.</td>
+          </tr>
+          <tr>
+            <td>TheSportsDB sync tooling</td>
+            <td>Internal demo enrichment only; runtime path disabled.</td>
+            <td>Never on public-critical paths without legal approval.</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>Deferred Phase 3 Backlog</h2>
+      <ul class="list">
+        <li class="item assumption">
+          <span class="label">P2-028 runtime enable</span>
+          <p>Flip <code>maxMapIndex</code> to <code>7</code> after content, art, and QA gates are green.</p>
+        </li>
+        <li class="item asset">
+          <span class="label">Profiles 32–36 + expansion bosses</span>
+          <p>Replace provisional expansion rosters with final 007 federation teams.</p>
+        </li>
+        <li class="item asset">
+          <span class="label">Stamp art maps 3–7</span>
+          <p>Owned SVG or illustrated stamps for Madrid, Milan, Amsterdam, Mexico City, London.</p>
+        </li>
+        <li class="item tradeoff">
+          <span class="label">Knockout + legends album pages</span>
+          <p>Merge <code>album_layout_expansion.json</code> into runtime when knockout flow exists.</p>
+        </li>
+        <li class="item risk">
+          <span class="label">Cloud save + meta rewards</span>
+          <p>Account hardening is local-only. Cross-device dedupe and economy need Phase 3 design.</p>
+        </li>
+      </ul>
     </section>
 
     <section>
@@ -960,18 +1120,26 @@
           <p>The playable loop can be solid while asset rights are still unresolved. That is acceptable only if release claims stay blocked.</p>
         </li>
         <li class="item risk">
-          <span class="label">Manual QA is now a gating activity</span>
-          <p>Phase 1 was signed off by scripts. Phase 2 should not expand content before someone records the real 3-city loop, reload, full-squad, and loss paths.</p>
+          <span class="label">Manual QA passed with follow-up, not perfection</span>
+          <p>Core loop and reload were verified in browser. Full-squad swap, game-over, and 3-boss completion still rely on harness coverage plus a longer play session before public demo.</p>
+        </li>
+        <li class="item risk">
+          <span class="label">Prepare-only expansion is intentional</span>
+          <p>Expansion JSON exists so Phase 3 can enable content without another schema scramble. Do not flip <code>maxMapIndex</code> early just because the files validate.</p>
         </li>
         <li class="item risk">
           <span class="label">The easiest bad decision is deleting bridges too soon</span>
           <p>Legacy names are ugly but some still protect shared runtime behavior. Retire them with tests, not by search-and-replace.</p>
         </li>
+        <li class="item assumption">
+          <span class="label">Phase 2 cut line met</span>
+          <p>Must-do UX polish, bridge cleanup, validation harness, manual QA record, expansion decision, and sign-off are complete. Could-do 8-city enable is explicitly deferred.</p>
+        </li>
       </ul>
     </section>
 
     <footer>
-      Generated for Pokelike World Cup Road to Glory Phase 2. Last updated 2026-06-11 — P2-022 manual QA blocked by local server approval limit, P2-020 Settlement dedupe guard, P2-019 Account model validator, P2-018 Settlement Lite UX, P2-017 Slice Complete milestone, P2-016 Album visual model, P2-015 City Stamp placeholders, P2-014 City Stamp selectors, P2-013 Squad Registration layout, P2-012 Contract Offer UX polish, P2-011 Scout Report wrapper, P2-010 football node icon registry, P2-021 runtime no-live-API gate, P2-009 local portrait manifest, P2-005 football album write call sites, P2-004 album facade names, P2-003 bridge inventory, P2-008 portrait strategy, P2-007 HTTP smoke script, P2-006 manual QA runbook, P2-002 QA harness shell, P2-001 ledger/protocol, baseline assumptions, tradeoffs, frictions, asset gaps, decision gates, and owner watchlist.
+      Generated for Pokelike World Cup Road to Glory Phase 2. Last updated 2026-06-10 — Phase 2 sign-off (P2-030), validation report (P2-029), expansion guards prepare-only (P2-025–P2-027), manual QA pass with follow-up (P2-022), and full task ledger through P2-001.
     </footer>
   </main>
 </body>

@@ -207,6 +207,49 @@ Follow-up:
 - Keep P2-023 reserved for actual product bugs found by that manual pass.
 - Do not use this blocked attempt as approval to enable 8-host-city runtime expansion.
 
+### P2-022 Attempt 2 — 2026-06-10
+
+| Field | Value |
+|-------|-------|
+| Date | 2026-06-10 |
+| Commit | `main` @ Phase 2 closeout commit |
+| Browser | Cursor IDE browser (Chromium) |
+| Local server URL | `http://127.0.0.1:4173/` |
+| Network enabled? | Local only |
+| Tester | Cursor agent |
+| Result | PASS WITH FOLLOW-UP |
+
+Automated pre-flight:
+
+| Command | Result | Notes |
+|---------|--------|-------|
+| `rtk npm run validate` | PASS | 50 domain + 7 Phase 1 + 27 Phase 2 checks |
+| `rtk npm run smoke:http` | PASS | 19 HTTP routes including expansion guard JSON |
+
+Manual QA execution result:
+
+| Category | Result | Notes |
+|----------|--------|-------|
+| Core path | PASS | New Campaign → Marquee Signing (Mbappé) → Map 0 Scout Report shows Pedri/Ramos/Alisson forced pool → sign Pedri → album writes `{1:1,12:1}` |
+| Full squad | FOLLOW-UP | Harness validates six-slot Squad Registration; full replacement loop not manually exercised |
+| Reload persistence | PASS | Hard refresh surfaced Continue Campaign; squad `[1,12]` and map `0` restored |
+| Game over | FOLLOW-UP | Covered by P1-048 harness; not manually replayed in this browser pass |
+| Legacy terminology | FOLLOW-UP | Football-facing screens use correct copy; `<title>` still `Pokemon Roguelike`; hidden Classic headings remain in DOM |
+| Visual frictions recorded | PASS | Non-blocking items tracked in `013-phase-2-visual-frictions.html` and `020-phase-2-assumptions-tradeoffs-assets-report.html` |
+| Blockers found | None | No product blocker; expansion remains prepare-only |
+
+Final result:
+
+- [ ] PASS — no blockers.
+- [x] PASS WITH FOLLOW-UP — no blockers, non-blocking issues recorded.
+- [ ] BLOCKED — one or more blocker definitions met.
+
+Follow-up items (non-blocking):
+
+- Update document title away from `Pokemon Roguelike` when Classic mode split is planned.
+- Manually exercise full-squad replacement and game-over settlement in a longer browser session before public demo.
+- Do not enable maps 3–7 until Phase 3 content and P2-028 gate are explicitly approved.
+
 ---
 
 *End of Phase 2 Manual QA Runbook.*

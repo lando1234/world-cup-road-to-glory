@@ -57,7 +57,7 @@ function assertCombatAdapterAvailable() {
   }
 }
 
-function validateBossCatalog(catalog) {
+function validateBossCatalog(catalog, options = {}) {
   const errors = [];
   const warnings = [];
 
@@ -74,8 +74,30 @@ function validateBossCatalog(catalog) {
     return { valid: errors.length === 0, errors, warnings };
   }
 
-  if (window.FEATURES?.sliceMode === true && catalog.bosses.length !== 3) {
+  const enforceSliceCount = options.enforceSliceCount ?? window.FEATURES?.sliceMode === true;
+  if (enforceSliceCount && catalog.bosses.length !== 3) {
     errors.push(`Phase 1 boss catalog must contain exactly 3 entries; received ${catalog.bosses.length}.`);
+  }
+
+  const expectedMapSpan = options.expectedMapSpan;
+  if (Number.isInteger(expectedMapSpan) && expectedMapSpan >= 0) {
+    const indexes = catalog.bosses.map(boss => boss.mapIndex).sort((a, b) => a - b);
+    const expected = Array.from({ length: expectedMapSpan + 1 }, (_, index) => index);
+    if (indexes.join(",") !== expected.join(",")) {
+      errors.push(`boss mapIndex values must cover 0..${expectedMapSpan}; received ${indexes.join(", ")}.`);
+    }
+  }
+
+  const mapIndexRange = options.mapIndexRange;
+  if (isPlainObject(mapIndexRange) && Number.isInteger(mapIndexRange.min) && Number.isInteger(mapIndexRange.max)) {
+    const indexes = catalog.bosses.map(boss => boss.mapIndex).sort((a, b) => a - b);
+    const expected = Array.from(
+      { length: mapIndexRange.max - mapIndexRange.min + 1 },
+      (_, offset) => mapIndexRange.min + offset
+    );
+    if (indexes.join(",") !== expected.join(",")) {
+      errors.push(`boss mapIndex values must cover ${mapIndexRange.min}..${mapIndexRange.max}; received ${indexes.join(", ")}.`);
+    }
   }
 
   const validStyles = getStyleIds();
@@ -192,9 +214,17 @@ function validateBossCatalog(catalog) {
   });
 
   const sortedIndexes = [...seenMapIndexes].sort((a, b) => a - b);
-  const expectedIndexes = Array.from({ length: sortedIndexes.length }, (_, index) => index);
+  const expectedIndexes = options.mapIndexRange
+    ? Array.from(
+      { length: options.mapIndexRange.max - options.mapIndexRange.min + 1 },
+      (_, offset) => options.mapIndexRange.min + offset
+    )
+    : Array.from({ length: sortedIndexes.length }, (_, index) => index);
   if (sortedIndexes.join(",") !== expectedIndexes.join(",")) {
-    errors.push(`boss mapIndex values must be contiguous from 0; received ${sortedIndexes.join(", ")}.`);
+    const spanLabel = options.mapIndexRange
+      ? `${options.mapIndexRange.min}..${options.mapIndexRange.max}`
+      : "0";
+    errors.push(`boss mapIndex values must be contiguous from ${spanLabel}; received ${sortedIndexes.join(", ")}.`);
   }
 
   return {

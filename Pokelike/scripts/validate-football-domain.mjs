@@ -1020,6 +1020,54 @@ await runTest("football battle presentation uses theme faint copy", () => {
   assert(!battleSource.includes("GAME_THEME"), "battle.js damage engine should remain theme-agnostic");
 });
 
+await runTest("host city expansion catalog validates maps 3-7 while runtime cap stays at 2", async () => {
+  const expansion = readJson("data/football/host_city_expansion.json");
+  const validation = context.window.DomainBosses.validateBossCatalog(expansion, {
+    enforceSliceCount: false,
+    mapIndexRange: { min: 3, max: 7 }
+  });
+  assert(validation.valid, `host city expansion validation failed: ${validation.errors.join(" | ")}`);
+  assert(expansion.bosses.length === 5, "expansion catalog should define maps 3-7");
+  assert(context.window.FEATURES.maxMapIndex === 2, "runtime maxMapIndex must remain 2 during prepare-only expansion");
+  assert(context.window.DomainBosses.getHostCity(3) === null, "runtime must not expose map 3 boss while cap is 2");
+});
+
+await runTest("scout pool expansion bands validate without changing slice bands", async () => {
+  const slicePools = readJson("data/football/scout_pools.json");
+  const expansionPools = readJson("data/football/scout_pools_expansion.json");
+  const sliceValidation = context.window.DomainScout.validateScoutPools(slicePools);
+  const expansionValidation = context.window.DomainScout.validateScoutPools(expansionPools);
+  assert(sliceValidation.valid, `slice scout pools failed: ${sliceValidation.errors.join(" | ")}`);
+  assert(expansionValidation.valid, `expansion scout pools failed: ${expansionValidation.errors.join(" | ")}`);
+  const lateBand = expansionPools.bands.find(band => band.bandId === "late");
+  const finaleBand = expansionPools.bands.find(band => band.bandId === "finale");
+  assert(lateBand?.mapMin === 3 && lateBand?.mapMax === 5, "late scout band should cover maps 3-5");
+  assert(finaleBand?.mapMin === 6 && finaleBand?.mapMax === 7, "finale scout band should cover maps 6-7");
+  const map0Report = context.window.DomainScout.buildSliceReport(0, {}, { node: { layer: 1, type: "catch" } });
+  const forcedPool = [...map0Report.profileIds].sort((a, b) => a - b).join(",");
+  assert(forcedPool === "12,15,17", `map 0 forced scout pool must remain unchanged after expansion authoring; received ${forcedPool}`);
+});
+
+await runTest("album expansion layout prepares deferred pages without enabling runtime pages", async () => {
+  const expansion = readJson("data/football/album_layout_expansion.json");
+  const pageIds = expansion.pages.map(page => page.pageId);
+  assert(pageIds.includes("host_city"), "expansion album layout should include host_city page");
+  assert(pageIds.includes("knockout"), "expansion album layout should include knockout page");
+  assert(pageIds.includes("legends"), "expansion album layout should include legends page");
+  const hostCityPage = expansion.pages.find(page => page.pageId === "host_city");
+  context.window.DomainAlbum.loadAlbumLayout({
+    schemaVersion: 1,
+    volumeTitle: expansion.volumeTitle,
+    pages: [hostCityPage],
+    deferredPages: []
+  });
+  const sliceLayout = readJson("data/football/album_layout.json");
+  assert(sliceLayout.pages.every(page => ["marquee", "favorites"].includes(page.pageId)),
+    "runtime album layout must keep only slice pages visible");
+  assert(sliceLayout.deferredPages.join(",") === "host_city,knockout,legends",
+    "runtime album layout should keep expansion pages deferred");
+});
+
 await runTest("cloud save is disabled by football feature gate", async () => {
   const cloudSource = readText("js/cloud-save.js");
   const gameSource = readText("js/game.js");

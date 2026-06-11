@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "contentStatus": "expansion_stub",
+  "notes": "Future album pages for 8-host-city and knockout content. Not merged into runtime album_layout.json while slice mode caps at map 2.",
+  "volumeTitle": "Road to the Trophy — Vol. 1 (Expansion)",
+  "pages": [
+    {
+      "pageId": "host_city",
+      "title": "Host City Heroes",
+      "description": "Boss anchors and federation faces from each host city leg.",
+      "hiddenUntil": "expansion_enable",
+      "slots": [
+        { "slot": 1, "profileId": 29, "label": "São Paulo Anchor" },
+        { "slot": 2, "profileId": 30, "label": "Berlin Metronome" },
+        { "slot": 3, "profileId": 31, "label": "Tokyo Spark" }
+      ]
+    },
+    {
+      "pageId": "knockout",
+      "title": "Knockout Gate",
+      "description": "Historical gate teams unlocked after eight city stamps.",
+      "hiddenUntil": "knockout_enable",
+      "slots": [
+        { "slot": 1, "profileId": 26, "label": "Libero Icon" },
+        { "slot": 2, "profileId": 22, "label": "Wing General" },
+        { "slot": 3, "profileId": 16, "label": "Sweeper Keeper" }
+      ]
+    },
+    {
+      "pageId": "legends",
+      "title": "Legends Vault",
+      "description": "Reserved for legend-tier chase cards in later meta.",
+      "hiddenUntil": "legends_enable",
+      "slots": [
+        { "slot": 1, "profileId": 2, "label": "Possession Maestro" },
+        { "slot": 2, "profileId": 1, "label": "High Press Icon" },
+        { "slot": 3, "profileId": 3, "label": "Defensive Anchor" }
+      ]
+    }
+  ]
+}

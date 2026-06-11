@@ -341,6 +341,62 @@ runTest("P2-020 settlement dedupe guard is local and run-id based", () => {
   assert(saveSource.includes("const DOMAIN_SAVE_SCHEMA_VERSION = 3"), "P2-020 must not introduce save v4 migration");
 });
 
+runTest("P2-022 manual QA runbook records a completed browser pass", () => {
+  const manualQa = readText("docs/017-phase-2-manual-qa-runbook.md");
+  assert(manualQa.includes("P2-022 Attempt 2"), "manual QA runbook should record the successful browser pass");
+  assert(manualQa.includes("PASS WITH FOLLOW-UP"), "manual QA should end with pass-with-follow-up when non-blocking issues remain");
+  assert(manualQa.includes("rtk npm run smoke:http"), "manual QA should record HTTP smoke evidence");
+});
+
+runTest("P2-024 eight-host-city expansion decision is prepare-only", () => {
+  const validationReport = readText("docs/019-phase-2-validation-report.md");
+  assert(validationReport.includes("prepare only"), "validation report should record prepare-only expansion decision");
+  assert(validationReport.includes("P2-028"), "validation report should document deferred map-cap enablement");
+  assert(featuresSource.includes("maxMapIndex: 2"), "runtime map cap must remain 2 after expansion decision");
+});
+
+runTest("P2-025 host city expansion guard validates maps 3-7 data contract", () => {
+  const expansion = JSON.parse(readText("data/football/host_city_expansion.json"));
+  assert(expansion.schemaVersion === 1, "host city expansion schemaVersion should be 1");
+  assert(expansion.bosses.length === 5, "host city expansion should define five bosses for maps 3-7");
+  assert(expansion.bosses.every(boss => boss.mapIndex >= 3 && boss.mapIndex <= 7), "expansion bosses should only cover maps 3-7");
+  assert(smokeHttpSource.includes("host_city_expansion.json"), "HTTP smoke should verify host city expansion JSON");
+});
+
+runTest("P2-026 scout pool expansion guard validates late bands without runtime load", () => {
+  const expansion = JSON.parse(readText("data/football/scout_pools_expansion.json"));
+  assert(expansion.bands.some(band => band.mapMin === 3), "expansion scout pools should include map 3+ bands");
+  assert(expansion.bands.some(band => band.mapMax === 7), "expansion scout pools should include map 7 coverage");
+  const slicePools = JSON.parse(readText("data/football/scout_pools.json"));
+  assert(slicePools.bands.length === 2, "runtime scout pools should keep slice-only bands");
+  assert(smokeHttpSource.includes("scout_pools_expansion.json"), "HTTP smoke should verify scout pool expansion JSON");
+});
+
+runTest("P2-027 album page expansion guard prepares deferred pages", () => {
+  const expansion = JSON.parse(readText("data/football/album_layout_expansion.json"));
+  const sliceLayout = JSON.parse(readText("data/football/album_layout.json"));
+  const expansionPageIds = expansion.pages.map(page => page.pageId);
+  assert(expansionPageIds.includes("host_city"), "album expansion should prepare host_city page");
+  assert(expansionPageIds.includes("knockout"), "album expansion should prepare knockout page");
+  assert(expansionPageIds.includes("legends"), "album expansion should prepare legends page");
+  assert(sliceLayout.deferredPages.includes("host_city"), "runtime album layout should keep host_city deferred");
+  assert(smokeHttpSource.includes("album_layout_expansion.json"), "HTTP smoke should verify album layout expansion JSON");
+});
+
+runTest("P2-029 Phase 2 validation report exists with go/no-go summary", () => {
+  const validationReport = readText("docs/019-phase-2-validation-report.md");
+  assert(validationReport.includes("Phase 2 Validation Report"), "validation report should include expected heading");
+  assert(validationReport.includes("Go / No-Go"), "validation report should include go/no-go verdict");
+  assert(validationReport.includes("no-live-API"), "validation report should assert no-live-API policy");
+  assert(validationReport.includes("cloud save"), "validation report should assert cloud-save policy");
+});
+
+runTest("P2-030 Phase 2 sign-off is recorded in the execution ledger", () => {
+  assert(phase2Ledger.includes("P2-030 | ✅"), "Phase 2 ledger should mark P2-030 complete");
+  assert(phase2Ledger.includes("**Done** | 30"), "Phase 2 progress summary should show 30 done tasks");
+  assert(phase2Report.includes("P2-030"), "Phase 2 assumptions report should include sign-off notes");
+});
+
 const failed = results.filter(result => result.status === "FAIL");
 for (const result of results) {
   if (result.status === "PASS") {

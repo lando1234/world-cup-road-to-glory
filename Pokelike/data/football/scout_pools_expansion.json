@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "contentStatus": "expansion_stub",
+  "notes": "Late-stage scout bands for maps 3-7. Not loaded at runtime while FEATURES.maxMapIndex remains 2.",
+  "bands": [
+    {
+      "bandId": "late",
+      "mapMin": 3,
+      "mapMax": 5,
+      "profileIds": [4, 6, 7, 9, 10, 14, 15, 16, 18, 22, 26, 28, 29, 30],
+      "rarityMultipliers": {
+        "common": 0.8,
+        "uncommon": 1,
+        "rare": 1.2,
+        "elite": 1.4,
+        "legend": 0
+      }
+    },
+    {
+      "bandId": "finale",
+      "mapMin": 6,
+      "mapMax": 7,
+      "profileIds": [4, 6, 7, 9, 10, 12, 14, 15, 16, 17, 18, 22, 26, 28, 29, 30, 31],
+      "rarityMultipliers": {
+        "common": 0.6,
+        "uncommon": 0.9,
+        "rare": 1.1,
+        "elite": 1.6,
+        "legend": 0
+      }
+    }
+  ],
+  "rules": {
+    "choicesPerReport": 3,
+    "excludedStarterProfileIds": [1, 2, 3],
+    "maxPlayersPerNation": {
+      "BRA": 1
+    }
+  }
+}

@@ -1,0 +1,127 @@
+{
+  "schemaVersion": 1,
+  "contentStatus": "expansion_stub",
+  "notes": "Maps 3-7 use provisional roster placeholders from the current slice catalog. Final federation rosters from 007-football-data-pack.md require profiles 32-36 in Phase 3.",
+  "bosses": [
+    {
+      "mapIndex": 3,
+      "hostCity": "Madrid",
+      "nation": "ESP",
+      "label": "Spain Federation Challenge",
+      "managerName": null,
+      "primaryStyle": "wing_play",
+      "stamp": {
+        "id": "stamp_madrid",
+        "displayName": "Madrid Stamp"
+      },
+      "difficulty": 3,
+      "recommendedFormRange": [28, 34],
+      "balance": {
+        "targetDevWinRate": 0.6,
+        "notes": "Expansion stub — replace with final Figo-led roster when profile 32 ships."
+      },
+      "roster": [
+        { "profileId": 28, "formLevel": 32, "skillTier": 1, "heldItemId": null, "role": "Boss anchor" },
+        { "profileId": 18, "formLevel": 30, "skillTier": 1, "heldItemId": null, "role": "Overlap" },
+        { "profileId": 7, "formLevel": 31, "skillTier": 1, "heldItemId": null, "role": "Outlet" }
+      ],
+      "flavorText": "Wide dominance — expansion placeholder until Spain roster is authored."
+    },
+    {
+      "mapIndex": 4,
+      "hostCity": "Milan",
+      "nation": "ITA",
+      "label": "Italy Federation Challenge",
+      "managerName": null,
+      "primaryStyle": "dark_arts",
+      "stamp": {
+        "id": "stamp_milan",
+        "displayName": "Milan Stamp"
+      },
+      "difficulty": 3,
+      "recommendedFormRange": [36, 44],
+      "balance": {
+        "targetDevWinRate": 0.55,
+        "notes": "Expansion stub — replace with Rossi/Maldini/Buffon roster when profiles 33+ ship."
+      },
+      "roster": [
+        { "profileId": 26, "formLevel": 42, "skillTier": 2, "heldItemId": null, "role": "Boss anchor" },
+        { "profileId": 3, "formLevel": 40, "skillTier": 2, "heldItemId": null, "role": "Iron wall" },
+        { "profileId": 16, "formLevel": 41, "skillTier": 2, "heldItemId": null, "role": "GK" }
+      ],
+      "flavorText": "Catenaccio edge — expansion placeholder until Italy roster is authored."
+    },
+    {
+      "mapIndex": 5,
+      "hostCity": "Amsterdam",
+      "nation": "NED",
+      "label": "Netherlands Federation Challenge",
+      "managerName": null,
+      "primaryStyle": "tactical_control",
+      "stamp": {
+        "id": "stamp_amsterdam",
+        "displayName": "Amsterdam Stamp"
+      },
+      "difficulty": 4,
+      "recommendedFormRange": [40, 46],
+      "balance": {
+        "targetDevWinRate": 0.5,
+        "notes": "Expansion stub — replace with Bergkamp/Cruyff roster when profile 34 ships."
+      },
+      "roster": [
+        { "profileId": 30, "formLevel": 44, "skillTier": 2, "heldItemId": null, "role": "Boss anchor" },
+        { "profileId": 2, "formLevel": 42, "skillTier": 2, "heldItemId": null, "role": "Total football" },
+        { "profileId": 6, "formLevel": 43, "skillTier": 2, "heldItemId": null, "role": "Metronome" }
+      ],
+      "flavorText": "Total football chess — expansion placeholder until Netherlands roster is authored."
+    },
+    {
+      "mapIndex": 6,
+      "hostCity": "Mexico City",
+      "nation": "MEX",
+      "label": "Mexico Federation Challenge",
+      "managerName": null,
+      "primaryStyle": "high_press",
+      "stamp": {
+        "id": "stamp_mexico_city",
+        "displayName": "Mexico City Stamp"
+      },
+      "difficulty": 4,
+      "recommendedFormRange": [48, 54],
+      "balance": {
+        "targetDevWinRate": 0.45,
+        "notes": "Expansion stub — replace with Sánchez-led roster when profile 35 ships."
+      },
+      "roster": [
+        { "profileId": 4, "formLevel": 52, "skillTier": 2, "heldItemId": null, "role": "Boss anchor" },
+        { "profileId": 14, "formLevel": 50, "skillTier": 2, "heldItemId": null, "role": "Press engine" },
+        { "profileId": 10, "formLevel": 51, "skillTier": 2, "heldItemId": null, "role": "Finisher" }
+      ],
+      "flavorText": "Aztec intensity — expansion placeholder until Mexico roster is authored."
+    },
+    {
+      "mapIndex": 7,
+      "hostCity": "London",
+      "nation": "ENG",
+      "label": "England Federation Challenge",
+      "managerName": null,
+      "primaryStyle": "aerial_threat",
+      "stamp": {
+        "id": "stamp_london",
+        "displayName": "London Stamp"
+      },
+      "difficulty": 4,
+      "recommendedFormRange": [52, 60],
+      "balance": {
+        "targetDevWinRate": 0.4,
+        "notes": "Expansion stub — replace with Charlton/Kane roster when profiles 36+ ship."
+      },
+      "roster": [
+        { "profileId": 15, "formLevel": 58, "skillTier": 2, "heldItemId": null, "role": "Boss anchor" },
+        { "profileId": 29, "formLevel": 56, "skillTier": 2, "heldItemId": null, "role": "Target" },
+        { "profileId": 17, "formLevel": 57, "skillTier": 2, "heldItemId": null, "role": "GK" }
+      ],
+      "flavorText": "Set-piece thunder — expansion placeholder until England roster is authored."
+    }
+  ]
+}

@@ -23,6 +23,9 @@ const routes = [
   { path: "/data/football/host_city_bosses.json", includes: "\"bosses\"" },
   { path: "/data/football/scout_pools.json", includes: "\"forcedOverrides\"" },
   { path: "/data/football/album_layout.json", includes: "\"pages\"" },
+  { path: "/data/football/host_city_expansion.json", includes: "\"expansion_stub\"" },
+  { path: "/data/football/scout_pools_expansion.json", includes: "\"late\"" },
+  { path: "/data/football/album_layout_expansion.json", includes: "\"host_city\"" },
   { path: "/assets/stamps/sao-paulo-stamp.svg", includes: "Sao Paulo City Stamp" },
   { path: "/assets/stamps/berlin-stamp.svg", includes: "Berlin City Stamp" },
   { path: "/assets/stamps/tokyo-stamp.svg", includes: "Tokyo City Stamp" }

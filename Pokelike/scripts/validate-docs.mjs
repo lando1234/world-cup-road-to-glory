@@ -21,6 +21,7 @@ const phase2TaskBreakdown = readText("docs/015-phase-2-engineering-task-breakdow
 const phase2ManualQaRunbook = readText("docs/017-phase-2-manual-qa-runbook.md");
 const portraitAssetStrategy = readText("docs/018-portrait-asset-strategy.md");
 const phase2AssumptionsHtml = readText("docs/020-phase-2-assumptions-tradeoffs-assets-report.html");
+const phase2ValidationReport = readText("docs/019-phase-2-validation-report.md");
 
 const frictionEntries = (visualFrictionsHtml.match(/class="entry"/g) || []).length;
 
@@ -65,5 +66,9 @@ assert(
 assert(phase2AssumptionsHtml.includes("Missing Assets And Ownership"), "Phase 2 assumptions report must document missing assets");
 assert(phase2AssumptionsHtml.includes("Decision Gates"), "Phase 2 assumptions report must document decision gates");
 assert(phase2AssumptionsHtml.includes("P2-GOV"), "Phase 2 assumptions report must include the governance ledger note");
+assert(phase2ValidationReport.includes("Phase 2 Validation Report"), "Phase 2 validation report must include the expected heading");
+assert(phase2ValidationReport.includes("Go / No-Go"), "Phase 2 validation report must include go/no-go verdict");
+assert(phase2ValidationReport.includes("prepare only"), "Phase 2 validation report must record expansion decision");
+assert(phase2AssumptionsHtml.includes("Phase 2 Sign-Off"), "Phase 2 assumptions report must include sign-off section");
 
 console.log(`PASS docs validation: ${frictionEntries} visual friction entries`);

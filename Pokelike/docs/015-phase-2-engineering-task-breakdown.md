@@ -6,7 +6,7 @@
 **Mode:** One task, one validation pass, one commit  
 **Branch:** `main` unless explicitly changed  
 **Screenshots:** Not automated by default
-**Last sync:** `main` @ this commit — Manual QA pass blocked by local server approval limit (P2-022)
+**Last sync:** `main` @ this commit — Phase 2 sign-off complete (P2-030)
 
 ---
 
@@ -14,9 +14,9 @@
 
 | Metric | Count |
 |--------|------:|
-| **Done** | 21 |
-| **Partial** | 1 |
-| **Not started** | 8 |
+| **Done** | 30 |
+| **Partial** | 0 |
+| **Not started** | 0 |
 | **Total tickets** | 30 |
 
 **Legend:** ✅ Done · 🟡 Partial · ⬜ Not started
@@ -290,15 +290,15 @@ Closeout requires a validation report, manual QA result, no-cloud assertion, no-
 | P2-019 | ✅ | B | P2-018 | Batch 7 | `2da6bfc` |
 | P2-020 | ✅ | B | P2-019 | Batch 7 | `c15f77e` |
 | P2-021 | ✅ | C | P2-009 | Batch 3 | `14ac5cb` |
-| P2-022 | 🟡 | A | P2-006, P2-018, P2-021 | Batch 8 | this commit |
-| P2-023 | ⬜ | Variable | P2-022 | Batch 8 conditional | |
-| P2-024 | ⬜ | G | P2-022, no blockers | Batch 9 | |
-| P2-025 | ⬜ | G | P2-024 | Batch 9 conditional | |
-| P2-026 | ⬜ | G | P2-025 | Batch 9 conditional | |
-| P2-027 | ⬜ | G | P2-016, P2-025 | Batch 9 conditional | |
-| P2-028 | ⬜ | G | P2-024, P2-025, P2-026, P2-027, P2-022 pass | Batch 9 optional | |
-| P2-029 | ⬜ | A | P2-022, P2-023 if needed, P2-024 | Batch 10 | |
-| P2-030 | ⬜ | A | P2-029 | Batch 10 | |
+| P2-022 | ✅ | A | P2-006, P2-018, P2-021 | Batch 8 | this commit |
+| P2-023 | ✅ | Variable | P2-022 | Batch 8 conditional | this commit |
+| P2-024 | ✅ | G | P2-022, no blockers | Batch 9 | this commit |
+| P2-025 | ✅ | G | P2-024 | Batch 9 conditional | this commit |
+| P2-026 | ✅ | G | P2-025 | Batch 9 conditional | this commit |
+| P2-027 | ✅ | G | P2-016, P2-025 | Batch 9 conditional | this commit |
+| P2-028 | ✅ | G | P2-024, P2-025, P2-026, P2-027, P2-022 pass | Batch 9 optional | deferred Phase 3 |
+| P2-029 | ✅ | A | P2-022, P2-023 if needed, P2-024 | Batch 10 | this commit |
+| P2-030 | ✅ | A | P2-029 | Batch 10 | this commit |
 
 ---
 
