@@ -239,6 +239,32 @@ runTest("P2-014 City Stamp ceremony exposes football-native selectors", () => {
   assert(badgeBlock.includes("badgeImg.style.display = 'none'"), "runtime should still hide legacy badge sprites in football mode");
 });
 
+runTest("P2-015 City Stamp artwork uses owned local placeholders", () => {
+  const badgeBlock = extractBetween(gameSource, "function showBadgeScreen", "function showSliceCompleteScreen");
+  const mapHudBlock = extractBetween(gameSource, "function showMapScreen", "async function doBattleNode");
+  const stampAssets = [
+    "assets/stamps/sao-paulo-stamp.svg",
+    "assets/stamps/berlin-stamp.svg",
+    "assets/stamps/tokyo-stamp.svg"
+  ];
+
+  for (const assetPath of stampAssets) {
+    const absolute = path.join(projectRoot, assetPath);
+    assert(fs.existsSync(absolute), `${assetPath} should exist`);
+    const assetSource = fs.readFileSync(absolute, "utf8");
+    assert(assetSource.includes("Owned abstract football stamp placeholder"), `${assetPath} should document owned placeholder source`);
+    assert(!assetSource.includes("Pokemon"), `${assetPath} should not reference Pokemon`);
+    assert(!assetSource.includes("Poke"), `${assetPath} should not reference Poke naming`);
+  }
+  assert(gameSource.includes("FOOTBALL_STAMP_ASSETS"), "game.js should define local stamp asset mapping");
+  assert(gameSource.includes("stamp_sao_paulo"), "stamp asset mapping should cover Sao Paulo");
+  assert(gameSource.includes("stamp_berlin"), "stamp asset mapping should cover Berlin");
+  assert(gameSource.includes("stamp_tokyo"), "stamp asset mapping should cover Tokyo");
+  assert(badgeBlock.includes("city-stamp-asset"), "City Stamp ceremony should render local stamp asset images");
+  assert(mapHudBlock.includes("city-stamp-hud-icon"), "map HUD should render local stamp asset images");
+  assert(smokeHttpSource.includes("sao-paulo-stamp.svg"), "HTTP smoke should cover stamp assets");
+});
+
 const failed = results.filter(result => result.status === "FAIL");
 for (const result of results) {
   if (result.status === "PASS") {

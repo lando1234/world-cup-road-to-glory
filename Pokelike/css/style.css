@@ -1464,6 +1464,17 @@ h1, h2, .pixel-font {
   line-height: 1;
   animation: bounce 0.5s ease-in-out infinite alternate;
 }
+.city-stamp-asset {
+  width: 84px;
+  height: 84px;
+  image-rendering: auto;
+}
+.city-stamp-hud-icon {
+  width: 22px;
+  height: 22px;
+  object-fit: contain;
+  image-rendering: auto;
+}
 @keyframes bounce { from { transform: scale(1); } to { transform: scale(1.1); } }
 #badge-msg,
 .city-stamp-message {

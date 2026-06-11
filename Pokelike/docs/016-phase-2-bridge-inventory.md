@@ -28,7 +28,7 @@
 | `speciesId` overloaded as football `profileId` | Keep for battle/save runtime | Combat adapter/save shape | `js/domain/combat-adapter.js`, `js/game.js`, `js/ui.js` | Phase 3 typed model |
 | `catch-screen` container for Scout Report | Reduced by P2-011; retire remaining handler IDs later | Recruitment UI | `index.html`, `js/game.js`, `css/style.css` | P2-011 |
 | `swap-screen` container for Squad Registration | Reduced by P2-013; retire remaining handler IDs later | Squad UI | `index.html`, `js/game.js`, `css/style.css` | P2-013 |
-| `badge-screen` and `badge-*` selectors for City Stamp | Reduced by P2-014; keep as compatibility anchors until artwork and Classic coverage are stable | Stamp ceremony | `index.html`, `js/game.js`, `css/style.css` | P2-014, P2-015 |
+| `badge-screen` and `badge-*` selectors for City Stamp | Reduced by P2-014; P2-015 adds local placeholders; keep IDs until Classic coverage is stable | Stamp ceremony | `index.html`, `js/game.js`, `css/style.css`, `assets/stamps/*` | P2-014, P2-015 |
 | Legacy node icons | Retire now through registry, keep fallback | Map UI | `js/map.js`, `js/ui.js`, `css/style.css` | P2-010 |
 | `TYPE_CHART` / style projection | Keep until explicit combat task | Battle compatibility | `js/domain/styles.js`, `js/data.js`, `js/game.js` | Defer unless balance task approved |
 | `GYM_LEADERS` references | Keep for non-football branches; no football hot path | Legacy boss compatibility | `js/game.js`, `js/map.js`, `js/data.js` | Later cleanup |

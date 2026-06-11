@@ -168,6 +168,16 @@ function flagEmojiFromCountryCode(countryCode) {
     .join('');
 }
 
+const FOOTBALL_STAMP_ASSETS = Object.freeze({
+  stamp_sao_paulo: 'assets/stamps/sao-paulo-stamp.svg',
+  stamp_berlin: 'assets/stamps/berlin-stamp.svg',
+  stamp_tokyo: 'assets/stamps/tokyo-stamp.svg'
+});
+
+function getFootballStampAsset(stamp) {
+  return FOOTBALL_STAMP_ASSETS[stamp?.id] || '';
+}
+
 function getTitleBootStatusEl() {
   let el = document.getElementById('title-boot-status');
   if (el) return el;
@@ -739,8 +749,11 @@ function showMapScreen() {
       const boss = window.DomainBosses?.getHostCity(i);
       const label = boss?.stamp?.displayName || `Host City ${i + 1} Stamp`;
       const flag = flagEmojiFromCountryCode(boss?.nation);
+      const stampAsset = getFootballStampAsset(boss?.stamp);
       return earned
-        ? `<span class="badge-icon-img" role="img" aria-label="${label}" title="${label}">${flag}</span>`
+        ? (stampAsset
+          ? `<img src="${stampAsset}" alt="${label}" title="${label}" class="badge-icon-img city-stamp-hud-icon">`
+          : `<span class="badge-icon-img" role="img" aria-label="${label}" title="${label}">${flag}</span>`)
         : `<span class="badge-icon-empty" title="${label}"></span>`;
     }).join('');
   } else {
@@ -2864,6 +2877,7 @@ function showBadgeScreen(leader) {
     badgeScreen?.classList.add('city-stamp-screen-active');
     const target = getFootballSliceStampTarget();
     const flag = flagEmojiFromCountryCode(leader.nation);
+    const stampAsset = getFootballStampAsset(leader.stamp);
     if (badgeMsg) badgeMsg.textContent = `${leader.badge} earned`;
     if (badgeLeader) badgeLeader.textContent = `${leader.hostCity} · ${leader.name}`;
     if (badgeCount) badgeCount.textContent = `Stamps: ${Math.min(state.badges, target)}/${target}`;
@@ -2873,7 +2887,9 @@ function showBadgeScreen(leader) {
       badgeImg.alt = leader.badge || 'City Stamp';
     }
     if (stampFlag) {
-      stampFlag.textContent = flag;
+      stampFlag.innerHTML = stampAsset
+        ? `<img src="${stampAsset}" alt="${leader.badge || 'City Stamp'}" class="city-stamp-asset">`
+        : flag;
       stampFlag.title = leader.badge || 'City Stamp';
       stampFlag.setAttribute('aria-label', leader.badge || 'City Stamp');
       stampFlag.style.display = 'flex';
@@ -2886,6 +2902,7 @@ function showBadgeScreen(leader) {
     if (stampFlag) {
       stampFlag.style.display = 'none';
       stampFlag.textContent = '';
+      stampFlag.innerHTML = '';
       stampFlag.removeAttribute('aria-label');
     }
     if (badgeImg) {

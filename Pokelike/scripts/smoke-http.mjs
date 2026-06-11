@@ -22,7 +22,10 @@ const routes = [
   { path: "/data/football/portrait_manifest.json", includes: "stylized_non_likeness_jersey_avatars" },
   { path: "/data/football/host_city_bosses.json", includes: "\"bosses\"" },
   { path: "/data/football/scout_pools.json", includes: "\"forcedOverrides\"" },
-  { path: "/data/football/album_layout.json", includes: "\"pages\"" }
+  { path: "/data/football/album_layout.json", includes: "\"pages\"" },
+  { path: "/assets/stamps/sao-paulo-stamp.svg", includes: "Sao Paulo City Stamp" },
+  { path: "/assets/stamps/berlin-stamp.svg", includes: "Berlin City Stamp" },
+  { path: "/assets/stamps/tokyo-stamp.svg", includes: "Tokyo City Stamp" }
 ];
 
 function wait(ms) {

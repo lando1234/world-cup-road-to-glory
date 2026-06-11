@@ -380,8 +380,9 @@ await runTest("football stamp ceremony uses host city stamp presentation", () =>
 
   const mapSource = gameSource.slice(gameSource.indexOf("function showMapScreen()"), badgeIndex);
   const footballHudBranch = mapSource.slice(mapSource.indexOf("} else if (isFootballModeEnabled())"), mapSource.indexOf("} else {", mapSource.indexOf("} else if (isFootballModeEnabled())")));
-  assert(footballHudBranch.includes("flagEmojiFromCountryCode"), "football HUD should use nation flag for earned stamps");
-  assert(!footballHudBranch.includes("<img"), "football HUD should not render badge sprite images");
+  assert(footballHudBranch.includes("getFootballStampAsset"), "football HUD should use local City Stamp assets when available");
+  assert(footballHudBranch.includes("city-stamp-hud-icon"), "football HUD should render local City Stamp asset icons");
+  assert(!footballHudBranch.includes("sprites/badges"), "football HUD should not render legacy badge sprite images");
   assert(htmlSource.includes('id="badge-stamp-flag"'), "index.html should include badge-stamp-flag element");
   assert(cssSource.includes(".badge-stamp-flag"), "style.css should define badge-stamp-flag styles");
 });
