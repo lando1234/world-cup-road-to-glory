@@ -151,6 +151,21 @@
       "assetTier": "T0",
       "portrait": "",
       "fallback": "BRA_FB"
+    },
+    "23": {
+      "assetTier": "T0",
+      "portrait": "",
+      "fallback": "ITA_CB"
+    },
+    "24": {
+      "assetTier": "T0",
+      "portrait": "",
+      "fallback": "ITA_GK"
+    },
+    "25": {
+      "assetTier": "T0",
+      "portrait": "",
+      "fallback": "ESP_GK"
     }
   }
 }

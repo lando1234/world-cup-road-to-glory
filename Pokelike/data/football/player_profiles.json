@@ -980,6 +980,111 @@
         "nameOk": true,
         "likenessTier": 0
       }
+    },
+    {
+      "profileId": 23,
+      "slug": "paolo-maldini",
+      "displayName": "Paolo Maldini",
+      "commonName": "Maldini",
+      "nation": "ITA",
+      "position": "CB",
+      "primaryStyle": "iron_defense",
+      "secondaryStyle": "compact_block",
+      "baseStats": {
+        "hp": 78,
+        "atk": 72,
+        "def": 115,
+        "special": 68,
+        "spdef": 95,
+        "speed": 75
+      },
+      "rarity": "elite",
+      "portrait": "/assets/players/paolo-maldini.png",
+      "flavorText": "Positioning so perfect it looks like he never tackles.",
+      "flags": {
+        "isMarquee": false,
+        "isLegend": false,
+        "scoutable": true,
+        "bossExclusive": false
+      },
+      "album": {
+        "pageId": "favorites",
+        "slot": 15
+      },
+      "legal": {
+        "nameOk": true,
+        "likenessTier": 0
+      }
+    },
+    {
+      "profileId": 24,
+      "slug": "gianluigi-buffon",
+      "displayName": "Gianluigi Buffon",
+      "commonName": "Buffon",
+      "nation": "ITA",
+      "position": "GK",
+      "primaryStyle": "iron_defense",
+      "secondaryStyle": "compact_block",
+      "baseStats": {
+        "hp": 82,
+        "atk": 52,
+        "def": 85,
+        "special": 70,
+        "spdef": 108,
+        "speed": 65
+      },
+      "rarity": "elite",
+      "portrait": "/assets/players/gianluigi-buffon.png",
+      "flavorText": "Commanding presence. Organizes the back line like a captain in gloves.",
+      "flags": {
+        "isMarquee": false,
+        "isLegend": false,
+        "scoutable": true,
+        "bossExclusive": false
+      },
+      "album": {
+        "pageId": "favorites",
+        "slot": 16
+      },
+      "legal": {
+        "nameOk": true,
+        "likenessTier": 0
+      }
+    },
+    {
+      "profileId": 25,
+      "slug": "iker-casillas",
+      "displayName": "Iker Casillas",
+      "commonName": "Casillas",
+      "nation": "ESP",
+      "position": "GK",
+      "primaryStyle": "rapid_counter",
+      "secondaryStyle": "iron_defense",
+      "baseStats": {
+        "hp": 75,
+        "atk": 50,
+        "def": 78,
+        "special": 68,
+        "spdef": 102,
+        "speed": 88
+      },
+      "rarity": "elite",
+      "portrait": "/assets/players/iker-casillas.png",
+      "flavorText": "Reflex saves that defy physics. Big-game calm.",
+      "flags": {
+        "isMarquee": false,
+        "isLegend": false,
+        "scoutable": true,
+        "bossExclusive": false
+      },
+      "album": {
+        "pageId": "favorites",
+        "slot": 17
+      },
+      "legal": {
+        "nameOk": true,
+        "likenessTier": 0
+      }
     }
   ]
 }
