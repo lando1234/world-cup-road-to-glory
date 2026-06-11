@@ -116,6 +116,11 @@
       "assetTier": "T0",
       "portrait": "",
       "fallback": "POR_W"
+    },
+    "33": {
+      "assetTier": "T0",
+      "portrait": "",
+      "fallback": "ITA_ST"
     }
   }
 }

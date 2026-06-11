@@ -735,6 +735,41 @@
         "nameOk": true,
         "likenessTier": 0
       }
+    },
+    {
+      "profileId": 33,
+      "slug": "paolo-rossi",
+      "displayName": "Paolo Rossi",
+      "commonName": "Rossi",
+      "nation": "ITA",
+      "position": "ST",
+      "primaryStyle": "clinical_finishing",
+      "secondaryStyle": "high_press",
+      "baseStats": {
+        "hp": 72,
+        "atk": 88,
+        "def": 62,
+        "special": 78,
+        "spdef": 68,
+        "speed": 82
+      },
+      "rarity": "rare",
+      "portrait": "/assets/players/paolo-rossi.png",
+      "flavorText": "Milan leg poacher — arrives where the ball will be.",
+      "flags": {
+        "isMarquee": false,
+        "isLegend": false,
+        "scoutable": true,
+        "bossExclusive": false
+      },
+      "album": {
+        "pageId": "host_city",
+        "slot": 5
+      },
+      "legal": {
+        "nameOk": true,
+        "likenessTier": 0
+      }
     }
   ]
 }
