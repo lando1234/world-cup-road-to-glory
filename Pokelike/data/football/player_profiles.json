@@ -700,6 +700,41 @@
         "nameOk": true,
         "likenessTier": 0
       }
+    },
+    {
+      "profileId": 32,
+      "slug": "luis-figo",
+      "displayName": "Luís Figo",
+      "commonName": "Figo",
+      "nation": "POR",
+      "position": "W",
+      "primaryStyle": "wing_play",
+      "secondaryStyle": "tactical_control",
+      "baseStats": {
+        "hp": 72,
+        "atk": 82,
+        "def": 68,
+        "special": 95,
+        "spdef": 85,
+        "speed": 88
+      },
+      "rarity": "elite",
+      "portrait": "/assets/players/luis-figo.png",
+      "flavorText": "Madrid leg maestro — wide creation with elite end product.",
+      "flags": {
+        "isMarquee": false,
+        "isLegend": false,
+        "scoutable": true,
+        "bossExclusive": false
+      },
+      "album": {
+        "pageId": "host_city",
+        "slot": 4
+      },
+      "legal": {
+        "nameOk": true,
+        "likenessTier": 0
+      }
     }
   ]
 }

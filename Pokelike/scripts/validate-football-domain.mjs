@@ -117,8 +117,13 @@ context.TRAINER_SPECIALTIES_GEN2 = {};
 runScript(context, "js/map.js");
 runScript(context, "js/cloud-save.js");
 
+const PHASE_1_PROFILE_IDS = Object.freeze([
+  1, 2, 3, 4, 6, 7, 9, 10, 12, 14, 15, 17, 18, 28, 29, 30, 31, 16, 22, 26
+]);
+const EXPECTED_PROFILE_IDS = Object.freeze([1, 2, 3, 4, 6, 7, 9, 10, 12, 14, 15, 17, 18, 28, 29, 30, 31, 16, 22, 26, 32]);
+
 const catalogJson = readJson("data/football/player_profiles.json");
-const catalog = context.window.DomainProfiles.loadCatalog(catalogJson);
+const catalog = context.window.DomainProfiles.loadCatalog(catalogJson, { expectedProfileIds: EXPECTED_PROFILE_IDS });
 const hostCityBossesJson = readJson("data/football/host_city_bosses.json");
 const hostCityBossCatalog = context.window.DomainBosses.loadHostCityBosses(hostCityBossesJson);
 const albumLayoutJson = readJson("data/football/album_layout.json");
@@ -437,7 +442,7 @@ await runTest("style chart exposes 18 complete football styles", () => {
 });
 
 await runTest("player catalog validates Phase 1 roster", () => {
-  assert(catalog.profiles.length === 20, `expected 20 profiles, received ${catalog.profiles.length}`);
+  assert(catalog.profiles.length === EXPECTED_PROFILE_IDS.length, `expected ${EXPECTED_PROFILE_IDS.length} profiles, received ${catalog.profiles.length}`);
   for (const starterId of [1, 2, 3]) {
     const profile = context.window.DomainProfiles.getProfile(starterId);
     assert(profile, `missing starter profile ${starterId}`);

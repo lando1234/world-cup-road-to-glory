@@ -79,7 +79,7 @@ function getProfileLabel(profile, fallbackIndex) {
   return profile?.profileId !== undefined ? `profile ${profile.profileId}` : `profiles[${fallbackIndex}]`;
 }
 
-function validatePlayerCatalog(catalog) {
+function validatePlayerCatalog(catalog, options = {}) {
   const errors = [];
   const warnings = [];
 
@@ -100,13 +100,19 @@ function validatePlayerCatalog(catalog) {
     return { valid: errors.length === 0, errors, warnings };
   }
 
-  if (catalog.profiles.length !== 20) {
-    errors.push(`profiles must contain exactly 20 Phase 1 entries; received ${catalog.profiles.length}.`);
+  const expectedProfileIds = Array.isArray(options.expectedProfileIds)
+    ? options.expectedProfileIds
+    : [...PHASE_1_PROFILE_IDS];
+  const profileIds = catalog.profiles.map(profile => profile?.profileId);
+
+  if (catalog.profiles.length !== expectedProfileIds.length) {
+    errors.push(
+      `profiles must contain exactly ${expectedProfileIds.length} entries; received ${catalog.profiles.length}.`
+    );
   }
 
-  const profileIds = catalog.profiles.map(profile => profile?.profileId);
-  if (profileIds.join(",") !== PHASE_1_PROFILE_IDS.join(",")) {
-    errors.push(`profileIds must match Phase 1 order: ${PHASE_1_PROFILE_IDS.join(", ")}.`);
+  if (profileIds.join(",") !== expectedProfileIds.join(",")) {
+    errors.push(`profileIds must match catalog order: ${expectedProfileIds.join(", ")}.`);
   }
 
   const seenIds = new Set();
@@ -234,8 +240,8 @@ function cloneAndFreezeProfile(profile) {
   });
 }
 
-function loadCatalog(json) {
-  const validation = validatePlayerCatalog(json);
+function loadCatalog(json, options = {}) {
+  const validation = validatePlayerCatalog(json, options);
   if (!validation.valid) {
     throw new Error(`Player profile catalog validation failed: ${validation.errors.join(" | ")}`);
   }

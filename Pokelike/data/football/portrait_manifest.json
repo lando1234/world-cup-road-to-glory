@@ -12,25 +12,110 @@
     "T3": "Licensed photo or cutout"
   },
   "players": {
-    "1": { "assetTier": "T0", "portrait": "", "fallback": "FRA_ST" },
-    "2": { "assetTier": "T0", "portrait": "", "fallback": "ARG_AM" },
-    "3": { "assetTier": "T0", "portrait": "", "fallback": "NED_CB" },
-    "4": { "assetTier": "T0", "portrait": "", "fallback": "NOR_ST" },
-    "6": { "assetTier": "T0", "portrait": "", "fallback": "CRO_CM" },
-    "7": { "assetTier": "T0", "portrait": "", "fallback": "EGY_W" },
-    "9": { "assetTier": "T0", "portrait": "", "fallback": "ESP_DM" },
-    "10": { "assetTier": "T0", "portrait": "", "fallback": "ENG_CM" },
-    "12": { "assetTier": "T0", "portrait": "", "fallback": "ESP_CM" },
-    "14": { "assetTier": "T0", "portrait": "", "fallback": "FRA_DM" },
-    "15": { "assetTier": "T0", "portrait": "", "fallback": "ESP_CB" },
-    "17": { "assetTier": "T0", "portrait": "", "fallback": "BRA_GK" },
-    "18": { "assetTier": "T0", "portrait": "", "fallback": "BRA_FB" },
-    "28": { "assetTier": "T0", "portrait": "", "fallback": "NED_W" },
-    "29": { "assetTier": "T0", "portrait": "", "fallback": "BRA_DM" },
-    "30": { "assetTier": "T0", "portrait": "", "fallback": "GER_CM" },
-    "31": { "assetTier": "T0", "portrait": "", "fallback": "JPN_W" },
-    "16": { "assetTier": "T0", "portrait": "", "fallback": "GER_GK" },
-    "22": { "assetTier": "T0", "portrait": "", "fallback": "BRA_FB" },
-    "26": { "assetTier": "T0", "portrait": "", "fallback": "GER_CB" }
+    "1": {
+      "assetTier": "T0",
+      "portrait": "",
+      "fallback": "FRA_ST"
+    },
+    "2": {
+      "assetTier": "T0",
+      "portrait": "",
+      "fallback": "ARG_AM"
+    },
+    "3": {
+      "assetTier": "T0",
+      "portrait": "",
+      "fallback": "NED_CB"
+    },
+    "4": {
+      "assetTier": "T0",
+      "portrait": "",
+      "fallback": "NOR_ST"
+    },
+    "6": {
+      "assetTier": "T0",
+      "portrait": "",
+      "fallback": "CRO_CM"
+    },
+    "7": {
+      "assetTier": "T0",
+      "portrait": "",
+      "fallback": "EGY_W"
+    },
+    "9": {
+      "assetTier": "T0",
+      "portrait": "",
+      "fallback": "ESP_DM"
+    },
+    "10": {
+      "assetTier": "T0",
+      "portrait": "",
+      "fallback": "ENG_CM"
+    },
+    "12": {
+      "assetTier": "T0",
+      "portrait": "",
+      "fallback": "ESP_CM"
+    },
+    "14": {
+      "assetTier": "T0",
+      "portrait": "",
+      "fallback": "FRA_DM"
+    },
+    "15": {
+      "assetTier": "T0",
+      "portrait": "",
+      "fallback": "ESP_CB"
+    },
+    "17": {
+      "assetTier": "T0",
+      "portrait": "",
+      "fallback": "BRA_GK"
+    },
+    "18": {
+      "assetTier": "T0",
+      "portrait": "",
+      "fallback": "BRA_FB"
+    },
+    "28": {
+      "assetTier": "T0",
+      "portrait": "",
+      "fallback": "NED_W"
+    },
+    "29": {
+      "assetTier": "T0",
+      "portrait": "",
+      "fallback": "BRA_DM"
+    },
+    "30": {
+      "assetTier": "T0",
+      "portrait": "",
+      "fallback": "GER_CM"
+    },
+    "31": {
+      "assetTier": "T0",
+      "portrait": "",
+      "fallback": "JPN_W"
+    },
+    "16": {
+      "assetTier": "T0",
+      "portrait": "",
+      "fallback": "GER_GK"
+    },
+    "22": {
+      "assetTier": "T0",
+      "portrait": "",
+      "fallback": "BRA_FB"
+    },
+    "26": {
+      "assetTier": "T0",
+      "portrait": "",
+      "fallback": "GER_CB"
+    },
+    "32": {
+      "assetTier": "T0",
+      "portrait": "",
+      "fallback": "POR_W"
+    }
   }
 }
