@@ -1,0 +1,444 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SPEC 015 Phase 5 Assumptions, Tradeoffs, and Decision Gates</title>
+  <style>
+    :root {
+      --bg: #f4f7f5;
+      --panel: #ffffff;
+      --ink: #18202c;
+      --muted: #62707c;
+      --line: #d7ded8;
+      --accent: #176f55;
+      --accent-2: #2357a5;
+      --warn: #a86513;
+      --risk: #9f3636;
+      --soft: #edf8f3;
+      --soft-2: #eef4ff;
+      --soft-3: #fff7e8;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at top left, rgba(23, 111, 85, 0.14), transparent 34rem),
+        radial-gradient(circle at bottom right, rgba(35, 87, 165, 0.12), transparent 30rem),
+        linear-gradient(180deg, #fbfcfa, var(--bg));
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.55;
+    }
+    main { max-width: 1180px; margin: 0 auto; padding: 44px 24px 72px; }
+    header, section {
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.9);
+      box-shadow: 0 18px 50px rgba(24, 32, 44, 0.06);
+    }
+    header { padding: 32px; border-radius: 24px; }
+    section { margin-top: 24px; padding: 26px; border-radius: 20px; }
+    h1, h2, h3 { margin: 0; line-height: 1.15; }
+    h1 { font-size: clamp(2rem, 4vw, 3.2rem); }
+    h2 { margin-bottom: 16px; font-size: 1.5rem; }
+    p { margin: 0; color: var(--muted); }
+    code {
+      padding: 1px 5px;
+      border-radius: 4px;
+      background: rgba(24, 32, 44, 0.08);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 0.94em;
+    }
+    .eyebrow {
+      display: inline-flex;
+      margin-bottom: 16px;
+      color: var(--accent);
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+    .subtitle { max-width: 860px; margin-top: 16px; font-size: 1.05rem; }
+    .meta { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      min-height: 30px;
+      padding: 5px 11px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: #fff;
+      color: var(--muted);
+      font-size: 0.83rem;
+      font-weight: 700;
+    }
+    .grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+    .split { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .card, .item {
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: var(--panel);
+      padding: 16px;
+    }
+    .card strong, .item .label {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--accent);
+      font-size: 0.76rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .list { display: grid; gap: 12px; margin: 0; padding: 0; list-style: none; }
+    .risk { border-color: rgba(159, 54, 54, 0.36); background: #fff4f4; }
+    .tradeoff { border-color: rgba(168, 101, 19, 0.34); background: var(--soft-3); }
+    .assumption { background: var(--soft); }
+    .gogreen { border-color: rgba(23, 111, 85, 0.4); background: var(--soft); }
+    .gored { border-color: rgba(159, 54, 54, 0.4); background: #fff4f4; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      overflow: hidden;
+      background: #fff;
+    }
+    th, td {
+      padding: 11px 12px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+      font-size: 0.92rem;
+    }
+    th {
+      color: var(--accent);
+      background: var(--soft);
+      font-size: 0.76rem;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+    }
+    tr:last-child td { border-bottom: 0; }
+    footer { margin-top: 30px; padding-top: 18px; border-top: 1px solid var(--line); color: var(--muted); font-size: 0.86rem; }
+    @media (max-width: 900px) {
+      .grid, .split { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <span class="eyebrow">SPEC 015 · Phase 5 Governance</span>
+      <h1>Phase 5 Assumptions, Tradeoffs, Frictions, and Decision Gates</h1>
+      <p class="subtitle">
+        Living governance report for knockout, meta progression, economy, and legends. Update after every Phase 5 task. Authority: <code>033-phase-5-knockout-and-meta-plan.md</code>.
+      </p>
+      <div class="meta">
+        <span class="pill">Created: 2026-06-11</span>
+        <span class="pill">Status: Implementation (P5-017 enabled)</span>
+        <span class="pill">Campaign: 8 host cities</span>
+        <span class="pill">Knockout: 5 gates (live)</span>
+        <span class="pill">P5-GOV: Waves 1–5 wired</span>
+        <span class="pill">P5-GOV: validate + smoke green</span>
+        <span class="pill">P5-GOV: profiles.js 46-id sync</span>
+        <span class="pill">knockoutEnabled: true</span>
+        <span class="pill">Save: v3</span>
+        <span class="pill">Cloud save: disabled</span>
+        <span class="pill">One task, one commit</span>
+      </div>
+    </header>
+
+    <section>
+      <h2>Executive Read</h2>
+      <div class="grid">
+        <article class="card">
+          <strong>What Phase 5 is doing</strong>
+          <p>Building the definitive game loop: 8-city campaign → knockout bracket → World Cup Trophy → full meta settlement with credits, fragments, achievements, and permanent account progress — without breaking RC invariants until explicit gate commits.</p>
+        </article>
+        <article class="card gogreen">
+          <strong>Current outcome</strong>
+          <p><strong>CONDITIONAL GO</strong> for automated gates. Knockout runner, meta settlement, economy, legends vault, and Trophy Room are implemented. Manual QA (036) still required for P5-072 sign-off.</p>
+        </article>
+        <article class="card">
+          <strong>Release posture</strong>
+          <p>Invariants: <code>maxMapIndex: 7</code>, knockout on (P5-017), cloud off, no live APIs, battle math frozen, save v3 extended (no v4), football-native identity.</p>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <h2>Go / No-Go Status</h2>
+      <div class="split">
+        <article class="card gogreen">
+          <strong>RC / external demo</strong>
+          <p><strong>GO</strong> — unchanged 8-city slice ending at Settlement Lite when knockout disabled.</p>
+        </article>
+        <article class="card gogreen">
+          <strong>Phase 5 production gameplay</strong>
+          <p><strong>CONDITIONAL GO</strong> — code path complete; pending browser pass per 036.</p>
+        </article>
+        <article class="card gogreen">
+          <strong>Phase 5 implementation kickoff</strong>
+          <p><strong>GO</strong> — docs 033–037 and <code>validate-phase5-qa.mjs</code> green.</p>
+        </article>
+        <article class="card">
+          <strong>Save v4 migration</strong>
+          <p><strong>PENDING</strong> — decision at P5-060. Default: extend v3 flat keys first.</p>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <h2>Core Assumptions</h2>
+      <ul class="list">
+        <li class="item assumption">
+          <span class="label">A1 · Knockout is linear, not map 8</span>
+          <p>Football knockout uses <code>eliteIndex</code> gate chain + <code>knockout_teams.json</code>. Legacy <code>startMap(8)</code> + <code>generateMap()</code> is Pokemon Elite Four only.</p>
+        </li>
+        <li class="item assumption">
+          <span class="label">A2 · knockoutEnabled gate is singular</span>
+          <p>Only task <strong>P5-017</strong> may flip <code>FEATURES.knockoutEnabled</code> to <code>true</code>, after data + runner + trophy path validate.</p>
+        </li>
+        <li class="item assumption">
+          <span class="label">A3 · Slice complete when knockout off</span>
+          <p>Stamp 8 with <code>knockoutEnabled: false</code> must still route to Slice Complete → <code>settleRunLite</code> for regression.</p>
+        </li>
+        <li class="item assumption">
+          <span class="label">A4 · Meta via domain/meta.js</span>
+          <p>Settlement logic lives in pure functions per <code>008-meta-progression.md</code> §18; UI never writes credits directly.</p>
+        </li>
+        <li class="item assumption">
+          <span class="label">A5 · Catalog stand-ins acceptable</span>
+          <p>Knockout rosters may use catalog stand-ins per <code>007-football-data-pack.md</code> §8; full 50-player catalog not required for Phase 5 cut line.</p>
+        </li>
+        <li class="item assumption">
+          <span class="label">A6 · One task, one commit</span>
+          <p>Never mix knockout enable, economy, save migration, and content authoring in one commit.</p>
+        </li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Tradeoffs</h2>
+      <ul class="list">
+        <li class="item tradeoff">
+          <span class="label">Reuse elite-prep-screen vs new knockout UI</span>
+          <p>Reskin existing prep screen for speed. Cost: temporary bridge DOM ids (<code>elite-prep-*</code>) until Phase 6 rename.</p>
+        </li>
+        <li class="item tradeoff">
+          <span class="label">v3 flat keys before v4 blob</span>
+          <p>Ship meta on additional localStorage keys without schema bump. Cost: more keys until Wave 6 consolidation.</p>
+        </li>
+        <li class="item tradeoff">
+          <span class="label">settleRunLite regression path</span>
+          <p>Keep lite settlement when knockout off. Cost: two settlement code paths until football always uses full meta.</p>
+        </li>
+        <li class="item tradeoff">
+          <span class="label">Fixed historical bracket</span>
+          <p>Seeded presentation only; gate order static per 007. Dynamic bracket seeding deferred Phase 6.</p>
+        </li>
+        <li class="item tradeoff">
+          <span class="label">Legend recruit defer</span>
+          <p>P5-053 may limit to album + trophy room display. Full legend recruit pool deferred if schedule tight.</p>
+        </li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Decision Gates</h2>
+      <table>
+        <thead>
+          <tr><th>Gate</th><th>Task</th><th>Condition</th><th>Status</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Planning complete</td>
+            <td>P5-006</td>
+            <td>Docs 033–037 + validate-phase5-qa green</td>
+            <td>✅ GO</td>
+          </tr>
+          <tr>
+            <td>Knockout data ready</td>
+            <td>P5-018</td>
+            <td><code>validate-knockout-data.mjs</code> passes</td>
+            <td>⬜ Pending</td>
+          </tr>
+          <tr>
+            <td>Knockout enable</td>
+            <td>P5-017</td>
+            <td>Runner + rosters + trophy + persistence</td>
+            <td>⬜ Pending</td>
+          </tr>
+          <tr>
+            <td>Full settlement</td>
+            <td>P5-041</td>
+            <td><code>DomainMeta.settleRun</code> + dedupe</td>
+            <td>⬜ Pending</td>
+          </tr>
+          <tr>
+            <td>Save v4</td>
+            <td>P5-060</td>
+            <td>Only if v3 flat keys insufficient</td>
+            <td>⬜ Pending</td>
+          </tr>
+          <tr>
+            <td>Phase 5 sign-off</td>
+            <td>P5-072</td>
+            <td>Manual QA PASS + cut line met</td>
+            <td>⬜ NO-GO</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>Known Frictions</h2>
+      <table>
+        <thead>
+          <tr><th>Surface</th><th>Friction</th><th>Phase 5 handling</th><th>Risk</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>game.js</code> stamp-8 advance</td>
+            <td>Gated <code>startMap(8)</code> exists — wrong for football knockout</td>
+            <td>P5-014 linear runner; lint in phase5 QA</td>
+            <td>High</td>
+          </tr>
+          <tr>
+            <td>elite-prep-screen</td>
+            <td>PokeAPI sprites on prep enemy slots</td>
+            <td>P5-015 football portrait reskin</td>
+            <td>Medium</td>
+          </tr>
+          <tr>
+            <td>Settlement</td>
+            <td><code>metaRewardsLabel: "Meta rewards coming soon"</code></td>
+            <td>P5-041 full settlement</td>
+            <td>Medium</td>
+          </tr>
+          <tr>
+            <td>Profiles 37–41</td>
+            <td>Knockout-only IDs missing from catalog</td>
+            <td>P5-021 before P5-017</td>
+            <td>High</td>
+          </tr>
+          <tr>
+            <td>Album expansion</td>
+            <td>knockout/legends pages in expansion JSON only</td>
+            <td>P5-036, P5-051 merge</td>
+            <td>Low</td>
+          </tr>
+          <tr>
+            <td>Bridge keys</td>
+            <td><code>speciesId</code>, <code>poke_*</code> in saves</td>
+            <td>Wave 6 optional; 030 audit</td>
+            <td>High if rushed</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>Missing Assets And Ownership</h2>
+      <table>
+        <thead>
+          <tr><th>Asset</th><th>Owner task</th><th>Tier</th><th>Notes</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>knockout_teams.json</code></td>
+            <td>P5-010, P5-020</td>
+            <td>Data</td>
+            <td>5 gates per 007 §8</td>
+          </tr>
+          <tr>
+            <td>World Cup trophy SVG</td>
+            <td>P5-025</td>
+            <td>T1 UI</td>
+            <td>Local manifest only</td>
+          </tr>
+          <tr>
+            <td>Knockout ceremony backdrop</td>
+            <td>P5-012</td>
+            <td>T1 optional</td>
+            <td>CSS gradient fallback OK</td>
+          </tr>
+          <tr>
+            <td>Profiles 37–41 portraits</td>
+            <td>P5-021</td>
+            <td>T1 jersey</td>
+            <td>Same pipeline as RC</td>
+          </tr>
+          <tr>
+            <td>Historical federation emblems</td>
+            <td>—</td>
+            <td>Defer Phase 6</td>
+            <td>Kit color chips first</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>Expansion Readiness (post-RC)</h2>
+      <div class="split">
+        <article class="card gogreen">
+          <strong>Ready now</strong>
+          <ul class="list" style="margin-top:12px;">
+            <li class="item"><span class="label">Host city campaign</span><p>8 maps, bosses, stamps, album host_city page.</p></li>
+            <li class="item"><span class="label">Elite infrastructure</span><p><code>eliteIndex</code>, prep screen, transition screen, battle flow.</p></li>
+            <li class="item"><span class="label">Settlement lite + dedupe</span><p><code>DomainSave.settleRunLite</code> proven.</p></li>
+            <li class="item"><span class="label">SPEC 008 blueprint</span><p>Meta algorithm and account shape documented.</p></li>
+          </ul>
+        </article>
+        <article class="card gogreen">
+          <strong>Implemented (Waves 1–5)</strong>
+          <ul class="list" style="margin-top:12px;">
+            <li class="item"><span class="label">Knockout data + runner</span><p><code>knockout_teams.json</code>, <code>enterKnockoutStage</code>, linear 5-gate chain.</p></li>
+            <li class="item"><span class="label">Meta + economy</span><p><code>DomainMeta.settleRun</code>, credits, fragments, run history.</p></li>
+            <li class="item"><span class="label">Album expansion</span><p>Knockout + legends pages with <code>hiddenUntil</code> unlock.</p></li>
+            <li class="item"><span class="label">Trophy Room</span><p>Title-screen modal with wins, credits, flags.</p></li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <h2>Runtime Blocker Resolved (P5-070)</h2>
+      <ul class="list">
+        <li class="item risk">
+          <span class="label">F1 · profiles.js still expected 33 IDs</span>
+          <p>Harness used 46-profile override; runtime <code>CATALOG_PROFILE_IDS</code> stayed at Phase 3 (33). Boot gate failed silently — <code>New Campaign</code> stayed disabled and knockout teams could not load.</p>
+        </li>
+        <li class="item gogreen">
+          <span class="label">Fix</span>
+          <p>Synced <code>CATALOG_PROFILE_IDS</code> to 46 entries; added harness guard <code>runtime CATALOG_PROFILE_IDS matches player_profiles.json</code>.</p>
+        </li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Phase 5 Sign-Off</h2>
+      <p>Update this section at P5-072.</p>
+      <table style="margin-top:16px;">
+        <thead>
+          <tr><th>Criterion</th><th>Target</th><th>Status</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Knockout 5-gate path</td><td>Playable win + loss</td><td>✅ (automated)</td></tr>
+          <tr><td>World Cup trophy</td><td>Ceremony + settlement</td><td>✅ (automated)</td></tr>
+          <tr><td>Meta progression</td><td>Flags, history, trophy room</td><td>✅</td></tr>
+          <tr><td>Economy</td><td>Credits earn + breakdown UI</td><td>✅</td></tr>
+          <tr><td>Legends</td><td>Fragments + one unlock path</td><td>✅</td></tr>
+          <tr><td>Save v4</td><td>Only if v3 insufficient</td><td>⏭ skipped — v3 flat keys</td></tr>
+          <tr><td>Validation</td><td><code>rtk npm run validate</code> green</td><td>✅</td></tr>
+          <tr><td>Manual QA</td><td>036 PASS</td><td>⬜ (P5-070)</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <footer>
+      P5-GOV ledger · Sync with <code>034-phase-5-task-breakdown.md</code> after each task · Post-Phase 5 reality check section added at P5-072.
+    </footer>
+  </main>
+</body>
+</html>
