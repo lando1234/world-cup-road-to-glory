@@ -136,6 +136,21 @@
       "assetTier": "T0",
       "portrait": "",
       "fallback": "ENG_CM"
+    },
+    "13": {
+      "assetTier": "T0",
+      "portrait": "",
+      "fallback": "ENG_ST"
+    },
+    "19": {
+      "assetTier": "T0",
+      "portrait": "",
+      "fallback": "ESP_CM"
+    },
+    "21": {
+      "assetTier": "T0",
+      "portrait": "",
+      "fallback": "BRA_FB"
     }
   }
 }

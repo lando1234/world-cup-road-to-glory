@@ -875,6 +875,111 @@
         "nameOk": true,
         "likenessTier": 0
       }
+    },
+    {
+      "profileId": 13,
+      "slug": "harry-kane",
+      "displayName": "Harry Kane",
+      "commonName": "Kane",
+      "nation": "ENG",
+      "position": "ST",
+      "primaryStyle": "clinical_finishing",
+      "secondaryStyle": "aerial_threat",
+      "baseStats": {
+        "hp": 72,
+        "atk": 88,
+        "def": 62,
+        "special": 78,
+        "spdef": 68,
+        "speed": 82
+      },
+      "rarity": "elite",
+      "portrait": "/assets/players/harry-kane.png",
+      "flavorText": "Drops deep or stays high — always finds the right shot.",
+      "flags": {
+        "isMarquee": false,
+        "isLegend": false,
+        "scoutable": true,
+        "bossExclusive": false
+      },
+      "album": {
+        "pageId": "favorites",
+        "slot": 12
+      },
+      "legal": {
+        "nameOk": true,
+        "likenessTier": 0
+      }
+    },
+    {
+      "profileId": 19,
+      "slug": "andres-iniesta",
+      "displayName": "Andrés Iniesta",
+      "commonName": "Iniesta",
+      "nation": "ESP",
+      "position": "CM",
+      "primaryStyle": "possession_buildup",
+      "secondaryStyle": "ice_press",
+      "baseStats": {
+        "hp": 70,
+        "atk": 68,
+        "def": 65,
+        "special": 112,
+        "spdef": 95,
+        "speed": 82
+      },
+      "rarity": "elite",
+      "portrait": "/assets/players/andres-iniesta.png",
+      "flavorText": "Glides past pressure. The big moment always finds him.",
+      "flags": {
+        "isMarquee": false,
+        "isLegend": false,
+        "scoutable": true,
+        "bossExclusive": false
+      },
+      "album": {
+        "pageId": "favorites",
+        "slot": 13
+      },
+      "legal": {
+        "nameOk": true,
+        "likenessTier": 0
+      }
+    },
+    {
+      "profileId": 21,
+      "slug": "roberto-carlos",
+      "displayName": "Roberto Carlos",
+      "commonName": "Roberto Carlos",
+      "nation": "BRA",
+      "position": "FB",
+      "primaryStyle": "power_strike",
+      "secondaryStyle": "wing_play",
+      "baseStats": {
+        "hp": 75,
+        "atk": 105,
+        "def": 78,
+        "special": 82,
+        "spdef": 72,
+        "speed": 92
+      },
+      "rarity": "elite",
+      "portrait": "/assets/players/roberto-carlos.png",
+      "flavorText": "Howitzer left foot. Defenders hear the run before they see him.",
+      "flags": {
+        "isMarquee": false,
+        "isLegend": false,
+        "scoutable": true,
+        "bossExclusive": false
+      },
+      "album": {
+        "pageId": "favorites",
+        "slot": 14
+      },
+      "legal": {
+        "nameOk": true,
+        "likenessTier": 0
+      }
     }
   ]
 }
