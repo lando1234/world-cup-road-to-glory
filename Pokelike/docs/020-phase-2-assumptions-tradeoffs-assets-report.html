@@ -677,6 +677,27 @@
           </div>
         </div>
       </article>
+      <article class="task" style="margin-top: 12px;">
+        <h3>P2-021 — Runtime no-live-API gate</h3>
+        <div class="task-grid">
+          <div class="field">
+            <span>Assumption</span>
+            <p>Legacy branches may still contain PokeAPI sprite URLs, but football runtime-critical display must not require live TheSportsDB or PokeAPI calls.</p>
+          </div>
+          <div class="field">
+            <span>Tradeoff</span>
+            <p>The gate validates the football-critical path instead of deleting every legacy remote URL, avoiding broad Classic-mode regressions.</p>
+          </div>
+          <div class="field">
+            <span>Validation</span>
+            <p>Phase 2 QA checks TheSportsDB is disabled, the manifest declares no remote dependency, profiles load local manifest before optional enrichment, and football starter display avoids remote URLs.</p>
+          </div>
+          <div class="field">
+            <span>Owner Note</span>
+            <p>Future public-release hardening can remove or gate non-critical legacy external scripts separately; this task protects gameplay-critical football display.</p>
+          </div>
+        </div>
+      </article>
     </section>
 
     <section>
@@ -698,7 +719,7 @@
     </section>
 
     <footer>
-      Generated for Pokelike World Cup Road to Glory Phase 2. Last updated 2026-06-10 — P2-009 local portrait manifest, P2-005 football album write call sites, P2-004 album facade names, P2-003 bridge inventory, P2-008 portrait strategy, P2-007 HTTP smoke script, P2-006 manual QA runbook, P2-002 QA harness shell, P2-001 ledger/protocol, baseline assumptions, tradeoffs, frictions, asset gaps, decision gates, and owner watchlist.
+      Generated for Pokelike World Cup Road to Glory Phase 2. Last updated 2026-06-10 — P2-021 runtime no-live-API gate, P2-009 local portrait manifest, P2-005 football album write call sites, P2-004 album facade names, P2-003 bridge inventory, P2-008 portrait strategy, P2-007 HTTP smoke script, P2-006 manual QA runbook, P2-002 QA harness shell, P2-001 ledger/protocol, baseline assumptions, tradeoffs, frictions, asset gaps, decision gates, and owner watchlist.
     </footer>
   </main>
 </body>

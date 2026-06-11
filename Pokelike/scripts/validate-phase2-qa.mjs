@@ -45,6 +45,7 @@ const gameSource = readText("js/game.js");
 const profilesSource = readText("js/domain/profiles.js");
 const featuresSource = readText("js/domain/features.js");
 const cloudSaveSource = readText("js/cloud-save.js");
+const portraitSource = readText("js/domain/portrait-source.js");
 
 runTest("P2-002 Phase 2 governance documents are present", () => {
   assert(phase2Spec.includes("SPEC 012"), "Phase 2 plan should keep the SPEC 012 heading");
@@ -140,6 +141,20 @@ runTest("P2-009 local portrait manifest covers the runtime profile catalog", () 
   assert(profilesSource.includes("PORTRAIT_MANIFEST_URL"), "DomainProfiles should define a portrait manifest URL");
   assert(profilesSource.includes("initPortraitManifest"), "DomainProfiles should initialize the local portrait manifest");
   assert(smokeHttpSource.includes("portrait_manifest.json"), "HTTP smoke should verify portrait_manifest.json");
+});
+
+runTest("P2-021 football runtime-critical display path does not require live APIs", () => {
+  const selectStarterBlock = extractBetween(gameSource, "async function selectStarter", "// ---- Map Management ----");
+  const footballStarterBranch = extractBetween(selectStarterBlock, "if (window.FEATURES?.footballMode === true", "} else {");
+
+  assert(featuresSource.includes("useTheSportsDbPortraits: false"), "TheSportsDB portrait enrichment should be disabled by default");
+  assert(portraitManifest.remoteRuntimeDependency === false, "portrait manifest should declare no remote runtime dependency");
+  assert(profilesSource.indexOf("initPortraitManifest") < profilesSource.indexOf("enrichCatalogPortraits"), "profile loader should apply local manifest before optional portrait enrichment");
+  assert(portraitSource.includes("if (!config.enabled) return null;"), "portrait source should no-op when disabled");
+  assert(!profilesSource.includes("lookupPlayerById("), "DomainProfiles should not call live TheSportsDB lookup");
+  assert(!profilesSource.includes("searchPlayer("), "DomainProfiles should not call live TheSportsDB search");
+  assert(!footballStarterBranch.includes("https://"), "football starter branch should not build remote sprite URLs");
+  assert(footballStarterBranch.includes("markAlbumSigned"), "football starter branch should use local album write path");
 });
 
 const failed = results.filter(result => result.status === "FAIL");

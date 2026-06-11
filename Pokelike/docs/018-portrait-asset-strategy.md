@@ -90,6 +90,8 @@ Current baseline:
 - Disables `FEATURES.useTheSportsDbPortraits` by default.
 - Keeps TheSportsDB tooling as internal/demo-only reference, not a critical runtime display path.
 
+P2-021 adds a validation gate for this rule: football runtime-critical display must use the local manifest/fallback path, and optional TheSportsDB helpers must no-op while disabled.
+
 This is intentionally a contract-first implementation. Final avatar art can land later without changing save shape or profile identity.
 
 ---
