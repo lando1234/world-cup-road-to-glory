@@ -155,8 +155,21 @@ function getFootballSliceStampTarget() {
   return Number.isFinite(maxMapIndex) ? maxMapIndex + 1 : Infinity;
 }
 
+function isKnockoutEnabled() {
+  return isFootballModeEnabled() && window.FEATURES?.knockoutEnabled === true;
+}
+
 function isFootballSliceComplete() {
-  return isFootballModeEnabled() && state.badges >= getFootballSliceStampTarget();
+  if (!isFootballModeEnabled()) return false;
+  if (isKnockoutEnabled()) return false;
+  return state.badges >= getFootballSliceStampTarget();
+}
+
+function shouldEnterKnockoutAfterStamps() {
+  return isKnockoutEnabled()
+    && state.badges >= 8
+    && !state.wonWorldCup
+    && (state.knockoutPhase || state.knockoutGatesCleared === undefined || state.knockoutGatesCleared < 5);
 }
 
 function flagEmojiFromCountryCode(countryCode) {
@@ -346,6 +359,11 @@ async function initGame() {
     continueBtn.style.display = '';
     continueBtn.onclick = async () => {
       if (!loadRun()) return;
+      if (state.knockoutPhase) {
+        await window.DomainKnockout?.initKnockoutTeams?.();
+        await runKnockoutChain();
+        return;
+      }
       if (state.currentNode && !state.currentNode.visited) {
         await onNodeClick(state.currentNode);
       } else {
@@ -1256,6 +1274,141 @@ function buildHostCityLeaderView(boss) {
   };
 }
 
+function renderKnockoutPrepEnemySlot(player) {
+  const profile = window.DomainProfiles?.getProfile?.(player.profileId);
+  const portrait = profile?.portrait || player.spriteUrl || '';
+  const displayName = profile?.displayName || player.name || 'Player';
+  const styles = [
+    renderStyleChip?.(profile?.primaryStyle),
+    profile?.secondaryStyle && profile.secondaryStyle !== profile.primaryStyle
+      ? renderStyleChip?.(profile.secondaryStyle)
+      : ''
+  ].filter(Boolean).join('');
+  const nationFlag = flagEmojiFromCountryCode(profile?.nation || player.nation || '');
+  return `<div class="elite-prep-enemy-slot">
+    <img src="${portrait}" alt="${displayName}" onerror="this.style.display='none'">
+    <div class="name">${nationFlag} ${displayName}</div>
+    <div class="lv">Form ${player.level ?? player.formLevel ?? '?'}</div>
+    <div class="types">${styles}</div>
+  </div>`;
+}
+
+async function showKnockoutDrawCeremony() {
+  return new Promise(resolve => {
+    const el = document.getElementById('transition-screen');
+    if (!el) { resolve(); return; }
+    const theme = window.GAME_THEME || {};
+    document.getElementById('transition-msg').textContent = theme.knockoutDrawTitle || 'Knockout Draw';
+    document.getElementById('transition-sub').textContent = theme.knockoutDrawSubtitle || 'Eight stamps earned. Historical champions await.';
+    showScreen('transition-screen');
+    const finish = () => {
+      document.removeEventListener('keydown', onKey);
+      el.removeEventListener('click', finish);
+      resolve();
+    };
+    const onKey = (e) => {
+      if (e.code !== 'Space' && e.key !== ' ') return;
+      e.preventDefault();
+      finish();
+    };
+    document.addEventListener('keydown', onKey);
+    el.addEventListener('click', finish);
+    setTimeout(finish, 3000);
+  });
+}
+
+async function enterKnockoutStage() {
+  state.knockoutPhase = true;
+  state.eliteIndex = Number(state.eliteIndex) || 0;
+  state.knockoutGatesCleared = Number(state.knockoutGatesCleared) || 0;
+  saveRun();
+  await window.DomainKnockout?.initKnockoutTeams?.();
+  await showKnockoutDrawCeremony();
+  await runKnockoutChain();
+}
+
+async function runKnockoutChain() {
+  const gates = window.DomainKnockout?.getAllGates?.() || [];
+  if (!gates.length) {
+    console.error('Knockout gate catalog is empty.');
+    showGameOver();
+    return;
+  }
+
+  const resumeFrom = Number(state.eliteIndex) || 0;
+  for (let i = state.eliteIndex; i < gates.length; i++) {
+    const gate = gates[i];
+    state.eliteIndex = i;
+    saveRun();
+
+    const isResumedFight = i === resumeFrom && resumeFrom > 0;
+    if (!isResumedFight) {
+      const prevGate = i > 0 ? gates[i - 1] : null;
+      const theme = window.GAME_THEME || {};
+      await showElitePrepScreen({
+        title: prevGate
+          ? `${prevGate.historicalTeam} eliminated!`
+          : (theme.knockoutPrepTitle || 'Knockout Stage'),
+        subtitle: `${gate.gateName}: ${gate.historicalTeam} — ${gate.flavorText || gate.nickname}`,
+        gate
+      });
+    }
+
+    const enemyTeam = window.DomainKnockout.buildGateTeam(gate);
+    showScreen('battle-screen');
+    document.getElementById('battle-title').textContent = `${gate.gateName}: ${gate.historicalTeam}!`;
+    document.getElementById('battle-subtitle').textContent = gate.nickname || '';
+    const won = await new Promise(resolve => {
+      runBattleScreen(enemyTeam, true, () => resolve(true), () => resolve(false), gate.historicalTeam);
+    });
+    if (!won) {
+      state.knockoutGatesCleared = Math.max(Number(state.knockoutGatesCleared) || 0, i);
+      state.knockoutPhase = true;
+      saveRun();
+      showGameOver();
+      return;
+    }
+
+    state.knockoutGatesCleared = i + 1;
+    saveRun();
+    if (i < gates.length - 1) {
+      await showEliteTransition(gate.historicalTeam, i + 1, gates.map(entry => ({ name: entry.historicalTeam })));
+    }
+  }
+
+  state.wonWorldCup = true;
+  state.knockoutPhase = false;
+  state.eliteIndex = 0;
+  saveRun();
+  showFootballWorldCupWinScreen();
+}
+
+function showFootballWorldCupWinScreen() {
+  const theme = window.GAME_THEME || {};
+  showScreen('win-screen');
+  const titleEl = document.querySelector('#win-screen .win-title');
+  const subtitleEl = document.querySelector('#win-screen p');
+  if (titleEl) titleEl.innerHTML = theme.worldCupWinTitle || 'WORLD CUP<br>LIFTED!';
+  if (subtitleEl) subtitleEl.textContent = theme.worldCupWinSubtitle || 'Your squad conquered the historical gauntlet.';
+  const winsEl = document.getElementById('win-run-count');
+  if (winsEl) winsEl.textContent = theme.worldCupWinKicker || 'Campaign complete — settlement awaits';
+  document.getElementById('win-team').innerHTML = state.team.map(p => {
+    const itemHtml = p.heldItem
+      ? `<div style="display:flex;align-items:center;gap:4px;font-size:8px;color:var(--text-dim);margin-top:4px;">${itemIconHtml(p.heldItem, 14)}<span>${p.heldItem.name}</span></div>`
+      : '';
+    return `<div style="display:flex;flex-direction:column;align-items:center;">${renderPokemonCard(p, false, false)}${itemHtml}</div>`;
+  }).join('');
+
+  const playAgainBtn = document.getElementById('btn-play-again');
+  if (playAgainBtn) {
+    playAgainBtn.textContent = theme.worldCupSettlementCta || 'Continue to Settlement';
+    playAgainBtn.onclick = () => settleRunAndReturnToTitle(createRunSnapshot());
+  }
+
+  const towerBtn = document.querySelector('#win-screen button[onclick="showEndlessStageSelect()"]');
+  if (towerBtn) towerBtn.style.display = 'none';
+}
+
 async function doElite4() {
   const bosses = ELITE_4;
   for (let i = state.eliteIndex; i < bosses.length; i++) {
@@ -1336,24 +1489,31 @@ function showEliteTransition(defeatedName, nextIndex, bossArray = ELITE_4) {
 // Prep screen shown between Elite 4 / Champion battles. Shows the next
 // opponent's roster, lets the player drag-reorder their team and use items,
 // then proceeds on Continue.
-function showElitePrepScreen({ title, subtitle, nextBoss }) {
+function showElitePrepScreen({ title, subtitle, nextBoss, gate }) {
   return new Promise(resolve => {
     document.getElementById('elite-prep-title').textContent = title;
     document.getElementById('elite-prep-sub').textContent = subtitle;
 
     const enemyEl = document.getElementById('elite-prep-enemy-team');
-    enemyEl.innerHTML = nextBoss.team.map(p => {
-      const sprite = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${p.speciesId}.png`;
-      const types  = (p.types || []).map(t => `<span class="type-badge type-${t.toLowerCase()}" style="font-size:5px;padding:1px 2px;">${t}</span>`).join('');
-      const item   = p.heldItem ? `<div style="font-size:7px;color:var(--text-dim);margin-top:2px;">${itemIconHtml(p.heldItem, 12)}</div>` : '';
-      return `<div class="elite-prep-enemy-slot">
-        <img src="${sprite}" alt="${p.name}" onerror="this.style.display='none'">
-        <div class="name">${p.name}</div>
-        <div class="lv">Lv ${p.level}</div>
-        <div class="types">${types}</div>
-        ${item}
-      </div>`;
-    }).join('');
+    if (gate && isFootballModeEnabled()) {
+      const enemyTeam = window.DomainKnockout?.buildGateTeam?.(gate) || [];
+      enemyEl.innerHTML = enemyTeam.map(renderKnockoutPrepEnemySlot).join('');
+      const sectionLabel = document.querySelector('#elite-prep-screen .elite-prep-section-label');
+      if (sectionLabel) sectionLabel.textContent = 'Opposition XI';
+    } else {
+      enemyEl.innerHTML = nextBoss.team.map(p => {
+        const sprite = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${p.speciesId}.png`;
+        const types  = (p.types || []).map(t => `<span class="type-badge type-${t.toLowerCase()}" style="font-size:5px;padding:1px 2px;">${t}</span>`).join('');
+        const item   = p.heldItem ? `<div style="font-size:7px;color:var(--text-dim);margin-top:2px;">${itemIconHtml(p.heldItem, 12)}</div>` : '';
+        return `<div class="elite-prep-enemy-slot">
+          <img src="${sprite}" alt="${p.name}" onerror="this.style.display='none'">
+          <div class="name">${p.name}</div>
+          <div class="lv">Lv ${p.level}</div>
+          <div class="types">${types}</div>
+          ${item}
+        </div>`;
+      }).join('');
+    }
 
     const teamEl  = document.getElementById('elite-prep-player-team');
     const itemsEl = document.getElementById('elite-prep-items');
@@ -3013,10 +3173,11 @@ function showBadgeScreen(leader) {
       showSliceCompleteScreen();
       return;
     }
-    if (state.currentMap >= 7 && window.FEATURES?.knockoutEnabled === true) {
-      state.eliteIndex = 0;
-      startMap(8);
-    } else if (state.currentMap < getFootballMaxMapIndex()) {
+    if (shouldEnterKnockoutAfterStamps()) {
+      enterKnockoutStage();
+      return;
+    }
+    if (state.currentMap < getFootballMaxMapIndex()) {
       startMap(state.currentMap + 1);
     }
   };
@@ -3032,8 +3193,15 @@ function createRunSnapshot() {
   };
 }
 
-function settleRunAndReturnToTitle(runSnapshot = createRunSnapshot()) {
-  const settlement = window.DomainSave?.settleRunLite?.(runSnapshot) || { patch: {}, summary: {} };
+async function settleRunAndReturnToTitle(runSnapshot = createRunSnapshot()) {
+  let settlement = { patch: {}, summary: {} };
+  if (window.DomainMeta?.settleRun) {
+    await window.DomainMeta.initRunEconomy?.();
+    const snapshot = window.DomainMeta.buildRunSnapshot?.(runSnapshot) || runSnapshot;
+    settlement = window.DomainMeta.settleRun(snapshot) || settlement;
+  } else {
+    settlement = window.DomainSave?.settleRunLite?.(runSnapshot) || settlement;
+  }
   // Order invariant: account patch must persist before the active run snapshot
   // is cleared, because that snapshot is the settlement source.
   window.DomainSave?.applyAccountPatch?.(settlement.patch);
