@@ -227,7 +227,7 @@ function settleRunLite(runSnapshot = {}, accountState = {}) {
 }
 
 function applyAccountPatch(patch = {}) {
-  if (!isPlainObject(patch.album)) return false;
+  if (!isPlainObject(patch)) return false;
 
   const incomingSettledRunId = typeof patch.lastSettledRunId === "string" && patch.lastSettledRunId.trim()
     ? patch.lastSettledRunId
@@ -237,26 +237,65 @@ function applyAccountPatch(patch = {}) {
     return false;
   }
 
-  const currentAlbum = readAlbumState();
-  const mergedAlbum = { ...currentAlbum };
   let changedCount = 0;
 
-  for (const [profileId, patchState] of Object.entries(patch.album)) {
-    const normalizedProfileId = normalizeAlbumProfileId(profileId);
-    const normalizedPatchState = patchState === 1 || patchState === "1" || patchState === true ? 1 : 0;
-    if (!normalizedProfileId) continue;
+  if (isPlainObject(patch.album)) {
+    const currentAlbum = readAlbumState();
+    const mergedAlbum = { ...currentAlbum };
 
-    const currentState = mergedAlbum[normalizedProfileId] === 1 ? 1 : 0;
-    const nextState = Math.max(currentState, normalizedPatchState);
-    if (mergedAlbum[normalizedProfileId] !== nextState) changedCount += 1;
-    mergedAlbum[normalizedProfileId] = nextState;
+    for (const [profileId, patchState] of Object.entries(patch.album)) {
+      const normalizedProfileId = normalizeAlbumProfileId(profileId);
+      const normalizedPatchState = patchState === 1 || patchState === "1" || patchState === true ? 1 : 0;
+      if (!normalizedProfileId) continue;
+
+      const currentState = mergedAlbum[normalizedProfileId] === 1 ? 1 : 0;
+      const nextState = Math.max(currentState, normalizedPatchState);
+      if (mergedAlbum[normalizedProfileId] !== nextState) changedCount += 1;
+      mergedAlbum[normalizedProfileId] = nextState;
+    }
+
+    localStorage.setItem(SAVE_ALBUM_STORAGE_KEY, JSON.stringify(mergedAlbum));
   }
 
-  localStorage.setItem(SAVE_ALBUM_STORAGE_KEY, JSON.stringify(mergedAlbum));
+  if (Number.isFinite(Number(patch.footballCredits))) {
+    localStorage.setItem("footballCredits", String(Math.max(0, Math.trunc(patch.footballCredits))));
+    changedCount += 1;
+  }
+  if (isPlainObject(patch.legendFragments)) {
+    localStorage.setItem("legendFragments", JSON.stringify(patch.legendFragments));
+    changedCount += 1;
+  }
+  if (Array.isArray(patch.unlockedLegends)) {
+    localStorage.setItem("unlockedLegends", JSON.stringify(patch.unlockedLegends));
+    changedCount += 1;
+  }
+  if (isPlainObject(patch.accountFlags)) {
+    localStorage.setItem("accountFlags", JSON.stringify(patch.accountFlags));
+    changedCount += 1;
+  }
+  if (isPlainObject(patch.gameAlbumMeta)) {
+    localStorage.setItem("game_album_meta", JSON.stringify(patch.gameAlbumMeta));
+    changedCount += 1;
+  }
+  if (Number.isFinite(Number(patch.runCount))) {
+    localStorage.setItem("runCount", String(Math.max(0, Math.trunc(patch.runCount))));
+    changedCount += 1;
+  }
+  if (Number.isFinite(Number(patch.campaignWins))) {
+    localStorage.setItem("campaignWins", String(Math.max(0, Math.trunc(patch.campaignWins))));
+    changedCount += 1;
+  }
+  if (Array.isArray(patch.runHistory)) {
+    localStorage.setItem("runHistory", JSON.stringify(patch.runHistory));
+    changedCount += 1;
+  }
+
   if (incomingSettledRunId) {
     localStorage.setItem(LAST_SETTLED_RUN_ID_STORAGE_KEY, incomingSettledRunId);
   }
-  console.info?.(`[DomainSave] applyAccountPatch wrote ${changedCount} game_album keys.`);
+
+  if (changedCount === 0 && !incomingSettledRunId) return false;
+  console.info?.(`[DomainSave] applyAccountPatch applied ${changedCount} account change(s).`);
   return true;
 }
 
@@ -265,6 +304,7 @@ const DomainSave = Object.freeze({
   LAST_SETTLED_RUN_ID_STORAGE_KEY,
   migrateSaveV2toV3,
   compactLegacyDexToAlbum,
+  readAlbumState,
   validateAccountModel,
   settleRunLite,
   applyAccountPatch
