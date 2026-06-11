@@ -530,6 +530,27 @@
           </div>
         </div>
       </article>
+      <article class="task" style="margin-top: 12px;">
+        <h3>P2-006 — Manual QA runbook</h3>
+        <div class="task-grid">
+          <div class="field">
+            <span>Assumption</span>
+            <p>Manual QA is now a first-class Phase 2 gate because Phase 1 sign-off was scripted and did not prove real player comprehension.</p>
+          </div>
+          <div class="field">
+            <span>Tradeoff</span>
+            <p>The runbook records expected behavior and evidence fields but does not force screenshots, preserving the current no-automated-screenshot direction.</p>
+          </div>
+          <div class="field">
+            <span>Friction</span>
+            <p>Game-over QA may need normal play or a documented temporary dev setup; dev-only shortcuts must not be committed.</p>
+          </div>
+          <div class="field">
+            <span>Validation</span>
+            <p><code>validate-docs.mjs</code> checks for blocker definitions plus core path, full squad, reload, game-over, and terminology sections.</p>
+          </div>
+        </div>
+      </article>
     </section>
 
     <section>
@@ -551,7 +572,7 @@
     </section>
 
     <footer>
-      Generated for Pokelike World Cup Road to Glory Phase 2. Last updated 2026-06-10 — P2-002 QA harness shell, P2-001 ledger/protocol, baseline assumptions, tradeoffs, frictions, asset gaps, decision gates, and owner watchlist.
+      Generated for Pokelike World Cup Road to Glory Phase 2. Last updated 2026-06-10 — P2-006 manual QA runbook, P2-002 QA harness shell, P2-001 ledger/protocol, baseline assumptions, tradeoffs, frictions, asset gaps, decision gates, and owner watchlist.
     </footer>
   </main>
 </body>

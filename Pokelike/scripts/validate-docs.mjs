@@ -18,6 +18,7 @@ const visualFrictionsHtml = readText("docs/013-phase-2-visual-frictions.html");
 const taskBreakdown = readText("docs/011-engineering-task-breakdown.md");
 const assumptionsHtml = readText("docs/012-phase-1-assumptions-tradeoffs-report.html");
 const phase2TaskBreakdown = readText("docs/015-phase-2-engineering-task-breakdown.md");
+const phase2ManualQaRunbook = readText("docs/017-phase-2-manual-qa-runbook.md");
 const phase2AssumptionsHtml = readText("docs/020-phase-2-assumptions-tradeoffs-assets-report.html");
 
 const frictionEntries = (visualFrictionsHtml.match(/class="entry"/g) || []).length;
@@ -40,6 +41,13 @@ assert(
   phase2TaskBreakdown.includes("020-phase-2-assumptions-tradeoffs-assets-report.html"),
   "Phase 2 task breakdown must reference the Phase 2 assumptions report"
 );
+assert(phase2ManualQaRunbook.includes("Phase 2 Manual QA Runbook"), "Phase 2 manual QA runbook must include the expected heading");
+assert(phase2ManualQaRunbook.includes("Blocker Definition"), "Phase 2 manual QA runbook must define blockers");
+assert(phase2ManualQaRunbook.includes("Core Path QA"), "Phase 2 manual QA runbook must include core path QA");
+assert(phase2ManualQaRunbook.includes("Full-Squad QA"), "Phase 2 manual QA runbook must include full-squad QA");
+assert(phase2ManualQaRunbook.includes("Reload Persistence QA"), "Phase 2 manual QA runbook must include reload persistence QA");
+assert(phase2ManualQaRunbook.includes("Game-Over QA"), "Phase 2 manual QA runbook must include game-over QA");
+assert(phase2ManualQaRunbook.includes("Legacy Terminology QA"), "Phase 2 manual QA runbook must include legacy terminology QA");
 assert(assumptionsHtml.includes("T0-001"), "assumptions report must include T0-001");
 assert(assumptionsHtml.includes("One task, one commit"), "assumptions report must include one-task-one-commit rule");
 assert(

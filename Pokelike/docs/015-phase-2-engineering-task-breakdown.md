@@ -6,7 +6,7 @@
 **Mode:** One task, one validation pass, one commit  
 **Branch:** `main` unless explicitly changed  
 **Screenshots:** Not automated by default
-**Last sync:** `main` @ this commit — Phase 2 QA harness shell (P2-002)
+**Last sync:** `main` @ this commit — Manual QA runbook (P2-006)
 
 ---
 
@@ -14,9 +14,9 @@
 
 | Metric | Count |
 |--------|------:|
-| **Done** | 2 |
+| **Done** | 3 |
 | **Partial** | 0 |
-| **Not started** | 28 |
+| **Not started** | 27 |
 | **Total tickets** | 30 |
 
 **Legend:** ✅ Done · 🟡 Partial · ⬜ Not started
@@ -270,11 +270,11 @@ Closeout requires a validation report, manual QA result, no-cloud assertion, no-
 | Task | Status | Lane | Dependencies | Parallel group | Commit |
 |------|--------|------|--------------|----------------|--------|
 | P2-001 | ✅ | A | Phase 1 complete | Batch 1 root | `bb8d87c` |
-| P2-002 | ✅ | A | P2-001 | Batch 1 | this commit |
+| P2-002 | ✅ | A | P2-001 | Batch 1 | `d64f18b` |
 | P2-003 | ⬜ | B | P2-002 | Batch 2 root | |
 | P2-004 | ⬜ | B | P2-003 | Batch 2 | |
 | P2-005 | ⬜ | B | P2-004 | Batch 2 | |
-| P2-006 | ⬜ | A | P2-001 | Batch 1 | |
+| P2-006 | ✅ | A | P2-001 | Batch 1 | this commit |
 | P2-007 | ⬜ | A | P2-002 | Batch 1 | |
 | P2-008 | ⬜ | C | P2-001 | Batch 1 | |
 | P2-009 | ⬜ | C | P2-008 | Batch 2/3 | |
