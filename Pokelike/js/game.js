@@ -2979,15 +2979,15 @@ function showSliceCompleteScreen() {
   const totalCount = sliceProfileIds.length || state.team.length || 1;
   const albumPct = Math.round((signedCount / Math.max(1, totalCount)) * 100);
 
-  if (titleEl) titleEl.textContent = window.GAME_THEME?.sliceCompleteTitle || 'Host City Complete';
+  if (titleEl) titleEl.textContent = window.GAME_THEME?.sliceCompleteTitle || 'Trophy Road: First Leg Complete';
   if (summaryEl) {
-    summaryEl.textContent = `Vertical Slice — 3 of 8 host cities. Squad snapshot locked for settlement.`;
+    summaryEl.textContent = `Three Host City Challenges cleared. Your squad, stamps, and album progress are locked for settlement.`;
   }
   if (statsEl) {
     statsEl.innerHTML = `
-      <div><span>Stamps</span><strong>${Math.min(state.badges, target)} / ${target}</strong></div>
-      <div><span>Album</span><strong>${signedCount} / ${totalCount}</strong></div>
-      <div><span>Slice Album</span><strong>${albumPct}%</strong></div>
+      <div><span>City Stamps</span><strong>${Math.min(state.badges, target)} / ${target}</strong></div>
+      <div><span>Signed Album</span><strong>${signedCount} / ${totalCount}</strong></div>
+      <div><span>Completion</span><strong>${albumPct}%</strong></div>
     `;
   }
   if (teamEl) {

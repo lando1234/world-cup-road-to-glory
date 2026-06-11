@@ -280,6 +280,22 @@ runTest("P2-016 Album visual model distinguishes unknown, scouted, and signed", 
   assert(!albumSlotBlock.includes("localStorage.setItem"), "Album visual rendering should not write persistence");
 });
 
+runTest("P2-017 Slice Complete presents Trophy Road milestone and still routes to settlement", () => {
+  const sliceBlock = extractBetween(gameSource, "function showSliceCompleteScreen", "async function showGameOver");
+
+  assert(indexSource.includes("slice-complete-screen"), "Slice Complete should have a dedicated screen class");
+  assert(indexSource.includes("Trophy Road Milestone"), "Slice Complete should present milestone kicker copy");
+  assert(indexSource.includes("Continue to Settlement"), "Slice Complete CTA should name settlement");
+  assert(indexSource.includes("slice-complete-team"), "Slice Complete should expose squad snapshot container class");
+  assert(styleSource.includes(".slice-complete-kicker"), "CSS should style Slice Complete milestone kicker");
+  assert(styleSource.includes(".slice-complete-team"), "CSS should style Slice Complete squad snapshot");
+  assert(sliceBlock.includes("Trophy Road: First Leg Complete"), "runtime should use Trophy Road completion title");
+  assert(sliceBlock.includes("Three Host City Challenges cleared"), "runtime should use milestone summary copy");
+  assert(sliceBlock.includes("City Stamps"), "runtime stats should use City Stamps label");
+  assert(sliceBlock.includes("Signed Album"), "runtime stats should use Signed Album label");
+  assert(sliceBlock.includes("settleRunAndReturnToTitle();"), "Slice Complete CTA should continue through settlement helper");
+});
+
 const failed = results.filter(result => result.status === "FAIL");
 for (const result of results) {
   if (result.status === "PASS") {

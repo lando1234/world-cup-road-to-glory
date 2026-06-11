@@ -1212,6 +1212,30 @@ h1, h2, .pixel-font {
   100% { transform: scale(1); box-shadow: 2px 2px 0 #000; }
 }
 
+.slice-complete-screen {
+  justify-content: center;
+  align-items: center;
+  gap: 14px;
+  text-align: center;
+}
+.slice-complete-kicker,
+.slice-complete-section-label {
+  color: var(--gold);
+  font-size: 8px;
+  text-transform: uppercase;
+}
+.slice-complete-title {
+  font-size: 14px;
+  line-height: 1.6;
+}
+.slice-complete-summary {
+  color: var(--text-dim);
+  text-align: center;
+  font-size: 9px;
+  line-height: 1.6;
+  max-width: min(680px, 92vw);
+  margin: 0;
+}
 .slice-complete-stats {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -1238,6 +1262,20 @@ h1, h2, .pixel-font {
 .slice-complete-stats strong {
   color: var(--gold);
   font-size: 12px;
+}
+.slice-complete-team {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin: 4px 0 8px;
+}
+.slice-complete-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  margin-top: 8px;
+  flex-wrap: wrap;
 }
 @media (max-width: 640px) {
   .slice-complete-stats { grid-template-columns: 1fr; }

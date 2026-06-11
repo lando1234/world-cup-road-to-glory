@@ -6,7 +6,7 @@
 **Mode:** One task, one validation pass, one commit  
 **Branch:** `main` unless explicitly changed  
 **Screenshots:** Not automated by default
-**Last sync:** `main` @ this commit — Album visual model pass (P2-016)
+**Last sync:** `main` @ this commit — Slice Complete presentation pass (P2-017)
 
 ---
 
@@ -14,9 +14,9 @@
 
 | Metric | Count |
 |--------|------:|
-| **Done** | 17 |
+| **Done** | 18 |
 | **Partial** | 0 |
-| **Not started** | 13 |
+| **Not started** | 12 |
 | **Total tickets** | 30 |
 
 **Legend:** ✅ Done · 🟡 Partial · ⬜ Not started
@@ -284,8 +284,8 @@ Closeout requires a validation report, manual QA result, no-cloud assertion, no-
 | P2-013 | ✅ | D | P2-012 | Batch 4 | `739e052` |
 | P2-014 | ✅ | E | P2-010 | Batch 5 | `4c83ee0` |
 | P2-015 | ✅ | E | P2-014 | Batch 5 | `9963570` |
-| P2-016 | ✅ | F | P2-009 | Batch 6 | this commit |
-| P2-017 | ⬜ | F | P2-015, P2-016 | Batch 6 | |
+| P2-016 | ✅ | F | P2-009 | Batch 6 | `a64a66a` |
+| P2-017 | ✅ | F | P2-015, P2-016 | Batch 6 | this commit |
 | P2-018 | ⬜ | F | P2-017 | Batch 6 | |
 | P2-019 | ⬜ | B | P2-018 | Batch 7 | |
 | P2-020 | ⬜ | B | P2-019 | Batch 7 | |
