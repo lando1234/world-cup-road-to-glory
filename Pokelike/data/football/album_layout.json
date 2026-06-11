@@ -135,10 +135,37 @@
           "label": "London Legend"
         }
       ]
+    },
+    {
+      "pageId": "knockout",
+      "title": "Knockout Immortals",
+      "description": "Historical gate teams unlocked after eight city stamps.",
+      "hiddenUntil": "knockout_enable",
+      "slots": [
+        { "slot": 1, "profileId": 41, "label": "Maracanazo Silence" },
+        { "slot": 2, "profileId": 42, "label": "Beautiful Game" },
+        { "slot": 3, "profileId": 43, "label": "Hand of God" },
+        { "slot": 4, "profileId": 44, "label": "Zizou Final" },
+        { "slot": 5, "profileId": 45, "label": "Scaloneta Hero" },
+        { "slot": 6, "profileId": 37, "label": "Schiaffino Link" },
+        { "slot": 7, "profileId": 38, "label": "Jairzinho Surge" },
+        { "slot": 8, "profileId": 39, "label": "Burruchaga Burst" },
+        { "slot": 9, "profileId": 49, "label": "Carlos Alberto Run" }
+      ]
+    },
+    {
+      "pageId": "legends",
+      "title": "Legends Vault",
+      "description": "GOAT chase cards unlocked through fragments and runs.",
+      "hiddenUntil": "legends_enable",
+      "slots": [
+        { "slot": 1, "profileId": 42, "label": "Pelé" },
+        { "slot": 2, "profileId": 43, "label": "Maradona" },
+        { "slot": 3, "profileId": 46, "label": "Ronaldo" },
+        { "slot": 4, "profileId": 47, "label": "Ronaldinho" },
+        { "slot": 5, "profileId": 50, "label": "CR7" }
+      ]
     }
   ],
-  "deferredPages": [
-    "knockout",
-    "legends"
-  ]
+  "deferredPages": []
 }

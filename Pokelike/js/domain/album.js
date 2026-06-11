@@ -6,7 +6,7 @@
  */
 const ALBUM_STORAGE_KEY = "game_album";
 const ALBUM_LAYOUT_URL = "data/football/album_layout.json";
-const PHASE_1_ALBUM_PAGE_IDS = Object.freeze(["marquee", "favorites", "host_city"]);
+const PHASE_1_ALBUM_PAGE_IDS = Object.freeze(["marquee", "favorites", "host_city", "knockout", "legends"]);
 const PHASE_1_ALBUM_PROFILE_IDS = Object.freeze([1, 2, 3, 4, 6, 7, 9, 10, 12, 14, 15, 17, 18, 28, 29, 30, 31, 32, 33, 34, 35, 36]);
 
 let albumLayout = null;
@@ -99,7 +99,8 @@ function loadAlbumLayout(rawLayout) {
       }
       const profileId = assertValidAlbumProfileId(slot.profileId);
       const profile = getProfileOrNull(profileId);
-      if (profile && (profile.album?.pageId !== page.pageId || profile.album?.slot !== slot.slot)) {
+      const dualLegendPlacement = page.pageId === "legends" && [42, 43].includes(profileId) && profile?.album?.pageId === "knockout";
+      if (profile && !dualLegendPlacement && (profile.album?.pageId !== page.pageId || profile.album?.slot !== slot.slot)) {
         throw new Error(`Album slot mismatch for profileId ${profileId} on page ${page.pageId}.`);
       }
     });
@@ -135,6 +136,27 @@ function getAlbumLayoutConfig() {
 
 function getAlbumLayout() {
   return albumLayout?.pages || Object.freeze([]);
+}
+
+function readAlbumMeta() {
+  try {
+    const raw = localStorage.getItem("game_album_meta");
+    return raw ? JSON.parse(raw) : {};
+  } catch (_) {
+    return {};
+  }
+}
+
+function isPageUnlocked(page, meta = readAlbumMeta()) {
+  if (!page?.hiddenUntil) return true;
+  if (page.hiddenUntil === "knockout_enable") return Boolean(meta.knockoutPageUnlocked);
+  if (page.hiddenUntil === "legends_enable") return Boolean(meta.legendsPageUnlocked);
+  if (page.hiddenUntil === "expansion_enable") return true;
+  return true;
+}
+
+function getVisiblePages(meta = readAlbumMeta()) {
+  return Object.freeze(getAlbumLayout().filter(page => isPageUnlocked(page, meta)));
 }
 
 function getSlotProfileIds(pageId) {
@@ -233,7 +255,10 @@ const DomainAlbum = Object.freeze({
   markAlbumSeen,
   markAlbumSigned,
   countSigned,
-  getSliceAlbumProfileIds
+  getSliceAlbumProfileIds,
+  readAlbumMeta,
+  isPageUnlocked,
+  getVisiblePages
 });
 
 window.DomainAlbum = DomainAlbum;

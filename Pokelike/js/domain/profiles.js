@@ -8,10 +8,11 @@
 const PROFILE_CATALOG_URL = "data/football/player_profiles.json";
 const PORTRAIT_MANIFEST_URL = "data/football/portrait_manifest.json";
 
-/** Authoritative catalog order after Phase 3 eight-city expansion (33 profiles). */
+/** Authoritative catalog order after Phase 5 knockout + legends expansion (46 profiles). */
 const CATALOG_PROFILE_IDS = Object.freeze([
-  1, 2, 3, 4, 6, 7, 9, 10, 12, 14, 15, 17, 18, 28, 29, 30, 31, 16, 22, 26,
-  32, 33, 34, 35, 36, 13, 19, 21, 23, 24, 25, 27, 40
+  1, 2, 3, 4, 6, 7, 9, 10, 12, 13, 14, 15, 16, 17, 18, 19, 21, 22, 23, 24,
+  25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43,
+  44, 45, 46, 47, 48, 49, 50
 ]);
 
 const REQUIRED_PROFILE_FIELDS = Object.freeze([

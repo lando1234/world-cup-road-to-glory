@@ -317,6 +317,41 @@
       }
     },
     {
+      "profileId": 13,
+      "slug": "harry-kane",
+      "displayName": "Harry Kane",
+      "commonName": "Kane",
+      "nation": "ENG",
+      "position": "ST",
+      "primaryStyle": "clinical_finishing",
+      "secondaryStyle": "aerial_threat",
+      "baseStats": {
+        "hp": 72,
+        "atk": 88,
+        "def": 62,
+        "special": 78,
+        "spdef": 68,
+        "speed": 82
+      },
+      "rarity": "elite",
+      "portrait": "/assets/players/harry-kane.png",
+      "flavorText": "Drops deep or stays high — always finds the right shot.",
+      "flags": {
+        "isMarquee": false,
+        "isLegend": false,
+        "scoutable": true,
+        "bossExclusive": false
+      },
+      "album": {
+        "pageId": "favorites",
+        "slot": 12
+      },
+      "legal": {
+        "nameOk": true,
+        "likenessTier": 0
+      }
+    },
+    {
       "profileId": 14,
       "slug": "n-golo-kante",
       "displayName": "N'Golo Kanté",
@@ -387,6 +422,41 @@
       }
     },
     {
+      "profileId": 16,
+      "slug": "manuel-neuer",
+      "displayName": "Manuel Neuer",
+      "commonName": "Neuer",
+      "nation": "GER",
+      "position": "GK",
+      "primaryStyle": "tactical_control",
+      "secondaryStyle": "iron_defense",
+      "baseStats": {
+        "hp": 78,
+        "atk": 55,
+        "def": 82,
+        "special": 78,
+        "spdef": 105,
+        "speed": 68
+      },
+      "rarity": "elite",
+      "portrait": "/assets/players/manuel-neuer.png",
+      "flavorText": "Sweeper-keeper who acts as an extra defender — and still saves everything.",
+      "flags": {
+        "isMarquee": false,
+        "isLegend": false,
+        "scoutable": true,
+        "bossExclusive": false
+      },
+      "album": {
+        "pageId": "favorites",
+        "slot": 12
+      },
+      "legal": {
+        "nameOk": true,
+        "likenessTier": 0
+      }
+    },
+    {
       "profileId": 17,
       "slug": "alisson-becker",
       "displayName": "Alisson Becker",
@@ -450,6 +520,286 @@
       "album": {
         "pageId": "favorites",
         "slot": 10
+      },
+      "legal": {
+        "nameOk": true,
+        "likenessTier": 0
+      }
+    },
+    {
+      "profileId": 19,
+      "slug": "andres-iniesta",
+      "displayName": "Andrés Iniesta",
+      "commonName": "Iniesta",
+      "nation": "ESP",
+      "position": "CM",
+      "primaryStyle": "possession_buildup",
+      "secondaryStyle": "ice_press",
+      "baseStats": {
+        "hp": 70,
+        "atk": 68,
+        "def": 65,
+        "special": 112,
+        "spdef": 95,
+        "speed": 82
+      },
+      "rarity": "elite",
+      "portrait": "/assets/players/andres-iniesta.png",
+      "flavorText": "Glides past pressure. The big moment always finds him.",
+      "flags": {
+        "isMarquee": false,
+        "isLegend": false,
+        "scoutable": true,
+        "bossExclusive": false
+      },
+      "album": {
+        "pageId": "favorites",
+        "slot": 13
+      },
+      "legal": {
+        "nameOk": true,
+        "likenessTier": 0
+      }
+    },
+    {
+      "profileId": 21,
+      "slug": "roberto-carlos",
+      "displayName": "Roberto Carlos",
+      "commonName": "Roberto Carlos",
+      "nation": "BRA",
+      "position": "FB",
+      "primaryStyle": "power_strike",
+      "secondaryStyle": "wing_play",
+      "baseStats": {
+        "hp": 75,
+        "atk": 105,
+        "def": 78,
+        "special": 82,
+        "spdef": 72,
+        "speed": 92
+      },
+      "rarity": "elite",
+      "portrait": "/assets/players/roberto-carlos.png",
+      "flavorText": "Howitzer left foot. Defenders hear the run before they see him.",
+      "flags": {
+        "isMarquee": false,
+        "isLegend": false,
+        "scoutable": true,
+        "bossExclusive": false
+      },
+      "album": {
+        "pageId": "favorites",
+        "slot": 14
+      },
+      "legal": {
+        "nameOk": true,
+        "likenessTier": 0
+      }
+    },
+    {
+      "profileId": 22,
+      "slug": "cafu",
+      "displayName": "Cafu",
+      "commonName": "Cafu",
+      "nation": "BRA",
+      "position": "FB",
+      "primaryStyle": "wing_play",
+      "secondaryStyle": "high_intensity",
+      "baseStats": {
+        "hp": 82,
+        "atk": 78,
+        "def": 82,
+        "special": 72,
+        "spdef": 78,
+        "speed": 95
+      },
+      "rarity": "elite",
+      "portrait": "/assets/players/cafu.png",
+      "flavorText": "Never stops running. Overlap after overlap until the cross lands.",
+      "flags": {
+        "isMarquee": false,
+        "isLegend": false,
+        "scoutable": true,
+        "bossExclusive": false
+      },
+      "album": {
+        "pageId": "favorites",
+        "slot": 13
+      },
+      "legal": {
+        "nameOk": true,
+        "likenessTier": 0
+      }
+    },
+    {
+      "profileId": 23,
+      "slug": "paolo-maldini",
+      "displayName": "Paolo Maldini",
+      "commonName": "Maldini",
+      "nation": "ITA",
+      "position": "CB",
+      "primaryStyle": "iron_defense",
+      "secondaryStyle": "compact_block",
+      "baseStats": {
+        "hp": 78,
+        "atk": 72,
+        "def": 115,
+        "special": 68,
+        "spdef": 95,
+        "speed": 75
+      },
+      "rarity": "elite",
+      "portrait": "/assets/players/paolo-maldini.png",
+      "flavorText": "Positioning so perfect it looks like he never tackles.",
+      "flags": {
+        "isMarquee": false,
+        "isLegend": false,
+        "scoutable": true,
+        "bossExclusive": false
+      },
+      "album": {
+        "pageId": "favorites",
+        "slot": 15
+      },
+      "legal": {
+        "nameOk": true,
+        "likenessTier": 0
+      }
+    },
+    {
+      "profileId": 24,
+      "slug": "gianluigi-buffon",
+      "displayName": "Gianluigi Buffon",
+      "commonName": "Buffon",
+      "nation": "ITA",
+      "position": "GK",
+      "primaryStyle": "iron_defense",
+      "secondaryStyle": "compact_block",
+      "baseStats": {
+        "hp": 82,
+        "atk": 52,
+        "def": 85,
+        "special": 70,
+        "spdef": 108,
+        "speed": 65
+      },
+      "rarity": "elite",
+      "portrait": "/assets/players/gianluigi-buffon.png",
+      "flavorText": "Commanding presence. Organizes the back line like a captain in gloves.",
+      "flags": {
+        "isMarquee": false,
+        "isLegend": false,
+        "scoutable": true,
+        "bossExclusive": false
+      },
+      "album": {
+        "pageId": "favorites",
+        "slot": 16
+      },
+      "legal": {
+        "nameOk": true,
+        "likenessTier": 0
+      }
+    },
+    {
+      "profileId": 25,
+      "slug": "iker-casillas",
+      "displayName": "Iker Casillas",
+      "commonName": "Casillas",
+      "nation": "ESP",
+      "position": "GK",
+      "primaryStyle": "rapid_counter",
+      "secondaryStyle": "iron_defense",
+      "baseStats": {
+        "hp": 75,
+        "atk": 50,
+        "def": 78,
+        "special": 68,
+        "spdef": 102,
+        "speed": 88
+      },
+      "rarity": "elite",
+      "portrait": "/assets/players/iker-casillas.png",
+      "flavorText": "Reflex saves that defy physics. Big-game calm.",
+      "flags": {
+        "isMarquee": false,
+        "isLegend": false,
+        "scoutable": true,
+        "bossExclusive": false
+      },
+      "album": {
+        "pageId": "favorites",
+        "slot": 17
+      },
+      "legal": {
+        "nameOk": true,
+        "likenessTier": 0
+      }
+    },
+    {
+      "profileId": 26,
+      "slug": "franz-beckenbauer",
+      "displayName": "Franz Beckenbauer",
+      "commonName": "Beckenbauer",
+      "nation": "GER",
+      "position": "CB",
+      "primaryStyle": "tactical_control",
+      "secondaryStyle": "possession_buildup",
+      "baseStats": {
+        "hp": 82,
+        "atk": 78,
+        "def": 105,
+        "special": 95,
+        "spdef": 92,
+        "speed": 78
+      },
+      "rarity": "elite",
+      "portrait": "/assets/players/franz-beckenbauer.png",
+      "flavorText": "Libero who steps out of defense to dictate the game.",
+      "flags": {
+        "isMarquee": false,
+        "isLegend": false,
+        "scoutable": true,
+        "bossExclusive": false
+      },
+      "album": {
+        "pageId": "favorites",
+        "slot": 14
+      },
+      "legal": {
+        "nameOk": true,
+        "likenessTier": 0
+      }
+    },
+    {
+      "profileId": 27,
+      "slug": "johan-cruyff",
+      "displayName": "Johan Cruyff",
+      "commonName": "Cruyff",
+      "nation": "NED",
+      "position": "AM",
+      "primaryStyle": "tactical_control",
+      "secondaryStyle": "possession_buildup",
+      "baseStats": {
+        "hp": 75,
+        "atk": 82,
+        "def": 72,
+        "special": 110,
+        "spdef": 98,
+        "speed": 88
+      },
+      "rarity": "elite",
+      "portrait": "/assets/players/johan-cruyff.png",
+      "flavorText": "Total football brain. Makes teammates play two steps ahead.",
+      "flags": {
+        "isMarquee": false,
+        "isLegend": false,
+        "scoutable": true,
+        "bossExclusive": false
+      },
+      "album": {
+        "pageId": "favorites",
+        "slot": 18
       },
       "legal": {
         "nameOk": true,
@@ -590,111 +940,6 @@
       "album": {
         "pageId": "host_city",
         "slot": 3
-      },
-      "legal": {
-        "nameOk": true,
-        "likenessTier": 0
-      }
-    },
-    {
-      "profileId": 16,
-      "slug": "manuel-neuer",
-      "displayName": "Manuel Neuer",
-      "commonName": "Neuer",
-      "nation": "GER",
-      "position": "GK",
-      "primaryStyle": "tactical_control",
-      "secondaryStyle": "iron_defense",
-      "baseStats": {
-        "hp": 78,
-        "atk": 55,
-        "def": 82,
-        "special": 78,
-        "spdef": 105,
-        "speed": 68
-      },
-      "rarity": "elite",
-      "portrait": "/assets/players/manuel-neuer.png",
-      "flavorText": "Sweeper-keeper who acts as an extra defender — and still saves everything.",
-      "flags": {
-        "isMarquee": false,
-        "isLegend": false,
-        "scoutable": true,
-        "bossExclusive": false
-      },
-      "album": {
-        "pageId": "favorites",
-        "slot": 12
-      },
-      "legal": {
-        "nameOk": true,
-        "likenessTier": 0
-      }
-    },
-    {
-      "profileId": 22,
-      "slug": "cafu",
-      "displayName": "Cafu",
-      "commonName": "Cafu",
-      "nation": "BRA",
-      "position": "FB",
-      "primaryStyle": "wing_play",
-      "secondaryStyle": "high_intensity",
-      "baseStats": {
-        "hp": 82,
-        "atk": 78,
-        "def": 82,
-        "special": 72,
-        "spdef": 78,
-        "speed": 95
-      },
-      "rarity": "elite",
-      "portrait": "/assets/players/cafu.png",
-      "flavorText": "Never stops running. Overlap after overlap until the cross lands.",
-      "flags": {
-        "isMarquee": false,
-        "isLegend": false,
-        "scoutable": true,
-        "bossExclusive": false
-      },
-      "album": {
-        "pageId": "favorites",
-        "slot": 13
-      },
-      "legal": {
-        "nameOk": true,
-        "likenessTier": 0
-      }
-    },
-    {
-      "profileId": 26,
-      "slug": "franz-beckenbauer",
-      "displayName": "Franz Beckenbauer",
-      "commonName": "Beckenbauer",
-      "nation": "GER",
-      "position": "CB",
-      "primaryStyle": "tactical_control",
-      "secondaryStyle": "possession_buildup",
-      "baseStats": {
-        "hp": 82,
-        "atk": 78,
-        "def": 105,
-        "special": 95,
-        "spdef": 92,
-        "speed": 78
-      },
-      "rarity": "elite",
-      "portrait": "/assets/players/franz-beckenbauer.png",
-      "flavorText": "Libero who steps out of defense to dictate the game.",
-      "flags": {
-        "isMarquee": false,
-        "isLegend": false,
-        "scoutable": true,
-        "bossExclusive": false
-      },
-      "album": {
-        "pageId": "favorites",
-        "slot": 14
       },
       "legal": {
         "nameOk": true,
@@ -877,104 +1122,34 @@
       }
     },
     {
-      "profileId": 13,
-      "slug": "harry-kane",
-      "displayName": "Harry Kane",
-      "commonName": "Kane",
-      "nation": "ENG",
-      "position": "ST",
-      "primaryStyle": "clinical_finishing",
-      "secondaryStyle": "aerial_threat",
-      "baseStats": {
-        "hp": 72,
-        "atk": 88,
-        "def": 62,
-        "special": 78,
-        "spdef": 68,
-        "speed": 82
-      },
-      "rarity": "elite",
-      "portrait": "/assets/players/harry-kane.png",
-      "flavorText": "Drops deep or stays high — always finds the right shot.",
-      "flags": {
-        "isMarquee": false,
-        "isLegend": false,
-        "scoutable": true,
-        "bossExclusive": false
-      },
-      "album": {
-        "pageId": "favorites",
-        "slot": 12
-      },
-      "legal": {
-        "nameOk": true,
-        "likenessTier": 0
-      }
-    },
-    {
-      "profileId": 19,
-      "slug": "andres-iniesta",
-      "displayName": "Andrés Iniesta",
-      "commonName": "Iniesta",
-      "nation": "ESP",
-      "position": "CM",
+      "profileId": 37,
+      "slug": "juan-schiaffino",
+      "displayName": "Juan Schiaffino",
+      "commonName": "Schiaffino",
+      "nation": "URU",
+      "position": "AM",
       "primaryStyle": "possession_buildup",
-      "secondaryStyle": "ice_press",
-      "baseStats": {
-        "hp": 70,
-        "atk": 68,
-        "def": 65,
-        "special": 112,
-        "spdef": 95,
-        "speed": 82
-      },
-      "rarity": "elite",
-      "portrait": "/assets/players/andres-iniesta.png",
-      "flavorText": "Glides past pressure. The big moment always finds him.",
-      "flags": {
-        "isMarquee": false,
-        "isLegend": false,
-        "scoutable": true,
-        "bossExclusive": false
-      },
-      "album": {
-        "pageId": "favorites",
-        "slot": 13
-      },
-      "legal": {
-        "nameOk": true,
-        "likenessTier": 0
-      }
-    },
-    {
-      "profileId": 21,
-      "slug": "roberto-carlos",
-      "displayName": "Roberto Carlos",
-      "commonName": "Roberto Carlos",
-      "nation": "BRA",
-      "position": "FB",
-      "primaryStyle": "power_strike",
-      "secondaryStyle": "wing_play",
+      "secondaryStyle": "tactical_control",
       "baseStats": {
         "hp": 75,
-        "atk": 105,
-        "def": 78,
-        "special": 82,
-        "spdef": 72,
-        "speed": 92
+        "atk": 78,
+        "def": 72,
+        "special": 95,
+        "spdef": 92,
+        "speed": 78
       },
       "rarity": "elite",
-      "portrait": "/assets/players/roberto-carlos.png",
-      "flavorText": "Howitzer left foot. Defenders hear the run before they see him.",
+      "portrait": "/assets/players/juan-schiaffino.png",
+      "flavorText": "Uruguay 1950 — elegant link between midfield and attack.",
       "flags": {
         "isMarquee": false,
         "isLegend": false,
-        "scoutable": true,
-        "bossExclusive": false
+        "scoutable": false,
+        "bossExclusive": true
       },
       "album": {
-        "pageId": "favorites",
-        "slot": 14
+        "pageId": "knockout",
+        "slot": 6
       },
       "legal": {
         "nameOk": true,
@@ -982,34 +1157,34 @@
       }
     },
     {
-      "profileId": 23,
-      "slug": "paolo-maldini",
-      "displayName": "Paolo Maldini",
-      "commonName": "Maldini",
-      "nation": "ITA",
-      "position": "CB",
-      "primaryStyle": "iron_defense",
-      "secondaryStyle": "compact_block",
+      "profileId": 38,
+      "slug": "jairzinho",
+      "displayName": "Jairzinho",
+      "commonName": "Jairzinho",
+      "nation": "BRA",
+      "position": "W",
+      "primaryStyle": "wing_play",
+      "secondaryStyle": "high_intensity",
       "baseStats": {
         "hp": 78,
-        "atk": 72,
-        "def": 115,
-        "special": 68,
-        "spdef": 95,
-        "speed": 75
+        "atk": 85,
+        "def": 68,
+        "special": 78,
+        "spdef": 72,
+        "speed": 105
       },
       "rarity": "elite",
-      "portrait": "/assets/players/paolo-maldini.png",
-      "flavorText": "Positioning so perfect it looks like he never tackles.",
+      "portrait": "/assets/players/jairzinho.png",
+      "flavorText": "Brazil 1970 — scored in every knockout game.",
       "flags": {
         "isMarquee": false,
         "isLegend": false,
-        "scoutable": true,
-        "bossExclusive": false
+        "scoutable": false,
+        "bossExclusive": true
       },
       "album": {
-        "pageId": "favorites",
-        "slot": 15
+        "pageId": "knockout",
+        "slot": 7
       },
       "legal": {
         "nameOk": true,
@@ -1017,104 +1192,34 @@
       }
     },
     {
-      "profileId": 24,
-      "slug": "gianluigi-buffon",
-      "displayName": "Gianluigi Buffon",
-      "commonName": "Buffon",
-      "nation": "ITA",
-      "position": "GK",
-      "primaryStyle": "iron_defense",
-      "secondaryStyle": "compact_block",
-      "baseStats": {
-        "hp": 82,
-        "atk": 52,
-        "def": 85,
-        "special": 70,
-        "spdef": 108,
-        "speed": 65
-      },
-      "rarity": "elite",
-      "portrait": "/assets/players/gianluigi-buffon.png",
-      "flavorText": "Commanding presence. Organizes the back line like a captain in gloves.",
-      "flags": {
-        "isMarquee": false,
-        "isLegend": false,
-        "scoutable": true,
-        "bossExclusive": false
-      },
-      "album": {
-        "pageId": "favorites",
-        "slot": 16
-      },
-      "legal": {
-        "nameOk": true,
-        "likenessTier": 0
-      }
-    },
-    {
-      "profileId": 25,
-      "slug": "iker-casillas",
-      "displayName": "Iker Casillas",
-      "commonName": "Casillas",
-      "nation": "ESP",
-      "position": "GK",
-      "primaryStyle": "rapid_counter",
-      "secondaryStyle": "iron_defense",
-      "baseStats": {
-        "hp": 75,
-        "atk": 50,
-        "def": 78,
-        "special": 68,
-        "spdef": 102,
-        "speed": 88
-      },
-      "rarity": "elite",
-      "portrait": "/assets/players/iker-casillas.png",
-      "flavorText": "Reflex saves that defy physics. Big-game calm.",
-      "flags": {
-        "isMarquee": false,
-        "isLegend": false,
-        "scoutable": true,
-        "bossExclusive": false
-      },
-      "album": {
-        "pageId": "favorites",
-        "slot": 17
-      },
-      "legal": {
-        "nameOk": true,
-        "likenessTier": 0
-      }
-    },
-    {
-      "profileId": 27,
-      "slug": "johan-cruyff",
-      "displayName": "Johan Cruyff",
-      "commonName": "Cruyff",
-      "nation": "NED",
+      "profileId": 39,
+      "slug": "jorge-burruchaga",
+      "displayName": "Jorge Burruchaga",
+      "commonName": "Burruchaga",
+      "nation": "ARG",
       "position": "AM",
-      "primaryStyle": "tactical_control",
-      "secondaryStyle": "possession_buildup",
+      "primaryStyle": "rapid_counter",
+      "secondaryStyle": "clinical_finishing",
       "baseStats": {
-        "hp": 75,
-        "atk": 82,
-        "def": 72,
-        "special": 110,
-        "spdef": 98,
-        "speed": 88
+        "hp": 72,
+        "atk": 78,
+        "def": 68,
+        "special": 85,
+        "spdef": 78,
+        "speed": 92
       },
-      "rarity": "elite",
-      "portrait": "/assets/players/johan-cruyff.png",
-      "flavorText": "Total football brain. Makes teammates play two steps ahead.",
+      "rarity": "uncommon",
+      "portrait": "/assets/players/jorge-burruchaga.png",
+      "flavorText": "Argentina 1986 — the pass and the run that finished the story.",
       "flags": {
         "isMarquee": false,
         "isLegend": false,
-        "scoutable": true,
-        "bossExclusive": false
+        "scoutable": false,
+        "bossExclusive": true
       },
       "album": {
-        "pageId": "favorites",
-        "slot": 18
+        "pageId": "knockout",
+        "slot": 8
       },
       "legal": {
         "nameOk": true,
@@ -1150,6 +1255,356 @@
       "album": {
         "pageId": "favorites",
         "slot": 19
+      },
+      "legal": {
+        "nameOk": true,
+        "likenessTier": 0
+      }
+    },
+    {
+      "profileId": 41,
+      "slug": "alcides-ghiggia",
+      "displayName": "Alcides Ghiggia",
+      "commonName": "Ghiggia",
+      "nation": "URU",
+      "position": "W",
+      "primaryStyle": "rapid_counter",
+      "secondaryStyle": "clinical_finishing",
+      "baseStats": {
+        "hp": 72,
+        "atk": 82,
+        "def": 65,
+        "special": 78,
+        "spdef": 72,
+        "speed": 105
+      },
+      "rarity": "elite",
+      "portrait": "/assets/players/alcides-ghiggia.png",
+      "flavorText": "Gate 0 icon — Maracanazo silence.",
+      "flags": {
+        "isMarquee": false,
+        "isLegend": false,
+        "scoutable": false,
+        "bossExclusive": true
+      },
+      "album": {
+        "pageId": "knockout",
+        "slot": 1
+      },
+      "legal": {
+        "nameOk": true,
+        "likenessTier": 0
+      }
+    },
+    {
+      "profileId": 42,
+      "slug": "pele",
+      "displayName": "Pelé",
+      "commonName": "Pelé",
+      "nation": "BRA",
+      "position": "ST",
+      "primaryStyle": "balanced",
+      "secondaryStyle": "power_strike",
+      "baseStats": {
+        "hp": 88,
+        "atk": 95,
+        "def": 82,
+        "special": 95,
+        "spdef": 85,
+        "speed": 95
+      },
+      "rarity": "legend",
+      "portrait": "/assets/players/pele.png",
+      "flavorText": "Gate 1 icon — Brazil 1970 heartbeat.",
+      "flags": {
+        "isMarquee": false,
+        "isLegend": true,
+        "scoutable": false,
+        "bossExclusive": true
+      },
+      "album": {
+        "pageId": "knockout",
+        "slot": 2
+      },
+      "legal": {
+        "nameOk": true,
+        "likenessTier": 0
+      }
+    },
+    {
+      "profileId": 43,
+      "slug": "diego-maradona",
+      "displayName": "Diego Maradona",
+      "commonName": "Maradona",
+      "nation": "ARG",
+      "position": "AM",
+      "primaryStyle": "street_smarts",
+      "secondaryStyle": "tactical_control",
+      "baseStats": {
+        "hp": 82,
+        "atk": 78,
+        "def": 72,
+        "special": 115,
+        "spdef": 95,
+        "speed": 95
+      },
+      "rarity": "legend",
+      "portrait": "/assets/players/diego-maradona.png",
+      "flavorText": "Gate 2 icon — Argentina 1986.",
+      "flags": {
+        "isMarquee": false,
+        "isLegend": true,
+        "scoutable": false,
+        "bossExclusive": true
+      },
+      "album": {
+        "pageId": "knockout",
+        "slot": 3
+      },
+      "legal": {
+        "nameOk": true,
+        "likenessTier": 0
+      }
+    },
+    {
+      "profileId": 44,
+      "slug": "zinedine-zidane",
+      "displayName": "Zinedine Zidane",
+      "commonName": "Zidane",
+      "nation": "FRA",
+      "position": "AM",
+      "primaryStyle": "tactical_control",
+      "secondaryStyle": "ice_press",
+      "baseStats": {
+        "hp": 78,
+        "atk": 82,
+        "def": 72,
+        "special": 112,
+        "spdef": 98,
+        "speed": 85
+      },
+      "rarity": "legend",
+      "portrait": "/assets/players/zinedine-zidane.png",
+      "flavorText": "Gate 3 icon — France 1998.",
+      "flags": {
+        "isMarquee": false,
+        "isLegend": false,
+        "scoutable": false,
+        "bossExclusive": true
+      },
+      "album": {
+        "pageId": "knockout",
+        "slot": 4
+      },
+      "legal": {
+        "nameOk": true,
+        "likenessTier": 0
+      }
+    },
+    {
+      "profileId": 45,
+      "slug": "angel-di-maria",
+      "displayName": "Ángel Di María",
+      "commonName": "Di María",
+      "nation": "ARG",
+      "position": "W",
+      "primaryStyle": "wing_play",
+      "secondaryStyle": "rapid_counter",
+      "baseStats": {
+        "hp": 72,
+        "atk": 82,
+        "def": 62,
+        "special": 88,
+        "spdef": 75,
+        "speed": 105
+      },
+      "rarity": "elite",
+      "portrait": "/assets/players/angel-di-maria.png",
+      "flavorText": "Gate 4 icon — Argentina 2022 final hero.",
+      "flags": {
+        "isMarquee": false,
+        "isLegend": false,
+        "scoutable": false,
+        "bossExclusive": true
+      },
+      "album": {
+        "pageId": "knockout",
+        "slot": 5
+      },
+      "legal": {
+        "nameOk": true,
+        "likenessTier": 0
+      }
+    },
+    {
+      "profileId": 46,
+      "slug": "ronaldo-nazario",
+      "displayName": "Ronaldo Nazário",
+      "commonName": "Ronaldo",
+      "nation": "BRA",
+      "position": "ST",
+      "primaryStyle": "power_strike",
+      "secondaryStyle": "rapid_counter",
+      "baseStats": {
+        "hp": 82,
+        "atk": 115,
+        "def": 68,
+        "special": 88,
+        "spdef": 72,
+        "speed": 112
+      },
+      "rarity": "legend",
+      "portrait": "/assets/players/ronaldo-nazario.png",
+      "flavorText": "The Phenomenon — pace and power.",
+      "flags": {
+        "isMarquee": false,
+        "isLegend": true,
+        "scoutable": false,
+        "bossExclusive": false
+      },
+      "album": {
+        "pageId": "legends",
+        "slot": 3
+      },
+      "legal": {
+        "nameOk": true,
+        "likenessTier": 0
+      }
+    },
+    {
+      "profileId": 47,
+      "slug": "ronaldinho",
+      "displayName": "Ronaldinho",
+      "commonName": "Ronaldinho",
+      "nation": "BRA",
+      "position": "AM",
+      "primaryStyle": "street_smarts",
+      "secondaryStyle": "wing_play",
+      "baseStats": {
+        "hp": 75,
+        "atk": 78,
+        "def": 62,
+        "special": 112,
+        "spdef": 85,
+        "speed": 95
+      },
+      "rarity": "legend",
+      "portrait": "/assets/players/ronaldinho.png",
+      "flavorText": "Samba genius — smile on his face.",
+      "flags": {
+        "isMarquee": false,
+        "isLegend": true,
+        "scoutable": false,
+        "bossExclusive": false
+      },
+      "album": {
+        "pageId": "legends",
+        "slot": 4
+      },
+      "legal": {
+        "nameOk": true,
+        "likenessTier": 0
+      }
+    },
+    {
+      "profileId": 48,
+      "slug": "emiliano-martinez",
+      "displayName": "Emiliano Martínez",
+      "commonName": "Martínez",
+      "nation": "ARG",
+      "position": "GK",
+      "primaryStyle": "iron_defense",
+      "secondaryStyle": "tactical_control",
+      "baseStats": {
+        "hp": 78,
+        "atk": 52,
+        "def": 82,
+        "special": 72,
+        "spdef": 105,
+        "speed": 75
+      },
+      "rarity": "elite",
+      "portrait": "/assets/players/emiliano-martinez.png",
+      "flavorText": "Penalty shootout hero.",
+      "flags": {
+        "isMarquee": false,
+        "isLegend": false,
+        "scoutable": false,
+        "bossExclusive": true
+      },
+      "album": {
+        "pageId": "favorites",
+        "slot": 20
+      },
+      "legal": {
+        "nameOk": true,
+        "likenessTier": 0
+      }
+    },
+    {
+      "profileId": 49,
+      "slug": "carlos-alberto",
+      "displayName": "Carlos Alberto",
+      "commonName": "Carlos Alberto",
+      "nation": "BRA",
+      "position": "FB",
+      "primaryStyle": "wing_play",
+      "secondaryStyle": "high_intensity",
+      "baseStats": {
+        "hp": 82,
+        "atk": 85,
+        "def": 88,
+        "special": 78,
+        "spdef": 82,
+        "speed": 92
+      },
+      "rarity": "elite",
+      "portrait": "/assets/players/carlos-alberto.png",
+      "flavorText": "Brazil 1970 captain — overlapping full-back.",
+      "flags": {
+        "isMarquee": false,
+        "isLegend": false,
+        "scoutable": false,
+        "bossExclusive": true
+      },
+      "album": {
+        "pageId": "knockout",
+        "slot": 9
+      },
+      "legal": {
+        "nameOk": true,
+        "likenessTier": 0
+      }
+    },
+    {
+      "profileId": 50,
+      "slug": "cristiano-ronaldo",
+      "displayName": "Cristiano Ronaldo",
+      "commonName": "Ronaldo",
+      "nation": "POR",
+      "position": "ST",
+      "primaryStyle": "power_strike",
+      "secondaryStyle": "aerial_threat",
+      "baseStats": {
+        "hp": 85,
+        "atk": 112,
+        "def": 72,
+        "special": 88,
+        "spdef": 78,
+        "speed": 95
+      },
+      "rarity": "legend",
+      "portrait": "/assets/players/cristiano-ronaldo.png",
+      "flavorText": "Machine of goals — aerial dominance.",
+      "flags": {
+        "isMarquee": false,
+        "isLegend": true,
+        "scoutable": false,
+        "bossExclusive": false
+      },
+      "album": {
+        "pageId": "legends",
+        "slot": 5
       },
       "legal": {
         "nameOk": true,
