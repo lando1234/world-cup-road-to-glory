@@ -6,7 +6,7 @@
 **Mode:** One task, one validation pass, one commit  
 **Branch:** `main` unless explicitly changed  
 **Screenshots:** Not automated by default
-**Last sync:** `main` @ this commit — Scout Report component wrapper (P2-011)
+**Last sync:** `main` @ this commit — Contract Offer UX polish (P2-012)
 
 ---
 
@@ -14,9 +14,9 @@
 
 | Metric | Count |
 |--------|------:|
-| **Done** | 12 |
+| **Done** | 13 |
 | **Partial** | 0 |
-| **Not started** | 18 |
+| **Not started** | 17 |
 | **Total tickets** | 30 |
 
 **Legend:** ✅ Done · 🟡 Partial · ⬜ Not started
@@ -279,8 +279,8 @@ Closeout requires a validation report, manual QA result, no-cloud assertion, no-
 | P2-008 | ✅ | C | P2-001 | Batch 1 | `cad24b2` |
 | P2-009 | ✅ | C | P2-008 | Batch 2/3 | `115fb67` |
 | P2-010 | ✅ | E | P2-003 | Batch 4/5 | `4571bab` |
-| P2-011 | ✅ | D | P2-005, P2-007 | Batch 4 | this commit |
-| P2-012 | ⬜ | D | P2-011 | Batch 4 | |
+| P2-011 | ✅ | D | P2-005, P2-007 | Batch 4 | `209e457` |
+| P2-012 | ✅ | D | P2-011 | Batch 4 | this commit |
 | P2-013 | ⬜ | D | P2-012 | Batch 4 | |
 | P2-014 | ⬜ | E | P2-010 | Batch 5 | |
 | P2-015 | ⬜ | E | P2-014 | Batch 5 | |

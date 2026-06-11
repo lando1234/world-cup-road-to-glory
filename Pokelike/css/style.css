@@ -1143,17 +1143,65 @@ h1, h2, .pixel-font {
   max-width: 420px;
   text-align: center;
 }
+.contract-offer-box {
+  border-color: var(--gold);
+}
+.contract-offer-kicker {
+  color: var(--gold);
+  font-size: 8px;
+  letter-spacing: 0;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+}
+.contract-offer-meta {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin: 10px 0 8px;
+}
+.contract-offer-meta span {
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--text);
+  font-size: 8px;
+  padding: 5px 7px;
+}
+.contract-offer-status {
+  display: inline-block;
+  margin: 4px 0 2px;
+  padding: 5px 8px;
+  font-size: 8px;
+  border: 1px solid var(--border);
+}
+.contract-offer-status-seen {
+  color: var(--blue);
+  border-color: var(--blue);
+}
+.contract-offer-status-signed {
+  color: var(--gold);
+  border-color: var(--gold);
+}
 .scout-contract-copy {
   color: var(--text-dim);
   font-size: 10px;
   line-height: 1.6;
   margin: 10px 0 14px;
 }
+.contract-offer-copy {
+  max-width: 360px;
+  margin-left: auto;
+  margin-right: auto;
+}
 .scout-contract-actions {
   display: flex;
   justify-content: center;
   gap: 10px;
   flex-wrap: wrap;
+}
+.contract-offer-primary,
+.contract-offer-secondary {
+  min-width: 140px;
 }
 .contract-stamp-pulse {
   animation: contractStampPulse 1.2s ease both;

@@ -1637,18 +1637,34 @@ function isFootballRuntimeInstance(instance) {
 function confirmScoutContract(player, node, cardEl = null) {
   const profile = window.DomainProfiles?.getProfile?.(player.profileId);
   const name = profile?.displayName || player.name || 'this player';
+  const albumState = window.DomainAlbum?.getEntryState?.(player.profileId) || 'seen';
+  const alreadySigned = albumState === 'signed';
+  const position = profile?.position || player.position || 'Squad';
+  const nation = profile?.nation || player.nation || 'INT';
+  const rarity = profile?.rarity || player.rarity || 'scouted';
+  const stateLabel = alreadySigned ? 'Already signed' : 'Seen in album';
+  const offerCopy = alreadySigned
+    ? 'This player is already signed in the World Cup Album. Offering again keeps the album signed and still follows the squad registration rules.'
+    : 'Signing adds this player to the current squad and records the contract in the World Cup Album.';
   document.getElementById('scout-contract-modal')?.remove();
 
   const modal = document.createElement('div');
   modal.id = 'scout-contract-modal';
-  modal.className = 'item-equip-overlay';
+  modal.className = 'item-equip-overlay contract-offer-overlay';
   modal.innerHTML = `
-    <div class="item-equip-box scout-contract-box">
+    <div class="item-equip-box scout-contract-box contract-offer-box">
+      <div class="contract-offer-kicker">Contract Offer</div>
       <h3>Offer contract to ${name}?</h3>
-      <p class="scout-contract-copy">Signing adds this player to the current squad and records the contract in the World Cup Album.</p>
+      <div class="contract-offer-meta" aria-label="Player contract context">
+        <span>${position}</span>
+        <span>${nation}</span>
+        <span>${String(rarity).toUpperCase()}</span>
+      </div>
+      <p class="contract-offer-status ${alreadySigned ? 'contract-offer-status-signed' : 'contract-offer-status-seen'}">${stateLabel}</p>
+      <p class="scout-contract-copy contract-offer-copy">${offerCopy}</p>
       <div class="scout-contract-actions">
-        <button id="btn-confirm-scout-contract" class="btn-primary">Offer Contract</button>
-        <button id="btn-cancel-scout-contract" class="btn-secondary">Keep Scouting</button>
+        <button id="btn-confirm-scout-contract" class="btn-primary contract-offer-primary">${alreadySigned ? 'Offer Again' : 'Sign Player'}</button>
+        <button id="btn-cancel-scout-contract" class="btn-secondary contract-offer-secondary">Keep Scouting</button>
       </div>
     </div>
   `;

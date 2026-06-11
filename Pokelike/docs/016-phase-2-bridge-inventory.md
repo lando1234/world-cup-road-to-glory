@@ -52,7 +52,7 @@ This maps directly to P2-004 and P2-005.
 
 ### UI container semantics
 
-Scout Report, Contract Offer, Squad Registration, and City Stamp are already behaviorally football-native but still include legacy compatibility anchors. P2-011 adds Scout Report wrapper classes while keeping the old IDs for event handlers. Phase 2 should improve player-facing structure first and only remove selector aliases after tests prove handlers remain stable.
+Scout Report, Contract Offer, Squad Registration, and City Stamp are already behaviorally football-native but still include legacy compatibility anchors. P2-011 adds Scout Report wrapper classes while keeping the old IDs for event handlers. P2-012 adds Contract Offer state classes while keeping the existing overlay base. Phase 2 should improve player-facing structure first and only remove selector aliases after tests prove handlers remain stable.
 
 ---
 

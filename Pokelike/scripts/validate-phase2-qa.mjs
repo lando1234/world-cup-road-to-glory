@@ -190,6 +190,23 @@ runTest("P2-011 Scout Report surface uses football-native wrappers", () => {
   assert(scoutBlock.includes("for (const inst of instances)"), "Scout Report should still render each report instance");
 });
 
+runTest("P2-012 Contract Offer UX separates sign, skip, and duplicate states", () => {
+  const contractBlock = extractBetween(gameSource, "function confirmScoutContract", "function signScoutPlayer");
+  const signBlock = extractBetween(gameSource, "function signScoutPlayer", "function showSwapScreen");
+
+  assert(contractBlock.includes("contract-offer-box"), "Contract Offer modal should expose a football-native box class");
+  assert(contractBlock.includes("contract-offer-meta"), "Contract Offer should show player context metadata");
+  assert(contractBlock.includes("window.DomainAlbum?.getEntryState"), "Contract Offer should read album state for seen/signed feedback");
+  assert(contractBlock.includes("alreadySigned"), "Contract Offer should branch duplicate signed copy");
+  assert(contractBlock.includes("Offer Again"), "Duplicate Contract Offer should have distinct CTA copy");
+  assert(contractBlock.includes("Sign Player"), "New Contract Offer should have distinct signing CTA copy");
+  assert(contractBlock.includes("Keep Scouting"), "Contract Offer should keep skip/back CTA copy");
+  assert(styleSource.includes(".contract-offer-status-signed"), "CSS should style signed Contract Offer state");
+  assert(styleSource.includes(".contract-offer-primary"), "CSS should style Contract Offer CTA hierarchy");
+  assert(!contractBlock.includes("DomainRecruit.offerContract"), "Contract Offer modal should not change recruitment domain rules");
+  assert(signBlock.includes("DomainRecruit.offerContract"), "Signing should remain delegated to DomainRecruit.offerContract");
+});
+
 const failed = results.filter(result => result.status === "FAIL");
 for (const result of results) {
   if (result.status === "PASS") {

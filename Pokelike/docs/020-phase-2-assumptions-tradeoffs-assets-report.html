@@ -740,6 +740,27 @@
           </div>
         </div>
       </article>
+      <article class="task" style="margin-top: 12px;">
+        <h3>P2-012 — Contract Offer UX polish</h3>
+        <div class="task-grid">
+          <div class="field">
+            <span>Assumption</span>
+            <p>Contract Offer clarity can improve through modal presentation, album-state copy, and CTA hierarchy without changing recruitment domain behavior.</p>
+          </div>
+          <div class="field">
+            <span>Tradeoff</span>
+            <p>The modal still uses the existing overlay mechanism to avoid introducing a new modal framework mid-flow. Football-native classes now own the visible offer state.</p>
+          </div>
+          <div class="field">
+            <span>Validation</span>
+            <p>Phase 2 QA asserts metadata, signed/seen state, duplicate copy, and CTA hierarchy exist while signing remains delegated to <code>DomainRecruit.offerContract</code>.</p>
+          </div>
+          <div class="field">
+            <span>Owner Note</span>
+            <p>Duplicate offers are intentionally messaged, not blocked. This preserves current domain semantics and leaves stricter duplicate policy as a future product decision.</p>
+          </div>
+        </div>
+      </article>
     </section>
 
     <section>
@@ -761,7 +782,7 @@
     </section>
 
     <footer>
-      Generated for Pokelike World Cup Road to Glory Phase 2. Last updated 2026-06-10 — P2-011 Scout Report wrapper, P2-010 football node icon registry, P2-021 runtime no-live-API gate, P2-009 local portrait manifest, P2-005 football album write call sites, P2-004 album facade names, P2-003 bridge inventory, P2-008 portrait strategy, P2-007 HTTP smoke script, P2-006 manual QA runbook, P2-002 QA harness shell, P2-001 ledger/protocol, baseline assumptions, tradeoffs, frictions, asset gaps, decision gates, and owner watchlist.
+      Generated for Pokelike World Cup Road to Glory Phase 2. Last updated 2026-06-10 — P2-012 Contract Offer UX polish, P2-011 Scout Report wrapper, P2-010 football node icon registry, P2-021 runtime no-live-API gate, P2-009 local portrait manifest, P2-005 football album write call sites, P2-004 album facade names, P2-003 bridge inventory, P2-008 portrait strategy, P2-007 HTTP smoke script, P2-006 manual QA runbook, P2-002 QA harness shell, P2-001 ledger/protocol, baseline assumptions, tradeoffs, frictions, asset gaps, decision gates, and owner watchlist.
     </footer>
   </main>
 </body>
