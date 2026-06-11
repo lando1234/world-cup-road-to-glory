@@ -17,6 +17,7 @@ function assert(condition, message) {
 const visualFrictionsHtml = readText("docs/013-phase-2-visual-frictions.html");
 const taskBreakdown = readText("docs/011-engineering-task-breakdown.md");
 const assumptionsHtml = readText("docs/012-phase-1-assumptions-tradeoffs-report.html");
+const phase2TaskBreakdown = readText("docs/015-phase-2-engineering-task-breakdown.md");
 const phase2AssumptionsHtml = readText("docs/020-phase-2-assumptions-tradeoffs-assets-report.html");
 
 const frictionEntries = (visualFrictionsHtml.match(/class="entry"/g) || []).length;
@@ -28,6 +29,17 @@ assert(
 assert(frictionEntries >= 3, `visual frictions registry must include at least 3 entries; found ${frictionEntries}`);
 assert(taskBreakdown.includes("Execution Protocol Addendum"), "task breakdown must include the execution protocol addendum");
 assert(taskBreakdown.includes("npm run validate"), "task breakdown must document the npm validation command");
+assert(phase2TaskBreakdown.includes("SPEC 012A"), "Phase 2 task breakdown must include the SPEC 012A heading");
+assert(phase2TaskBreakdown.includes("Progress Summary"), "Phase 2 task breakdown must include a progress summary");
+assert(phase2TaskBreakdown.includes("Task Registry"), "Phase 2 task breakdown must include the task registry");
+assert(phase2TaskBreakdown.includes("Commit Message Template"), "Phase 2 task breakdown must include the commit template");
+assert(phase2TaskBreakdown.includes("Stop Conditions"), "Phase 2 task breakdown must include stop conditions");
+assert(phase2TaskBreakdown.includes("P2-001"), "Phase 2 task breakdown must include P2-001");
+assert(phase2TaskBreakdown.includes("P2-030"), "Phase 2 task breakdown must include P2-030");
+assert(
+  phase2TaskBreakdown.includes("020-phase-2-assumptions-tradeoffs-assets-report.html"),
+  "Phase 2 task breakdown must reference the Phase 2 assumptions report"
+);
 assert(assumptionsHtml.includes("T0-001"), "assumptions report must include T0-001");
 assert(assumptionsHtml.includes("One task, one commit"), "assumptions report must include one-task-one-commit rule");
 assert(

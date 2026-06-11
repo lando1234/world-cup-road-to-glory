@@ -6,8 +6,20 @@
 **Mode:** One task, one validation pass, one commit  
 **Branch:** `main` unless explicitly changed  
 **Screenshots:** Not automated by default
+**Last sync:** `main` @ this commit — Phase 2 ledger/protocol (P2-001)
 
 ---
+
+## Progress Summary
+
+| Metric | Count |
+|--------|------:|
+| **Done** | 1 |
+| **Partial** | 0 |
+| **Not started** | 29 |
+| **Total tickets** | 30 |
+
+**Legend:** ✅ Done · 🟡 Partial · ⬜ Not started
 
 ## 1. Operating Principle
 
@@ -257,7 +269,7 @@ Closeout requires a validation report, manual QA result, no-cloud assertion, no-
 
 | Task | Status | Lane | Dependencies | Parallel group | Commit |
 |------|--------|------|--------------|----------------|--------|
-| P2-001 | ⬜ | A | Phase 1 complete | Batch 1 root | |
+| P2-001 | ✅ | A | Phase 1 complete | Batch 1 root | this commit |
 | P2-002 | ⬜ | A | P2-001 | Batch 1 | |
 | P2-003 | ⬜ | B | P2-002 | Batch 2 root | |
 | P2-004 | ⬜ | B | P2-003 | Batch 2 | |

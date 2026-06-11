@@ -488,6 +488,27 @@
           </div>
         </div>
       </article>
+      <article class="task" style="margin-top: 12px;">
+        <h3>P2-001 — Phase 2 ledger and validation protocol</h3>
+        <div class="task-grid">
+          <div class="field">
+            <span>Assumption</span>
+            <p>The execution plan is now the authoritative Phase 2 task ledger until a later task deliberately replaces or splits it.</p>
+          </div>
+          <div class="field">
+            <span>Tradeoff</span>
+            <p>Docs validation checks structural markers and task IDs rather than parsing the full table schema, keeping the gate useful without making it brittle.</p>
+          </div>
+          <div class="field">
+            <span>Validation</span>
+            <p><code>validate-docs.mjs</code> asserts SPEC 012A, progress summary, task registry, commit template, stop conditions, P2-001, P2-030, and this report link.</p>
+          </div>
+          <div class="field">
+            <span>Owner Note</span>
+            <p>Every future Phase 2 implementation commit should update the ledger status and this report when assumptions, tradeoffs, risks, or asset gaps change.</p>
+          </div>
+        </div>
+      </article>
     </section>
 
     <section>
@@ -509,7 +530,7 @@
     </section>
 
     <footer>
-      Generated for Pokelike World Cup Road to Glory Phase 2. Last updated 2026-06-10 — baseline assumptions, tradeoffs, frictions, asset gaps, decision gates, and owner watchlist.
+      Generated for Pokelike World Cup Road to Glory Phase 2. Last updated 2026-06-10 — P2-001 ledger/protocol, baseline assumptions, tradeoffs, frictions, asset gaps, decision gates, and owner watchlist.
     </footer>
   </main>
 </body>
