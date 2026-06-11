@@ -6,7 +6,7 @@
 **Mode:** One task, one validation pass, one commit  
 **Branch:** `main` unless explicitly changed  
 **Governance HTML:** [022-phase-3-assumptions-tradeoffs-assets-report.html](./022-phase-3-assumptions-tradeoffs-assets-report.html)  
-**Last sync:** P3-051 (pending)
+**Last sync:** P3-051 (`8e9323b`)
 
 ---
 
@@ -147,5 +147,5 @@ Stop and re-plan if:
 | **knockoutEnabled** | `false` |
 | **Validation report** | [023-phase-3-validation-report.md](./023-phase-3-validation-report.md) |
 | **Runtime enable commit** | `c9b032c` |
-| **Sign-off sync** | pending |
+| **Sign-off sync** | `8e9323b` |
 
