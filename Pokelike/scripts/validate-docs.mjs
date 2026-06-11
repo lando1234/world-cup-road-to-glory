@@ -34,6 +34,11 @@ const rcAssetPipeline = readText("docs/028-asset-pipeline-and-art-direction.md")
 const rcBridgePlan = readText("docs/030-release-candidate-bridge-retirement-plan.md");
 const rcManualQaRunbook = readText("docs/031-release-candidate-manual-qa-runbook.md");
 const rcValidationReport = readText("docs/032-release-candidate-validation-report.md");
+const phase5Plan = readText("docs/033-phase-5-knockout-and-meta-plan.md");
+const phase5Ledger = readText("docs/034-phase-5-task-breakdown.md");
+const phase5ManualQaRunbook = readText("docs/036-phase-5-manual-qa.md");
+const phase5AssumptionsHtml = readText("docs/035-phase-5-assumptions-tradeoffs.html");
+const phase5ValidationReport = readText("docs/037-phase-5-validation-report.md");
 
 const frictionEntries = (visualFrictionsHtml.match(/class="entry"/g) || []).length;
 
@@ -119,7 +124,32 @@ assert(rcBridgePlan.includes("Bridge Retirement Plan"), "RC bridge retirement pl
 assert(rcManualQaRunbook.includes("Release Candidate Manual QA Runbook"), "RC manual QA runbook must include expected heading");
 assert(rcManualQaRunbook.includes("Full 8-City Path"), "RC manual QA runbook must include 8-city path");
 assert(rcValidationReport.includes("Release Candidate Validation Report"), "RC validation report must include expected heading");
+assert(phase5Plan.includes("SPEC 015"), "Phase 5 plan must include the SPEC 015 heading");
+assert(phase5Plan.includes("P5-017"), "Phase 5 plan must include the knockout enable gate task");
+assert(phase5Ledger.includes("SPEC 015A"), "Phase 5 task breakdown must include the SPEC 015A heading");
+assert(phase5Ledger.includes("Progress Summary"), "Phase 5 task breakdown must include a progress summary");
+assert(phase5Ledger.includes("Task Registry"), "Phase 5 task breakdown must include the task registry");
+assert(phase5Ledger.includes("P5-001"), "Phase 5 task breakdown must include P5-001");
+assert(phase5Ledger.includes("P5-072"), "Phase 5 task breakdown must include P5-072");
+assert(
+  phase5Ledger.includes("035-phase-5-assumptions-tradeoffs.html"),
+  "Phase 5 task breakdown must reference the Phase 5 governance HTML"
+);
+assert(
+  phase5AssumptionsHtml.includes("Phase 5 Assumptions, Tradeoffs, Frictions, and Decision Gates"),
+  "Phase 5 assumptions report must include the expected h1"
+);
+assert(phase5AssumptionsHtml.includes("Go / No-Go Status"), "Phase 5 assumptions report must document go/no-go");
+assert(phase5AssumptionsHtml.includes("Decision Gates"), "Phase 5 assumptions report must document decision gates");
+assert(phase5AssumptionsHtml.includes("P5-GOV"), "Phase 5 assumptions report must include the governance ledger note");
+assert(phase5ManualQaRunbook.includes("Phase 5 Manual QA Runbook"), "Phase 5 manual QA runbook must include the expected heading");
+assert(phase5ManualQaRunbook.includes("Knockout Entry"), "Phase 5 manual QA runbook must include knockout entry checks");
+assert(phase5ManualQaRunbook.includes("Trophy Ceremony"), "Phase 5 manual QA runbook must include trophy ceremony checks");
+assert(phase5ManualQaRunbook.includes("Blocker Definition"), "Phase 5 manual QA runbook must define blockers");
+assert(phase5ValidationReport.includes("Phase 5 Validation Report"), "Phase 5 validation report must include the expected heading");
+assert(phase5ValidationReport.includes("Go / No-Go"), "Phase 5 validation report must include go/no-go verdict");
 assert(fs.existsSync(path.join(projectRoot, "data/football/player_asset_manifest.json")), "player asset manifest must exist");
+assert(fs.existsSync(path.join(projectRoot, "scripts/validate-phase5-qa.mjs")), "phase5 QA harness must exist");
 assert(fs.existsSync(path.join(projectRoot, "scripts/validate-identity-cleanup.mjs")), "identity cleanup harness must exist");
 assert(fs.existsSync(path.join(projectRoot, "scripts/validate-asset-manifests.mjs")), "asset manifest harness must exist");
 

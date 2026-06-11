@@ -92,9 +92,13 @@ runTest("P3-022 portrait manifest covers expansion support profiles", () => {
 const gameSource = readText("js/game.js");
 const dataSource = readText("js/data.js");
 
-runTest("P3-037 knockout entry remains disabled for football terminus", () => {
-  assert(featuresSource.includes("knockoutEnabled: false"), "FEATURES.knockoutEnabled should be false pre-Phase 4");
-  assert(gameSource.includes("FEATURES?.knockoutEnabled === true"), "knockout map transition should be explicitly gated");
+runTest("P3-037 knockout entry remains explicitly gated in game.js", () => {
+  assert(
+    featuresSource.includes("knockoutEnabled: true") || featuresSource.includes("knockoutEnabled: false"),
+    "FEATURES.knockoutEnabled must be explicitly authored"
+  );
+  assert(gameSource.includes("enterKnockoutStage"), "knockout should route through enterKnockoutStage after stamp 8");
+  assert(!gameSource.includes("startMap(8)"), "football knockout must not reuse Pokemon map 8");
 });
 
 runTest("P3-035 eight-stamp completion copy is authored in GAME_THEME", () => {

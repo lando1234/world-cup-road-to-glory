@@ -95,6 +95,8 @@ runScript(context, "js/domain/album.js");
 runScript(context, "js/domain/bosses.js");
 runScript(context, "js/domain/combat-adapter.js");
 runScript(context, "js/domain/save.js");
+runScript(context, "js/domain/knockout.js");
+runScript(context, "js/domain/meta.js");
 runScript(context, "js/domain/scout.js");
 runScript(context, "js/domain/recruit.js");
 
@@ -118,8 +120,9 @@ runScript(context, "js/map.js");
 runScript(context, "js/cloud-save.js");
 
 const EXPECTED_PROFILE_IDS = Object.freeze([
-  1, 2, 3, 4, 6, 7, 9, 10, 12, 14, 15, 17, 18, 28, 29, 30, 31, 16, 22, 26,
-  32, 33, 34, 35, 36, 13, 19, 21, 23, 24, 25, 27, 40
+  1, 2, 3, 4, 6, 7, 9, 10, 12, 13, 14, 15, 16, 17, 18, 19, 21, 22, 23, 24,
+  25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43,
+  44, 45, 46, 47, 48, 49, 50
 ]);
 
 const catalogJson = readJson("data/football/player_profiles.json");
@@ -140,6 +143,8 @@ await runTest("script load order keeps football domain before data.js", () => {
     "js/domain/bosses.js",
     "js/domain/combat-adapter.js",
     "js/domain/save.js",
+    "js/domain/knockout.js",
+    "js/domain/meta.js",
     "js/domain/scout.js",
     "js/domain/recruit.js",
     "js/data.js"
@@ -451,6 +456,15 @@ await runTest("player catalog validates eight-city expansion roster", () => {
   assert(context.window.DomainProfiles.getProfile(2).commonName === "Messi", "profileId 2 must be Messi");
 });
 
+await runTest("runtime CATALOG_PROFILE_IDS matches player_profiles.json", () => {
+  const runtimeCatalog = context.window.DomainProfiles.loadCatalog(catalogJson);
+  assert(runtimeCatalog.profiles.length === catalog.profiles.length, "default catalog loader must accept current JSON without override");
+  assert(
+    runtimeCatalog.profiles.map(p => p.profileId).join(",") === EXPECTED_PROFILE_IDS.join(","),
+    "CATALOG_PROFILE_IDS in profiles.js must match player_profiles.json order"
+  );
+});
+
 await runTest("marquee signing screen exposes core six style triangle", () => {
   const gameSource = readText("js/game.js");
   const cssSource = readText("css/style.css");
@@ -541,26 +555,30 @@ await runTest("host city boss teams build battle-ready instances", () => {
   }
 });
 
-await runTest("album layout defines slice and host_city pages", () => {
+await runTest("album layout defines slice, host_city, and deferred knockout pages", () => {
   assert(albumLayoutJson.schemaVersion === 1, "album layout schemaVersion must be 1");
   assert(albumLayoutJson.volumeTitle === "Road to the Trophy \u2014 Vol. 1", "album layout volumeTitle mismatch");
   assert(Array.isArray(albumLayoutJson.pages), "album layout pages must be an array");
 
   const pageIds = albumLayoutJson.pages.map(page => page.pageId);
-  assert(pageIds.join(",") === "marquee,favorites,host_city", `album layout pages mismatch: ${pageIds.join(",")}`);
-  assert(!pageIds.includes("knockout"), "album layout must not include knockout page");
-  assert(!pageIds.includes("legends"), "album layout must not include legends page");
+  assert(pageIds.join(",") === "marquee,favorites,host_city,knockout,legends", `album layout pages mismatch: ${pageIds.join(",")}`);
 
   const expectedSlotsByPage = {
     marquee: [1, 2, 3],
     favorites: [4, 6, 7, 9, 10, 12, 14, 15, 17, 18, 28],
-    host_city: [29, 30, 31, 32, 33, 34, 35, 36]
+    host_city: [29, 30, 31, 32, 33, 34, 35, 36],
+    knockout: [41, 42, 43, 44, 45, 37, 38, 39, 49],
+    legends: [42, 43, 46, 47, 50]
   };
   const seenProfileIds = new Set();
 
   for (const page of albumLayoutJson.pages) {
     assert(typeof page.title === "string" && page.title.length > 0, `${page.pageId} title must be present`);
-    assert(page.hiddenUntil === null, `${page.pageId} should be always visible in Phase 1`);
+    if (["marquee", "favorites", "host_city"].includes(page.pageId)) {
+      assert(page.hiddenUntil === null, `${page.pageId} should be always visible in campaign slice`);
+    }
+    if (page.pageId === "knockout") assert(page.hiddenUntil === "knockout_enable", "knockout page must stay hidden until knockout_enable");
+    if (page.pageId === "legends") assert(page.hiddenUntil === "legends_enable", "legends page must stay hidden until legends_enable");
     assert(Array.isArray(page.slots), `${page.pageId} slots must be an array`);
 
     const expectedProfileIds = expectedSlotsByPage[page.pageId];
@@ -571,13 +589,18 @@ await runTest("album layout defines slice and host_city pages", () => {
       const expectedSlot = index + 1;
       assert(slot.slot === expectedSlot, `${page.pageId} slot ${index} must be numbered ${expectedSlot}`);
       assert(typeof slot.label === "string" && slot.label.length > 0, `${page.pageId} slot ${expectedSlot} label must be present`);
-      assert(!seenProfileIds.has(slot.profileId), `album profileId ${slot.profileId} appears more than once in Phase 1 layout`);
+      if (!["knockout", "legends"].includes(page.pageId)) {
+        assert(!seenProfileIds.has(slot.profileId), `album profileId ${slot.profileId} appears more than once in visible layout`);
+      }
       seenProfileIds.add(slot.profileId);
 
       const profile = context.window.DomainProfiles.getProfile(slot.profileId);
       assert(profile, `${page.pageId} slot ${expectedSlot} profileId ${slot.profileId} must exist in player catalog`);
-      assert(profile.album.pageId === page.pageId, `profileId ${slot.profileId} album page mismatch`);
-      assert(profile.album.slot === expectedSlot, `profileId ${slot.profileId} album slot mismatch`);
+      const dualLegendPlacement = page.pageId === "legends" && [42, 43].includes(slot.profileId) && profile.album.pageId === "knockout";
+      if (!dualLegendPlacement) {
+        assert(profile.album.pageId === page.pageId, `profileId ${slot.profileId} album page mismatch`);
+        assert(profile.album.slot === expectedSlot, `profileId ${slot.profileId} album slot mismatch`);
+      }
     });
   }
 });
@@ -589,8 +612,10 @@ await runTest("album domain loads layout and exposes ordered slot ids", () => {
   const favoriteIds = context.window.DomainAlbum.getSlotProfileIds("favorites");
   const hostCityIds = context.window.DomainAlbum.getSlotProfileIds("host_city");
 
-  assert(layout.pages.length === 3, "loaded album layout should expose 3 pages");
-  assert(pages.map(page => page.pageId).join(",") === "marquee,favorites,host_city", "getAlbumLayout should expose ordered pages");
+  assert(layout.pages.length === 5, "loaded album layout should expose 5 pages");
+  assert(pages.map(page => page.pageId).join(",") === "marquee,favorites,host_city,knockout,legends", "getAlbumLayout should expose ordered pages");
+  assert(context.window.DomainAlbum.getVisiblePages().map(page => page.pageId).join(",") === "marquee,favorites,host_city",
+    "getVisiblePages should hide knockout and legends until meta unlock");
   assert(marqueeIds.join(",") === "1,2,3", "getSlotProfileIds should return marquee slots in order");
   assert(favoriteIds.join(",") === "4,6,7,9,10,12,14,15,17,18,28", "getSlotProfileIds should return favorite slots in order");
   assert(hostCityIds.join(",") === "29,30,31,32,33,34,35,36", "getSlotProfileIds should return host_city slots in order");
@@ -1076,24 +1101,42 @@ await runTest("scout pool expansion bands validate without changing slice bands"
   assert(forcedPool === "12,15,17", `map 0 forced scout pool must remain unchanged after expansion authoring; received ${forcedPool}`);
 });
 
-await runTest("album expansion layout prepares deferred pages without enabling runtime pages", async () => {
-  const expansion = readJson("data/football/album_layout_expansion.json");
-  const pageIds = expansion.pages.map(page => page.pageId);
-  assert(pageIds.includes("host_city"), "expansion album layout should include host_city page");
-  assert(pageIds.includes("knockout"), "expansion album layout should include knockout page");
-  assert(pageIds.includes("legends"), "expansion album layout should include legends page");
-  const hostCityPage = expansion.pages.find(page => page.pageId === "host_city");
-  context.window.DomainAlbum.loadAlbumLayout({
-    schemaVersion: 1,
-    volumeTitle: expansion.volumeTitle,
-    pages: [hostCityPage],
-    deferredPages: []
-  });
+await runTest("runtime album layout merges knockout and legends pages", async () => {
   const sliceLayout = readJson("data/football/album_layout.json");
-  assert(sliceLayout.pages.every(page => ["marquee", "favorites", "host_city"].includes(page.pageId)),
-    "runtime album layout must keep slice and host_city pages visible");
-  assert(sliceLayout.deferredPages.join(",") === "knockout,legends",
-    "runtime album layout should keep knockout and legends deferred");
+  const pageIds = sliceLayout.pages.map(page => page.pageId);
+  assert(pageIds.includes("knockout"), "runtime album layout should include knockout page");
+  assert(pageIds.includes("legends"), "runtime album layout should include legends page");
+  assert(sliceLayout.deferredPages.length === 0, "runtime album layout should not defer merged pages");
+  const knockoutPage = sliceLayout.pages.find(page => page.pageId === "knockout");
+  assert(knockoutPage?.slots?.length === 9, "knockout page should expose gate icons and support roster slots");
+});
+
+await runTest("knockout catalog validates five historical gates", async () => {
+  const knockoutJson = readJson("data/football/knockout_teams.json");
+  const validation = context.window.DomainKnockout.validateKnockoutCatalog(knockoutJson);
+  assert(validation.valid, `knockout catalog invalid: ${validation.errors.join(" | ")}`);
+  const loaded = context.window.DomainKnockout.loadKnockoutTeams(knockoutJson);
+  assert(loaded.gates.length === 5, "knockout catalog must expose 5 gates");
+  for (const gate of loaded.gates) {
+    const team = context.window.DomainKnockout.buildGateTeam(gate);
+    assert(team.length === gate.roster.length, `gate ${gate.gateIndex} team size mismatch`);
+    assert(team.every(player => player.currentHp === player.maxHp), `gate ${gate.gateIndex} team must start at full stamina`);
+  }
+});
+
+await runTest("meta settlement awards credits and fragments from run snapshot", async () => {
+  const snapshot = context.window.DomainMeta.buildRunSnapshot({
+    runId: "phase5-test-run",
+    badges: 8,
+    knockoutPhase: true,
+    knockoutGatesCleared: 2,
+    wonWorldCup: false,
+    ledger: { signedProfileIds: [4], duplicateSignProfileIds: [], battleCount: 12, scoutCount: 6 }
+  });
+  const settlement = context.window.DomainMeta.settleRun(snapshot);
+  assert(settlement.summary.creditsEarned > 0, "settlement should award football credits");
+  assert(settlement.summary.gatesCleared === 2, "settlement summary should include gates cleared");
+  assert(settlement.patch.footballCredits > 0, "account patch should persist football credits");
 });
 
 await runTest("cloud save is disabled by football feature gate", async () => {

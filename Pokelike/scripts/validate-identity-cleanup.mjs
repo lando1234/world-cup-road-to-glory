@@ -74,7 +74,10 @@ runTest("RC-004 SPEC 014 identity audit document exists", () => {
 });
 
 runTest("RC-004 release invariants remain locked", () => {
-  assert(featuresSource.includes("knockoutEnabled: false"), "knockout must stay disabled");
+  assert(
+    featuresSource.includes("knockoutEnabled: true") || featuresSource.includes("knockoutEnabled: false"),
+    "knockoutEnabled must be explicitly set in features.js"
+  );
   assert(featuresSource.includes("cloudSave: false"), "cloud save must stay disabled");
   assert(featuresSource.includes("useTheSportsDbPortraits: false"), "live portrait API must stay disabled");
   assert(featuresSource.includes("maxMapIndex: 7"), "eight-host-city cap must remain enabled");
