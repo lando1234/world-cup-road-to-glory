@@ -90,6 +90,9 @@ runTest("RC-050 football node icon SVGs exist on disk", () => {
     assert(iconPath, `node ${key} must define icon path`);
     assert(fs.existsSync(path.join(projectRoot, iconPath)), `missing node icon: ${iconPath}`);
   }
+  const bossCompleted = nodeManifest.nodes?.boss?.paths?.completed;
+  assert(bossCompleted, "boss node must define completed icon path");
+  assert(fs.existsSync(path.join(projectRoot, bossCompleted)), `missing boss completed icon: ${bossCompleted}`);
 });
 
 runTest("RC-005 stamp asset manifest references existing SVGs", () => {

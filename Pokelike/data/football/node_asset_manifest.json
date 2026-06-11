@@ -52,7 +52,10 @@
     "boss": {
       "label": "Host City Challenge",
       "iconCode": "HC",
-      "paths": { "icon": "assets/nodes/host-city-challenge.svg" }
+      "paths": {
+        "icon": "assets/nodes/host-city-challenge.svg",
+        "completed": "assets/nodes/host-city-challenge-completed.svg"
+      }
     },
     "legendary": {
       "label": "Legend Scouting",
