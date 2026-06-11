@@ -41,7 +41,8 @@ const routes = [
   { path: "/assets/nodes/scout-report.svg", includes: "Scout Report" },
   { path: "/assets/nodes/host-city-challenge.svg", includes: "Host City Challenge" },
   { path: "/assets/ui/logo.svg", includes: "Road to Glory" },
-  { path: "/assets/ui/settlement-trophy.svg", includes: "Settlement Trophy" }
+  { path: "/assets/ui/settlement-trophy.svg", includes: "Settlement Trophy" },
+  { path: "/assets/players/kylian-mbappe/portrait.svg", includes: "FRA ST" }
 ];
 
 function wait(ms) {

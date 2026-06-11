@@ -13,18 +13,18 @@
   },
   "players": {
     "1": {
-      "assetTier": "T0",
-      "portrait": "",
+      "assetTier": "T1",
+      "portrait": "assets/players/kylian-mbappe/portrait.svg",
       "fallback": "FRA_ST"
     },
     "2": {
-      "assetTier": "T0",
-      "portrait": "",
+      "assetTier": "T1",
+      "portrait": "assets/players/lionel-messi/portrait.svg",
       "fallback": "ARG_AM"
     },
     "3": {
-      "assetTier": "T0",
-      "portrait": "",
+      "assetTier": "T1",
+      "portrait": "assets/players/virgil-van-dijk/portrait.svg",
       "fallback": "NED_CB"
     },
     "4": {

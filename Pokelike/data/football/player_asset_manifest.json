@@ -20,46 +20,46 @@
   "players": {
     "1": {
       "slug": "kylian-mbappe",
-      "assetTier": "T0",
+      "assetTier": "T1",
       "releaseCritical": false,
       "paths": {
-        "portrait": "assets/players/kylian-mbappe/portrait.png",
+        "portrait": "assets/players/kylian-mbappe/portrait.svg",
         "form1": "assets/players/kylian-mbappe/form-1.png",
         "form2": "assets/players/kylian-mbappe/form-2.png",
         "form3": "assets/players/kylian-mbappe/form-3.png",
-        "album": "assets/players/kylian-mbappe/album.png",
-        "battle": "assets/players/kylian-mbappe/battle.png",
-        "squad": "assets/players/kylian-mbappe/squad.png"
+        "album": "assets/players/kylian-mbappe/album.svg",
+        "battle": "assets/players/kylian-mbappe/battle.svg",
+        "squad": "assets/players/kylian-mbappe/squad.svg"
       },
       "fallback": "nation_position_jersey"
     },
     "2": {
       "slug": "lionel-messi",
-      "assetTier": "T0",
+      "assetTier": "T1",
       "releaseCritical": false,
       "paths": {
-        "portrait": "assets/players/lionel-messi/portrait.png",
+        "portrait": "assets/players/lionel-messi/portrait.svg",
         "form1": "assets/players/lionel-messi/form-1.png",
         "form2": "assets/players/lionel-messi/form-2.png",
         "form3": "assets/players/lionel-messi/form-3.png",
-        "album": "assets/players/lionel-messi/album.png",
-        "battle": "assets/players/lionel-messi/battle.png",
-        "squad": "assets/players/lionel-messi/squad.png"
+        "album": "assets/players/lionel-messi/album.svg",
+        "battle": "assets/players/lionel-messi/battle.svg",
+        "squad": "assets/players/lionel-messi/squad.svg"
       },
       "fallback": "nation_position_jersey"
     },
     "3": {
       "slug": "virgil-van-dijk",
-      "assetTier": "T0",
+      "assetTier": "T1",
       "releaseCritical": false,
       "paths": {
-        "portrait": "assets/players/virgil-van-dijk/portrait.png",
+        "portrait": "assets/players/virgil-van-dijk/portrait.svg",
         "form1": "assets/players/virgil-van-dijk/form-1.png",
         "form2": "assets/players/virgil-van-dijk/form-2.png",
         "form3": "assets/players/virgil-van-dijk/form-3.png",
-        "album": "assets/players/virgil-van-dijk/album.png",
-        "battle": "assets/players/virgil-van-dijk/battle.png",
-        "squad": "assets/players/virgil-van-dijk/squad.png"
+        "album": "assets/players/virgil-van-dijk/album.svg",
+        "battle": "assets/players/virgil-van-dijk/battle.svg",
+        "squad": "assets/players/virgil-van-dijk/squad.svg"
       },
       "fallback": "nation_position_jersey"
     },
