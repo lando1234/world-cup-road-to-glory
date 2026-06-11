@@ -1,0 +1,111 @@
+{
+  "schemaVersion": 1,
+  "bracketSeed": "historical_world_cup_gauntlet_v1",
+  "gates": [
+    {
+      "gateIndex": 0,
+      "gateName": "Round of 16",
+      "historicalTeam": "Uruguay 1950",
+      "nickname": "La Celeste — Maracanazo",
+      "nation": "URU",
+      "primaryStyle": "compact_block",
+      "secondaryStyle": "rapid_counter",
+      "kitColors": ["#6CACE4", "#FFFFFF"],
+      "signatureProfileId": 41,
+      "recommendedFormRange": [38, 44],
+      "balance": { "targetFirstRunWinRate": 0.70 },
+      "roster": [
+        { "profileId": 41, "formLevel": 42, "skillTier": 1, "heldItemId": null, "role": "Gate icon" },
+        { "profileId": 37, "formLevel": 40, "skillTier": 1, "heldItemId": null, "role": "Playmaker" },
+        { "profileId": 29, "formLevel": 39, "skillTier": 0, "heldItemId": null, "role": "Enforcer" },
+        { "profileId": 23, "formLevel": 38, "skillTier": 0, "heldItemId": null, "role": "Centre-back" },
+        { "profileId": 24, "formLevel": 38, "skillTier": 0, "heldItemId": null, "role": "Goalkeeper" }
+      ],
+      "flavorText": "Giant-killer myth — 200,000 silenced at Maracanã."
+    },
+    {
+      "gateIndex": 1,
+      "gateName": "Quarter-final",
+      "historicalTeam": "Brazil 1970",
+      "nickname": "The Beautiful Game",
+      "nation": "BRA",
+      "primaryStyle": "wing_play",
+      "secondaryStyle": "high_intensity",
+      "kitColors": ["#FFDF00", "#009C3B"],
+      "signatureProfileId": 42,
+      "recommendedFormRange": [45, 52],
+      "balance": { "targetFirstRunWinRate": 0.55 },
+      "roster": [
+        { "profileId": 42, "formLevel": 50, "skillTier": 2, "heldItemId": null, "role": "Gate icon" },
+        { "profileId": 38, "formLevel": 48, "skillTier": 1, "heldItemId": null, "role": "Wide threat" },
+        { "profileId": 49, "formLevel": 47, "skillTier": 1, "heldItemId": null, "role": "Captain full-back" },
+        { "profileId": 21, "formLevel": 46, "skillTier": 1, "heldItemId": null, "role": "Overlapping FB" },
+        { "profileId": 47, "formLevel": 48, "skillTier": 1, "heldItemId": null, "role": "Creative outlet" }
+      ],
+      "flavorText": "Peak aesthetic football — Jairzinho scored every knockout match."
+    },
+    {
+      "gateIndex": 2,
+      "gateName": "Semi-final",
+      "historicalTeam": "Argentina 1986",
+      "nickname": "La Albiceleste — Hand of God",
+      "nation": "ARG",
+      "primaryStyle": "street_smarts",
+      "secondaryStyle": "tactical_control",
+      "kitColors": ["#75AADB", "#FFFFFF"],
+      "signatureProfileId": 43,
+      "recommendedFormRange": [52, 58],
+      "balance": { "targetFirstRunWinRate": 0.40 },
+      "roster": [
+        { "profileId": 43, "formLevel": 58, "skillTier": 2, "heldItemId": null, "role": "Gate icon" },
+        { "profileId": 39, "formLevel": 54, "skillTier": 1, "heldItemId": null, "role": "Final assist" },
+        { "profileId": 45, "formLevel": 52, "skillTier": 1, "heldItemId": null, "role": "Wide runner" },
+        { "profileId": 48, "formLevel": 53, "skillTier": 1, "heldItemId": null, "role": "Goalkeeper" },
+        { "profileId": 9, "formLevel": 52, "skillTier": 1, "heldItemId": null, "role": "Shield" }
+      ],
+      "flavorText": "One man carried a nation — Burruchaga finished the story."
+    },
+    {
+      "gateIndex": 3,
+      "gateName": "Final",
+      "historicalTeam": "France 1998",
+      "nickname": "Les Bleus — Home Triumph",
+      "nation": "FRA",
+      "primaryStyle": "tactical_control",
+      "secondaryStyle": "compact_block",
+      "kitColors": ["#002395", "#FFFFFF"],
+      "signatureProfileId": 44,
+      "recommendedFormRange": [60, 66],
+      "balance": { "targetFirstRunWinRate": 0.30 },
+      "roster": [
+        { "profileId": 44, "formLevel": 65, "skillTier": 2, "heldItemId": null, "role": "Gate icon" },
+        { "profileId": 40, "formLevel": 62, "skillTier": 1, "heldItemId": null, "role": "Defensive general" },
+        { "profileId": 14, "formLevel": 61, "skillTier": 1, "heldItemId": null, "role": "Press shield" },
+        { "profileId": 13, "formLevel": 60, "skillTier": 1, "heldItemId": null, "role": "Target striker" },
+        { "profileId": 16, "formLevel": 61, "skillTier": 1, "heldItemId": null, "role": "Goalkeeper" }
+      ],
+      "flavorText": "Zidane double header — first French World Cup."
+    },
+    {
+      "gateIndex": 4,
+      "gateName": "Trophy lift",
+      "historicalTeam": "Argentina 2022",
+      "nickname": "La Scaloneta — Qatar Crown",
+      "nation": "ARG",
+      "primaryStyle": "possession_buildup",
+      "secondaryStyle": "high_press",
+      "kitColors": ["#75AADB", "#FFFFFF"],
+      "signatureProfileId": 2,
+      "recommendedFormRange": [65, 72],
+      "balance": { "targetFirstRunWinRate": 0.20 },
+      "roster": [
+        { "profileId": 2, "formLevel": 72, "skillTier": 2, "heldItemId": null, "role": "World Cup captain" },
+        { "profileId": 45, "formLevel": 68, "skillTier": 2, "heldItemId": null, "role": "Final hero" },
+        { "profileId": 6, "formLevel": 66, "skillTier": 1, "heldItemId": null, "role": "Midfield engine" },
+        { "profileId": 48, "formLevel": 65, "skillTier": 1, "heldItemId": null, "role": "Penalty hero GK" },
+        { "profileId": 9, "formLevel": 65, "skillTier": 1, "heldItemId": null, "role": "Anchor" }
+      ],
+      "flavorText": "Messi's crowning moment — penalty shootout drama."
+    }
+  ]
+}
