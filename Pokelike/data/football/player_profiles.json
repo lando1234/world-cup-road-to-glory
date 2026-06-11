@@ -805,6 +805,41 @@
         "nameOk": true,
         "likenessTier": 0
       }
+    },
+    {
+      "profileId": 35,
+      "slug": "hugo-sanchez",
+      "displayName": "Hugo Sánchez",
+      "commonName": "Sánchez",
+      "nation": "MEX",
+      "position": "ST",
+      "primaryStyle": "clinical_finishing",
+      "secondaryStyle": "aerial_threat",
+      "baseStats": {
+        "hp": 72,
+        "atk": 88,
+        "def": 65,
+        "special": 78,
+        "spdef": 68,
+        "speed": 85
+      },
+      "rarity": "rare",
+      "portrait": "/assets/players/hugo-sanchez.png",
+      "flavorText": "Mexico City leg — acrobatic finishes and predatory movement.",
+      "flags": {
+        "isMarquee": false,
+        "isLegend": false,
+        "scoutable": true,
+        "bossExclusive": false
+      },
+      "album": {
+        "pageId": "host_city",
+        "slot": 7
+      },
+      "legal": {
+        "nameOk": true,
+        "likenessTier": 0
+      }
     }
   ]
 }
