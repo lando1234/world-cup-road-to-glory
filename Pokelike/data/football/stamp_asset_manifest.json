@@ -3,6 +3,10 @@
   "releaseCritical": true,
   "remoteRuntimeDependency": false,
   "defaultFallback": "nation_flag_emoji",
+  "statePolicy": {
+    "unsigned": "Base city stamp SVG — neutral palette",
+    "signed": "Same SVG with HUD/album CSS class city-stamp--signed (green glow + check overlay); separate signed asset files deferred to T2"
+  },
   "campaignComplete": {
     "id": "stamp_campaign_complete",
     "paths": {
