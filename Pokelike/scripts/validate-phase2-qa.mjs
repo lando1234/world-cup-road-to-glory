@@ -27,6 +27,7 @@ function runTest(name, fn) {
 const packageJson = JSON.parse(readText("../package.json"));
 const smokeHttpSource = readText("scripts/smoke-http.mjs");
 const phase2Spec = readText("docs/014-phase-2-polish-debt-retirement-and-football-native-ux-plan.md");
+const bridgeInventory = readText("docs/016-phase-2-bridge-inventory.md");
 const phase2Ledger = readText("docs/015-phase-2-engineering-task-breakdown.md");
 const phase2Report = readText("docs/020-phase-2-assumptions-tradeoffs-assets-report.html");
 const featuresSource = readText("js/domain/features.js");
@@ -70,6 +71,19 @@ runTest("P2-007 HTTP smoke command is available for runtime UI tasks", () => {
   assert(smokeHttpSource.includes("host_city_bosses.json"), "HTTP smoke should verify host city JSON");
   assert(smokeHttpSource.includes("scout_pools.json"), "HTTP smoke should verify scout pool JSON");
   assert(smokeHttpSource.includes("album_layout.json"), "HTTP smoke should verify album layout JSON");
+});
+
+runTest("P2-003 bridge inventory is ready before bridge retirement", () => {
+  assert(bridgeInventory.includes("Phase 2 Bridge Inventory"), "bridge inventory should include the expected heading");
+  assert(bridgeInventory.includes("markPokedexSeen"), "bridge inventory should include dex seen facade");
+  assert(bridgeInventory.includes("markPokedexCaught"), "bridge inventory should include dex caught facade");
+  assert(bridgeInventory.includes("speciesId"), "bridge inventory should include speciesId compatibility bridge");
+  assert(bridgeInventory.includes("catch-screen"), "bridge inventory should include catch-screen bridge");
+  assert(bridgeInventory.includes("swap-screen"), "bridge inventory should include swap-screen bridge");
+  assert(bridgeInventory.includes("badge-screen"), "bridge inventory should include badge-screen bridge");
+  assert(bridgeInventory.includes("TYPE_CHART"), "bridge inventory should include style projection bridge");
+  assert(bridgeInventory.includes("TheSportsDB"), "bridge inventory should include TheSportsDB bridge");
+  assert(bridgeInventory.includes("Cloud save module"), "bridge inventory should include cloud save bridge");
 });
 
 const failed = results.filter(result => result.status === "FAIL");

@@ -6,7 +6,7 @@
 **Mode:** One task, one validation pass, one commit  
 **Branch:** `main` unless explicitly changed  
 **Screenshots:** Not automated by default
-**Last sync:** `main` @ this commit — Portrait/legal/art decision gate (P2-008)
+**Last sync:** `main` @ this commit — Bridge inventory (P2-003)
 
 ---
 
@@ -14,9 +14,9 @@
 
 | Metric | Count |
 |--------|------:|
-| **Done** | 5 |
+| **Done** | 6 |
 | **Partial** | 0 |
-| **Not started** | 25 |
+| **Not started** | 24 |
 | **Total tickets** | 30 |
 
 **Legend:** ✅ Done · 🟡 Partial · ⬜ Not started
@@ -271,12 +271,12 @@ Closeout requires a validation report, manual QA result, no-cloud assertion, no-
 |------|--------|------|--------------|----------------|--------|
 | P2-001 | ✅ | A | Phase 1 complete | Batch 1 root | `bb8d87c` |
 | P2-002 | ✅ | A | P2-001 | Batch 1 | `d64f18b` |
-| P2-003 | ⬜ | B | P2-002 | Batch 2 root | |
+| P2-003 | ✅ | B | P2-002 | Batch 2 root | this commit |
 | P2-004 | ⬜ | B | P2-003 | Batch 2 | |
 | P2-005 | ⬜ | B | P2-004 | Batch 2 | |
 | P2-006 | ✅ | A | P2-001 | Batch 1 | `5b7f083` |
 | P2-007 | ✅ | A | P2-002 | Batch 1 | `231a81f` |
-| P2-008 | ✅ | C | P2-001 | Batch 1 | this commit |
+| P2-008 | ✅ | C | P2-001 | Batch 1 | `cad24b2` |
 | P2-009 | ⬜ | C | P2-008 | Batch 2/3 | |
 | P2-010 | ⬜ | E | P2-003 | Batch 4/5 | |
 | P2-011 | ⬜ | D | P2-005, P2-007 | Batch 4 | |
