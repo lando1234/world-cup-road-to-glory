@@ -509,6 +509,27 @@
           </div>
         </div>
       </article>
+      <article class="task" style="margin-top: 12px;">
+        <h3>P2-002 — Phase 2 QA harness shell</h3>
+        <div class="task-grid">
+          <div class="field">
+            <span>Assumption</span>
+            <p>The Phase 2 harness starts as a governance and invariant gate, then grows as implementation tasks add behavior-specific checks.</p>
+          </div>
+          <div class="field">
+            <span>Tradeoff</span>
+            <p>The first Phase 2 checks intentionally avoid UI/runtime assertions so the harness can be wired without destabilizing the playable slice.</p>
+          </div>
+          <div class="field">
+            <span>Validation</span>
+            <p><code>npm run validate</code> now runs domain validation, Phase 1 QA, Phase 2 QA, docs validation, and syntax checks.</p>
+          </div>
+          <div class="field">
+            <span>Owner Note</span>
+            <p>The no-live-API gate is not enforced here yet because TheSportsDB retirement is scoped to P2-009/P2-021.</p>
+          </div>
+        </div>
+      </article>
     </section>
 
     <section>
@@ -530,7 +551,7 @@
     </section>
 
     <footer>
-      Generated for Pokelike World Cup Road to Glory Phase 2. Last updated 2026-06-10 — P2-001 ledger/protocol, baseline assumptions, tradeoffs, frictions, asset gaps, decision gates, and owner watchlist.
+      Generated for Pokelike World Cup Road to Glory Phase 2. Last updated 2026-06-10 — P2-002 QA harness shell, P2-001 ledger/protocol, baseline assumptions, tradeoffs, frictions, asset gaps, decision gates, and owner watchlist.
     </footer>
   </main>
 </body>
