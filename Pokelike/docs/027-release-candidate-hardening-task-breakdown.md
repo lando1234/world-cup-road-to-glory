@@ -1,7 +1,7 @@
 # SPEC 014B — Release Candidate Hardening Task Breakdown
 
-**Status:** Wave 0 complete — Wave 1 in progress  
-**Last sync:** RC-011/016/019 identity cleanup  
+**Status:** Wave 0–1 complete — Waves 3–6 in progress  
+**Last sync:** 2026-06-11 — RC-050 node icon SVG set shipped  
 **Authority:** [026 — Identity Audit](./026-release-candidate-identity-audit.md) · [028 — Asset Pipeline](./028-asset-pipeline-and-art-direction.md)  
 **Date:** 2026-06-10  
 **Mode:** One atomic task per commit · Playable after every commit  
@@ -13,9 +13,9 @@
 
 | Metric | Count |
 |--------|------:|
-| **Done** | 10 |
-| **In progress** | 4 |
-| **Not started** | 38 |
+| **Done** | 23 |
+| **In progress** | 5 |
+| **Not started** | 24 |
 | **Total** | 52 |
 
 **Legend:** ✅ Done · 🟡 Partial · ⬜ Not started

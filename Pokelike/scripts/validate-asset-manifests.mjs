@@ -80,6 +80,18 @@ runTest("RC-005 node asset manifest schema", () => {
   }
 });
 
+runTest("RC-050 football node icon SVGs exist on disk", () => {
+  const footballKeys = [
+    "start", "catch", "battle", "trainer", "pokecenter", "item",
+    "move_tutor", "question", "boss", "rest_site", "final_locked"
+  ];
+  for (const key of footballKeys) {
+    const iconPath = nodeManifest.nodes?.[key]?.paths?.icon;
+    assert(iconPath, `node ${key} must define icon path`);
+    assert(fs.existsSync(path.join(projectRoot, iconPath)), `missing node icon: ${iconPath}`);
+  }
+});
+
 runTest("RC-005 stamp asset manifest references existing SVGs", () => {
   assert(stampManifest.schemaVersion === 1, "stamp manifest schemaVersion must be 1");
   assert(stampManifest.releaseCritical === true, "stamp manifest should be release critical");

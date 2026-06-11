@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="Gear Crate">
+  <rect x="6" y="10" width="20" height="16" rx="2" fill="#3d2817" stroke="#ffd54f" stroke-width="2"/>
+  <path d="M6 14h20" stroke="#ffd54f" stroke-width="2"/>
+  <circle cx="16" cy="20" r="4" fill="none" stroke="#7ec8ff" stroke-width="2"/>
+  <path d="M16 8v4M12 6l4 4 4-4" stroke="#7ec8ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

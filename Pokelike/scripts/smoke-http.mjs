@@ -37,7 +37,9 @@ const routes = [
   { path: "/assets/stamps/milan-stamp.svg", includes: "Milan City Stamp" },
   { path: "/assets/stamps/amsterdam-stamp.svg", includes: "Amsterdam City Stamp" },
   { path: "/assets/stamps/mexico-city-stamp.svg", includes: "Mexico City Stamp" },
-  { path: "/assets/stamps/london-stamp.svg", includes: "London City Stamp" }
+  { path: "/assets/stamps/london-stamp.svg", includes: "London City Stamp" },
+  { path: "/assets/nodes/scout-report.svg", includes: "Scout Report" },
+  { path: "/assets/nodes/host-city-challenge.svg", includes: "Host City Challenge" }
 ];
 
 function wait(ms) {
