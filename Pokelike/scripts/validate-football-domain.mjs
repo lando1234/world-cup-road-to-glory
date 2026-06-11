@@ -117,10 +117,10 @@ context.TRAINER_SPECIALTIES_GEN2 = {};
 runScript(context, "js/map.js");
 runScript(context, "js/cloud-save.js");
 
-const PHASE_1_PROFILE_IDS = Object.freeze([
-  1, 2, 3, 4, 6, 7, 9, 10, 12, 14, 15, 17, 18, 28, 29, 30, 31, 16, 22, 26
+const EXPECTED_PROFILE_IDS = Object.freeze([
+  1, 2, 3, 4, 6, 7, 9, 10, 12, 14, 15, 17, 18, 28, 29, 30, 31, 16, 22, 26,
+  32, 33, 34, 35, 36, 13, 19, 21, 23, 24, 25, 27, 40
 ]);
-const EXPECTED_PROFILE_IDS = Object.freeze([1, 2, 3, 4, 6, 7, 9, 10, 12, 14, 15, 17, 18, 28, 29, 30, 31, 16, 22, 26, 32, 33, 34, 35, 36, 13, 19, 21, 23, 24, 25, 27, 40]);
 
 const catalogJson = readJson("data/football/player_profiles.json");
 const catalog = context.window.DomainProfiles.loadCatalog(catalogJson, { expectedProfileIds: EXPECTED_PROFILE_IDS });
@@ -441,7 +441,7 @@ await runTest("style chart exposes 18 complete football styles", () => {
   }
 });
 
-await runTest("player catalog validates Phase 1 roster", () => {
+await runTest("player catalog validates eight-city expansion roster", () => {
   assert(catalog.profiles.length === EXPECTED_PROFILE_IDS.length, `expected ${EXPECTED_PROFILE_IDS.length} profiles, received ${catalog.profiles.length}`);
   for (const starterId of [1, 2, 3]) {
     const profile = context.window.DomainProfiles.getProfile(starterId);

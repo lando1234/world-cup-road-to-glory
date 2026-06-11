@@ -8,8 +8,10 @@
 const PROFILE_CATALOG_URL = "data/football/player_profiles.json";
 const PORTRAIT_MANIFEST_URL = "data/football/portrait_manifest.json";
 
-const PHASE_1_PROFILE_IDS = Object.freeze([
-  1, 2, 3, 4, 6, 7, 9, 10, 12, 14, 15, 17, 18, 28, 29, 30, 31, 16, 22, 26
+/** Authoritative catalog order after Phase 3 eight-city expansion (33 profiles). */
+const CATALOG_PROFILE_IDS = Object.freeze([
+  1, 2, 3, 4, 6, 7, 9, 10, 12, 14, 15, 17, 18, 28, 29, 30, 31, 16, 22, 26,
+  32, 33, 34, 35, 36, 13, 19, 21, 23, 24, 25, 27, 40
 ]);
 
 const REQUIRED_PROFILE_FIELDS = Object.freeze([
@@ -102,7 +104,7 @@ function validatePlayerCatalog(catalog, options = {}) {
 
   const expectedProfileIds = Array.isArray(options.expectedProfileIds)
     ? options.expectedProfileIds
-    : [...PHASE_1_PROFILE_IDS];
+    : [...CATALOG_PROFILE_IDS];
   const profileIds = catalog.profiles.map(profile => profile?.profileId);
 
   if (catalog.profiles.length !== expectedProfileIds.length) {
