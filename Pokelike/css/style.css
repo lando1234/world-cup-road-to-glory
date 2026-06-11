@@ -2727,6 +2727,87 @@ h1, h2, .pixel-font {
   text-align: center;
 }
 
+.settlement-lite-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 320;
+  background: rgba(0, 0, 0, 0.84);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+.settlement-lite-box {
+  width: min(460px, 92vw);
+  border: 3px solid #2b8f6b;
+  padding: 14px;
+  background: #081612;
+  box-shadow: 0 0 0 2px #000, 4px 4px 0 rgba(0,0,0,0.7);
+}
+.settlement-lite-kicker {
+  color: var(--gold);
+  font-size: 8px;
+  text-align: center;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.settlement-lite-box h2 {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 12px;
+  color: #77e0b5;
+  text-align: center;
+  margin: 0 0 12px;
+}
+.settlement-lite-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  font-size: 9px;
+  color: var(--text);
+}
+.settlement-lite-grid div {
+  border: 1px solid #174f3b;
+  background: #06100d;
+  padding: 8px;
+  text-align: center;
+}
+.settlement-lite-grid span,
+.settlement-lite-grid strong {
+  display: block;
+}
+.settlement-lite-grid span {
+  color: var(--text-dim);
+  margin-bottom: 5px;
+}
+.settlement-lite-grid strong {
+  color: var(--gold);
+}
+.settlement-lite-signings {
+  margin-top: 12px;
+  color: var(--text);
+  font-size: 9px;
+}
+.settlement-lite-signings div {
+  color: var(--text-dim);
+  margin-bottom: 4px;
+}
+.settlement-lite-signings ul {
+  margin: 0;
+  padding-left: 18px;
+  line-height: 1.6;
+}
+.settlement-lite-rewards {
+  margin-top: 12px;
+  color: var(--text-dim);
+  font-size: 8px;
+  text-align: center;
+}
+.settlement-lite-actions {
+  display: flex;
+  justify-content: center;
+  margin-top: 14px;
+}
+
 /* ---- Shiny Dex ---- */
 #shiny-dex-modal {
   position: fixed; inset: 0; z-index: 300;

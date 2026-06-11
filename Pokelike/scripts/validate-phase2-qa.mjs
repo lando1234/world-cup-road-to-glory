@@ -296,6 +296,22 @@ runTest("P2-017 Slice Complete presents Trophy Road milestone and still routes t
   assert(sliceBlock.includes("settleRunAndReturnToTitle();"), "Slice Complete CTA should continue through settlement helper");
 });
 
+runTest("P2-018 Settlement Lite UX clarifies patch summary and return flow", () => {
+  const settlementBlock = extractBetween(readText("js/ui.js"), "function showSettlementLiteModal", "function openDexDetailModal");
+
+  assert(settlementBlock.includes("settlement-lite-overlay"), "Settlement modal should use dedicated overlay class");
+  assert(settlementBlock.includes("Run Settlement"), "Settlement modal should name the settlement step");
+  assert(settlementBlock.includes("Road to Glory Summary"), "Settlement modal should use football-native summary title");
+  assert(settlementBlock.includes("City Stamps"), "Settlement modal should label stamp summary");
+  assert(settlementBlock.includes("Album Patch"), "Settlement modal should clarify account album patch");
+  assert(settlementBlock.includes("Scout Reports"), "Settlement modal should label scout count");
+  assert(settlementBlock.includes("New Signings Applied"), "Settlement modal should clarify applied signings");
+  assert(settlementBlock.includes("Return to Title"), "Settlement modal CTA should name return destination");
+  assert(settlementBlock.includes("onContinue();"), "Settlement modal should still call provided continuation callback");
+  assert(styleSource.includes(".settlement-lite-grid"), "CSS should style settlement summary grid");
+  assert(styleSource.includes(".settlement-lite-rewards"), "CSS should style settlement reward note");
+});
+
 const failed = results.filter(result => result.status === "FAIL");
 for (const result of results) {
   if (result.status === "PASS") {

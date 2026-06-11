@@ -6,7 +6,7 @@
 **Mode:** One task, one validation pass, one commit  
 **Branch:** `main` unless explicitly changed  
 **Screenshots:** Not automated by default
-**Last sync:** `main` @ this commit — Slice Complete presentation pass (P2-017)
+**Last sync:** `main` @ this commit — Settlement Lite UX pass (P2-018)
 
 ---
 
@@ -14,9 +14,9 @@
 
 | Metric | Count |
 |--------|------:|
-| **Done** | 18 |
+| **Done** | 19 |
 | **Partial** | 0 |
-| **Not started** | 12 |
+| **Not started** | 11 |
 | **Total tickets** | 30 |
 
 **Legend:** ✅ Done · 🟡 Partial · ⬜ Not started
@@ -285,8 +285,8 @@ Closeout requires a validation report, manual QA result, no-cloud assertion, no-
 | P2-014 | ✅ | E | P2-010 | Batch 5 | `4c83ee0` |
 | P2-015 | ✅ | E | P2-014 | Batch 5 | `9963570` |
 | P2-016 | ✅ | F | P2-009 | Batch 6 | `a64a66a` |
-| P2-017 | ✅ | F | P2-015, P2-016 | Batch 6 | this commit |
-| P2-018 | ⬜ | F | P2-017 | Batch 6 | |
+| P2-017 | ✅ | F | P2-015, P2-016 | Batch 6 | `f56ee20` |
+| P2-018 | ✅ | F | P2-017 | Batch 6 | this commit |
 | P2-019 | ⬜ | B | P2-018 | Batch 7 | |
 | P2-020 | ⬜ | B | P2-019 | Batch 7 | |
 | P2-021 | ✅ | C | P2-009 | Batch 3 | `14ac5cb` |
