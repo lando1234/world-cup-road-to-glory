@@ -147,6 +147,16 @@ runTest("RC-005 asset folder scaffold exists", () => {
   }
 });
 
+runTest("RC-042 all catalog profiles have T1 portrait SVG on disk", () => {
+  for (const profile of catalog.profiles) {
+    const entry = playerManifest.players[String(profile.profileId)];
+    assert(entry, `player manifest missing profile ${profile.profileId}`);
+    const portraitPath = entry.paths?.portrait;
+    assert(portraitPath?.endsWith(".svg"), `profile ${profile.profileId} portrait should use local SVG path`);
+    assert(fs.existsSync(path.join(projectRoot, portraitPath)), `missing portrait: ${portraitPath}`);
+  }
+});
+
 const failed = results.filter(result => result.status === "FAIL");
 for (const result of results) {
   if (result.status === "PASS") {

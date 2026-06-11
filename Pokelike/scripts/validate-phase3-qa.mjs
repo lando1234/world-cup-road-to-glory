@@ -82,7 +82,10 @@ runTest("P3-022 portrait manifest covers expansion support profiles", () => {
   for (const profileId of [13, 19, 21, 23, 24, 25, 27, 40]) {
     const entry = portraitManifest.players[String(profileId)];
     assert(entry, `portrait manifest must include support profile ${profileId}`);
-    assert(entry.assetTier === "T0", `support profile ${profileId} portrait should use T0 tier`);
+    assert(entry.assetTier === "T0" || entry.assetTier === "T1", `support profile ${profileId} portrait tier should be T0 or T1`);
+    if (entry.assetTier === "T1") {
+      assert(entry.portrait.startsWith("assets/players/"), `support profile ${profileId} T1 portrait must be local`);
+    }
   }
 });
 

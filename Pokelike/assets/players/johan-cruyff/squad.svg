@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 80" role="img" aria-label="NED AM stylized jersey">
+  <title>NED AM T1 placeholder</title>
+  <rect x="8" y="6" width="48" height="68" rx="4" fill="#ff6600" stroke="#1a2a4a" stroke-width="2"/>
+  <path d="M8 20 L20 14 L32 20 L44 14 L56 20" fill="none" stroke="#ffffff" stroke-width="2"/>
+  <rect x="26" y="28" width="12" height="14" rx="1" fill="#ffffff" opacity="0.85"/>
+  <text x="32" y="38" text-anchor="middle" font-family="monospace" font-size="10" font-weight="bold" fill="#ff6600">27</text>
+  <text x="32" y="58" text-anchor="middle" font-family="monospace" font-size="8" fill="#ffffff">NED</text>
+  <text x="32" y="70" text-anchor="middle" font-family="monospace" font-size="7" fill="#21468b">AM</text>
+</svg>

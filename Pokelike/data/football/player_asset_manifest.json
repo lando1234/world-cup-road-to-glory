@@ -65,361 +65,361 @@
     },
     "4": {
       "slug": "erling-haaland",
-      "assetTier": "T0",
+      "assetTier": "T1",
       "releaseCritical": false,
       "paths": {
-        "portrait": "assets/players/erling-haaland/portrait.png",
+        "portrait": "assets/players/erling-haaland/portrait.svg",
         "form1": "assets/players/erling-haaland/form-1.png",
         "form2": "assets/players/erling-haaland/form-2.png",
         "form3": "assets/players/erling-haaland/form-3.png",
-        "album": "assets/players/erling-haaland/album.png",
-        "battle": "assets/players/erling-haaland/battle.png",
-        "squad": "assets/players/erling-haaland/squad.png"
+        "album": "assets/players/erling-haaland/album.svg",
+        "battle": "assets/players/erling-haaland/battle.svg",
+        "squad": "assets/players/erling-haaland/squad.svg"
       },
       "fallback": "nation_position_jersey"
     },
     "6": {
       "slug": "luka-modric",
-      "assetTier": "T0",
+      "assetTier": "T1",
       "releaseCritical": false,
       "paths": {
-        "portrait": "assets/players/luka-modric/portrait.png",
+        "portrait": "assets/players/luka-modric/portrait.svg",
         "form1": "assets/players/luka-modric/form-1.png",
         "form2": "assets/players/luka-modric/form-2.png",
         "form3": "assets/players/luka-modric/form-3.png",
-        "album": "assets/players/luka-modric/album.png",
-        "battle": "assets/players/luka-modric/battle.png",
-        "squad": "assets/players/luka-modric/squad.png"
+        "album": "assets/players/luka-modric/album.svg",
+        "battle": "assets/players/luka-modric/battle.svg",
+        "squad": "assets/players/luka-modric/squad.svg"
       },
       "fallback": "nation_position_jersey"
     },
     "7": {
       "slug": "mohamed-salah",
-      "assetTier": "T0",
+      "assetTier": "T1",
       "releaseCritical": false,
       "paths": {
-        "portrait": "assets/players/mohamed-salah/portrait.png",
+        "portrait": "assets/players/mohamed-salah/portrait.svg",
         "form1": "assets/players/mohamed-salah/form-1.png",
         "form2": "assets/players/mohamed-salah/form-2.png",
         "form3": "assets/players/mohamed-salah/form-3.png",
-        "album": "assets/players/mohamed-salah/album.png",
-        "battle": "assets/players/mohamed-salah/battle.png",
-        "squad": "assets/players/mohamed-salah/squad.png"
+        "album": "assets/players/mohamed-salah/album.svg",
+        "battle": "assets/players/mohamed-salah/battle.svg",
+        "squad": "assets/players/mohamed-salah/squad.svg"
       },
       "fallback": "nation_position_jersey"
     },
     "9": {
       "slug": "rodri",
-      "assetTier": "T0",
+      "assetTier": "T1",
       "releaseCritical": false,
       "paths": {
-        "portrait": "assets/players/rodri/portrait.png",
+        "portrait": "assets/players/rodri/portrait.svg",
         "form1": "assets/players/rodri/form-1.png",
         "form2": "assets/players/rodri/form-2.png",
         "form3": "assets/players/rodri/form-3.png",
-        "album": "assets/players/rodri/album.png",
-        "battle": "assets/players/rodri/battle.png",
-        "squad": "assets/players/rodri/squad.png"
+        "album": "assets/players/rodri/album.svg",
+        "battle": "assets/players/rodri/battle.svg",
+        "squad": "assets/players/rodri/squad.svg"
       },
       "fallback": "nation_position_jersey"
     },
     "10": {
       "slug": "jude-bellingham",
-      "assetTier": "T0",
+      "assetTier": "T1",
       "releaseCritical": false,
       "paths": {
-        "portrait": "assets/players/jude-bellingham/portrait.png",
+        "portrait": "assets/players/jude-bellingham/portrait.svg",
         "form1": "assets/players/jude-bellingham/form-1.png",
         "form2": "assets/players/jude-bellingham/form-2.png",
         "form3": "assets/players/jude-bellingham/form-3.png",
-        "album": "assets/players/jude-bellingham/album.png",
-        "battle": "assets/players/jude-bellingham/battle.png",
-        "squad": "assets/players/jude-bellingham/squad.png"
+        "album": "assets/players/jude-bellingham/album.svg",
+        "battle": "assets/players/jude-bellingham/battle.svg",
+        "squad": "assets/players/jude-bellingham/squad.svg"
       },
       "fallback": "nation_position_jersey"
     },
     "12": {
       "slug": "pedri",
-      "assetTier": "T0",
+      "assetTier": "T1",
       "releaseCritical": false,
       "paths": {
-        "portrait": "assets/players/pedri/portrait.png",
+        "portrait": "assets/players/pedri/portrait.svg",
         "form1": "assets/players/pedri/form-1.png",
         "form2": "assets/players/pedri/form-2.png",
         "form3": "assets/players/pedri/form-3.png",
-        "album": "assets/players/pedri/album.png",
-        "battle": "assets/players/pedri/battle.png",
-        "squad": "assets/players/pedri/squad.png"
+        "album": "assets/players/pedri/album.svg",
+        "battle": "assets/players/pedri/battle.svg",
+        "squad": "assets/players/pedri/squad.svg"
       },
       "fallback": "nation_position_jersey"
     },
     "13": {
       "slug": "harry-kane",
-      "assetTier": "T0",
+      "assetTier": "T1",
       "releaseCritical": false,
       "paths": {
-        "portrait": "assets/players/harry-kane/portrait.png",
+        "portrait": "assets/players/harry-kane/portrait.svg",
         "form1": "assets/players/harry-kane/form-1.png",
         "form2": "assets/players/harry-kane/form-2.png",
         "form3": "assets/players/harry-kane/form-3.png",
-        "album": "assets/players/harry-kane/album.png",
-        "battle": "assets/players/harry-kane/battle.png",
-        "squad": "assets/players/harry-kane/squad.png"
+        "album": "assets/players/harry-kane/album.svg",
+        "battle": "assets/players/harry-kane/battle.svg",
+        "squad": "assets/players/harry-kane/squad.svg"
       },
       "fallback": "nation_position_jersey"
     },
     "14": {
       "slug": "n-golo-kante",
-      "assetTier": "T0",
+      "assetTier": "T1",
       "releaseCritical": false,
       "paths": {
-        "portrait": "assets/players/n-golo-kante/portrait.png",
+        "portrait": "assets/players/n-golo-kante/portrait.svg",
         "form1": "assets/players/n-golo-kante/form-1.png",
         "form2": "assets/players/n-golo-kante/form-2.png",
         "form3": "assets/players/n-golo-kante/form-3.png",
-        "album": "assets/players/n-golo-kante/album.png",
-        "battle": "assets/players/n-golo-kante/battle.png",
-        "squad": "assets/players/n-golo-kante/squad.png"
+        "album": "assets/players/n-golo-kante/album.svg",
+        "battle": "assets/players/n-golo-kante/battle.svg",
+        "squad": "assets/players/n-golo-kante/squad.svg"
       },
       "fallback": "nation_position_jersey"
     },
     "15": {
       "slug": "sergio-ramos",
-      "assetTier": "T0",
+      "assetTier": "T1",
       "releaseCritical": false,
       "paths": {
-        "portrait": "assets/players/sergio-ramos/portrait.png",
+        "portrait": "assets/players/sergio-ramos/portrait.svg",
         "form1": "assets/players/sergio-ramos/form-1.png",
         "form2": "assets/players/sergio-ramos/form-2.png",
         "form3": "assets/players/sergio-ramos/form-3.png",
-        "album": "assets/players/sergio-ramos/album.png",
-        "battle": "assets/players/sergio-ramos/battle.png",
-        "squad": "assets/players/sergio-ramos/squad.png"
+        "album": "assets/players/sergio-ramos/album.svg",
+        "battle": "assets/players/sergio-ramos/battle.svg",
+        "squad": "assets/players/sergio-ramos/squad.svg"
       },
       "fallback": "nation_position_jersey"
     },
     "16": {
       "slug": "manuel-neuer",
-      "assetTier": "T0",
+      "assetTier": "T1",
       "releaseCritical": false,
       "paths": {
-        "portrait": "assets/players/manuel-neuer/portrait.png",
+        "portrait": "assets/players/manuel-neuer/portrait.svg",
         "form1": "assets/players/manuel-neuer/form-1.png",
         "form2": "assets/players/manuel-neuer/form-2.png",
         "form3": "assets/players/manuel-neuer/form-3.png",
-        "album": "assets/players/manuel-neuer/album.png",
-        "battle": "assets/players/manuel-neuer/battle.png",
-        "squad": "assets/players/manuel-neuer/squad.png"
+        "album": "assets/players/manuel-neuer/album.svg",
+        "battle": "assets/players/manuel-neuer/battle.svg",
+        "squad": "assets/players/manuel-neuer/squad.svg"
       },
       "fallback": "nation_position_jersey"
     },
     "17": {
       "slug": "alisson-becker",
-      "assetTier": "T0",
+      "assetTier": "T1",
       "releaseCritical": false,
       "paths": {
-        "portrait": "assets/players/alisson-becker/portrait.png",
+        "portrait": "assets/players/alisson-becker/portrait.svg",
         "form1": "assets/players/alisson-becker/form-1.png",
         "form2": "assets/players/alisson-becker/form-2.png",
         "form3": "assets/players/alisson-becker/form-3.png",
-        "album": "assets/players/alisson-becker/album.png",
-        "battle": "assets/players/alisson-becker/battle.png",
-        "squad": "assets/players/alisson-becker/squad.png"
+        "album": "assets/players/alisson-becker/album.svg",
+        "battle": "assets/players/alisson-becker/battle.svg",
+        "squad": "assets/players/alisson-becker/squad.svg"
       },
       "fallback": "nation_position_jersey"
     },
     "18": {
       "slug": "marcelo",
-      "assetTier": "T0",
+      "assetTier": "T1",
       "releaseCritical": false,
       "paths": {
-        "portrait": "assets/players/marcelo/portrait.png",
+        "portrait": "assets/players/marcelo/portrait.svg",
         "form1": "assets/players/marcelo/form-1.png",
         "form2": "assets/players/marcelo/form-2.png",
         "form3": "assets/players/marcelo/form-3.png",
-        "album": "assets/players/marcelo/album.png",
-        "battle": "assets/players/marcelo/battle.png",
-        "squad": "assets/players/marcelo/squad.png"
+        "album": "assets/players/marcelo/album.svg",
+        "battle": "assets/players/marcelo/battle.svg",
+        "squad": "assets/players/marcelo/squad.svg"
       },
       "fallback": "nation_position_jersey"
     },
     "19": {
       "slug": "andres-iniesta",
-      "assetTier": "T0",
+      "assetTier": "T1",
       "releaseCritical": false,
       "paths": {
-        "portrait": "assets/players/andres-iniesta/portrait.png",
+        "portrait": "assets/players/andres-iniesta/portrait.svg",
         "form1": "assets/players/andres-iniesta/form-1.png",
         "form2": "assets/players/andres-iniesta/form-2.png",
         "form3": "assets/players/andres-iniesta/form-3.png",
-        "album": "assets/players/andres-iniesta/album.png",
-        "battle": "assets/players/andres-iniesta/battle.png",
-        "squad": "assets/players/andres-iniesta/squad.png"
+        "album": "assets/players/andres-iniesta/album.svg",
+        "battle": "assets/players/andres-iniesta/battle.svg",
+        "squad": "assets/players/andres-iniesta/squad.svg"
       },
       "fallback": "nation_position_jersey"
     },
     "21": {
       "slug": "roberto-carlos",
-      "assetTier": "T0",
+      "assetTier": "T1",
       "releaseCritical": false,
       "paths": {
-        "portrait": "assets/players/roberto-carlos/portrait.png",
+        "portrait": "assets/players/roberto-carlos/portrait.svg",
         "form1": "assets/players/roberto-carlos/form-1.png",
         "form2": "assets/players/roberto-carlos/form-2.png",
         "form3": "assets/players/roberto-carlos/form-3.png",
-        "album": "assets/players/roberto-carlos/album.png",
-        "battle": "assets/players/roberto-carlos/battle.png",
-        "squad": "assets/players/roberto-carlos/squad.png"
+        "album": "assets/players/roberto-carlos/album.svg",
+        "battle": "assets/players/roberto-carlos/battle.svg",
+        "squad": "assets/players/roberto-carlos/squad.svg"
       },
       "fallback": "nation_position_jersey"
     },
     "22": {
       "slug": "cafu",
-      "assetTier": "T0",
+      "assetTier": "T1",
       "releaseCritical": false,
       "paths": {
-        "portrait": "assets/players/cafu/portrait.png",
+        "portrait": "assets/players/cafu/portrait.svg",
         "form1": "assets/players/cafu/form-1.png",
         "form2": "assets/players/cafu/form-2.png",
         "form3": "assets/players/cafu/form-3.png",
-        "album": "assets/players/cafu/album.png",
-        "battle": "assets/players/cafu/battle.png",
-        "squad": "assets/players/cafu/squad.png"
+        "album": "assets/players/cafu/album.svg",
+        "battle": "assets/players/cafu/battle.svg",
+        "squad": "assets/players/cafu/squad.svg"
       },
       "fallback": "nation_position_jersey"
     },
     "23": {
       "slug": "paolo-maldini",
-      "assetTier": "T0",
+      "assetTier": "T1",
       "releaseCritical": false,
       "paths": {
-        "portrait": "assets/players/paolo-maldini/portrait.png",
+        "portrait": "assets/players/paolo-maldini/portrait.svg",
         "form1": "assets/players/paolo-maldini/form-1.png",
         "form2": "assets/players/paolo-maldini/form-2.png",
         "form3": "assets/players/paolo-maldini/form-3.png",
-        "album": "assets/players/paolo-maldini/album.png",
-        "battle": "assets/players/paolo-maldini/battle.png",
-        "squad": "assets/players/paolo-maldini/squad.png"
+        "album": "assets/players/paolo-maldini/album.svg",
+        "battle": "assets/players/paolo-maldini/battle.svg",
+        "squad": "assets/players/paolo-maldini/squad.svg"
       },
       "fallback": "nation_position_jersey"
     },
     "24": {
       "slug": "gianluigi-buffon",
-      "assetTier": "T0",
+      "assetTier": "T1",
       "releaseCritical": false,
       "paths": {
-        "portrait": "assets/players/gianluigi-buffon/portrait.png",
+        "portrait": "assets/players/gianluigi-buffon/portrait.svg",
         "form1": "assets/players/gianluigi-buffon/form-1.png",
         "form2": "assets/players/gianluigi-buffon/form-2.png",
         "form3": "assets/players/gianluigi-buffon/form-3.png",
-        "album": "assets/players/gianluigi-buffon/album.png",
-        "battle": "assets/players/gianluigi-buffon/battle.png",
-        "squad": "assets/players/gianluigi-buffon/squad.png"
+        "album": "assets/players/gianluigi-buffon/album.svg",
+        "battle": "assets/players/gianluigi-buffon/battle.svg",
+        "squad": "assets/players/gianluigi-buffon/squad.svg"
       },
       "fallback": "nation_position_jersey"
     },
     "25": {
       "slug": "iker-casillas",
-      "assetTier": "T0",
+      "assetTier": "T1",
       "releaseCritical": false,
       "paths": {
-        "portrait": "assets/players/iker-casillas/portrait.png",
+        "portrait": "assets/players/iker-casillas/portrait.svg",
         "form1": "assets/players/iker-casillas/form-1.png",
         "form2": "assets/players/iker-casillas/form-2.png",
         "form3": "assets/players/iker-casillas/form-3.png",
-        "album": "assets/players/iker-casillas/album.png",
-        "battle": "assets/players/iker-casillas/battle.png",
-        "squad": "assets/players/iker-casillas/squad.png"
+        "album": "assets/players/iker-casillas/album.svg",
+        "battle": "assets/players/iker-casillas/battle.svg",
+        "squad": "assets/players/iker-casillas/squad.svg"
       },
       "fallback": "nation_position_jersey"
     },
     "26": {
       "slug": "franz-beckenbauer",
-      "assetTier": "T0",
+      "assetTier": "T1",
       "releaseCritical": false,
       "paths": {
-        "portrait": "assets/players/franz-beckenbauer/portrait.png",
+        "portrait": "assets/players/franz-beckenbauer/portrait.svg",
         "form1": "assets/players/franz-beckenbauer/form-1.png",
         "form2": "assets/players/franz-beckenbauer/form-2.png",
         "form3": "assets/players/franz-beckenbauer/form-3.png",
-        "album": "assets/players/franz-beckenbauer/album.png",
-        "battle": "assets/players/franz-beckenbauer/battle.png",
-        "squad": "assets/players/franz-beckenbauer/squad.png"
+        "album": "assets/players/franz-beckenbauer/album.svg",
+        "battle": "assets/players/franz-beckenbauer/battle.svg",
+        "squad": "assets/players/franz-beckenbauer/squad.svg"
       },
       "fallback": "nation_position_jersey"
     },
     "27": {
       "slug": "johan-cruyff",
-      "assetTier": "T0",
+      "assetTier": "T1",
       "releaseCritical": false,
       "paths": {
-        "portrait": "assets/players/johan-cruyff/portrait.png",
+        "portrait": "assets/players/johan-cruyff/portrait.svg",
         "form1": "assets/players/johan-cruyff/form-1.png",
         "form2": "assets/players/johan-cruyff/form-2.png",
         "form3": "assets/players/johan-cruyff/form-3.png",
-        "album": "assets/players/johan-cruyff/album.png",
-        "battle": "assets/players/johan-cruyff/battle.png",
-        "squad": "assets/players/johan-cruyff/squad.png"
+        "album": "assets/players/johan-cruyff/album.svg",
+        "battle": "assets/players/johan-cruyff/battle.svg",
+        "squad": "assets/players/johan-cruyff/squad.svg"
       },
       "fallback": "nation_position_jersey"
     },
     "28": {
       "slug": "arjen-robben",
-      "assetTier": "T0",
+      "assetTier": "T1",
       "releaseCritical": false,
       "paths": {
-        "portrait": "assets/players/arjen-robben/portrait.png",
+        "portrait": "assets/players/arjen-robben/portrait.svg",
         "form1": "assets/players/arjen-robben/form-1.png",
         "form2": "assets/players/arjen-robben/form-2.png",
         "form3": "assets/players/arjen-robben/form-3.png",
-        "album": "assets/players/arjen-robben/album.png",
-        "battle": "assets/players/arjen-robben/battle.png",
-        "squad": "assets/players/arjen-robben/squad.png"
+        "album": "assets/players/arjen-robben/album.svg",
+        "battle": "assets/players/arjen-robben/battle.svg",
+        "squad": "assets/players/arjen-robben/squad.svg"
       },
       "fallback": "nation_position_jersey"
     },
     "29": {
       "slug": "casemiro",
-      "assetTier": "T0",
+      "assetTier": "T1",
       "releaseCritical": false,
       "paths": {
-        "portrait": "assets/players/casemiro/portrait.png",
+        "portrait": "assets/players/casemiro/portrait.svg",
         "form1": "assets/players/casemiro/form-1.png",
         "form2": "assets/players/casemiro/form-2.png",
         "form3": "assets/players/casemiro/form-3.png",
-        "album": "assets/players/casemiro/album.png",
-        "battle": "assets/players/casemiro/battle.png",
-        "squad": "assets/players/casemiro/squad.png"
+        "album": "assets/players/casemiro/album.svg",
+        "battle": "assets/players/casemiro/battle.svg",
+        "squad": "assets/players/casemiro/squad.svg"
       },
       "fallback": "nation_position_jersey"
     },
     "30": {
       "slug": "toni-kroos",
-      "assetTier": "T0",
+      "assetTier": "T1",
       "releaseCritical": false,
       "paths": {
-        "portrait": "assets/players/toni-kroos/portrait.png",
+        "portrait": "assets/players/toni-kroos/portrait.svg",
         "form1": "assets/players/toni-kroos/form-1.png",
         "form2": "assets/players/toni-kroos/form-2.png",
         "form3": "assets/players/toni-kroos/form-3.png",
-        "album": "assets/players/toni-kroos/album.png",
-        "battle": "assets/players/toni-kroos/battle.png",
-        "squad": "assets/players/toni-kroos/squad.png"
+        "album": "assets/players/toni-kroos/album.svg",
+        "battle": "assets/players/toni-kroos/battle.svg",
+        "squad": "assets/players/toni-kroos/squad.svg"
       },
       "fallback": "nation_position_jersey"
     },
     "31": {
       "slug": "takefusa-kubo",
-      "assetTier": "T0",
+      "assetTier": "T1",
       "releaseCritical": false,
       "paths": {
-        "portrait": "assets/players/takefusa-kubo/portrait.png",
+        "portrait": "assets/players/takefusa-kubo/portrait.svg",
         "form1": "assets/players/takefusa-kubo/form-1.png",
         "form2": "assets/players/takefusa-kubo/form-2.png",
         "form3": "assets/players/takefusa-kubo/form-3.png",
-        "album": "assets/players/takefusa-kubo/album.png",
-        "battle": "assets/players/takefusa-kubo/battle.png",
-        "squad": "assets/players/takefusa-kubo/squad.png"
+        "album": "assets/players/takefusa-kubo/album.svg",
+        "battle": "assets/players/takefusa-kubo/battle.svg",
+        "squad": "assets/players/takefusa-kubo/squad.svg"
       },
       "fallback": "nation_position_jersey"
     },
@@ -500,16 +500,16 @@
     },
     "40": {
       "slug": "lilian-thuram",
-      "assetTier": "T0",
+      "assetTier": "T1",
       "releaseCritical": false,
       "paths": {
-        "portrait": "assets/players/lilian-thuram/portrait.png",
+        "portrait": "assets/players/lilian-thuram/portrait.svg",
         "form1": "assets/players/lilian-thuram/form-1.png",
         "form2": "assets/players/lilian-thuram/form-2.png",
         "form3": "assets/players/lilian-thuram/form-3.png",
-        "album": "assets/players/lilian-thuram/album.png",
-        "battle": "assets/players/lilian-thuram/battle.png",
-        "squad": "assets/players/lilian-thuram/squad.png"
+        "album": "assets/players/lilian-thuram/album.svg",
+        "battle": "assets/players/lilian-thuram/battle.svg",
+        "squad": "assets/players/lilian-thuram/squad.svg"
       },
       "fallback": "nation_position_jersey"
     }
