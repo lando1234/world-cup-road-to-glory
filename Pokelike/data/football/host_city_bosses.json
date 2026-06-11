@@ -72,6 +72,126 @@
         { "profileId": 7, "formLevel": 24, "skillTier": 1, "heldItemId": null, "role": "Counter outlet" }
       ],
       "flavorText": "Precision transitions — Kubo leads lightning counters through tight spaces."
+    },
+    {
+      "mapIndex": 3,
+      "hostCity": "Madrid",
+      "nation": "ESP",
+      "label": "Spain Federation Challenge",
+      "managerName": null,
+      "primaryStyle": "wing_play",
+      "stamp": {
+        "id": "stamp_madrid",
+        "displayName": "Madrid Stamp"
+      },
+      "difficulty": 3,
+      "recommendedFormRange": [28, 34],
+      "balance": {
+        "targetDevWinRate": 0.6,
+        "notes": "Wide dominance — Figo orchestrates from the flank with Roberto Carlos overlap."
+      },
+      "roster": [
+        { "profileId": 32, "formLevel": 32, "skillTier": 1, "heldItemId": null, "role": "Boss anchor" },
+        { "profileId": 21, "formLevel": 30, "skillTier": 1, "heldItemId": null, "role": "Overlap" },
+        { "profileId": 19, "formLevel": 31, "skillTier": 1, "heldItemId": null, "role": "Interior link" }
+      ],
+      "flavorText": "Wide dominance — Figo orchestrates from the flank."
+    },
+    {
+      "mapIndex": 4,
+      "hostCity": "Milan",
+      "nation": "ITA",
+      "label": "Italy Federation Challenge",
+      "managerName": null,
+      "primaryStyle": "dark_arts",
+      "stamp": {
+        "id": "stamp_milan",
+        "displayName": "Milan Stamp"
+      },
+      "difficulty": 3,
+      "recommendedFormRange": [36, 44],
+      "balance": {
+        "targetDevWinRate": 0.55,
+        "notes": "Catenaccio edge — Rossi poaches while Maldini and Buffon frustrate."
+      },
+      "roster": [
+        { "profileId": 33, "formLevel": 42, "skillTier": 2, "heldItemId": null, "role": "Boss anchor" },
+        { "profileId": 23, "formLevel": 40, "skillTier": 2, "heldItemId": null, "role": "Iron wall" },
+        { "profileId": 24, "formLevel": 41, "skillTier": 2, "heldItemId": null, "role": "GK" }
+      ],
+      "flavorText": "Catenaccio edge — Rossi poaches, defense frustrates."
+    },
+    {
+      "mapIndex": 5,
+      "hostCity": "Amsterdam",
+      "nation": "NED",
+      "label": "Netherlands Federation Challenge",
+      "managerName": null,
+      "primaryStyle": "tactical_control",
+      "stamp": {
+        "id": "stamp_amsterdam",
+        "displayName": "Amsterdam Stamp"
+      },
+      "difficulty": 4,
+      "recommendedFormRange": [40, 46],
+      "balance": {
+        "targetDevWinRate": 0.5,
+        "notes": "Total football chess — roster lists Van Dijk (3) as NPC defender; substitute profile 40 Thuram when the player marquee-signed Van Dijk."
+      },
+      "roster": [
+        { "profileId": 34, "formLevel": 44, "skillTier": 2, "heldItemId": null, "role": "Boss anchor" },
+        { "profileId": 27, "formLevel": 42, "skillTier": 2, "heldItemId": null, "role": "Total football" },
+        { "profileId": 3, "formLevel": 43, "skillTier": 2, "heldItemId": null, "role": "Iron wall" }
+      ],
+      "flavorText": "Total football chess — Bergkamp's touch decides."
+    },
+    {
+      "mapIndex": 6,
+      "hostCity": "Mexico City",
+      "nation": "MEX",
+      "label": "Mexico Federation Challenge",
+      "managerName": null,
+      "primaryStyle": "high_press",
+      "stamp": {
+        "id": "stamp_mexico_city",
+        "displayName": "Mexico City Stamp"
+      },
+      "difficulty": 4,
+      "recommendedFormRange": [48, 54],
+      "balance": {
+        "targetDevWinRate": 0.45,
+        "notes": "Aztec intensity — Sánchez finishes chaotic pressure with Kanté and Haaland."
+      },
+      "roster": [
+        { "profileId": 35, "formLevel": 52, "skillTier": 2, "heldItemId": null, "role": "Boss anchor" },
+        { "profileId": 14, "formLevel": 50, "skillTier": 2, "heldItemId": null, "role": "Press engine" },
+        { "profileId": 4, "formLevel": 51, "skillTier": 2, "heldItemId": null, "role": "Finisher" }
+      ],
+      "flavorText": "Aztec intensity — Sánchez finishes chaotic pressure."
+    },
+    {
+      "mapIndex": 7,
+      "hostCity": "London",
+      "nation": "ENG",
+      "label": "England Federation Challenge",
+      "managerName": null,
+      "primaryStyle": "aerial_threat",
+      "stamp": {
+        "id": "stamp_london",
+        "displayName": "London Stamp"
+      },
+      "difficulty": 4,
+      "recommendedFormRange": [52, 60],
+      "balance": {
+        "targetDevWinRate": 0.4,
+        "notes": "Set-piece thunder — Charlton's range with Kane target and Casillas in goal."
+      },
+      "roster": [
+        { "profileId": 36, "formLevel": 58, "skillTier": 2, "heldItemId": null, "role": "Boss anchor" },
+        { "profileId": 13, "formLevel": 56, "skillTier": 2, "heldItemId": null, "role": "Target" },
+        { "profileId": 25, "formLevel": 57, "skillTier": 2, "heldItemId": null, "role": "GK" }
+      ],
+      "flavorText": "Set-piece thunder — Charlton's range and physical duels."
     }
   ]
 }

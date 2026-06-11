@@ -497,6 +497,13 @@ await runTest("combat adapter creates browser-compatible football instances", ()
   assert(Array.isArray(instance.types) && instance.types.length > 0, "instance must expose legacy battle types");
 });
 
+await runTest("full host city catalog validates eight bosses offline", () => {
+  const fullBossJson = readJson("data/football/host_city_bosses.json");
+  const fullValidation = context.window.DomainBosses.validateBossCatalog(fullBossJson, { enforceSliceCount: false, expectedMapSpan: 7 });
+  assert(fullValidation.valid, `8-boss catalog validation failed: ${fullValidation.errors.join(" | ")}`);
+  assert(fullBossJson.bosses.length === 8, `expected 8 host city bosses, received ${fullBossJson.bosses.length}`);
+});
+
 await runTest("host city boss catalog validates Phase 1 maps", () => {
   assert(hostCityBossCatalog.bosses.length === 3, `expected 3 host city bosses, received ${hostCityBossCatalog.bosses.length}`);
   const expected = [

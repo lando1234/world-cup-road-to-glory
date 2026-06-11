@@ -75,7 +75,7 @@ function validateBossCatalog(catalog, options = {}) {
   }
 
   const enforceSliceCount = options.enforceSliceCount ?? window.FEATURES?.sliceMode === true;
-  if (enforceSliceCount && catalog.bosses.length !== 3) {
+  if (enforceSliceCount && !Number.isInteger(options.expectedMapSpan) && catalog.bosses.length !== 3) {
     errors.push(`Phase 1 boss catalog must contain exactly 3 entries; received ${catalog.bosses.length}.`);
   }
 
@@ -251,7 +251,7 @@ function cloneBossConfig(boss) {
 function loadHostCityBosses(json) {
   assertProfileCatalogAvailable();
 
-  const validation = validateBossCatalog(json);
+  const validation = validateBossCatalog(json, { enforceSliceCount: false, expectedMapSpan: 7 });
   if (!validation.valid) {
     throw new Error(`Host city boss catalog validation failed: ${validation.errors.join(" | ")}`);
   }

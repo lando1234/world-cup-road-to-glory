@@ -60,8 +60,10 @@ runTest("P1-046 happy path structure is complete for all marquee starters", () =
   }
   assert(gameSource.includes("function getFootballSliceStampTarget()"), "slice stamp target helper should exist");
   assert(gameSource.includes("return 3;"), "slice stamp target should be 3");
-  assert(bosses.bosses.length === 3, "slice should define exactly 3 host city bosses");
-  assert(bosses.bosses.every((boss, index) => boss.mapIndex === index), "host city bosses should cover maps 0, 1, and 2");
+  assert(bosses.bosses.length === 8, "catalog should define eight host city bosses after Phase 3");
+  const sliceBosses = bosses.bosses.filter(boss => boss.mapIndex <= 2);
+  assert(sliceBosses.length === 3, "slice maps 0-2 should still define three host city bosses");
+  assert(sliceBosses.every((boss, index) => boss.mapIndex === index), "slice host city bosses should cover maps 0, 1, and 2");
   assert(gameSource.includes("showSliceCompleteScreen();"), "third stamp should route to slice complete screen");
 });
 
