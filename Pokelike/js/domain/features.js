@@ -9,7 +9,7 @@ const FEATURES = Object.freeze({
   footballMode: true,
   sliceMode: true,
   maxMapIndex: 7,
-  knockoutEnabled: false,
+  knockoutEnabled: true,
   continentalCup: false,
   cloudSave: false,
   nuzlocke: false,
