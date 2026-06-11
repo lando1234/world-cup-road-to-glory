@@ -135,9 +135,8 @@
       </p>
       <div class="meta">
         <span class="pill">Created: 2026-06-10</span>
-        <span class="pill">Status: In progress</span>
-        <span class="pill">Slice: 3 cities (maps 0–2) until P3-040</span>
-        <span class="pill">Target: 8 host cities</span>
+        <span class="pill">Status: Phase 3 complete (P3-051)</span>
+        <span class="pill">Slice: 8 host cities (maps 0–7)</span>
         <span class="pill">maxMapIndex: 7</span>
         <span class="pill">P3-GOV: P3-051 GO 8-city</span>
         <span class="pill">Cloud save: disabled</span>
@@ -166,9 +165,9 @@
           <strong>What Phase 3 is doing</strong>
           <p>Expanding the playable football campaign from three to eight Host City Challenges with final catalog content, stamp assets, runtime guards, and a single explicit <code>maxMapIndex</code> enable gate — without knockout, legends, economy, or cloud save.</p>
         </article>
-        <article class="card risk">
-          <strong>Biggest blocker today</strong>
-          <p>Missing profiles 32–36 and boss roster support IDs. Expansion JSON exists as stubs only. Maps 3–7 must not enable until content + assets + QA pass.</p>
+        <article class="card gogreen">
+          <strong>Phase 3 outcome</strong>
+          <p>Eight-host-city campaign is live: catalog, scouts, album host_city page, eight stamp assets, portrait manifest, runtime guards, and <code>maxMapIndex: 7</code> shipped in P3-040 (<code>c9b032c</code>). Manual QA: PASS WITH FOLLOW-UP.</p>
         </article>
         <article class="card">
           <strong>Release posture</strong>
@@ -181,12 +180,12 @@
       <h2>Go / No-Go Status</h2>
       <div class="split">
         <article class="card gogreen">
-          <strong>3-city slice</strong>
-          <p><strong>GO</strong> — Phase 2 sign-off stands. Playable maps 0–2 with settlement lite.</p>
+          <strong>8-host-city campaign</strong>
+          <p><strong>GO</strong> — Phase 3 sign-off (P3-051). Playable maps 0–7, eight City Stamps, completion routes to Settlement Lite — not knockout.</p>
         </article>
         <article class="card gogreen">
-          <strong>8-city runtime</strong>
-          <p><strong>GO</strong> — P3-040 enabled maps 3–7; harness + manual QA PASS WITH FOLLOW-UP (<code>c9b032c</code>).</p>
+          <strong>Phase 4 scope</strong>
+          <p><strong>NO-GO</strong> (deferred) — knockout stage, legends nodes, Football Credits economy, cloud save, and full 50-player catalog remain out of scope until Phase 4 planning.</p>
         </article>
       </div>
     </section>
@@ -240,26 +239,32 @@
         <tbody>
           <tr>
             <td>Document title</td>
-            <td>Still <code>Pokemon Roguelike</code></td>
-            <td>P3-006</td>
+            <td>Tab title fixed to <code>World Cup: Road to Glory</code> (P3-006)</td>
+            <td>Closed</td>
+            <td>Low</td>
+          </tr>
+          <tr>
+            <td>Classic subtitle in DOM</td>
+            <td>Hidden <code>Pokemon Roguelike</code> subtitle remains for Classic compatibility</td>
+            <td>Phase 4+</td>
             <td>Low</td>
           </tr>
           <tr>
             <td>Full-squad QA</td>
-            <td>Not manually exercised in P2-022</td>
-            <td>P3-007</td>
-            <td>Medium</td>
+            <td>PASS WITH FOLLOW-UP — harness-backed; browser spot-check recommended</td>
+            <td>P3-007 closed</td>
+            <td>Low</td>
           </tr>
           <tr>
             <td>Game-over QA</td>
-            <td>Harness only in P2</td>
-            <td>P3-008</td>
-            <td>Medium</td>
+            <td>PASS WITH FOLLOW-UP — harness-backed; browser spot-check recommended</td>
+            <td>P3-008 closed</td>
+            <td>Low</td>
           </tr>
           <tr>
-            <td>Stamp ceremony maps 3–7</td>
-            <td>Flag emoji fallback only</td>
-            <td>P3-029–P3-033</td>
+            <td>Full 8-city browser playthrough</td>
+            <td>Harness + HTTP smoke green; end-to-end browser pass recommended before external demo</td>
+            <td>P3-041 follow-up</td>
             <td>Medium</td>
           </tr>
         </tbody>
@@ -273,12 +278,12 @@
           <tr><th>Asset</th><th>Status</th><th>Task</th><th>Owner</th></tr>
         </thead>
         <tbody>
-          <tr><td>madrid-stamp.svg</td><td>Missing</td><td>P3-029</td><td>Engineering + art</td></tr>
-          <tr><td>milan-stamp.svg</td><td>Missing</td><td>P3-030</td><td>Engineering + art</td></tr>
-          <tr><td>amsterdam-stamp.svg</td><td>Missing</td><td>P3-031</td><td>Engineering + art</td></tr>
-          <tr><td>mexico-city-stamp.svg</td><td>Missing</td><td>P3-032</td><td>Engineering + art</td></tr>
-          <tr><td>london-stamp.svg</td><td>Missing</td><td>P3-033</td><td>Engineering + art</td></tr>
-          <tr><td>Portrait manifest 32–36</td><td>Missing</td><td>P3-021</td><td>Engineering</td></tr>
+          <tr><td>madrid-stamp.svg</td><td>Shipped</td><td>P3-029</td><td>Engineering + art</td></tr>
+          <tr><td>milan-stamp.svg</td><td>Shipped</td><td>P3-030</td><td>Engineering + art</td></tr>
+          <tr><td>amsterdam-stamp.svg</td><td>Shipped</td><td>P3-031</td><td>Engineering + art</td></tr>
+          <tr><td>mexico-city-stamp.svg</td><td>Shipped</td><td>P3-032</td><td>Engineering + art</td></tr>
+          <tr><td>london-stamp.svg</td><td>Shipped</td><td>P3-033</td><td>Engineering + art</td></tr>
+          <tr><td>Portrait manifest 32–36 + support IDs</td><td>Shipped (T0)</td><td>P3-021–P3-022</td><td>Engineering</td></tr>
           <tr><td>T1 stylized avatars</td><td>Deferred</td><td>Phase 4+</td><td>Product/legal</td></tr>
         </tbody>
       </table>
@@ -291,11 +296,11 @@
           <tr><th>Gap</th><th>IDs / files</th><th>Blocking enable?</th></tr>
         </thead>
         <tbody>
-          <tr><td>Host city heroes</td><td>Profiles 32–36</td><td>Yes</td></tr>
-          <tr><td>Boss roster support</td><td>13, 19, 21, 23–25, 27, 40</td><td>Yes</td></tr>
-          <tr><td>Final boss rosters maps 3–7</td><td><code>host_city_bosses.json</code></td><td>Yes</td></tr>
-          <tr><td>Late/finale scout bands</td><td><code>scout_pools.json</code></td><td>Yes</td></tr>
-          <tr><td>Host city album page</td><td><code>album_layout.json</code></td><td>Should</td></tr>
+          <tr><td>Host city heroes</td><td>Profiles 32–36</td><td>Complete (P3-009–P3-013)</td></tr>
+          <tr><td>Boss roster support</td><td>13, 19, 21, 23–25, 27, 40</td><td>Complete (P3-014–P3-016)</td></tr>
+          <tr><td>Final boss rosters maps 3–7</td><td><code>host_city_bosses.json</code></td><td>Complete (P3-019)</td></tr>
+          <tr><td>Late/finale scout bands</td><td><code>scout_pools.json</code></td><td>Complete (P3-017–P3-018)</td></tr>
+          <tr><td>Host city album page</td><td><code>album_layout.json</code></td><td>Complete (P3-020)</td></tr>
         </tbody>
       </table>
     </section>
@@ -330,25 +335,25 @@
           <tr><th>Gate</th><th>Status</th><th>Exit task</th></tr>
         </thead>
         <tbody>
-          <tr><td>Content</td><td>Not ready</td><td>P3-009–P3-020</td></tr>
-          <tr><td>Assets</td><td>Not ready</td><td>P3-021–P3-033</td></tr>
-          <tr><td>Guards</td><td>Not ready</td><td>P3-034–P3-039</td></tr>
-          <tr><td>Manual QA</td><td>Not started</td><td>P3-041</td></tr>
-          <tr><td>Runtime enable</td><td>Blocked</td><td>P3-040</td></tr>
+          <tr><td>Content</td><td>Complete</td><td>P3-009–P3-020</td></tr>
+          <tr><td>Assets</td><td>Complete</td><td>P3-021–P3-033</td></tr>
+          <tr><td>Guards</td><td>Complete</td><td>P3-034–P3-039</td></tr>
+          <tr><td>Manual QA</td><td>PASS WITH FOLLOW-UP</td><td>P3-041–P3-043</td></tr>
+          <tr><td>Runtime enable</td><td>Complete</td><td>P3-040 (<code>c9b032c</code>)</td></tr>
         </tbody>
       </table>
     </section>
 
     <section>
       <h2>Manual QA Notes</h2>
-      <p>Runbook: <code>025-phase-3-manual-qa-runbook.md</code> (created P3-003). Phase 2 follow-ups P3-007 and P3-008 must PASS before P3-040.</p>
+      <p>Runbook: <code>025-phase-3-manual-qa-runbook.md</code>. Recorded PASS WITH FOLLOW-UP after P3-041–P3-043. Validation report: <code>023-phase-3-validation-report.md</code>.</p>
     </section>
 
     <section>
       <h2>Task-Level Notes</h2>
       <article class="task">
         <h3>P3-001 — Phase 3 ledger and governance baseline</h3>
-        <p>Created <code>024-phase-3-engineering-task-breakdown.md</code> and this governance HTML. Phase 3 execution loop active. <code>maxMapIndex</code> unchanged at 2.</p>
+        <p>Created <code>024-phase-3-engineering-task-breakdown.md</code> and this governance HTML. Phase 3 execution loop active through P3-051 sign-off.</p>
       </article>
     </section>
 
@@ -363,25 +368,35 @@
     </section>
 
     <section>
-      <h2>What The Owner Should Know</h2>
+      <h2>Post-Phase 3 Reality Check</h2>
       <div class="grid">
-        <article class="card">
-          <strong>Playable today</strong>
-          <p>3-city slice only. Third stamp → Slice Complete → Settlement. Safe for demo within maps 0–2.</p>
+        <article class="card gogreen">
+          <strong>What shipped</strong>
+          <p>Eight Host City Challenges (maps 0–7), eight City Stamp SVG assets, profiles 32–36 plus boss roster support IDs, merged <code>host_city_bosses.json</code> and scout late/finale bands, Host City Heroes album page, portrait manifest (T0), document tab title, knockout guard, and <code>FEATURES.maxMapIndex: 7</code>.</p>
         </article>
         <article class="card">
-          <strong>Not playable yet</strong>
-          <p>Maps 3–7 (Madrid through London). Enabling without content is a hard NO-GO.</p>
+          <strong>Deferred to Phase 4</strong>
+          <p>Knockout stage (<code>knockoutEnabled: false</code>), legends nodes and album page, Football Credits economy, cloud save reactivation, full 50-player catalog, T1+ portrait pipeline, and bridge ID mass retirement (<code>catch-screen</code>, <code>speciesId</code>, etc.).</p>
         </article>
-        <article class="card">
-          <strong>Decision needed</strong>
-          <p>Document title string (P3-006). Stamp art style approval before P3-029 if brand review required.</p>
+        <article class="card assumption">
+          <strong>Release invariants (do not break)</strong>
+          <p><code>FEATURES.cloudSave === false</code> · <code>FEATURES.useTheSportsDbPortraits === false</code> · no live API on boot/gameplay hot path · <code>SAVE_SCHEMA_VERSION === 3</code> · battle math frozen · eighth stamp → completion/settlement, never map 8 knockout.</p>
         </article>
       </div>
+      <ul class="list" style="margin-top: 16px;">
+        <li class="item tradeoff">
+          <span class="label">Before Phase 4 development</span>
+          <p>Read <code>023-phase-3-validation-report.md</code> and <code>025-phase-3-manual-qa-runbook.md</code>. Run <code>rtk npm run validate</code> and <code>rtk npm run smoke:http</code> on every change. Do not flip <code>knockoutEnabled</code> or re-enable cloud save without a formal decision. Expansion archive JSON (<code>*_expansion.json</code>) remains for schema reference — runtime truth is merged catalogs.</p>
+        </li>
+        <li class="item">
+          <span class="label">Known follow-ups (non-blocking)</span>
+          <p>Full browser 8-city playthrough, full-squad replacement spot-check, and game-over settlement spot-check are harness-backed PASS WITH FOLLOW-UP — schedule before external demo if needed.</p>
+        </li>
+      </ul>
     </section>
 
     <footer>
-      Update this file after every Phase 3 task. Ledger: <code>024-phase-3-engineering-task-breakdown.md</code> · Plan: <code>021-phase-3-expansion-content-release-hardening-plan.md</code>
+      Phase 3 signed off P3-051. Ledger: <code>024-phase-3-engineering-task-breakdown.md</code> · Plan: <code>021-phase-3-expansion-content-release-hardening-plan.md</code> · Validation: <code>023-phase-3-validation-report.md</code>
     </footer>
   </main>
 </body>

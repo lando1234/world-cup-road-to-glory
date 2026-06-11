@@ -424,7 +424,7 @@ await runTest("feature gates default to football slice mode", () => {
   const features = context.window.FEATURES;
   assert(features.footballMode === true, "FEATURES.footballMode must be true");
   assert(features.sliceMode === true, "FEATURES.sliceMode must be true");
-  assert(features.maxMapIndex === 7, "FEATURES.maxMapIndex must be 2 for Phase 1");
+  assert(features.maxMapIndex === 7, "FEATURES.maxMapIndex must be 7 after Phase 3 enable");
   assert(features.cloudSave === false, "FEATURES.cloudSave must be false for Phase 1");
 });
 
@@ -1048,7 +1048,7 @@ await runTest("football battle presentation uses theme faint copy", () => {
   assert(!battleSource.includes("GAME_THEME"), "battle.js damage engine should remain theme-agnostic");
 });
 
-await runTest("host city expansion catalog validates maps 3-7 while runtime cap stays at 2", async () => {
+await runTest("host city expansion catalog validates maps 3-7 with runtime cap at 7", async () => {
   const expansion = readJson("data/football/host_city_expansion.json");
   const validation = context.window.DomainBosses.validateBossCatalog(expansion, {
     enforceSliceCount: false,
@@ -1057,7 +1057,7 @@ await runTest("host city expansion catalog validates maps 3-7 while runtime cap 
   assert(validation.valid, `host city expansion validation failed: ${validation.errors.join(" | ")}`);
   assert(expansion.bosses.length === 5, "expansion catalog should define maps 3-7");
   assert(context.window.FEATURES.maxMapIndex === 7, "runtime maxMapIndex must be 7 after P3-040 enable");
-  assert(context.window.DomainBosses.getHostCity(3) !== null, "runtime must not expose map 3 boss while cap is 7");
+  assert(context.window.DomainBosses.getHostCity(3) !== null, "runtime must expose map 3 boss after P3-040 enable");
 });
 
 await runTest("scout pool expansion bands validate without changing slice bands", async () => {

@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "contentStatus": "expansion_stub",
-  "notes": "Future album pages for 8-host-city and knockout content. Not merged into runtime album_layout.json while slice mode caps at map 2.",
+  "contentStatus": "partial_merged",
+  "notes": "host_city page merged into album_layout.json in P3-020. knockout and legends pages remain deferred to Phase 4.",
   "volumeTitle": "Road to the Trophy — Vol. 1 (Expansion)",
   "pages": [
     {

@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "contentStatus": "expansion_stub",
-  "notes": "Late-stage scout bands for maps 3-7. Not loaded at runtime while FEATURES.maxMapIndex remains 2.",
+  "contentStatus": "merged_to_runtime",
+  "notes": "Late and finale bands merged into scout_pools.json in P3-017 and P3-018. Archive reference only.",
   "bands": [
     {
       "bandId": "late",

@@ -3,15 +3,15 @@
 **Status:** Final validation report for SPEC 013 closeout  
 **Date:** 2026-06-10  
 **Branch:** `main`  
-**Authority:** [024 — Phase 3 Execution Plan](./024-phase-3-engineering-task-breakdown.md)
+**Authority:** [021 — SPEC 013](./021-phase-3-expansion-content-release-hardening-plan.md) · [024 — Phase 3 Execution Plan](./024-phase-3-engineering-task-breakdown.md) · [022 — Governance HTML](./022-phase-3-assumptions-tradeoffs-assets-report.html)
 
 ---
 
 ## 1. Executive Summary
 
-Phase 3 expands the football campaign to eight Host City Challenges with offline catalog completion, expansion stamp assets, runtime guards, and `FEATURES.maxMapIndex: 7`. Automated validation and HTTP smoke are green. Manual QA is recorded as **PASS WITH FOLLOW-UP** (harness-backed).
+Phase 3 expanded the football campaign from three to **eight Host City Challenges** with offline catalog completion, eight City Stamp assets, runtime guards, and `FEATURES.maxMapIndex: 7`. Automated validation and HTTP smoke are green. Manual QA is recorded as **PASS WITH FOLLOW-UP** (harness-backed).
 
-**Go / No-Go:** **GO** for 8-city slice release with documented follow-ups on full browser regression and squad-replacement playthrough.
+**Go / No-Go:** **GO** for the 8-host-city campaign. **NO-GO** for knockout, legends, economy, and cloud save — explicitly deferred to Phase 4 per P3-037 and release invariants.
 
 ---
 
@@ -51,11 +51,26 @@ Recorded in [025 — Phase 3 Manual QA Runbook](./025-phase-3-manual-qa-runbook.
 
 ---
 
-## 5. Sign-Off
+## 5. Phase 3 Deliverables Verified
+
+| Deliverable | Status |
+|-------------|--------|
+| Profiles 32–36 + boss support IDs | Shipped |
+| 8-boss `host_city_bosses.json` | Shipped |
+| Scout late/finale bands merged | Shipped |
+| Host City Heroes album page | Shipped |
+| 8 stamp SVG assets | Shipped |
+| Portrait manifest (T0) for expansion IDs | Shipped |
+| `FEATURES.maxMapIndex: 7` (P3-040) | Shipped |
+| Knockout guard (`knockoutEnabled: false`) | Verified |
+
+## 6. Sign-Off
 
 **P3-051:** Phase 3 engineering ledger marks content, assets, guards, map enable, and validation complete.
 
-**Verdict:** GO for 8-host-city campaign with follow-up browser QA.
+**Verdict:** GO for 8-host-city campaign. Follow-up: full browser 8-city playthrough and squad/game-over spot-checks before external demo.
+
+**Phase 4 entry:** Do not enable knockout, cloud save, or live APIs without updating governance docs and validation harnesses.
 
 ---
 

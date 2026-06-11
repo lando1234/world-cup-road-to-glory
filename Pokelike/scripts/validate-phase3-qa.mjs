@@ -54,7 +54,7 @@ runTest("P3-002 cloud save remains disabled during Phase 3 foundation", () => {
   assert(cloudSaveSource.includes("window.FEATURES?.cloudSave !== false"), "cloud-save gate should still read feature flag");
 });
 
-runTest("P3-002 runtime map cap remains 2 until explicit P3-040 enable", () => {
+runTest("P3-040 runtime map cap is 7 after enable gate", () => {
   assert(featuresSource.includes("maxMapIndex: 7"), "FEATURES.maxMapIndex must be 7 after P3-040 map enable gate");
 });
 
@@ -95,7 +95,7 @@ runTest("P3-035 eight-stamp completion copy is authored in GAME_THEME", () => {
   assert(gameSource.includes("sliceCompleteSummary8"), "slice complete screen should branch on stamp target");
 });
 
-runTest("P3-034 catalog validates eight bosses while runtime cap stays at two", () => {
+runTest("P3-034 catalog validates eight bosses with runtime cap at seven", () => {
   const bosses = JSON.parse(readText("data/football/host_city_bosses.json"));
   assert(bosses.bosses.length === 8, "host city catalog should contain eight bosses");
 });

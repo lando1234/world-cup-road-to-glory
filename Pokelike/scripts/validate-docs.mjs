@@ -27,6 +27,7 @@ const phase3Ledger = readText("docs/024-phase-3-engineering-task-breakdown.md");
 const phase2BridgeInventory = readText("docs/016-phase-2-bridge-inventory.md");
 const phase3ManualQaRunbook = readText("docs/025-phase-3-manual-qa-runbook.md");
 const phase3AssumptionsHtml = readText("docs/022-phase-3-assumptions-tradeoffs-assets-report.html");
+const phase3ValidationReport = readText("docs/023-phase-3-validation-report.md");
 
 const frictionEntries = (visualFrictionsHtml.match(/class="entry"/g) || []).length;
 
@@ -98,5 +99,11 @@ assert(phase3ManualQaRunbook.includes("Knockout Guard Assertion"), "Phase 3 manu
 assert(phase3ManualQaRunbook.includes("Core 8-City Path"), "Phase 3 manual QA runbook must include 8-city path");
 assert(phase3ManualQaRunbook.includes("Blocker Definition"), "Phase 3 manual QA runbook must define blockers");
 assert(phase3AssumptionsHtml.includes("P3-GOV"), "Phase 3 assumptions report must include the governance ledger note");
+assert(
+  phase3AssumptionsHtml.includes("Post-Phase 3 Reality Check"),
+  "Phase 3 assumptions report must include post-sign-off reality check"
+);
+assert(phase3ValidationReport.includes("Phase 3 Validation Report"), "Phase 3 validation report must include the expected heading");
+assert(phase3ValidationReport.includes("Go / No-Go"), "Phase 3 validation report must include go/no-go verdict");
 
 console.log(`PASS docs validation: ${frictionEntries} visual friction entries`);

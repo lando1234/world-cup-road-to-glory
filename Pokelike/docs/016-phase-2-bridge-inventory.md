@@ -113,7 +113,7 @@ Stop a bridge-retirement task if:
 | `GYM_LEADERS` legacy bosses | **Keep** | Football uses `host_city_bosses.json` only |
 | Cloud save module | **Keep disabled** | `FEATURES.cloudSave === false` through Phase 3 |
 | TheSportsDB portraits | **Keep disabled** | `portrait_manifest.json` + T0 jersey fallbacks |
-| `maxMapIndex` gate | **Enable only in P3-040** | Stays `2` for content/asset waves |
+| `maxMapIndex` gate | **Enabled in P3-040** | Runtime cap is `7` (8 host cities, maps 0–7) |
 | Knockout map 8 | **Blocked** | `knockoutEnabled: false` until Phase 4 |
 
 **Validation:** `npm run validate` + Phase 3 QA harness assert the rows above after P3-038.

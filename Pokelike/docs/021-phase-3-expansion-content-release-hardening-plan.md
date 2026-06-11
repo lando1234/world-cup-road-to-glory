@@ -1,6 +1,6 @@
 # SPEC 013 — Phase 3 Expansion, Content Completion, and Release Hardening Plan
 
-**Status:** Proposed Phase 3 implementation plan  
+**Status:** Complete — signed off P3-051 (2026-06-10)  
 **Authority:** Follows Phase 2 sign-off in [019 — Phase 2 Validation Report](./019-phase-2-validation-report.md) and executes deferred work from [015 — Phase 2 Execution Plan](./015-phase-2-engineering-task-breakdown.md) (P2-028)  
 **Inputs:** [006B](./006B-technical-blueprint-revised.md), [007](./007-football-data-pack.md), [008](./008-meta-progression.md), [009](./009-gameplay-loop-node-system.md), [016](./016-phase-2-bridge-inventory.md), [017](./017-phase-2-manual-qa-runbook.md), [018](./018-portrait-asset-strategy.md), [020](./020-phase-2-assumptions-tradeoffs-assets-report.html)  
 **Version:** v0.1  
@@ -59,7 +59,9 @@ Phase 3 expands the playable campaign from **3 to 8 Host City Challenges** witho
 
 ---
 
-## 4. Current Baseline from Phase 2
+## 4. Baseline at Phase 3 Start (from Phase 2)
+
+> **Note:** This table records the starting point when Phase 3 opened. Final state: `maxMapIndex: 7`, 8 bosses, 33 profiles in catalog, all expansion gates complete — see [023](./023-phase-3-validation-report.md) and [022](./022-phase-3-assumptions-tradeoffs-assets-report.html).
 
 | Area | State | Evidence |
 |------|-------|----------|

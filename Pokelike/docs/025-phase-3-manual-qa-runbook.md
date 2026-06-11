@@ -96,7 +96,7 @@
 | 1 | Mid map 4+ with signings | State saved |
 | 2 | Hard refresh → Continue | Squad, map, ledger restore |
 
-**Status:** Pending (P3-042)
+**Status:** PASS WITH FOLLOW-UP (P3-042 — harness-backed; browser spot-check recommended)
 
 ---
 
@@ -104,7 +104,7 @@
 
 | Category | Result | Notes |
 |----------|--------|-------|
-| Core 8-city | PASS WITH FOLLOW-UP | Harness: 8 bosses, 8 stamps, maxMapIndex 7; full browser path recommended | |
+| Core 8-city | PASS WITH FOLLOW-UP | Harness: 8 bosses, 8 stamps, maxMapIndex 7; full browser path recommended |
 | Full squad | PASS WITH FOLLOW-UP | P3-007 harness + registration layout | |
 | Game over | PASS WITH FOLLOW-UP | P3-008 settlement path via harness | |
 | Reload map 4+ | PASS WITH FOLLOW-UP | P3-042 save v3 harness | |

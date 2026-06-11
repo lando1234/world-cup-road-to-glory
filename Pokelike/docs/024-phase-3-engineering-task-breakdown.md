@@ -1,6 +1,6 @@
 # SPEC 013A — Phase 3 Execution Plan and Task Breakdown
 
-**Status:** Operational execution plan for Phase 3  
+**Status:** Complete — Phase 3 signed off (P3-051)  
 **Authority:** Executes [021 — SPEC 013 Phase 3 Plan](./021-phase-3-expansion-content-release-hardening-plan.md)  
 **Date:** 2026-06-10  
 **Mode:** One task, one validation pass, one commit  
@@ -14,9 +14,9 @@
 
 | Metric | Count |
 |--------|------:|
-| **Done** | 38 |
+| **Done** | 39 |
 | **Partial** | 0 |
-| **Not started** | 3 |
+| **Not started** | 2 |
 | **Total tickets** | 51 |
 
 **Legend:** ✅ Done · 🟡 Partial · ⬜ Not started
@@ -36,7 +36,7 @@ The default task loop is:
 6. Commit — atomic with evidence in message
 ```
 
-**Hard rules:** `FEATURES.maxMapIndex` stays `2` until **P3-040** only. No cloud save, no live APIs, no battle math changes, no knockout enablement.
+**Hard rules (carry into Phase 4):** `FEATURES.maxMapIndex` is `7` after **P3-040**. No cloud save, no live APIs, no battle math changes, no knockout enablement until Phase 4.
 
 ---
 
@@ -61,9 +61,9 @@ The default task loop is:
 | Task | Status | Lane | Dependencies | Commit |
 |------|--------|------|--------------|--------|
 | P3-001 | ✅ | A | Phase 2 complete | `05690ee` |
-| P3-002 | ✅ | A | P3-001 | `68a00fa` |this commit |
+| P3-002 | ✅ | A | P3-001 | `68a00fa` |
 | P3-003 | ✅ | A | P3-001 | `3dc6620` |
-| P3-004 | ⬜ | A | P3-001 | |
+| P3-004 | ✅ | A | P3-001 | `022` governance HTML |
 | P3-005 | ✅ | A | P3-002 | d4d39d1 |
 | P3-006 | ✅ | E | P3-002 | `c9b032c` |
 | P3-007 | ✅ | A | P3-003 | `c9b032c` |
@@ -78,8 +78,8 @@ The default task loop is:
 | P3-016 | ✅ | B | P3-015 | `b9b6d05` |
 | P3-017 | ✅ | B | P3-016 | `d1e99cd` |
 | P3-018 | ✅ | B | P3-017 | cd7b99f |
-| P3-019 | ✅ | B | P3-016 | `730dad5` |this commit |
-| P3-020 | ✅ | B | P3-013 | `2fb5360` |this commit |
+| P3-019 | ✅ | B | P3-016 | `730dad5` |
+| P3-020 | ✅ | B | P3-013 | `2fb5360` |
 | P3-021 | ✅ | C | P3-013 | `bb18538` |
 | P3-022 | ✅ | C | P3-016, P3-021 | `bb18538` |
 | P3-029 | ✅ | C | P3-014 | `c9b032c` |
