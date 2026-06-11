@@ -425,76 +425,76 @@
     },
     "32": {
       "slug": "luis-figo",
-      "assetTier": "T0",
+      "assetTier": "T1",
       "releaseCritical": false,
       "paths": {
-        "portrait": "assets/players/luis-figo/portrait.png",
+        "portrait": "assets/players/luis-figo/portrait.svg",
         "form1": "assets/players/luis-figo/form-1.png",
         "form2": "assets/players/luis-figo/form-2.png",
         "form3": "assets/players/luis-figo/form-3.png",
-        "album": "assets/players/luis-figo/album.png",
-        "battle": "assets/players/luis-figo/battle.png",
-        "squad": "assets/players/luis-figo/squad.png"
+        "album": "assets/players/luis-figo/album.svg",
+        "battle": "assets/players/luis-figo/battle.svg",
+        "squad": "assets/players/luis-figo/squad.svg"
       },
       "fallback": "nation_position_jersey"
     },
     "33": {
       "slug": "paolo-rossi",
-      "assetTier": "T0",
+      "assetTier": "T1",
       "releaseCritical": false,
       "paths": {
-        "portrait": "assets/players/paolo-rossi/portrait.png",
+        "portrait": "assets/players/paolo-rossi/portrait.svg",
         "form1": "assets/players/paolo-rossi/form-1.png",
         "form2": "assets/players/paolo-rossi/form-2.png",
         "form3": "assets/players/paolo-rossi/form-3.png",
-        "album": "assets/players/paolo-rossi/album.png",
-        "battle": "assets/players/paolo-rossi/battle.png",
-        "squad": "assets/players/paolo-rossi/squad.png"
+        "album": "assets/players/paolo-rossi/album.svg",
+        "battle": "assets/players/paolo-rossi/battle.svg",
+        "squad": "assets/players/paolo-rossi/squad.svg"
       },
       "fallback": "nation_position_jersey"
     },
     "34": {
       "slug": "dennis-bergkamp",
-      "assetTier": "T0",
+      "assetTier": "T1",
       "releaseCritical": false,
       "paths": {
-        "portrait": "assets/players/dennis-bergkamp/portrait.png",
+        "portrait": "assets/players/dennis-bergkamp/portrait.svg",
         "form1": "assets/players/dennis-bergkamp/form-1.png",
         "form2": "assets/players/dennis-bergkamp/form-2.png",
         "form3": "assets/players/dennis-bergkamp/form-3.png",
-        "album": "assets/players/dennis-bergkamp/album.png",
-        "battle": "assets/players/dennis-bergkamp/battle.png",
-        "squad": "assets/players/dennis-bergkamp/squad.png"
+        "album": "assets/players/dennis-bergkamp/album.svg",
+        "battle": "assets/players/dennis-bergkamp/battle.svg",
+        "squad": "assets/players/dennis-bergkamp/squad.svg"
       },
       "fallback": "nation_position_jersey"
     },
     "35": {
       "slug": "hugo-sanchez",
-      "assetTier": "T0",
+      "assetTier": "T1",
       "releaseCritical": false,
       "paths": {
-        "portrait": "assets/players/hugo-sanchez/portrait.png",
+        "portrait": "assets/players/hugo-sanchez/portrait.svg",
         "form1": "assets/players/hugo-sanchez/form-1.png",
         "form2": "assets/players/hugo-sanchez/form-2.png",
         "form3": "assets/players/hugo-sanchez/form-3.png",
-        "album": "assets/players/hugo-sanchez/album.png",
-        "battle": "assets/players/hugo-sanchez/battle.png",
-        "squad": "assets/players/hugo-sanchez/squad.png"
+        "album": "assets/players/hugo-sanchez/album.svg",
+        "battle": "assets/players/hugo-sanchez/battle.svg",
+        "squad": "assets/players/hugo-sanchez/squad.svg"
       },
       "fallback": "nation_position_jersey"
     },
     "36": {
       "slug": "bobby-charlton",
-      "assetTier": "T0",
+      "assetTier": "T1",
       "releaseCritical": false,
       "paths": {
-        "portrait": "assets/players/bobby-charlton/portrait.png",
+        "portrait": "assets/players/bobby-charlton/portrait.svg",
         "form1": "assets/players/bobby-charlton/form-1.png",
         "form2": "assets/players/bobby-charlton/form-2.png",
         "form3": "assets/players/bobby-charlton/form-3.png",
-        "album": "assets/players/bobby-charlton/album.png",
-        "battle": "assets/players/bobby-charlton/battle.png",
-        "squad": "assets/players/bobby-charlton/squad.png"
+        "album": "assets/players/bobby-charlton/album.svg",
+        "battle": "assets/players/bobby-charlton/battle.svg",
+        "squad": "assets/players/bobby-charlton/squad.svg"
       },
       "fallback": "nation_position_jersey"
     },

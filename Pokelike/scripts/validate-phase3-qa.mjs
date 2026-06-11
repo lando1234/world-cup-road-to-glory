@@ -68,8 +68,13 @@ runTest("P3-021 portrait manifest covers host city heroes 32-36", () => {
   for (const profileId of [32, 33, 34, 35, 36]) {
     const entry = portraitManifest.players[String(profileId)];
     assert(entry, `portrait manifest must include profile ${profileId}`);
-    assert(entry.assetTier === "T0", `profile ${profileId} portrait should use T0 tier`);
-    assert(entry.portrait === "", `profile ${profileId} portrait URL should stay empty for T0 fallback`);
+    assert(entry.assetTier === "T0" || entry.assetTier === "T1", `profile ${profileId} portrait tier should be T0 or T1`);
+    if (entry.assetTier === "T1") {
+      assert(entry.portrait.startsWith("assets/players/"), `profile ${profileId} T1 portrait must be local`);
+      assert(!entry.portrait.includes("http"), `profile ${profileId} portrait must not be remote`);
+    } else {
+      assert(entry.portrait === "", `profile ${profileId} T0 portrait URL should stay empty for fallback`);
+    }
   }
 });
 

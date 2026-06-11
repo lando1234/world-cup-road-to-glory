@@ -57,6 +57,11 @@
       "portrait": "",
       "fallback": "ESP_CM"
     },
+    "13": {
+      "assetTier": "T0",
+      "portrait": "",
+      "fallback": "ENG_ST"
+    },
     "14": {
       "assetTier": "T0",
       "portrait": "",
@@ -67,6 +72,11 @@
       "portrait": "",
       "fallback": "ESP_CB"
     },
+    "16": {
+      "assetTier": "T0",
+      "portrait": "",
+      "fallback": "GER_GK"
+    },
     "17": {
       "assetTier": "T0",
       "portrait": "",
@@ -76,6 +86,46 @@
       "assetTier": "T0",
       "portrait": "",
       "fallback": "BRA_FB"
+    },
+    "19": {
+      "assetTier": "T0",
+      "portrait": "",
+      "fallback": "ESP_CM"
+    },
+    "21": {
+      "assetTier": "T0",
+      "portrait": "",
+      "fallback": "BRA_FB"
+    },
+    "22": {
+      "assetTier": "T0",
+      "portrait": "",
+      "fallback": "BRA_FB"
+    },
+    "23": {
+      "assetTier": "T0",
+      "portrait": "",
+      "fallback": "ITA_CB"
+    },
+    "24": {
+      "assetTier": "T0",
+      "portrait": "",
+      "fallback": "ITA_GK"
+    },
+    "25": {
+      "assetTier": "T0",
+      "portrait": "",
+      "fallback": "ESP_GK"
+    },
+    "26": {
+      "assetTier": "T0",
+      "portrait": "",
+      "fallback": "GER_CB"
+    },
+    "27": {
+      "assetTier": "T0",
+      "portrait": "",
+      "fallback": "NED_AM"
     },
     "28": {
       "assetTier": "T0",
@@ -97,80 +147,30 @@
       "portrait": "",
       "fallback": "JPN_W"
     },
-    "16": {
-      "assetTier": "T0",
-      "portrait": "",
-      "fallback": "GER_GK"
-    },
-    "22": {
-      "assetTier": "T0",
-      "portrait": "",
-      "fallback": "BRA_FB"
-    },
-    "26": {
-      "assetTier": "T0",
-      "portrait": "",
-      "fallback": "GER_CB"
-    },
     "32": {
-      "assetTier": "T0",
-      "portrait": "",
+      "assetTier": "T1",
+      "portrait": "assets/players/luis-figo/portrait.svg",
       "fallback": "POR_W"
     },
     "33": {
-      "assetTier": "T0",
-      "portrait": "",
+      "assetTier": "T1",
+      "portrait": "assets/players/paolo-rossi/portrait.svg",
       "fallback": "ITA_ST"
     },
     "34": {
-      "assetTier": "T0",
-      "portrait": "",
+      "assetTier": "T1",
+      "portrait": "assets/players/dennis-bergkamp/portrait.svg",
       "fallback": "NED_AM"
     },
     "35": {
-      "assetTier": "T0",
-      "portrait": "",
+      "assetTier": "T1",
+      "portrait": "assets/players/hugo-sanchez/portrait.svg",
       "fallback": "MEX_ST"
     },
     "36": {
-      "assetTier": "T0",
-      "portrait": "",
+      "assetTier": "T1",
+      "portrait": "assets/players/bobby-charlton/portrait.svg",
       "fallback": "ENG_CM"
-    },
-    "13": {
-      "assetTier": "T0",
-      "portrait": "",
-      "fallback": "ENG_ST"
-    },
-    "19": {
-      "assetTier": "T0",
-      "portrait": "",
-      "fallback": "ESP_CM"
-    },
-    "21": {
-      "assetTier": "T0",
-      "portrait": "",
-      "fallback": "BRA_FB"
-    },
-    "23": {
-      "assetTier": "T0",
-      "portrait": "",
-      "fallback": "ITA_CB"
-    },
-    "24": {
-      "assetTier": "T0",
-      "portrait": "",
-      "fallback": "ITA_GK"
-    },
-    "25": {
-      "assetTier": "T0",
-      "portrait": "",
-      "fallback": "ESP_GK"
-    },
-    "27": {
-      "assetTier": "T0",
-      "portrait": "",
-      "fallback": "NED_AM"
     },
     "40": {
       "assetTier": "T0",
