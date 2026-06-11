@@ -6,7 +6,7 @@
 **Mode:** One task, one validation pass, one commit  
 **Branch:** `main` unless explicitly changed  
 **Screenshots:** Not automated by default
-**Last sync:** `main` @ this commit — Settlement dedupe guard (P2-020)
+**Last sync:** `main` @ this commit — Manual QA pass blocked by local server approval limit (P2-022)
 
 ---
 
@@ -15,8 +15,8 @@
 | Metric | Count |
 |--------|------:|
 | **Done** | 21 |
-| **Partial** | 0 |
-| **Not started** | 9 |
+| **Partial** | 1 |
+| **Not started** | 8 |
 | **Total tickets** | 30 |
 
 **Legend:** ✅ Done · 🟡 Partial · ⬜ Not started
@@ -288,9 +288,9 @@ Closeout requires a validation report, manual QA result, no-cloud assertion, no-
 | P2-017 | ✅ | F | P2-015, P2-016 | Batch 6 | `f56ee20` |
 | P2-018 | ✅ | F | P2-017 | Batch 6 | `d784a91` |
 | P2-019 | ✅ | B | P2-018 | Batch 7 | `2da6bfc` |
-| P2-020 | ✅ | B | P2-019 | Batch 7 | this commit |
+| P2-020 | ✅ | B | P2-019 | Batch 7 | `c15f77e` |
 | P2-021 | ✅ | C | P2-009 | Batch 3 | `14ac5cb` |
-| P2-022 | ⬜ | A | P2-006, P2-018, P2-021 | Batch 8 | |
+| P2-022 | 🟡 | A | P2-006, P2-018, P2-021 | Batch 8 | this commit |
 | P2-023 | ⬜ | Variable | P2-022 | Batch 8 conditional | |
 | P2-024 | ⬜ | G | P2-022, no blockers | Batch 9 | |
 | P2-025 | ⬜ | G | P2-024 | Batch 9 conditional | |

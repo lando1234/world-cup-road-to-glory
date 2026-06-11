@@ -162,6 +162,51 @@ Final result:
 - [ ] PASS WITH FOLLOW-UP — no blockers, non-blocking issues recorded.
 - [ ] BLOCKED — one or more blocker definitions met.
 
+## 10. Recorded Runs
+
+### P2-022 Attempt 1 — 2026-06-11
+
+| Field | Value |
+|-------|-------|
+| Date | 2026-06-11 |
+| Commit | `c15f77e` |
+| Browser | Not opened |
+| Local server URL | Not started |
+| Network enabled? | Restricted / not used |
+| Tester | Codex |
+| Result | BLOCKED |
+
+Automated pre-flight:
+
+| Command | Result | Notes |
+|---------|--------|-------|
+| `rtk npm run validate` | PASS | Last run after P2-020: 47 football domain checks, 7 Phase 1 QA checks, 20 Phase 2 QA checks, docs validation, and syntax checks passed. |
+| `rtk npm run smoke:http` | BLOCKED | Requires an escalated local server approval. The approval path is currently blocked by the Codex usage limit, so the smoke server/browser path was not reattempted. |
+
+Manual QA execution result:
+
+| Category | Result | Notes |
+|----------|--------|-------|
+| Core path | Blocked | Browser/server pass could not start in this environment. |
+| Full squad | Blocked | Depends on interactive browser/server pass. |
+| Reload persistence | Blocked | Depends on interactive browser/server pass. |
+| Game over | Blocked | Depends on interactive browser/server pass. |
+| Legacy terminology | Blocked | Requires visible UI pass. Automated grep gates continue to pass. |
+| Visual frictions recorded | Pass | Current known frictions remain in this file and `013-phase-2-visual-frictions.html`. |
+| Blockers found | Environment blocker | No product blocker confirmed because manual execution did not start. |
+
+Final result:
+
+- [ ] PASS — no blockers.
+- [ ] PASS WITH FOLLOW-UP — no blockers, non-blocking issues recorded.
+- [x] BLOCKED — local browser/server execution unavailable in this Codex environment.
+
+Follow-up:
+
+- Re-run this runbook manually in a browser once local server execution is available.
+- Keep P2-023 reserved for actual product bugs found by that manual pass.
+- Do not use this blocked attempt as approval to enable 8-host-city runtime expansion.
+
 ---
 
 *End of Phase 2 Manual QA Runbook.*

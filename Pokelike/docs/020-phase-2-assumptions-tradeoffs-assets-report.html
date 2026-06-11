@@ -929,6 +929,27 @@
           </div>
         </div>
       </article>
+      <article class="task" style="margin-top: 12px;">
+        <h3>P2-022 — Manual QA pass 1 blocked</h3>
+        <div class="task-grid">
+          <div class="field">
+            <span>Assumption</span>
+            <p>Manual QA requires a local server/browser pass; automated validation alone is not enough to approve expansion.</p>
+          </div>
+          <div class="field">
+            <span>Blocker</span>
+            <p>The Codex environment currently blocks escalated local-server approval via usage limit, so the interactive runbook could not start.</p>
+          </div>
+          <div class="field">
+            <span>Validation</span>
+            <p><code>rtk npm run validate</code> passed after P2-020 with 47 domain checks, 7 Phase 1 QA checks, 20 Phase 2 QA checks, docs validation, and syntax checks. HTTP smoke/browser execution remains blocked.</p>
+          </div>
+          <div class="field">
+            <span>Owner Note</span>
+            <p>Do not treat this as a product pass. Re-run the manual QA runbook before enabling 8-host-city runtime expansion or Phase 2 signoff.</p>
+          </div>
+        </div>
+      </article>
     </section>
 
     <section>
@@ -950,7 +971,7 @@
     </section>
 
     <footer>
-      Generated for Pokelike World Cup Road to Glory Phase 2. Last updated 2026-06-10 — P2-020 Settlement dedupe guard, P2-019 Account model validator, P2-018 Settlement Lite UX, P2-017 Slice Complete milestone, P2-016 Album visual model, P2-015 City Stamp placeholders, P2-014 City Stamp selectors, P2-013 Squad Registration layout, P2-012 Contract Offer UX polish, P2-011 Scout Report wrapper, P2-010 football node icon registry, P2-021 runtime no-live-API gate, P2-009 local portrait manifest, P2-005 football album write call sites, P2-004 album facade names, P2-003 bridge inventory, P2-008 portrait strategy, P2-007 HTTP smoke script, P2-006 manual QA runbook, P2-002 QA harness shell, P2-001 ledger/protocol, baseline assumptions, tradeoffs, frictions, asset gaps, decision gates, and owner watchlist.
+      Generated for Pokelike World Cup Road to Glory Phase 2. Last updated 2026-06-11 — P2-022 manual QA blocked by local server approval limit, P2-020 Settlement dedupe guard, P2-019 Account model validator, P2-018 Settlement Lite UX, P2-017 Slice Complete milestone, P2-016 Album visual model, P2-015 City Stamp placeholders, P2-014 City Stamp selectors, P2-013 Squad Registration layout, P2-012 Contract Offer UX polish, P2-011 Scout Report wrapper, P2-010 football node icon registry, P2-021 runtime no-live-API gate, P2-009 local portrait manifest, P2-005 football album write call sites, P2-004 album facade names, P2-003 bridge inventory, P2-008 portrait strategy, P2-007 HTTP smoke script, P2-006 manual QA runbook, P2-002 QA harness shell, P2-001 ledger/protocol, baseline assumptions, tradeoffs, frictions, asset gaps, decision gates, and owner watchlist.
     </footer>
   </main>
 </body>
