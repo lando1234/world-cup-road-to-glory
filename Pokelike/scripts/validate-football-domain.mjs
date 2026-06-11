@@ -120,7 +120,7 @@ runScript(context, "js/cloud-save.js");
 const PHASE_1_PROFILE_IDS = Object.freeze([
   1, 2, 3, 4, 6, 7, 9, 10, 12, 14, 15, 17, 18, 28, 29, 30, 31, 16, 22, 26
 ]);
-const EXPECTED_PROFILE_IDS = Object.freeze([1, 2, 3, 4, 6, 7, 9, 10, 12, 14, 15, 17, 18, 28, 29, 30, 31, 16, 22, 26, 32, 33, 34, 35, 36, 13, 19, 21, 23, 24, 25]);
+const EXPECTED_PROFILE_IDS = Object.freeze([1, 2, 3, 4, 6, 7, 9, 10, 12, 14, 15, 17, 18, 28, 29, 30, 31, 16, 22, 26, 32, 33, 34, 35, 36, 13, 19, 21, 23, 24, 25, 27, 40]);
 
 const catalogJson = readJson("data/football/player_profiles.json");
 const catalog = context.window.DomainProfiles.loadCatalog(catalogJson, { expectedProfileIds: EXPECTED_PROFILE_IDS });

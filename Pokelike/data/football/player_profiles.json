@@ -1085,6 +1085,76 @@
         "nameOk": true,
         "likenessTier": 0
       }
+    },
+    {
+      "profileId": 27,
+      "slug": "johan-cruyff",
+      "displayName": "Johan Cruyff",
+      "commonName": "Cruyff",
+      "nation": "NED",
+      "position": "AM",
+      "primaryStyle": "tactical_control",
+      "secondaryStyle": "possession_buildup",
+      "baseStats": {
+        "hp": 75,
+        "atk": 82,
+        "def": 72,
+        "special": 110,
+        "spdef": 98,
+        "speed": 88
+      },
+      "rarity": "elite",
+      "portrait": "/assets/players/johan-cruyff.png",
+      "flavorText": "Total football brain. Makes teammates play two steps ahead.",
+      "flags": {
+        "isMarquee": false,
+        "isLegend": false,
+        "scoutable": true,
+        "bossExclusive": false
+      },
+      "album": {
+        "pageId": "favorites",
+        "slot": 18
+      },
+      "legal": {
+        "nameOk": true,
+        "likenessTier": 0
+      }
+    },
+    {
+      "profileId": 40,
+      "slug": "lilian-thuram",
+      "displayName": "Lilian Thuram",
+      "commonName": "Thuram",
+      "nation": "FRA",
+      "position": "CB",
+      "primaryStyle": "iron_defense",
+      "secondaryStyle": "compact_block",
+      "baseStats": {
+        "hp": 85,
+        "atk": 72,
+        "def": 108,
+        "special": 68,
+        "spdef": 95,
+        "speed": 82
+      },
+      "rarity": "elite",
+      "portrait": "/assets/players/lilian-thuram.png",
+      "flavorText": "France 1998 — immovable full-back turned defensive general.",
+      "flags": {
+        "isMarquee": false,
+        "isLegend": false,
+        "scoutable": true,
+        "bossExclusive": false
+      },
+      "album": {
+        "pageId": "favorites",
+        "slot": 19
+      },
+      "legal": {
+        "nameOk": true,
+        "likenessTier": 0
+      }
     }
   ]
 }

@@ -166,6 +166,16 @@
       "assetTier": "T0",
       "portrait": "",
       "fallback": "ESP_GK"
+    },
+    "27": {
+      "assetTier": "T0",
+      "portrait": "",
+      "fallback": "NED_AM"
+    },
+    "40": {
+      "assetTier": "T0",
+      "portrait": "",
+      "fallback": "FRA_CB"
     }
   }
 }
