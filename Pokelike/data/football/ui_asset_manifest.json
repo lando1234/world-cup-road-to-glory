@@ -16,6 +16,10 @@
       "paths": { "default": "assets/ui/settlement-trophy.svg" },
       "fallback": { "type": "emoji", "value": "🏆" }
     },
+    "worldCupTrophy": {
+      "paths": { "default": "assets/ui/world-cup-trophy.svg" },
+      "fallback": { "type": "emoji", "value": "🏆" }
+    },
     "trophyRoadMilestone": {
       "paths": { "default": "assets/ui/trophy-road-milestone.svg" },
       "fallback": { "type": "emoji", "value": "🛣️" }
