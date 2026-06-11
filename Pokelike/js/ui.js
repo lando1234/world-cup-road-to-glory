@@ -249,6 +249,9 @@ function renderPlayerCard(instance, onClick, selected) {
     ${styleHtml ? `<div class="poke-types player-styles">${styleHtml}</div>` : ''}
     <div class="player-stamina-label">Stamina</div>
     <div class="poke-hp">${renderHpBar(currentHp, maxHp)}</div>
+    ${typeof getFootballSkillDisplayName === 'function'
+      ? `<div class="player-skill-label">Signature skill: ${getFootballSkillDisplayName(instance, instance.moveTier ?? 1)}</div>`
+      : ''}
     <div class="player-stat-grid">
       ${statRows.map(([label, value]) => `<div><span>${label}</span><strong>${value}</strong></div>`).join('')}
     </div>
@@ -569,7 +572,17 @@ function hideTeamHoverCard() {
 }
 
 function getMoveForPokemon(pokemon) {
+  if (typeof getCombatMoveForEntity === 'function') return getCombatMoveForEntity(pokemon);
   return getBestMove(pokemon.types || ['Normal'], pokemon.baseStats, pokemon.speciesId, pokemon.moveTier ?? 1, pokemon.heldItem);
+}
+
+function formatBattleSkillLogLine(attackerName, moveName, targetName, damage, effText, isPlayer) {
+  const sideLabel = isPlayer ? '' : '(enemy) ';
+  if (isFootballBattlePresentation()) {
+    const verb = window.GAME_THEME?.battle?.skillVerb || 'unleashed';
+    return `${sideLabel}${attackerName} ${verb} ${moveName} → ${targetName} took ${damage} dmg.${effText}`;
+  }
+  return `${sideLabel}${attackerName} used ${moveName} → ${targetName} took ${damage} dmg.${effText}`;
 }
 
 let _dragIdx = null;
@@ -605,7 +618,7 @@ function renderTeamBar(team, el, showTypes = false, forceReorder = false, afterE
     slot.innerHTML = `
       <img src="${p.spriteUrl||''}" alt="${p.name}" class="team-sprite" onerror="this.src='';this.style.display='none'">
       <div class="team-slot-name">${p.nickname||p.name}</div>
-      <div class="team-slot-lv">Lv${p.level}</div>
+      <div class="team-slot-lv">${formatBattleLevelLabel(p.level)}</div>
       ${showTypes ? `<div style="display:flex;gap:2px;flex-wrap:wrap;justify-content:center;margin:1px 0;">${(p.types||[]).map(t=>`<span class="type-badge type-${t.toLowerCase()}" style="font-size:5px;padding:1px 2px;">${t}</span>`).join('')}</div>` : ''}
       <div class="hp-bar-bg sm"><div class="hp-bar-fill" style="width:${Math.floor(pct*100)}%;background:${color}"></div></div>
       ${p.heldItem ? `<div class="team-slot-item">${itemIconHtml(p.heldItem, 16)}</div>` : ''}`;
@@ -3002,9 +3015,8 @@ async function animateBattleVisually(detailedLog, pTeamInit, eTeamInit) {
       else if (event.typeEff < 1) effText = ' Not very effective...';
       if (event.crit) effText += ' Critical hit!';
 
-      const sideLabel = event.side === 'player' ? '' : '(enemy) ';
       addLogEntry(
-        `${sideLabel}${event.attackerName} used ${event.moveName} → ${event.targetName} took ${event.damage} dmg.${effText}`,
+        formatBattleSkillLogLine(event.attackerName, event.moveName, event.targetName, event.damage, effText, event.side === 'player'),
         event.side === 'player' ? 'log-player' : 'log-enemy'
       );
 

@@ -212,8 +212,12 @@ function runBattle(playerTeam, enemyTeam, bagItems, enemyItems, onLog, traitsCon
     const eSpeed = getEffectiveStat(eActive, 'speed', eActiveItems, eActive.stages);
 
     // If both active Pokemon can only use noDamage moves, force Struggle to break the stalemate
-    const pMove = getBestMove(pActive.types || ['Normal'], pActive.baseStats, pActive.speciesId, pActive.moveTier ?? 1, pActive.heldItem);
-    const eMove = getBestMove(eActive.types || ['Normal'], eActive.baseStats, eActive.speciesId, eActive.moveTier ?? 1, eActive.heldItem);
+    const pMove = typeof getCombatMoveForEntity === 'function'
+      ? getCombatMoveForEntity(pActive)
+      : getBestMove(pActive.types || ['Normal'], pActive.baseStats, pActive.speciesId, pActive.moveTier ?? 1, pActive.heldItem);
+    const eMove = typeof getCombatMoveForEntity === 'function'
+      ? getCombatMoveForEntity(eActive)
+      : getBestMove(eActive.types || ['Normal'], eActive.baseStats, eActive.speciesId, eActive.moveTier ?? 1, eActive.heldItem);
     const bothUseless = pMove.noDamage && eMove.noDamage;
 
     // Quick Claw: 50% chance to attack first regardless of speed. If both
@@ -275,7 +279,9 @@ function runBattle(playerTeam, enemyTeam, bagItems, enemyItems, onLog, traitsCon
         }
       }
 
-      let move = getBestMove(attacker.types || ['Normal'], attacker.baseStats, attacker.speciesId, attacker.moveTier ?? 1, attacker.heldItem);
+      let move = typeof getCombatMoveForEntity === 'function'
+        ? getCombatMoveForEntity(attacker)
+        : getBestMove(attacker.types || ['Normal'], attacker.baseStats, attacker.speciesId, attacker.moveTier ?? 1, attacker.heldItem);
       // If both sides are stuck with useless moves, force Struggle on both
       if (bothUseless) {
         move = { name: 'Struggle', power: 50, type: 'Normal', isSpecial: false, typeless: true };
@@ -289,7 +295,8 @@ function runBattle(playerTeam, enemyTeam, bagItems, enemyItems, onLog, traitsCon
 
       if (move.noDamage) {
         const aName = attacker.nickname || attacker.name;
-        addLog(`${side === 'player' ? '' : '(enemy) '}${aName} used ${move.name}! But nothing happened!`,
+        const noopVerb = window.FEATURES?.footballMode === true ? 'unleashed' : 'used';
+        addLog(`${side === 'player' ? '' : '(enemy) '}${aName} ${noopVerb} ${move.name}! But nothing happened!`,
                side === 'player' ? 'log-player' : 'log-enemy');
         detailedLog.push({
           type: 'attack', side, attackerIdx: aIdx, attackerName: aName,
@@ -334,7 +341,8 @@ function runBattle(playerTeam, enemyTeam, bagItems, enemyItems, onLog, traitsCon
       else if (typeEff === 0) effText = ' No effect!';
       else if (typeEff < 1)  effText = ' Not very effective...';
 
-      addLog(`${side === 'player' ? '' : '(enemy) '}${aName} used ${move.name} → ${tName} took ${damage} dmg.${effText}`,
+      const skillVerb = window.FEATURES?.footballMode === true ? 'unleashed' : 'used';
+      addLog(`${side === 'player' ? '' : '(enemy) '}${aName} ${skillVerb} ${move.name} → ${tName} took ${damage} dmg.${effText}`,
              side === 'player' ? 'log-player' : 'log-enemy');
 
       // Push attack event FIRST so whenAttacked hooks (Flying dodge etc.) appear after it in the log

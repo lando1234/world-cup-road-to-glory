@@ -1,0 +1,362 @@
+category,id,slug,asset_type,tier,path,status,notes
+player,1,kylian-mbappe,portrait,T1,assets/players/kylian-mbappe/portrait.svg,present,Kylian Mbappé
+player,1,kylian-mbappe,form1,T1,assets/players/kylian-mbappe/form-1.png,missing,Kylian Mbappé
+player,1,kylian-mbappe,form2,T1,assets/players/kylian-mbappe/form-2.png,missing,Kylian Mbappé
+player,1,kylian-mbappe,form3,T1,assets/players/kylian-mbappe/form-3.png,missing,Kylian Mbappé
+player,1,kylian-mbappe,album,T1,assets/players/kylian-mbappe/album.svg,present,Kylian Mbappé
+player,1,kylian-mbappe,battle,T1,assets/players/kylian-mbappe/battle.svg,present,Kylian Mbappé
+player,1,kylian-mbappe,squad,T1,assets/players/kylian-mbappe/squad.svg,present,Kylian Mbappé
+player,2,lionel-messi,portrait,T1,assets/players/lionel-messi/portrait.svg,present,Lionel Messi
+player,2,lionel-messi,form1,T1,assets/players/lionel-messi/form-1.png,missing,Lionel Messi
+player,2,lionel-messi,form2,T1,assets/players/lionel-messi/form-2.png,missing,Lionel Messi
+player,2,lionel-messi,form3,T1,assets/players/lionel-messi/form-3.png,missing,Lionel Messi
+player,2,lionel-messi,album,T1,assets/players/lionel-messi/album.svg,present,Lionel Messi
+player,2,lionel-messi,battle,T1,assets/players/lionel-messi/battle.svg,present,Lionel Messi
+player,2,lionel-messi,squad,T1,assets/players/lionel-messi/squad.svg,present,Lionel Messi
+player,3,virgil-van-dijk,portrait,T1,assets/players/virgil-van-dijk/portrait.svg,present,Virgil van Dijk
+player,3,virgil-van-dijk,form1,T1,assets/players/virgil-van-dijk/form-1.png,missing,Virgil van Dijk
+player,3,virgil-van-dijk,form2,T1,assets/players/virgil-van-dijk/form-2.png,missing,Virgil van Dijk
+player,3,virgil-van-dijk,form3,T1,assets/players/virgil-van-dijk/form-3.png,missing,Virgil van Dijk
+player,3,virgil-van-dijk,album,T1,assets/players/virgil-van-dijk/album.svg,present,Virgil van Dijk
+player,3,virgil-van-dijk,battle,T1,assets/players/virgil-van-dijk/battle.svg,present,Virgil van Dijk
+player,3,virgil-van-dijk,squad,T1,assets/players/virgil-van-dijk/squad.svg,present,Virgil van Dijk
+player,4,erling-haaland,portrait,T1,assets/players/erling-haaland/portrait.svg,present,Erling Haaland
+player,4,erling-haaland,form1,T1,assets/players/erling-haaland/form-1.png,missing,Erling Haaland
+player,4,erling-haaland,form2,T1,assets/players/erling-haaland/form-2.png,missing,Erling Haaland
+player,4,erling-haaland,form3,T1,assets/players/erling-haaland/form-3.png,missing,Erling Haaland
+player,4,erling-haaland,album,T1,assets/players/erling-haaland/album.svg,present,Erling Haaland
+player,4,erling-haaland,battle,T1,assets/players/erling-haaland/battle.svg,present,Erling Haaland
+player,4,erling-haaland,squad,T1,assets/players/erling-haaland/squad.svg,present,Erling Haaland
+player,6,luka-modric,portrait,T1,assets/players/luka-modric/portrait.svg,present,Luka Modrić
+player,6,luka-modric,form1,T1,assets/players/luka-modric/form-1.png,missing,Luka Modrić
+player,6,luka-modric,form2,T1,assets/players/luka-modric/form-2.png,missing,Luka Modrić
+player,6,luka-modric,form3,T1,assets/players/luka-modric/form-3.png,missing,Luka Modrić
+player,6,luka-modric,album,T1,assets/players/luka-modric/album.svg,present,Luka Modrić
+player,6,luka-modric,battle,T1,assets/players/luka-modric/battle.svg,present,Luka Modrić
+player,6,luka-modric,squad,T1,assets/players/luka-modric/squad.svg,present,Luka Modrić
+player,7,mohamed-salah,portrait,T1,assets/players/mohamed-salah/portrait.svg,present,Mohamed Salah
+player,7,mohamed-salah,form1,T1,assets/players/mohamed-salah/form-1.png,missing,Mohamed Salah
+player,7,mohamed-salah,form2,T1,assets/players/mohamed-salah/form-2.png,missing,Mohamed Salah
+player,7,mohamed-salah,form3,T1,assets/players/mohamed-salah/form-3.png,missing,Mohamed Salah
+player,7,mohamed-salah,album,T1,assets/players/mohamed-salah/album.svg,present,Mohamed Salah
+player,7,mohamed-salah,battle,T1,assets/players/mohamed-salah/battle.svg,present,Mohamed Salah
+player,7,mohamed-salah,squad,T1,assets/players/mohamed-salah/squad.svg,present,Mohamed Salah
+player,9,rodri,portrait,T1,assets/players/rodri/portrait.svg,present,Rodri
+player,9,rodri,form1,T1,assets/players/rodri/form-1.png,missing,Rodri
+player,9,rodri,form2,T1,assets/players/rodri/form-2.png,missing,Rodri
+player,9,rodri,form3,T1,assets/players/rodri/form-3.png,missing,Rodri
+player,9,rodri,album,T1,assets/players/rodri/album.svg,present,Rodri
+player,9,rodri,battle,T1,assets/players/rodri/battle.svg,present,Rodri
+player,9,rodri,squad,T1,assets/players/rodri/squad.svg,present,Rodri
+player,10,jude-bellingham,portrait,T1,assets/players/jude-bellingham/portrait.svg,present,Jude Bellingham
+player,10,jude-bellingham,form1,T1,assets/players/jude-bellingham/form-1.png,missing,Jude Bellingham
+player,10,jude-bellingham,form2,T1,assets/players/jude-bellingham/form-2.png,missing,Jude Bellingham
+player,10,jude-bellingham,form3,T1,assets/players/jude-bellingham/form-3.png,missing,Jude Bellingham
+player,10,jude-bellingham,album,T1,assets/players/jude-bellingham/album.svg,present,Jude Bellingham
+player,10,jude-bellingham,battle,T1,assets/players/jude-bellingham/battle.svg,present,Jude Bellingham
+player,10,jude-bellingham,squad,T1,assets/players/jude-bellingham/squad.svg,present,Jude Bellingham
+player,12,pedri,portrait,T1,assets/players/pedri/portrait.svg,present,Pedri
+player,12,pedri,form1,T1,assets/players/pedri/form-1.png,missing,Pedri
+player,12,pedri,form2,T1,assets/players/pedri/form-2.png,missing,Pedri
+player,12,pedri,form3,T1,assets/players/pedri/form-3.png,missing,Pedri
+player,12,pedri,album,T1,assets/players/pedri/album.svg,present,Pedri
+player,12,pedri,battle,T1,assets/players/pedri/battle.svg,present,Pedri
+player,12,pedri,squad,T1,assets/players/pedri/squad.svg,present,Pedri
+player,13,harry-kane,portrait,T1,assets/players/harry-kane/portrait.svg,present,Harry Kane
+player,13,harry-kane,form1,T1,assets/players/harry-kane/form-1.png,missing,Harry Kane
+player,13,harry-kane,form2,T1,assets/players/harry-kane/form-2.png,missing,Harry Kane
+player,13,harry-kane,form3,T1,assets/players/harry-kane/form-3.png,missing,Harry Kane
+player,13,harry-kane,album,T1,assets/players/harry-kane/album.svg,present,Harry Kane
+player,13,harry-kane,battle,T1,assets/players/harry-kane/battle.svg,present,Harry Kane
+player,13,harry-kane,squad,T1,assets/players/harry-kane/squad.svg,present,Harry Kane
+player,14,n-golo-kante,portrait,T1,assets/players/n-golo-kante/portrait.svg,present,N'Golo Kanté
+player,14,n-golo-kante,form1,T1,assets/players/n-golo-kante/form-1.png,missing,N'Golo Kanté
+player,14,n-golo-kante,form2,T1,assets/players/n-golo-kante/form-2.png,missing,N'Golo Kanté
+player,14,n-golo-kante,form3,T1,assets/players/n-golo-kante/form-3.png,missing,N'Golo Kanté
+player,14,n-golo-kante,album,T1,assets/players/n-golo-kante/album.svg,present,N'Golo Kanté
+player,14,n-golo-kante,battle,T1,assets/players/n-golo-kante/battle.svg,present,N'Golo Kanté
+player,14,n-golo-kante,squad,T1,assets/players/n-golo-kante/squad.svg,present,N'Golo Kanté
+player,15,sergio-ramos,portrait,T1,assets/players/sergio-ramos/portrait.svg,present,Sergio Ramos
+player,15,sergio-ramos,form1,T1,assets/players/sergio-ramos/form-1.png,missing,Sergio Ramos
+player,15,sergio-ramos,form2,T1,assets/players/sergio-ramos/form-2.png,missing,Sergio Ramos
+player,15,sergio-ramos,form3,T1,assets/players/sergio-ramos/form-3.png,missing,Sergio Ramos
+player,15,sergio-ramos,album,T1,assets/players/sergio-ramos/album.svg,present,Sergio Ramos
+player,15,sergio-ramos,battle,T1,assets/players/sergio-ramos/battle.svg,present,Sergio Ramos
+player,15,sergio-ramos,squad,T1,assets/players/sergio-ramos/squad.svg,present,Sergio Ramos
+player,16,manuel-neuer,portrait,T1,assets/players/manuel-neuer/portrait.svg,present,Manuel Neuer
+player,16,manuel-neuer,form1,T1,assets/players/manuel-neuer/form-1.png,missing,Manuel Neuer
+player,16,manuel-neuer,form2,T1,assets/players/manuel-neuer/form-2.png,missing,Manuel Neuer
+player,16,manuel-neuer,form3,T1,assets/players/manuel-neuer/form-3.png,missing,Manuel Neuer
+player,16,manuel-neuer,album,T1,assets/players/manuel-neuer/album.svg,present,Manuel Neuer
+player,16,manuel-neuer,battle,T1,assets/players/manuel-neuer/battle.svg,present,Manuel Neuer
+player,16,manuel-neuer,squad,T1,assets/players/manuel-neuer/squad.svg,present,Manuel Neuer
+player,17,alisson-becker,portrait,T1,assets/players/alisson-becker/portrait.svg,present,Alisson Becker
+player,17,alisson-becker,form1,T1,assets/players/alisson-becker/form-1.png,missing,Alisson Becker
+player,17,alisson-becker,form2,T1,assets/players/alisson-becker/form-2.png,missing,Alisson Becker
+player,17,alisson-becker,form3,T1,assets/players/alisson-becker/form-3.png,missing,Alisson Becker
+player,17,alisson-becker,album,T1,assets/players/alisson-becker/album.svg,present,Alisson Becker
+player,17,alisson-becker,battle,T1,assets/players/alisson-becker/battle.svg,present,Alisson Becker
+player,17,alisson-becker,squad,T1,assets/players/alisson-becker/squad.svg,present,Alisson Becker
+player,18,marcelo,portrait,T1,assets/players/marcelo/portrait.svg,present,Marcelo
+player,18,marcelo,form1,T1,assets/players/marcelo/form-1.png,missing,Marcelo
+player,18,marcelo,form2,T1,assets/players/marcelo/form-2.png,missing,Marcelo
+player,18,marcelo,form3,T1,assets/players/marcelo/form-3.png,missing,Marcelo
+player,18,marcelo,album,T1,assets/players/marcelo/album.svg,present,Marcelo
+player,18,marcelo,battle,T1,assets/players/marcelo/battle.svg,present,Marcelo
+player,18,marcelo,squad,T1,assets/players/marcelo/squad.svg,present,Marcelo
+player,19,andres-iniesta,portrait,T1,assets/players/andres-iniesta/portrait.svg,present,Andrés Iniesta
+player,19,andres-iniesta,form1,T1,assets/players/andres-iniesta/form-1.png,missing,Andrés Iniesta
+player,19,andres-iniesta,form2,T1,assets/players/andres-iniesta/form-2.png,missing,Andrés Iniesta
+player,19,andres-iniesta,form3,T1,assets/players/andres-iniesta/form-3.png,missing,Andrés Iniesta
+player,19,andres-iniesta,album,T1,assets/players/andres-iniesta/album.svg,present,Andrés Iniesta
+player,19,andres-iniesta,battle,T1,assets/players/andres-iniesta/battle.svg,present,Andrés Iniesta
+player,19,andres-iniesta,squad,T1,assets/players/andres-iniesta/squad.svg,present,Andrés Iniesta
+player,21,roberto-carlos,portrait,T1,assets/players/roberto-carlos/portrait.svg,present,Roberto Carlos
+player,21,roberto-carlos,form1,T1,assets/players/roberto-carlos/form-1.png,missing,Roberto Carlos
+player,21,roberto-carlos,form2,T1,assets/players/roberto-carlos/form-2.png,missing,Roberto Carlos
+player,21,roberto-carlos,form3,T1,assets/players/roberto-carlos/form-3.png,missing,Roberto Carlos
+player,21,roberto-carlos,album,T1,assets/players/roberto-carlos/album.svg,present,Roberto Carlos
+player,21,roberto-carlos,battle,T1,assets/players/roberto-carlos/battle.svg,present,Roberto Carlos
+player,21,roberto-carlos,squad,T1,assets/players/roberto-carlos/squad.svg,present,Roberto Carlos
+player,22,cafu,portrait,T1,assets/players/cafu/portrait.svg,present,Cafu
+player,22,cafu,form1,T1,assets/players/cafu/form-1.png,missing,Cafu
+player,22,cafu,form2,T1,assets/players/cafu/form-2.png,missing,Cafu
+player,22,cafu,form3,T1,assets/players/cafu/form-3.png,missing,Cafu
+player,22,cafu,album,T1,assets/players/cafu/album.svg,present,Cafu
+player,22,cafu,battle,T1,assets/players/cafu/battle.svg,present,Cafu
+player,22,cafu,squad,T1,assets/players/cafu/squad.svg,present,Cafu
+player,23,paolo-maldini,portrait,T1,assets/players/paolo-maldini/portrait.svg,present,Paolo Maldini
+player,23,paolo-maldini,form1,T1,assets/players/paolo-maldini/form-1.png,missing,Paolo Maldini
+player,23,paolo-maldini,form2,T1,assets/players/paolo-maldini/form-2.png,missing,Paolo Maldini
+player,23,paolo-maldini,form3,T1,assets/players/paolo-maldini/form-3.png,missing,Paolo Maldini
+player,23,paolo-maldini,album,T1,assets/players/paolo-maldini/album.svg,present,Paolo Maldini
+player,23,paolo-maldini,battle,T1,assets/players/paolo-maldini/battle.svg,present,Paolo Maldini
+player,23,paolo-maldini,squad,T1,assets/players/paolo-maldini/squad.svg,present,Paolo Maldini
+player,24,gianluigi-buffon,portrait,T1,assets/players/gianluigi-buffon/portrait.svg,present,Gianluigi Buffon
+player,24,gianluigi-buffon,form1,T1,assets/players/gianluigi-buffon/form-1.png,missing,Gianluigi Buffon
+player,24,gianluigi-buffon,form2,T1,assets/players/gianluigi-buffon/form-2.png,missing,Gianluigi Buffon
+player,24,gianluigi-buffon,form3,T1,assets/players/gianluigi-buffon/form-3.png,missing,Gianluigi Buffon
+player,24,gianluigi-buffon,album,T1,assets/players/gianluigi-buffon/album.svg,present,Gianluigi Buffon
+player,24,gianluigi-buffon,battle,T1,assets/players/gianluigi-buffon/battle.svg,present,Gianluigi Buffon
+player,24,gianluigi-buffon,squad,T1,assets/players/gianluigi-buffon/squad.svg,present,Gianluigi Buffon
+player,25,iker-casillas,portrait,T1,assets/players/iker-casillas/portrait.svg,present,Iker Casillas
+player,25,iker-casillas,form1,T1,assets/players/iker-casillas/form-1.png,missing,Iker Casillas
+player,25,iker-casillas,form2,T1,assets/players/iker-casillas/form-2.png,missing,Iker Casillas
+player,25,iker-casillas,form3,T1,assets/players/iker-casillas/form-3.png,missing,Iker Casillas
+player,25,iker-casillas,album,T1,assets/players/iker-casillas/album.svg,present,Iker Casillas
+player,25,iker-casillas,battle,T1,assets/players/iker-casillas/battle.svg,present,Iker Casillas
+player,25,iker-casillas,squad,T1,assets/players/iker-casillas/squad.svg,present,Iker Casillas
+player,26,franz-beckenbauer,portrait,T1,assets/players/franz-beckenbauer/portrait.svg,present,Franz Beckenbauer
+player,26,franz-beckenbauer,form1,T1,assets/players/franz-beckenbauer/form-1.png,missing,Franz Beckenbauer
+player,26,franz-beckenbauer,form2,T1,assets/players/franz-beckenbauer/form-2.png,missing,Franz Beckenbauer
+player,26,franz-beckenbauer,form3,T1,assets/players/franz-beckenbauer/form-3.png,missing,Franz Beckenbauer
+player,26,franz-beckenbauer,album,T1,assets/players/franz-beckenbauer/album.svg,present,Franz Beckenbauer
+player,26,franz-beckenbauer,battle,T1,assets/players/franz-beckenbauer/battle.svg,present,Franz Beckenbauer
+player,26,franz-beckenbauer,squad,T1,assets/players/franz-beckenbauer/squad.svg,present,Franz Beckenbauer
+player,27,johan-cruyff,portrait,T1,assets/players/johan-cruyff/portrait.svg,present,Johan Cruyff
+player,27,johan-cruyff,form1,T1,assets/players/johan-cruyff/form-1.png,missing,Johan Cruyff
+player,27,johan-cruyff,form2,T1,assets/players/johan-cruyff/form-2.png,missing,Johan Cruyff
+player,27,johan-cruyff,form3,T1,assets/players/johan-cruyff/form-3.png,missing,Johan Cruyff
+player,27,johan-cruyff,album,T1,assets/players/johan-cruyff/album.svg,present,Johan Cruyff
+player,27,johan-cruyff,battle,T1,assets/players/johan-cruyff/battle.svg,present,Johan Cruyff
+player,27,johan-cruyff,squad,T1,assets/players/johan-cruyff/squad.svg,present,Johan Cruyff
+player,28,arjen-robben,portrait,T1,assets/players/arjen-robben/portrait.svg,present,Arjen Robben
+player,28,arjen-robben,form1,T1,assets/players/arjen-robben/form-1.png,missing,Arjen Robben
+player,28,arjen-robben,form2,T1,assets/players/arjen-robben/form-2.png,missing,Arjen Robben
+player,28,arjen-robben,form3,T1,assets/players/arjen-robben/form-3.png,missing,Arjen Robben
+player,28,arjen-robben,album,T1,assets/players/arjen-robben/album.svg,present,Arjen Robben
+player,28,arjen-robben,battle,T1,assets/players/arjen-robben/battle.svg,present,Arjen Robben
+player,28,arjen-robben,squad,T1,assets/players/arjen-robben/squad.svg,present,Arjen Robben
+player,29,casemiro,portrait,T1,assets/players/casemiro/portrait.svg,present,Casemiro
+player,29,casemiro,form1,T1,assets/players/casemiro/form-1.png,missing,Casemiro
+player,29,casemiro,form2,T1,assets/players/casemiro/form-2.png,missing,Casemiro
+player,29,casemiro,form3,T1,assets/players/casemiro/form-3.png,missing,Casemiro
+player,29,casemiro,album,T1,assets/players/casemiro/album.svg,present,Casemiro
+player,29,casemiro,battle,T1,assets/players/casemiro/battle.svg,present,Casemiro
+player,29,casemiro,squad,T1,assets/players/casemiro/squad.svg,present,Casemiro
+player,30,toni-kroos,portrait,T1,assets/players/toni-kroos/portrait.svg,present,Toni Kroos
+player,30,toni-kroos,form1,T1,assets/players/toni-kroos/form-1.png,missing,Toni Kroos
+player,30,toni-kroos,form2,T1,assets/players/toni-kroos/form-2.png,missing,Toni Kroos
+player,30,toni-kroos,form3,T1,assets/players/toni-kroos/form-3.png,missing,Toni Kroos
+player,30,toni-kroos,album,T1,assets/players/toni-kroos/album.svg,present,Toni Kroos
+player,30,toni-kroos,battle,T1,assets/players/toni-kroos/battle.svg,present,Toni Kroos
+player,30,toni-kroos,squad,T1,assets/players/toni-kroos/squad.svg,present,Toni Kroos
+player,31,takefusa-kubo,portrait,T1,assets/players/takefusa-kubo/portrait.svg,present,Takefusa Kubo
+player,31,takefusa-kubo,form1,T1,assets/players/takefusa-kubo/form-1.png,missing,Takefusa Kubo
+player,31,takefusa-kubo,form2,T1,assets/players/takefusa-kubo/form-2.png,missing,Takefusa Kubo
+player,31,takefusa-kubo,form3,T1,assets/players/takefusa-kubo/form-3.png,missing,Takefusa Kubo
+player,31,takefusa-kubo,album,T1,assets/players/takefusa-kubo/album.svg,present,Takefusa Kubo
+player,31,takefusa-kubo,battle,T1,assets/players/takefusa-kubo/battle.svg,present,Takefusa Kubo
+player,31,takefusa-kubo,squad,T1,assets/players/takefusa-kubo/squad.svg,present,Takefusa Kubo
+player,32,luis-figo,portrait,T1,assets/players/luis-figo/portrait.svg,present,Luís Figo
+player,32,luis-figo,form1,T1,assets/players/luis-figo/form-1.png,missing,Luís Figo
+player,32,luis-figo,form2,T1,assets/players/luis-figo/form-2.png,missing,Luís Figo
+player,32,luis-figo,form3,T1,assets/players/luis-figo/form-3.png,missing,Luís Figo
+player,32,luis-figo,album,T1,assets/players/luis-figo/album.svg,present,Luís Figo
+player,32,luis-figo,battle,T1,assets/players/luis-figo/battle.svg,present,Luís Figo
+player,32,luis-figo,squad,T1,assets/players/luis-figo/squad.svg,present,Luís Figo
+player,33,paolo-rossi,portrait,T1,assets/players/paolo-rossi/portrait.svg,present,Paolo Rossi
+player,33,paolo-rossi,form1,T1,assets/players/paolo-rossi/form-1.png,missing,Paolo Rossi
+player,33,paolo-rossi,form2,T1,assets/players/paolo-rossi/form-2.png,missing,Paolo Rossi
+player,33,paolo-rossi,form3,T1,assets/players/paolo-rossi/form-3.png,missing,Paolo Rossi
+player,33,paolo-rossi,album,T1,assets/players/paolo-rossi/album.svg,present,Paolo Rossi
+player,33,paolo-rossi,battle,T1,assets/players/paolo-rossi/battle.svg,present,Paolo Rossi
+player,33,paolo-rossi,squad,T1,assets/players/paolo-rossi/squad.svg,present,Paolo Rossi
+player,34,dennis-bergkamp,portrait,T1,assets/players/dennis-bergkamp/portrait.svg,present,Dennis Bergkamp
+player,34,dennis-bergkamp,form1,T1,assets/players/dennis-bergkamp/form-1.png,missing,Dennis Bergkamp
+player,34,dennis-bergkamp,form2,T1,assets/players/dennis-bergkamp/form-2.png,missing,Dennis Bergkamp
+player,34,dennis-bergkamp,form3,T1,assets/players/dennis-bergkamp/form-3.png,missing,Dennis Bergkamp
+player,34,dennis-bergkamp,album,T1,assets/players/dennis-bergkamp/album.svg,present,Dennis Bergkamp
+player,34,dennis-bergkamp,battle,T1,assets/players/dennis-bergkamp/battle.svg,present,Dennis Bergkamp
+player,34,dennis-bergkamp,squad,T1,assets/players/dennis-bergkamp/squad.svg,present,Dennis Bergkamp
+player,35,hugo-sanchez,portrait,T1,assets/players/hugo-sanchez/portrait.svg,present,Hugo Sánchez
+player,35,hugo-sanchez,form1,T1,assets/players/hugo-sanchez/form-1.png,missing,Hugo Sánchez
+player,35,hugo-sanchez,form2,T1,assets/players/hugo-sanchez/form-2.png,missing,Hugo Sánchez
+player,35,hugo-sanchez,form3,T1,assets/players/hugo-sanchez/form-3.png,missing,Hugo Sánchez
+player,35,hugo-sanchez,album,T1,assets/players/hugo-sanchez/album.svg,present,Hugo Sánchez
+player,35,hugo-sanchez,battle,T1,assets/players/hugo-sanchez/battle.svg,present,Hugo Sánchez
+player,35,hugo-sanchez,squad,T1,assets/players/hugo-sanchez/squad.svg,present,Hugo Sánchez
+player,36,bobby-charlton,portrait,T1,assets/players/bobby-charlton/portrait.svg,present,Bobby Charlton
+player,36,bobby-charlton,form1,T1,assets/players/bobby-charlton/form-1.png,missing,Bobby Charlton
+player,36,bobby-charlton,form2,T1,assets/players/bobby-charlton/form-2.png,missing,Bobby Charlton
+player,36,bobby-charlton,form3,T1,assets/players/bobby-charlton/form-3.png,missing,Bobby Charlton
+player,36,bobby-charlton,album,T1,assets/players/bobby-charlton/album.svg,present,Bobby Charlton
+player,36,bobby-charlton,battle,T1,assets/players/bobby-charlton/battle.svg,present,Bobby Charlton
+player,36,bobby-charlton,squad,T1,assets/players/bobby-charlton/squad.svg,present,Bobby Charlton
+player,37,juan-schiaffino,portrait,T1,assets/players/juan-schiaffino/portrait.svg,present,Juan Schiaffino
+player,37,juan-schiaffino,form1,T1,assets/players/juan-schiaffino/form-1.png,missing,Juan Schiaffino
+player,37,juan-schiaffino,form2,T1,assets/players/juan-schiaffino/form-2.png,missing,Juan Schiaffino
+player,37,juan-schiaffino,form3,T1,assets/players/juan-schiaffino/form-3.png,missing,Juan Schiaffino
+player,37,juan-schiaffino,album,T1,assets/players/juan-schiaffino/album.svg,present,Juan Schiaffino
+player,37,juan-schiaffino,battle,T1,assets/players/juan-schiaffino/battle.svg,present,Juan Schiaffino
+player,37,juan-schiaffino,squad,T1,assets/players/juan-schiaffino/squad.svg,present,Juan Schiaffino
+player,38,jairzinho,portrait,T1,assets/players/jairzinho/portrait.svg,present,Jairzinho
+player,38,jairzinho,form1,T1,assets/players/jairzinho/form-1.png,missing,Jairzinho
+player,38,jairzinho,form2,T1,assets/players/jairzinho/form-2.png,missing,Jairzinho
+player,38,jairzinho,form3,T1,assets/players/jairzinho/form-3.png,missing,Jairzinho
+player,38,jairzinho,album,T1,assets/players/jairzinho/album.svg,present,Jairzinho
+player,38,jairzinho,battle,T1,assets/players/jairzinho/battle.svg,present,Jairzinho
+player,38,jairzinho,squad,T1,assets/players/jairzinho/squad.svg,present,Jairzinho
+player,39,jorge-burruchaga,portrait,T1,assets/players/jorge-burruchaga/portrait.svg,present,Jorge Burruchaga
+player,39,jorge-burruchaga,form1,T1,assets/players/jorge-burruchaga/form-1.png,missing,Jorge Burruchaga
+player,39,jorge-burruchaga,form2,T1,assets/players/jorge-burruchaga/form-2.png,missing,Jorge Burruchaga
+player,39,jorge-burruchaga,form3,T1,assets/players/jorge-burruchaga/form-3.png,missing,Jorge Burruchaga
+player,39,jorge-burruchaga,album,T1,assets/players/jorge-burruchaga/album.svg,present,Jorge Burruchaga
+player,39,jorge-burruchaga,battle,T1,assets/players/jorge-burruchaga/battle.svg,present,Jorge Burruchaga
+player,39,jorge-burruchaga,squad,T1,assets/players/jorge-burruchaga/squad.svg,present,Jorge Burruchaga
+player,40,lilian-thuram,portrait,T1,assets/players/lilian-thuram/portrait.svg,present,Lilian Thuram
+player,40,lilian-thuram,form1,T1,assets/players/lilian-thuram/form-1.png,missing,Lilian Thuram
+player,40,lilian-thuram,form2,T1,assets/players/lilian-thuram/form-2.png,missing,Lilian Thuram
+player,40,lilian-thuram,form3,T1,assets/players/lilian-thuram/form-3.png,missing,Lilian Thuram
+player,40,lilian-thuram,album,T1,assets/players/lilian-thuram/album.svg,present,Lilian Thuram
+player,40,lilian-thuram,battle,T1,assets/players/lilian-thuram/battle.svg,present,Lilian Thuram
+player,40,lilian-thuram,squad,T1,assets/players/lilian-thuram/squad.svg,present,Lilian Thuram
+player,41,alcides-ghiggia,portrait,T1,assets/players/alcides-ghiggia/portrait.svg,present,Alcides Ghiggia
+player,41,alcides-ghiggia,form1,T1,assets/players/alcides-ghiggia/form-1.png,missing,Alcides Ghiggia
+player,41,alcides-ghiggia,form2,T1,assets/players/alcides-ghiggia/form-2.png,missing,Alcides Ghiggia
+player,41,alcides-ghiggia,form3,T1,assets/players/alcides-ghiggia/form-3.png,missing,Alcides Ghiggia
+player,41,alcides-ghiggia,album,T1,assets/players/alcides-ghiggia/album.svg,present,Alcides Ghiggia
+player,41,alcides-ghiggia,battle,T1,assets/players/alcides-ghiggia/battle.svg,present,Alcides Ghiggia
+player,41,alcides-ghiggia,squad,T1,assets/players/alcides-ghiggia/squad.svg,present,Alcides Ghiggia
+player,42,pele,portrait,T1,assets/players/pele/portrait.svg,present,Pelé
+player,42,pele,form1,T1,assets/players/pele/form-1.png,missing,Pelé
+player,42,pele,form2,T1,assets/players/pele/form-2.png,missing,Pelé
+player,42,pele,form3,T1,assets/players/pele/form-3.png,missing,Pelé
+player,42,pele,album,T1,assets/players/pele/album.svg,present,Pelé
+player,42,pele,battle,T1,assets/players/pele/battle.svg,present,Pelé
+player,42,pele,squad,T1,assets/players/pele/squad.svg,present,Pelé
+player,43,diego-maradona,portrait,T1,assets/players/diego-maradona/portrait.svg,present,Diego Maradona
+player,43,diego-maradona,form1,T1,assets/players/diego-maradona/form-1.png,missing,Diego Maradona
+player,43,diego-maradona,form2,T1,assets/players/diego-maradona/form-2.png,missing,Diego Maradona
+player,43,diego-maradona,form3,T1,assets/players/diego-maradona/form-3.png,missing,Diego Maradona
+player,43,diego-maradona,album,T1,assets/players/diego-maradona/album.svg,present,Diego Maradona
+player,43,diego-maradona,battle,T1,assets/players/diego-maradona/battle.svg,present,Diego Maradona
+player,43,diego-maradona,squad,T1,assets/players/diego-maradona/squad.svg,present,Diego Maradona
+player,44,zinedine-zidane,portrait,T1,assets/players/zinedine-zidane/portrait.svg,present,Zinedine Zidane
+player,44,zinedine-zidane,form1,T1,assets/players/zinedine-zidane/form-1.png,missing,Zinedine Zidane
+player,44,zinedine-zidane,form2,T1,assets/players/zinedine-zidane/form-2.png,missing,Zinedine Zidane
+player,44,zinedine-zidane,form3,T1,assets/players/zinedine-zidane/form-3.png,missing,Zinedine Zidane
+player,44,zinedine-zidane,album,T1,assets/players/zinedine-zidane/album.svg,present,Zinedine Zidane
+player,44,zinedine-zidane,battle,T1,assets/players/zinedine-zidane/battle.svg,present,Zinedine Zidane
+player,44,zinedine-zidane,squad,T1,assets/players/zinedine-zidane/squad.svg,present,Zinedine Zidane
+player,45,angel-di-maria,portrait,T1,assets/players/angel-di-maria/portrait.svg,present,Ángel Di María
+player,45,angel-di-maria,form1,T1,assets/players/angel-di-maria/form-1.png,missing,Ángel Di María
+player,45,angel-di-maria,form2,T1,assets/players/angel-di-maria/form-2.png,missing,Ángel Di María
+player,45,angel-di-maria,form3,T1,assets/players/angel-di-maria/form-3.png,missing,Ángel Di María
+player,45,angel-di-maria,album,T1,assets/players/angel-di-maria/album.svg,present,Ángel Di María
+player,45,angel-di-maria,battle,T1,assets/players/angel-di-maria/battle.svg,present,Ángel Di María
+player,45,angel-di-maria,squad,T1,assets/players/angel-di-maria/squad.svg,present,Ángel Di María
+player,46,ronaldo-nazario,portrait,T1,assets/players/ronaldo-nazario/portrait.svg,present,Ronaldo Nazário
+player,46,ronaldo-nazario,form1,T1,assets/players/ronaldo-nazario/form-1.png,missing,Ronaldo Nazário
+player,46,ronaldo-nazario,form2,T1,assets/players/ronaldo-nazario/form-2.png,missing,Ronaldo Nazário
+player,46,ronaldo-nazario,form3,T1,assets/players/ronaldo-nazario/form-3.png,missing,Ronaldo Nazário
+player,46,ronaldo-nazario,album,T1,assets/players/ronaldo-nazario/album.svg,present,Ronaldo Nazário
+player,46,ronaldo-nazario,battle,T1,assets/players/ronaldo-nazario/battle.svg,present,Ronaldo Nazário
+player,46,ronaldo-nazario,squad,T1,assets/players/ronaldo-nazario/squad.svg,present,Ronaldo Nazário
+player,47,ronaldinho,portrait,T1,assets/players/ronaldinho/portrait.svg,present,Ronaldinho
+player,47,ronaldinho,form1,T1,assets/players/ronaldinho/form-1.png,missing,Ronaldinho
+player,47,ronaldinho,form2,T1,assets/players/ronaldinho/form-2.png,missing,Ronaldinho
+player,47,ronaldinho,form3,T1,assets/players/ronaldinho/form-3.png,missing,Ronaldinho
+player,47,ronaldinho,album,T1,assets/players/ronaldinho/album.svg,present,Ronaldinho
+player,47,ronaldinho,battle,T1,assets/players/ronaldinho/battle.svg,present,Ronaldinho
+player,47,ronaldinho,squad,T1,assets/players/ronaldinho/squad.svg,present,Ronaldinho
+player,48,emiliano-martinez,portrait,T1,assets/players/emiliano-martinez/portrait.svg,present,Emiliano Martínez
+player,48,emiliano-martinez,form1,T1,assets/players/emiliano-martinez/form-1.png,missing,Emiliano Martínez
+player,48,emiliano-martinez,form2,T1,assets/players/emiliano-martinez/form-2.png,missing,Emiliano Martínez
+player,48,emiliano-martinez,form3,T1,assets/players/emiliano-martinez/form-3.png,missing,Emiliano Martínez
+player,48,emiliano-martinez,album,T1,assets/players/emiliano-martinez/album.svg,present,Emiliano Martínez
+player,48,emiliano-martinez,battle,T1,assets/players/emiliano-martinez/battle.svg,present,Emiliano Martínez
+player,48,emiliano-martinez,squad,T1,assets/players/emiliano-martinez/squad.svg,present,Emiliano Martínez
+player,49,carlos-alberto,portrait,T1,assets/players/carlos-alberto/portrait.svg,present,Carlos Alberto
+player,49,carlos-alberto,form1,T1,assets/players/carlos-alberto/form-1.png,missing,Carlos Alberto
+player,49,carlos-alberto,form2,T1,assets/players/carlos-alberto/form-2.png,missing,Carlos Alberto
+player,49,carlos-alberto,form3,T1,assets/players/carlos-alberto/form-3.png,missing,Carlos Alberto
+player,49,carlos-alberto,album,T1,assets/players/carlos-alberto/album.svg,present,Carlos Alberto
+player,49,carlos-alberto,battle,T1,assets/players/carlos-alberto/battle.svg,present,Carlos Alberto
+player,49,carlos-alberto,squad,T1,assets/players/carlos-alberto/squad.svg,present,Carlos Alberto
+player,50,cristiano-ronaldo,portrait,T1,assets/players/cristiano-ronaldo/portrait.svg,present,Cristiano Ronaldo
+player,50,cristiano-ronaldo,form1,T1,assets/players/cristiano-ronaldo/form-1.png,missing,Cristiano Ronaldo
+player,50,cristiano-ronaldo,form2,T1,assets/players/cristiano-ronaldo/form-2.png,missing,Cristiano Ronaldo
+player,50,cristiano-ronaldo,form3,T1,assets/players/cristiano-ronaldo/form-3.png,missing,Cristiano Ronaldo
+player,50,cristiano-ronaldo,album,T1,assets/players/cristiano-ronaldo/album.svg,present,Cristiano Ronaldo
+player,50,cristiano-ronaldo,battle,T1,assets/players/cristiano-ronaldo/battle.svg,present,Cristiano Ronaldo
+player,50,cristiano-ronaldo,squad,T1,assets/players/cristiano-ronaldo/squad.svg,present,Cristiano Ronaldo
+node,start,Arrival,icon,T1,assets/nodes/arrival.svg,present,KO
+node,catch,Scout Report,icon,T1,assets/nodes/scout-report.svg,present,SR
+node,battle,Friendly Match,icon,T1,assets/nodes/friendly-match.svg,present,⚽
+node,trainer,Rival National Team,icon,T1,assets/nodes/rival-national-team.svg,present,RN
+node,silver,Rival National Team,icon,T1,assets/nodes/rival-national-team.svg,present,RN
+node,pokecenter,Recovery Center,icon,T1,assets/nodes/recovery-center.svg,present,+
+node,item,Gear Crate,icon,T1,assets/nodes/gear-crate.svg,present,GE
+node,move_tutor,Specialist Coach,icon,T1,assets/nodes/specialist-coach.svg,present,SC
+node,question,Tournament Event,icon,T1,assets/nodes/mystery-event.svg,present,EV
+node,boss,Host City Challenge,icon,T1,assets/nodes/host-city-challenge.svg,present,HC
+node,legendary,Legend Scouting,icon,T1,assets/nodes/legend-scouting.svg,present,LG
+node,trade,Transfer Market,icon,T1,assets/nodes/transfer-market.svg,present,TM
+node,final_locked,Final Challenge Locked,icon,T1,assets/nodes/final-challenge-locked.svg,present,🔒
+node,rest_site,Rest Site,icon,T1,assets/nodes/rest-site.svg,present,RS
+ui,titleLogo,titleLogo,asset,T1,assets/ui/logo.svg,present,
+ui,collectionButton,collectionButton,asset,T1,assets/ui/album-icon.svg,present,
+ui,settlement,settlement,asset,T1,assets/ui/settlement-trophy.svg,present,
+ui,worldCupTrophy,worldCupTrophy,asset,T1,assets/ui/world-cup-trophy.svg,present,
+ui,trophyRoadMilestone,trophyRoadMilestone,asset,T1,assets/ui/trophy-road-milestone.svg,present,
+ui,emptyState,emptyState,asset,T1,assets/ui/empty-squad.svg,present,
+ui,album.slotUnknown,album.slotUnknown,asset,T1,assets/ui/album/slot-unknown.svg,present,
+ui,album.slotScouted,album.slotScouted,asset,T1,assets/ui/album/slot-scouted.svg,present,
+ui,album.slotSigned,album.slotSigned,asset,T1,assets/ui/album/slot-signed.svg,present,
+ui,album.frameMarquee,album.frameMarquee,asset,T1,assets/ui/album/frame-marquee.svg,present,
+ui,album.frameFavorites,album.frameFavorites,asset,T1,assets/ui/album/frame-favorites.svg,present,
+ui,album.frameHostCity,album.frameHostCity,asset,T1,assets/ui/album/frame-host-city.svg,present,
+ui,buttons.primary,buttons.primary,asset,T1,assets/ui/button-primary.svg,present,
+ui,buttons.secondary,buttons.secondary,asset,T1,assets/ui/button-secondary.svg,present,
+background,ui/mapsNormalMode/map1.png,map1,image,legacy,ui/mapsNormalMode/map1.png,missing,Referenced in legacy map UI; football maps may use CSS theme
+background,ui/mapsNormalMode/map2.png,map2,image,legacy,ui/mapsNormalMode/map2.png,missing,Referenced in legacy map UI; football maps may use CSS theme
+background,ui/mapsNormalMode/map3.png,map3,image,legacy,ui/mapsNormalMode/map3.png,missing,Referenced in legacy map UI; football maps may use CSS theme
+background,ui/mapsNormalMode/map4.png,map4,image,legacy,ui/mapsNormalMode/map4.png,missing,Referenced in legacy map UI; football maps may use CSS theme
+background,ui/mapsNormalMode/map5.png,map5,image,legacy,ui/mapsNormalMode/map5.png,missing,Referenced in legacy map UI; football maps may use CSS theme
+background,ui/mapsNormalMode/map6.png,map6,image,legacy,ui/mapsNormalMode/map6.png,missing,Referenced in legacy map UI; football maps may use CSS theme
+background,ui/mapsNormalMode/map7.png,map7,image,legacy,ui/mapsNormalMode/map7.png,missing,Referenced in legacy map UI; football maps may use CSS theme
+background,ui/mapsNormalMode/map8.png,map8,image,legacy,ui/mapsNormalMode/map8.png,missing,Referenced in legacy map UI; football maps may use CSS theme
+background,ui/background.png,background,image,legacy,ui/background.png,present,Referenced in legacy map UI; football maps may use CSS theme
+background,ui/background.jpg,background,image,legacy,ui/background.jpg,present,Referenced in legacy map UI; football maps may use CSS theme
+coach,player-manager,showdown-trainer-cdn,sprite,legacy,cdn:play.pokemonshowdown.com/sprites/trainers,external,TRAINER_SVG in data.js — replace with local manager portrait

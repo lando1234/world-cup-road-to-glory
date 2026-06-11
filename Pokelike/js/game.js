@@ -254,6 +254,10 @@ async function prepareFootballBootGate() {
       throw new Error('DomainBosses.initHostCityBosses is unavailable.');
     }
     await window.DomainBosses.initHostCityBosses();
+    if (!window.DomainScout || typeof window.DomainScout.initScoutPools !== 'function') {
+      throw new Error('DomainScout.initScoutPools is unavailable.');
+    }
+    await window.DomainScout.initScoutPools();
     setCampaignControlsDisabled(false, '');
     return true;
   } catch (error) {
@@ -1097,9 +1101,13 @@ function getLevelForNode(node) {
   return Math.min(maxL, Math.max(minL, base + Math.floor(rng() * spread)));
 }
 
-function buildFootballNpcTeam(mapIndex, teamSize, level, moveTier, node) {
+async function buildFootballNpcTeam(mapIndex, teamSize, level, moveTier, node) {
+  await window.DomainScout.initScoutPools();
   const report = window.DomainScout.buildSliceReport(mapIndex, state, { node });
   const pool = [...report.profileIds];
+  if (pool.length === 0) {
+    throw new Error(`No scoutable profiles available for map ${mapIndex}.`);
+  }
   const profileIds = [];
   for (let i = 0; i < teamSize; i += 1) {
     profileIds.push(pool[i % pool.length]);
@@ -1115,11 +1123,11 @@ async function doBattleNode(node) {
     const moveTier = getMoveТierForMap(state.currentMap);
     let enemy;
     try {
-      const team = buildFootballNpcTeam(state.currentMap, 1, level, moveTier, node);
+      const team = await buildFootballNpcTeam(state.currentMap, 1, level, moveTier, node);
       enemy = team[0];
     } catch (error) {
       console.error('Football friendly match failed to build opponent:', error);
-      advanceFromNode(state.map, node.id);
+      showMapNotification('Friendly match could not start. Refresh and try again.');
       showMapScreen();
       return;
     }
@@ -2425,8 +2433,13 @@ function openUsableItemModal(item, bagIdx, afterUse = null) {
 
       } else if (item.id === 'tm_normal') {
         pokemon.moveTier = Math.min(2, (pokemon.moveTier ?? 1) + 1);
-        const newMove = getBestMove(pokemon.types || ['Normal'], pokemon.baseStats, pokemon.speciesId, pokemon.moveTier, pokemon.heldItem);
-        showMapNotification(`${pokemon.nickname || pokemon.name} learned ${newMove.name}!`);
+        if (isFootballModeEnabled() && typeof getFootballSkillDisplayName === 'function') {
+          const skillName = getFootballSkillDisplayName(pokemon, pokemon.moveTier);
+          showMapNotification(`${pokemon.nickname || pokemon.name} upgraded to ${skillName}!`);
+        } else {
+          const newMove = getBestMove(pokemon.types || ['Normal'], pokemon.baseStats, pokemon.speciesId, pokemon.moveTier, pokemon.heldItem);
+          showMapNotification(`${pokemon.nickname || pokemon.name} learned ${newMove.name}!`);
+        }
         renderItemBadges(state.items);
         renderTeamBar(state.team);
 
@@ -2624,10 +2637,10 @@ async function doTrainerNode(node) {
   if (isFootballModeEnabled()) {
     let enemyTeam;
     try {
-      enemyTeam = buildFootballNpcTeam(state.currentMap, teamSize, level, moveTier, node);
+      enemyTeam = await buildFootballNpcTeam(state.currentMap, teamSize, level, moveTier, node);
     } catch (error) {
       console.error('Football rival national team failed to build opponent:', error);
-      advanceFromNode(state.map, node.id);
+      showMapNotification('Rival National Team could not start. Refresh and try again.');
       showMapScreen();
       return;
     }
@@ -2755,10 +2768,33 @@ function doMoveTutorNode(node) {
   const modal = document.createElement('div');
   modal.id = 'item-equip-modal';
   modal.className = 'item-equip-overlay';
+  const footballCoach = isFootballModeEnabled();
+  const coachCopy = footballCoach && window.GAME_THEME?.specialistCoach
+    ? window.GAME_THEME.specialistCoach
+    : null;
 
   const rows = state.team.map((p, i) => {
     const tier = p.moveTier ?? 1;
     const maxed = tier >= 2;
+    if (footballCoach && typeof getFootballSkillDisplayName === 'function') {
+      const currentSkill = getFootballSkillDisplayName(p, tier);
+      const nextSkill = !maxed ? getFootballSkillDisplayName(p, tier + 1) : null;
+      const tierLabel = typeof getFootballSkillTierLabel === 'function'
+        ? getFootballSkillTierLabel(tier)
+        : `Skill ${tier + 1}`;
+      return `<div class="equip-pokemon-row" style="${maxed ? 'opacity:0.45;' : ''}">
+        <img src="${p.spriteUrl}" class="equip-poke-sprite" onerror="this.style.display='none'">
+        <div class="equip-poke-info">
+          <div class="equip-poke-name">${p.nickname || p.name}</div>
+          <div class="equip-poke-lv">Form ${p.level} &bull; ${currentSkill} (${tierLabel})</div>
+        </div>
+        <div class="equip-btn-group">
+          ${maxed
+            ? `<span style="font-size:10px;color:#888;">${coachCopy?.mastered || 'Skill III — mastered'}</span>`
+            : `<button class="equip-btn" data-tutor="${i}">→ ${nextSkill}</button>`}
+        </div>
+      </div>`;
+    }
     const currentMove = getBestMove(p.types || ['Normal'], p.baseStats, p.speciesId, tier, p.heldItem);
     const nextMove = !maxed ? getBestMove(p.types || ['Normal'], p.baseStats, p.speciesId, tier + 1, p.heldItem) : null;
     const tierLabel = ['Tier 1', 'Tier 2', 'Mastered'][tier];
@@ -2779,14 +2815,14 @@ function doMoveTutorNode(node) {
   modal.innerHTML = `
     <div class="item-equip-box">
       <div class="equip-item-header">
-        <span class="equip-item-icon" style="font-size:28px;">♪</span>
+        <span class="equip-item-icon" style="font-size:28px;">${footballCoach ? '⚽' : '♪'}</span>
         <div>
-          <div class="equip-item-name">Move Tutor</div>
-          <div class="equip-item-desc">Teach one Pokémon a more powerful move.</div>
+          <div class="equip-item-name">${coachCopy?.title || 'Move Tutor'}</div>
+          <div class="equip-item-desc">${coachCopy?.desc || 'Teach one Pokémon a more powerful move.'}</div>
         </div>
       </div>
       <div class="equip-pokemon-list">${rows}</div>
-      <button id="btn-skip-tutor" class="btn-secondary" style="width:100%;margin-top:8px;">Skip</button>
+      <button id="btn-skip-tutor" class="btn-secondary" style="width:100%;margin-top:8px;">${coachCopy?.skip || 'Skip'}</button>
     </div>`;
 
   document.body.appendChild(modal);
@@ -2802,11 +2838,17 @@ function doMoveTutorNode(node) {
       const idx = parseInt(btn.dataset.tutor);
       const pokemon = state.team[idx];
       pokemon.moveTier = Math.min(2, (pokemon.moveTier ?? 1) + 1);
-      const newMove = getBestMove(pokemon.types || ['Normal'], pokemon.baseStats, pokemon.speciesId, pokemon.moveTier, pokemon.heldItem);
       modal.remove();
       advanceFromNode(state.map, node.id);
       showMapScreen();
-      showMapNotification(`${pokemon.nickname || pokemon.name} learned ${newMove.name}!`);
+      if (footballCoach && typeof getFootballSkillDisplayName === 'function') {
+        const skillName = getFootballSkillDisplayName(pokemon, pokemon.moveTier);
+        const verb = coachCopy?.learned || 'upgraded to';
+        showMapNotification(`${pokemon.nickname || pokemon.name} ${verb} ${skillName}!`);
+      } else {
+        const newMove = getBestMove(pokemon.types || ['Normal'], pokemon.baseStats, pokemon.speciesId, pokemon.moveTier, pokemon.heldItem);
+        showMapNotification(`${pokemon.nickname || pokemon.name} learned ${newMove.name}!`);
+      }
     });
   });
 

@@ -52,6 +52,7 @@ const GAME_THEME = Object.freeze({
   battle: Object.freeze({
     faint: "is exhausted",
     injured: "is injured",
+    skillVerb: "unleashed",
     win: "Victory",
     loss: "Defeat",
     scoutingTitle: "Transfer Target Found",
@@ -66,7 +67,16 @@ const GAME_THEME = Object.freeze({
     recoveryCenter: "Recovery Center",
     gearCrate: "Gear Crate",
     rivalNationalTeam: "Rival National Team",
-    hostCityChallenge: "Host City Challenge"
+    hostCityChallenge: "Host City Challenge",
+    specialistCoach: "Specialist Coach"
+  }),
+  specialistCoach: Object.freeze({
+    title: "Specialist Coach",
+    desc: "Upgrade one player's signature skill tier.",
+    skip: "Skip",
+    mastered: "Skill III — mastered",
+    upgrade: "Upgrade skill",
+    learned: "upgraded to"
   })
 });
 
@@ -249,11 +259,74 @@ function getMoveТierForMap(mapIndex) {
   return mapIndex <= 2 ? 0 : 1;
 }
 
-function getBestMove(types, baseStats, speciesId, moveTier = 1, heldItem = null) {
-  if (speciesId === 129) return { name: 'Splash',   power: 0, type: 'Normal', isSpecial: false, noDamage: true };
-  if (speciesId === 63)  return { name: 'Teleport', power: 0, type: 'Normal', isSpecial: false, noDamage: true };
-  const isSpecial = (baseStats?.special || 0) >= (baseStats?.atk || 0);
+function isFootballCombatEntity(entity) {
+  if (window.FEATURES?.footballMode !== true || !entity) return false;
+  if (entity.profileId != null) return true;
+  if (typeof window.DomainProfiles?.isFootballProfileId === 'function') {
+    try {
+      return window.DomainProfiles.isFootballProfileId(entity.speciesId);
+    } catch (_) {
+      return false;
+    }
+  }
+  return Number.isInteger(entity.speciesId) && entity.speciesId >= 1 && entity.speciesId <= 50;
+}
+
+function getFootballSkillDisplayName(entity, tier) {
+  const normalizedTier = Math.max(0, Math.min(2, tier ?? entity?.moveTier ?? 1));
+  let styleId = null;
+  const profileId = entity?.profileId ?? entity?.speciesId;
+  if (profileId != null && typeof window.DomainProfiles?.getProfile === 'function') {
+    const profile = window.DomainProfiles.getProfile(profileId);
+    styleId = profile?.primaryStyle || null;
+  }
+  if (!styleId && entity?.types?.length) {
+    styleId = styleIdFromType(entity.types[0]);
+  }
+  const styleName = window.STYLE_LABELS?.[styleId] || 'Signature';
+  const roman = ['I', 'II', 'III'][normalizedTier] || 'I';
+  return `${styleName} ${roman}`;
+}
+
+function applyFootballMoveLabel(move, types, speciesId, moveTier) {
+  if (!move || !isFootballMode() || !isFootballProfileIdRange(speciesId)) return move;
   const tier = Math.max(0, Math.min(2, moveTier ?? 1));
+  return {
+    ...move,
+    name: getFootballSkillDisplayName({ profileId: speciesId, speciesId, types, moveTier: tier }, tier)
+  };
+}
+
+function getFootballSkillTierLabel(tier) {
+  return ['Skill I', 'Skill II', 'Skill III'][Math.max(0, Math.min(2, tier ?? 0))] || 'Skill I';
+}
+
+function getCombatMoveForEntity(entity) {
+  const combatId = entity.profileId ?? entity.speciesId;
+  return getBestMove(
+    entity.types || ['Normal'],
+    entity.baseStats,
+    combatId,
+    entity.moveTier ?? 1,
+    entity.heldItem
+  );
+}
+
+function getBestMove(types, baseStats, speciesId, moveTier = 1, heldItem = null) {
+  const tier = Math.max(0, Math.min(2, moveTier ?? 1));
+  if (speciesId === 129) {
+    return applyFootballMoveLabel(
+      { name: 'Splash', power: 0, type: 'Normal', isSpecial: false, noDamage: true },
+      types, speciesId, tier
+    );
+  }
+  if (speciesId === 63) {
+    return applyFootballMoveLabel(
+      { name: 'Teleport', power: 0, type: 'Normal', isSpecial: false, noDamage: true },
+      types, speciesId, tier
+    );
+  }
+  const isSpecial = (baseStats?.special || 0) >= (baseStats?.atk || 0);
   // Resolve the tier-appropriate move for a capitalized type, or null if that
   // type has no move pool.
   const moveForType = (cap) => {
@@ -285,10 +358,11 @@ function getBestMove(types, baseStats, speciesId, moveTier = 1, heldItem = null)
   if (heldItem?.id === 'metronome' && types && types.length >= 2) {
     const otherType = types.map(capitalize).find(cap => cap !== defaultType);
     const move = otherType ? moveForType(otherType) : null;
-    if (move) return move;
+    if (move) return applyFootballMoveLabel(move, types, speciesId, tier);
   }
 
-  return moveForType(defaultType) || { name: 'Tackle', power: 40, type: 'Normal', isSpecial: false };
+  const resolved = moveForType(defaultType) || { name: 'Tackle', power: 40, type: 'Normal', isSpecial: false };
+  return applyFootballMoveLabel(resolved, types, speciesId, tier);
 }
 
 // Gym leader teams (hardcoded)

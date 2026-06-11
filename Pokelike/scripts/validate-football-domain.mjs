@@ -162,6 +162,8 @@ await runTest("game boot migrates save before run reads", () => {
   const gameSource = readText("js/game.js");
   assert(gameSource.includes("migrateAccountSaveOnBoot();"), "initGame should call migrateAccountSaveOnBoot");
   assert(gameSource.includes("DomainAlbum.initAlbumLayout"), "football boot gate should initialize album layout");
+  assert(gameSource.includes("DomainScout.initScoutPools"), "football boot gate should initialize scout pools");
+  assert(gameSource.includes("async function buildFootballNpcTeam"), "buildFootballNpcTeam should be async for scout pool init");
 
   const initGameIndex = gameSource.indexOf("async function initGame()");
   const migrationIndex = gameSource.indexOf("migrateAccountSaveOnBoot();", initGameIndex);
@@ -170,6 +172,13 @@ await runTest("game boot migrates save before run reads", () => {
   assert(migrationIndex !== -1, "initGame should call migrateAccountSaveOnBoot");
   assert(continueRunReadIndex !== -1, "initGame should read poke_current_run for Continue Run");
   assert(migrationIndex < continueRunReadIndex, "save migration must run before initGame reads poke_current_run");
+});
+
+await runTest("getBestMove relabels football profile skills", () => {
+  const dataSource = readText("js/data.js");
+  assert(dataSource.includes("applyFootballMoveLabel"), "data.js should relabel combat moves for football profiles");
+  assert(!dataSource.includes("getProfileOrNull"), "football skill labels should use DomainProfiles.getProfile");
+  assert(dataSource.includes("skillVerb"), "GAME_THEME battle copy should use football skill verb");
 });
 
 await runTest("new and loaded runs carry run identity ledger shape", () => {
