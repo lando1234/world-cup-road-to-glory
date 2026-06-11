@@ -2853,6 +2853,7 @@ function runBattleScreen(enemyTeam, isBoss, onWin, onLose, enemyName = null, ene
 
 function showBadgeScreen(leader) {
   showScreen('badge-screen');
+  const badgeScreen = document.getElementById('badge-screen');
   const badgeMsg = document.getElementById('badge-msg');
   const badgeLeader = document.getElementById('badge-leader');
   const badgeCount = document.getElementById('badge-count-display');
@@ -2860,6 +2861,7 @@ function showBadgeScreen(leader) {
   const stampFlag = document.getElementById('badge-stamp-flag');
 
   if (isFootballModeEnabled()) {
+    badgeScreen?.classList.add('city-stamp-screen-active');
     const target = getFootballSliceStampTarget();
     const flag = flagEmojiFromCountryCode(leader.nation);
     if (badgeMsg) badgeMsg.textContent = `${leader.badge} earned`;
@@ -2877,6 +2879,7 @@ function showBadgeScreen(leader) {
       stampFlag.style.display = 'flex';
     }
   } else {
+    badgeScreen?.classList.remove('city-stamp-screen-active');
     if (badgeMsg) badgeMsg.textContent = `You earned the ${leader.badge}!`;
     if (badgeLeader) badgeLeader.textContent = '';
     if (badgeCount) badgeCount.textContent = `Badges: ${state.badges}/8`;

@@ -224,6 +224,21 @@ runTest("P2-013 Squad Registration uses six-slot football layout", () => {
   assert(swapBlock.includes("DomainRecruit.offerContract(newPoke.profileId, state, { forceAdd: true })"), "replacement should still force-add through DomainRecruit");
 });
 
+runTest("P2-014 City Stamp ceremony exposes football-native selectors", () => {
+  const badgeBlock = extractBetween(gameSource, "function showBadgeScreen", "function showSliceCompleteScreen");
+
+  assert(indexSource.includes("CITY STAMP / BADGE COMPATIBILITY SCREEN"), "City Stamp ceremony should document the compatibility surface");
+  assert(indexSource.includes("city-stamp-screen"), "City Stamp ceremony should have a football-native screen class");
+  assert(indexSource.includes("city-stamp-emblem"), "City Stamp ceremony should have a football-native emblem class");
+  assert(indexSource.includes("city-stamp-message"), "City Stamp ceremony should have a football-native message class");
+  assert(indexSource.includes("city-stamp-progress"), "City Stamp ceremony should have a football-native progress class");
+  assert(styleSource.includes(".city-stamp-screen"), "CSS should style City Stamp screen aliases");
+  assert(styleSource.includes(".city-stamp-emblem"), "CSS should style City Stamp emblem aliases");
+  assert(badgeBlock.includes("city-stamp-screen-active"), "runtime should activate City Stamp presentation in football mode");
+  assert(badgeBlock.includes("Stamps:"), "runtime should keep football stamp progress copy");
+  assert(badgeBlock.includes("badgeImg.style.display = 'none'"), "runtime should still hide legacy badge sprites in football mode");
+});
+
 const failed = results.filter(result => result.status === "FAIL");
 for (const result of results) {
   if (result.status === "PASS") {

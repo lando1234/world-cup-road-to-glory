@@ -1434,10 +1434,23 @@ h1, h2, .pixel-font {
 @keyframes shimmer { from { text-shadow: 0 0 10px gold; } to { text-shadow: 0 0 30px gold, 0 0 60px orange; } }
 #shiny-content { display: flex; flex-direction: column; align-items: center; gap: 16px; }
 
-/* ---- Badge Screen ---- */
-#badge-screen { align-items: center; justify-content: center; gap: 20px; text-align: center; }
-.badge-icon { width: 96px; height: 96px; image-rendering: pixelated; animation: bounce 0.5s ease-in-out infinite alternate; }
-.badge-stamp-flag {
+/* ---- City Stamp / Badge compatibility screen ---- */
+#badge-screen,
+.city-stamp-screen {
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  text-align: center;
+}
+.badge-icon,
+.city-stamp-legacy-badge-icon {
+  width: 96px;
+  height: 96px;
+  image-rendering: pixelated;
+  animation: bounce 0.5s ease-in-out infinite alternate;
+}
+.badge-stamp-flag,
+.city-stamp-emblem {
   width: 96px;
   height: 96px;
   border: 2px solid var(--gold);
@@ -1452,9 +1465,22 @@ h1, h2, .pixel-font {
   animation: bounce 0.5s ease-in-out infinite alternate;
 }
 @keyframes bounce { from { transform: scale(1); } to { transform: scale(1.1); } }
-#badge-msg { font-family: 'Press Start 2P', monospace; font-size: clamp(10px,2.5vw,14px); color: var(--gold); }
-#badge-leader { font-size: 16px; color: var(--text); }
-#badge-count-display { color: var(--text-dim); font-size: 14px; }
+#badge-msg,
+.city-stamp-message {
+  font-family: 'Press Start 2P', monospace;
+  font-size: clamp(10px,2.5vw,14px);
+  color: var(--gold);
+}
+#badge-leader,
+.city-stamp-host {
+  font-size: 16px;
+  color: var(--text);
+}
+#badge-count-display,
+.city-stamp-progress {
+  color: var(--text-dim);
+  font-size: 14px;
+}
 
 /* ---- Item Equip Modal ---- */
 .item-equip-overlay {

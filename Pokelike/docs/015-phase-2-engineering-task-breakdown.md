@@ -6,7 +6,7 @@
 **Mode:** One task, one validation pass, one commit  
 **Branch:** `main` unless explicitly changed  
 **Screenshots:** Not automated by default
-**Last sync:** `main` @ this commit — Squad Registration six-slot layout (P2-013)
+**Last sync:** `main` @ this commit — City Stamp selector cleanup (P2-014)
 
 ---
 
@@ -14,9 +14,9 @@
 
 | Metric | Count |
 |--------|------:|
-| **Done** | 14 |
+| **Done** | 15 |
 | **Partial** | 0 |
-| **Not started** | 16 |
+| **Not started** | 15 |
 | **Total tickets** | 30 |
 
 **Legend:** ✅ Done · 🟡 Partial · ⬜ Not started
@@ -281,8 +281,8 @@ Closeout requires a validation report, manual QA result, no-cloud assertion, no-
 | P2-010 | ✅ | E | P2-003 | Batch 4/5 | `4571bab` |
 | P2-011 | ✅ | D | P2-005, P2-007 | Batch 4 | `209e457` |
 | P2-012 | ✅ | D | P2-011 | Batch 4 | `a5b4bd6` |
-| P2-013 | ✅ | D | P2-012 | Batch 4 | this commit |
-| P2-014 | ⬜ | E | P2-010 | Batch 5 | |
+| P2-013 | ✅ | D | P2-012 | Batch 4 | `739e052` |
+| P2-014 | ✅ | E | P2-010 | Batch 5 | this commit |
 | P2-015 | ⬜ | E | P2-014 | Batch 5 | |
 | P2-016 | ⬜ | F | P2-009 | Batch 6 | |
 | P2-017 | ⬜ | F | P2-015, P2-016 | Batch 6 | |
