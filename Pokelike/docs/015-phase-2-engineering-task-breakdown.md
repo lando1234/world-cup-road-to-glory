@@ -36,7 +36,8 @@ The default task loop is:
 
 5. Docs update
    - Update this ledger.
-   - Update assumptions/frictions docs when new assumptions, visual debt, or product risks appear.
+   - Update `020-phase-2-assumptions-tradeoffs-assets-report.html` when new assumptions, tradeoffs, asset gaps, product risks, or owner notes appear.
+   - Update `013-phase-2-visual-frictions.html` when new visual debt, sprite gaps, image issues, or UX friction appears.
 
 6. Commit
    - Stage only files touched by the task.
@@ -70,7 +71,7 @@ Use lanes to parallelize without conflicts. Two tasks can run at the same time o
 
 | Lane | Ownership | Typical files | Tasks |
 |------|-----------|---------------|-------|
-| A — Validation & Process | Harnesses, docs, smoke, task ledgers | `package.json`, `scripts/*`, `docs/015*`, `docs/017*`, `docs/019*` | P2-001, P2-002, P2-006, P2-007, P2-022, P2-029, P2-030 |
+| A — Validation & Process | Harnesses, docs, smoke, task ledgers | `package.json`, `scripts/*`, `docs/015*`, `docs/017*`, `docs/019*`, `docs/020*` | P2-001, P2-002, P2-006, P2-007, P2-022, P2-029, P2-030 |
 | B — Bridge & Domain Cleanup | Album facades, bridge inventory, domain contracts | `js/domain/*`, `js/data.js`, `js/game.js`, validation scripts | P2-003, P2-004, P2-005, P2-019, P2-020 |
 | C — Asset & Release Safety | Portrait strategy, local manifests, no-live-API checks | `data/football/*`, `js/domain/profiles.js`, `docs/018*`, validation scripts | P2-008, P2-009, P2-021 |
 | D — Recruitment UX | Scout, Contract Offer, Squad Registration | `index.html`, `js/ui.js`, `style.css` | P2-011, P2-012, P2-013 |
@@ -347,6 +348,7 @@ Start with **P2-001**:
 
 - Create the formal Phase 2 task ledger sections in this file.
 - Add docs validation for P2 task IDs and execution-loop fields.
+- Keep `020-phase-2-assumptions-tradeoffs-assets-report.html` current as the Phase 2 assumptions/tradeoffs/assets companion.
 - Commit it alone.
 
 After P2-001, run Batch 1 with controlled parallelism:
