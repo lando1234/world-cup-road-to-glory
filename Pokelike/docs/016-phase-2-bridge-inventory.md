@@ -98,3 +98,22 @@ Stop a bridge-retirement task if:
 ---
 
 *End of Phase 2 Bridge Inventory.*
+
+
+---
+
+## 6. Phase 3 Policy (8-Host-City Expansion)
+
+| Bridge | Phase 3 stance | Notes |
+|--------|----------------|-------|
+| `speciesId` as `profileId` | **Keep** | Required until typed save v4 |
+| `poke_dex` migration key | **Keep** | Album v3 remains authoritative for football |
+| `badge-screen` stamp ceremony IDs | **Keep** | Eight-stamp path reuses ceremony shell |
+| `catch-screen` / `swap-screen` IDs | **Keep** | Scout Report + Squad Registration unchanged |
+| `GYM_LEADERS` legacy bosses | **Keep** | Football uses `host_city_bosses.json` only |
+| Cloud save module | **Keep disabled** | `FEATURES.cloudSave === false` through Phase 3 |
+| TheSportsDB portraits | **Keep disabled** | `portrait_manifest.json` + T0 jersey fallbacks |
+| `maxMapIndex` gate | **Enable only in P3-040** | Stays `2` for content/asset waves |
+| Knockout map 8 | **Blocked** | `knockoutEnabled: false` until Phase 4 |
+
+**Validation:** `npm run validate` + Phase 3 QA harness assert the rows above after P3-038.
