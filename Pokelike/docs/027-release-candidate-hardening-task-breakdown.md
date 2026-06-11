@@ -1,7 +1,7 @@
 # SPEC 014B — Release Candidate Hardening Task Breakdown
 
-**Status:** Wave 0–1 complete — Waves 3–6 in progress  
-**Last sync:** 2026-06-11 — RC-051/060 node+stamp state assets documented  
+**Status:** SPEC 014 complete — RC-072 sign-off GO  
+**Last sync:** 2026-06-11 — RC-070/071/072 validation + sign-off  
 **Authority:** [026 — Identity Audit](./026-release-candidate-identity-audit.md) · [028 — Asset Pipeline](./028-asset-pipeline-and-art-direction.md)  
 **Date:** 2026-06-10  
 **Mode:** One atomic task per commit · Playable after every commit  
@@ -13,9 +13,9 @@
 
 | Metric | Count |
 |--------|------:|
-| **Done** | 32 |
-| **In progress** | 2 |
-| **Not started** | 20 |
+| **Done** | 36 |
+| **In progress** | 0 |
+| **Not started** | 16 |
 | **Total** | 52 |
 
 **Legend:** ✅ Done · 🟡 Partial · ⬜ Not started
