@@ -9,6 +9,7 @@ const DOMAIN_SAVE_SCHEMA_VERSION = 3;
 const LEGACY_DEX_STORAGE_KEY = "poke_dex";
 const SAVE_ALBUM_STORAGE_KEY = "game_album";
 const SAVE_VERSION_STORAGE_KEY = "saveVersion";
+const LAST_SETTLED_RUN_ID_STORAGE_KEY = "football_last_settled_run_id";
 
 function isPlainObject(value) {
   return value !== null && typeof value === "object" && !Array.isArray(value);
@@ -201,7 +202,10 @@ function settleRunLite(runSnapshot = {}, accountState = {}) {
 
   return Object.freeze({
     patch: Object.freeze({
-      album: Object.freeze(albumPatch)
+      album: Object.freeze(albumPatch),
+      ...(typeof runSnapshot.runId === "string" && runSnapshot.runId.trim()
+        ? { lastSettledRunId: runSnapshot.runId }
+        : {})
     }),
     summary: Object.freeze({
       stampsEarned: Number(runSnapshot.badges || 0),
@@ -221,6 +225,14 @@ function settleRunLite(runSnapshot = {}, accountState = {}) {
 function applyAccountPatch(patch = {}) {
   if (!isPlainObject(patch.album)) return false;
 
+  const incomingSettledRunId = typeof patch.lastSettledRunId === "string" && patch.lastSettledRunId.trim()
+    ? patch.lastSettledRunId
+    : "";
+  if (incomingSettledRunId && localStorage.getItem(LAST_SETTLED_RUN_ID_STORAGE_KEY) === incomingSettledRunId) {
+    console.info?.(`[DomainSave] applyAccountPatch skipped duplicate settlement for ${incomingSettledRunId}.`);
+    return false;
+  }
+
   const currentAlbum = readAlbumState();
   const mergedAlbum = { ...currentAlbum };
   let changedCount = 0;
@@ -237,12 +249,16 @@ function applyAccountPatch(patch = {}) {
   }
 
   localStorage.setItem(SAVE_ALBUM_STORAGE_KEY, JSON.stringify(mergedAlbum));
+  if (incomingSettledRunId) {
+    localStorage.setItem(LAST_SETTLED_RUN_ID_STORAGE_KEY, incomingSettledRunId);
+  }
   console.info?.(`[DomainSave] applyAccountPatch wrote ${changedCount} game_album keys.`);
   return true;
 }
 
 const DomainSave = Object.freeze({
   SAVE_SCHEMA_VERSION: DOMAIN_SAVE_SCHEMA_VERSION,
+  LAST_SETTLED_RUN_ID_STORAGE_KEY,
   migrateSaveV2toV3,
   compactLegacyDexToAlbum,
   validateAccountModel,

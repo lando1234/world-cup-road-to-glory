@@ -6,7 +6,7 @@
 **Mode:** One task, one validation pass, one commit  
 **Branch:** `main` unless explicitly changed  
 **Screenshots:** Not automated by default
-**Last sync:** `main` @ this commit — Account model shape validator (P2-019)
+**Last sync:** `main` @ this commit — Settlement dedupe guard (P2-020)
 
 ---
 
@@ -14,9 +14,9 @@
 
 | Metric | Count |
 |--------|------:|
-| **Done** | 20 |
+| **Done** | 21 |
 | **Partial** | 0 |
-| **Not started** | 10 |
+| **Not started** | 9 |
 | **Total tickets** | 30 |
 
 **Legend:** ✅ Done · 🟡 Partial · ⬜ Not started
@@ -287,8 +287,8 @@ Closeout requires a validation report, manual QA result, no-cloud assertion, no-
 | P2-016 | ✅ | F | P2-009 | Batch 6 | `a64a66a` |
 | P2-017 | ✅ | F | P2-015, P2-016 | Batch 6 | `f56ee20` |
 | P2-018 | ✅ | F | P2-017 | Batch 6 | `d784a91` |
-| P2-019 | ✅ | B | P2-018 | Batch 7 | this commit |
-| P2-020 | ⬜ | B | P2-019 | Batch 7 | |
+| P2-019 | ✅ | B | P2-018 | Batch 7 | `2da6bfc` |
+| P2-020 | ✅ | B | P2-019 | Batch 7 | this commit |
 | P2-021 | ✅ | C | P2-009 | Batch 3 | `14ac5cb` |
 | P2-022 | ⬜ | A | P2-006, P2-018, P2-021 | Batch 8 | |
 | P2-023 | ⬜ | Variable | P2-022 | Batch 8 conditional | |

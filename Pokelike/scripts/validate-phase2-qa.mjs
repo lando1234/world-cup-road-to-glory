@@ -327,6 +327,20 @@ runTest("P2-019 account model validator is pure and Phase 2 scoped", () => {
   assert(!cloudSaveSource.includes("game_album"), "cloud save should remain disconnected from album/account keys");
 });
 
+runTest("P2-020 settlement dedupe guard is local and run-id based", () => {
+  const settleBlock = extractBetween(saveSource, "function settleRunLite", "function applyAccountPatch");
+  const applyBlock = extractBetween(saveSource, "function applyAccountPatch", "const DomainSave");
+
+  assert(saveSource.includes("LAST_SETTLED_RUN_ID_STORAGE_KEY"), "DomainSave should define local settled-run key");
+  assert(saveSource.includes("football_last_settled_run_id"), "dedupe key should be local football-specific storage");
+  assert(settleBlock.includes("lastSettledRunId"), "settlement patch should include lastSettledRunId when runId exists");
+  assert(applyBlock.includes("skipped duplicate settlement"), "applyAccountPatch should log duplicate settlement skip");
+  assert(applyBlock.includes("return false;"), "duplicate settlement should return false");
+  assert(applyBlock.includes("localStorage.setItem(LAST_SETTLED_RUN_ID_STORAGE_KEY"), "first settlement should record settled run id locally");
+  assert(!cloudSaveSource.includes("football_last_settled_run_id"), "settlement dedupe key should not be cloud-synced in Phase 2");
+  assert(saveSource.includes("const DOMAIN_SAVE_SCHEMA_VERSION = 3"), "P2-020 must not introduce save v4 migration");
+});
+
 const failed = results.filter(result => result.status === "FAIL");
 for (const result of results) {
   if (result.status === "PASS") {

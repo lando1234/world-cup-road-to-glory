@@ -915,6 +915,30 @@ await runTest("account model validator accepts absent future keys and rejects ba
   assert(invalid.issues.length === 3, "invalid account model should report all bad optional fields");
 });
 
+await runTest("settlement dedupe guard prevents duplicate local account patch", () => {
+  const { DomainSave } = context.window;
+  context.localStorage.removeItem("game_album");
+  context.localStorage.removeItem(DomainSave.LAST_SETTLED_RUN_ID_STORAGE_KEY);
+
+  const settlement = DomainSave.settleRunLite({
+    runId: "run-dedupe-1",
+    badges: 3,
+    ledger: {
+      signedProfileIds: [14],
+      battleCount: 2,
+      scoutReportsSeen: [1]
+    }
+  }, { album: {} });
+
+  assert(settlement.patch.lastSettledRunId === "run-dedupe-1", "settlement patch should include run id for dedupe");
+  assert(DomainSave.applyAccountPatch(settlement.patch) === true, "first settlement patch should apply");
+  assert(context.localStorage.getItem(DomainSave.LAST_SETTLED_RUN_ID_STORAGE_KEY) === "run-dedupe-1", "settled run id should be recorded locally");
+
+  const albumAfterFirstApply = context.localStorage.getItem("game_album");
+  assert(DomainSave.applyAccountPatch(settlement.patch) === false, "duplicate settlement patch should be skipped");
+  assert(context.localStorage.getItem("game_album") === albumAfterFirstApply, "duplicate settlement should not mutate album");
+});
+
 await runTest("settlement modal is wired before run clear", () => {
   const gameSource = readText("js/game.js");
   const uiSource = readText("js/ui.js");
