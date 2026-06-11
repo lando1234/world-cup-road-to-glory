@@ -770,6 +770,41 @@
         "nameOk": true,
         "likenessTier": 0
       }
+    },
+    {
+      "profileId": 34,
+      "slug": "dennis-bergkamp",
+      "displayName": "Dennis Bergkamp",
+      "commonName": "Bergkamp",
+      "nation": "NED",
+      "position": "AM",
+      "primaryStyle": "ice_press",
+      "secondaryStyle": "tactical_control",
+      "baseStats": {
+        "hp": 70,
+        "atk": 78,
+        "def": 62,
+        "special": 105,
+        "spdef": 88,
+        "speed": 82
+      },
+      "rarity": "elite",
+      "portrait": "/assets/players/dennis-bergkamp.png",
+      "flavorText": "Amsterdam leg artist — first touch eliminates a defender.",
+      "flags": {
+        "isMarquee": false,
+        "isLegend": false,
+        "scoutable": true,
+        "bossExclusive": false
+      },
+      "album": {
+        "pageId": "host_city",
+        "slot": 6
+      },
+      "legal": {
+        "nameOk": true,
+        "likenessTier": 0
+      }
     }
   ]
 }
