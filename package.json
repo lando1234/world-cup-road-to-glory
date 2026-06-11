@@ -6,12 +6,13 @@
   "scripts": {
     "serve": "node Pokelike/scripts/serve-static.mjs --root Pokelike --port 4173",
     "smoke:http": "node Pokelike/scripts/smoke-http.mjs",
-    "validate": "npm run validate:domain && npm run validate:qa && npm run validate:phase2 && npm run validate:docs && npm run check:syntax",
+    "validate": "npm run validate:domain && npm run validate:qa && npm run validate:phase2 && npm run validate:phase3 && npm run validate:docs && npm run check:syntax",
     "validate:domain": "node Pokelike/scripts/validate-football-domain.mjs",
     "validate:qa": "node Pokelike/scripts/validate-phase1-qa.mjs",
     "validate:phase2": "node Pokelike/scripts/validate-phase2-qa.mjs",
+    "validate:phase3": "node Pokelike/scripts/validate-phase3-qa.mjs",
     "validate:docs": "node Pokelike/scripts/validate-docs.mjs",
-    "check:syntax": "node --check Pokelike/scripts/validate-football-domain.mjs && node --check Pokelike/scripts/validate-phase1-qa.mjs && node --check Pokelike/scripts/validate-phase2-qa.mjs && node --check Pokelike/scripts/validate-docs.mjs && node --check Pokelike/scripts/serve-static.mjs && node --check Pokelike/scripts/smoke-http.mjs && node --check Pokelike/js/domain/album.js && node --check Pokelike/js/domain/save.js && node --check Pokelike/js/domain/scout.js && node --check Pokelike/js/domain/recruit.js && node --check Pokelike/js/data.js && node --check Pokelike/js/game.js && node --check Pokelike/js/map.js && node --check Pokelike/js/ui.js && node --check Pokelike/js/cloud-save.js"
+    "check:syntax": "node --check Pokelike/scripts/validate-football-domain.mjs && node --check Pokelike/scripts/validate-phase1-qa.mjs && node --check Pokelike/scripts/validate-phase2-qa.mjs && node --check Pokelike/scripts/validate-phase3-qa.mjs && node --check Pokelike/scripts/validate-docs.mjs && node --check Pokelike/scripts/serve-static.mjs && node --check Pokelike/scripts/smoke-http.mjs && node --check Pokelike/js/domain/album.js && node --check Pokelike/js/domain/save.js && node --check Pokelike/js/domain/scout.js && node --check Pokelike/js/domain/recruit.js && node --check Pokelike/js/data.js && node --check Pokelike/js/game.js && node --check Pokelike/js/map.js && node --check Pokelike/js/ui.js && node --check Pokelike/js/cloud-save.js"
   },
   "engines": {
     "node": ">=20"
