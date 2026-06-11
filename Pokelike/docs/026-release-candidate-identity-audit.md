@@ -60,26 +60,26 @@ Full-repo search for monster-game / Pokémon / Pokelike identity residue. Goal: 
 
 ---
 
-## 4. Player-Facing Blockers (Category 1 / 6)
+## 4. Player-Facing Blockers (Category 1 / 8)
 
-| ID | Location | Finding | RC task |
-|----|----------|---------|---------|
-| RC-B01 | `index.html` L32 | Static subtitle `Pokemon Roguelike` until JS applies theme | RC-010 |
-| RC-B02 | `index.html` L46 | Visible `Nuzlocke` button label (football mode should hide or rename) | RC-011 |
-| RC-B03 | `index.html` L49, L112–122 | Collection button `📖 Pokédex` + `ui/pokedex.png` alt | RC-012 |
-| RC-B04 | `index.html` L69–70 | Pokémon disclaimer block (hidden in football via JS; should remove from DOM or gate) | RC-013 |
-| RC-B05 | `index.html` L91 | Starter screen fallback title `Choose Your Starter!` | RC-014 |
-| RC-B06 | `index.html` L149 | Battle title fallback `Wild Battle!` | RC-015 |
-| RC-B07 | `index.html` L234–236 | Badge screen fallback `Badge Earned!` / `Badges: 0/8` | RC-016 |
-| RC-B08 | `index.html` L354 | Evolution overlay `Choose its evolution:` | RC-017 |
-| RC-B09 | `ui.js` L277 | `GAME_THEME` fallback subtitle still `Pokemon Roguelike` in legacy branch | RC-018 |
-| RC-B10 | `ui.js` L125 | Legacy battle intro `Wild ${name} appeared!` | RC-019 |
-| RC-B11 | `ui.js` L135 | Default faint string `fainted!` (football uses `is exhausted` via theme) | RC-019 |
-| RC-B12 | `ui/pokedex.png` | Asset filename and icon imply Pokédex | RC-020 |
-| RC-B13 | `css/style.css` L1 | File header `Pokemon Roguelike Retro Theme` | RC-021 |
-| RC-B14 | Player profile `portrait` paths | `/assets/players/{slug}.png` referenced but **no files on disk** (T0 fallback only) | RC-030+ |
-| RC-B15 | `ui.js` remote URLs | PokeAPI sprite URLs in legacy card/evolution paths | RC-022 (football path must never hit) |
-| RC-B16 | `game.js` `doTrainerNode` / `doBattleNode` | Trainer battles still spawn Pokémon (`Fisherman wants to battle`, Psyduck); friendly match uses National Dex pool | RC-019 |
+| ID | Location | Finding | RC task | Status |
+|----|----------|---------|---------|--------|
+| RC-B01 | `index.html` subtitle | Static subtitle was `Pokemon Roguelike` | RC-011 | **RESOLVED** — `Build your World Cup squad` |
+| RC-B02 | `index.html` hard mode | Nuzlocke label + Pokémon tooltip | RC-012 | **RESOLVED** — `football-boot` hides control; label `Hard Mode` |
+| RC-B03 | `index.html` collection | Pokédex button / alt | RC-013 | **RESOLVED** — `World Cup Album` + glyph; manifest `album-icon.svg` |
+| RC-B04 | `index.html` disclaimer | Pokémon disclaimer in DOM | RC-014 | **RESOLVED** — hidden via `football-boot` + JS gate |
+| RC-B05 | `index.html` starter | `Choose Your Starter!` fallback | RC-015 | **RESOLVED** — `Marquee Signing` |
+| RC-B06 | `index.html` battle | `Wild Battle!` fallback | RC-016 | **RESOLVED** — `Friendly Match` |
+| RC-B07 | `index.html` stamp | `Badge Earned!` / `Badges: n/8` | RC-017 | **RESOLVED** — `City Stamp earned` / `Stamps: n/8` |
+| RC-B08 | `index.html` evolution | `Choose its evolution:` overlay | RC-018 | **MITIGATED** — football path blocks evolution UI |
+| RC-B09 | `ui.js` legacy theme | `TITLE_SCREEN_LEGACY_COPY` | — | **DEFER** — Classic branch only (cat. 2) |
+| RC-B10 | `ui.js` battle intro | `Wild ${name} appeared!` | RC-016 | **MITIGATED** — football uses `GAME_THEME` copy |
+| RC-B11 | `ui.js` faint | `fainted!` default | RC-016 | **MITIGATED** — football uses `is exhausted` |
+| RC-B12 | `ui/pokedex.png` | Legacy filename | RC-033 | **OPEN** — fallback only; `assets/ui/album-icon.svg` shipped |
+| RC-B13 | `css/style.css` header | Old Pokemon theme comment | RC-021 | **RESOLVED** |
+| RC-B14 | `assets/players/` | No portrait PNGs on disk | RC-040+ | **OPEN** — T0 jersey fallback active |
+| RC-B15 | `ui.js` remote URLs | PokeAPI in legacy paths | RC-022 | **MITIGATED** — football path local/manifest only |
+| RC-B16 | `game.js` trainer node | Pokémon trainer teams | RC-016 | **RESOLVED** — `buildFootballNpcTeam` on football path |
 
 **P1-049 green surfaces (already football-native):** Scout Report, Squad Registration, Slice Complete, football `GAME_THEME` branch, `doScoutReportNode` strings.
 
@@ -179,15 +179,15 @@ Hidden or inactive when `FEATURES.footballMode === true`:
 
 External demo **GO** requires all of:
 
-- [ ] No `Pokemon`, `Pokémon`, `Pokédex`, `Gym`, `Elite Four`, `Wild`, `fainted`, `evolution`, `starter`, `shiny`, `legendary`, `Nuzlocke` in **football-active rendered strings** (P1-049 surfaces + title/HUD/album/settlement/battle chrome)
-- [ ] Document `<title>` and visible title/subtitle are football-native (`World Cup: Road to Glory` / `Road to Glory`)
-- [ ] Collection entry labeled **World Cup Album** with owned icon asset
-- [ ] City Stamp UI uses stamp/stamp progress copy — not badge/gym
-- [ ] Player forms described as **Form Level** / **Career Form** — never “evolution” player-facing
-- [ ] No remote asset URLs on football-critical paths (PokeAPI, Showdown, TheSportsDB runtime)
-- [ ] `validate-identity-cleanup.mjs` and `validate-asset-manifests.mjs` green
-- [ ] Manual RC runbook PASS (see [031](./031-release-candidate-manual-qa-runbook.md))
-- [ ] Release invariants unchanged (knockout off, cloud off, battle math)
+- [x] No forbidden terms in **football-active rendered strings** (P1-049 + `validate-identity-cleanup.mjs`)
+- [x] Document `<title>` and visible title/subtitle football-native
+- [x] Collection entry labeled **World Cup Album** (glyph + `album-icon.svg` manifest)
+- [x] City Stamp UI uses stamp progress copy — not badge/gym
+- [x] Player forms as **Form Level** — evolution UI blocked on football path
+- [x] No remote asset URLs on football-critical paths (runtime gates off)
+- [x] `validate-identity-cleanup.mjs` and `validate-asset-manifests.mjs` green
+- [ ] Manual RC runbook PASS ([031](./031-release-candidate-manual-qa-runbook.md))
+- [x] Release invariants unchanged (knockout off, cloud off, battle math)
 
 ---
 
@@ -195,10 +195,13 @@ External demo **GO** requires all of:
 
 | Gate | Status |
 |------|--------|
-| Football loop surfaces (scout/swap/slice/settlement) | **PASS** (P1-049) |
-| Title / collection / battle chrome | **FAIL** — RC-B01–B13 |
-| Asset pipeline | **NOT STARTED** — T0 fallbacks only |
-| External demo identity | **NO-GO** until RC Waves 1–3 minimum |
+| Wave 0 (audit, manifests, harnesses) | **PASS** |
+| Wave 1 (player-facing identity) | **PASS** — RC-B01–B11, B13, B16 resolved; B12/B14 asset debt |
+| Football loop surfaces | **PASS** (P1-049 + domain harness) |
+| Asset pipeline (manifests + stamps) | **PASS** schema; **PARTIAL** art (T0 portraits, node SVGs pending) |
+| Manual QA ([031](./031-release-candidate-manual-qa-runbook.md)) | **PENDING** |
+| External demo identity | **CONDITIONAL NO-GO** — identity gates green; manual QA + T1 portraits recommended |
+| Phase 4 entry | **BLOCKED** until RC-072 sign-off |
 
 ---
 

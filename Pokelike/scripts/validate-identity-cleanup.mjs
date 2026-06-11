@@ -116,6 +116,8 @@ runTest("RC-007 index.html static fallbacks are football-native", () => {
   assert(htmlSource.includes("Friendly Match"), "battle title fallback should be Friendly Match");
   assert(htmlSource.includes("City Stamp earned"), "stamp ceremony fallback should be football-native");
   assert(htmlSource.includes("CITY STAMPS"), "map HUD should say CITY STAMPS");
+  assert(htmlSource.includes('class="football-boot"'), "html should default to football-boot to hide classic controls");
+  assert(!htmlSource.includes("Pokémon"), "index.html should not contain Pokémon in player-visible markup");
 });
 
 runTest("RC-010 GAME_THEME battle copy is football-native", () => {

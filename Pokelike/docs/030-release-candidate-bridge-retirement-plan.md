@@ -25,7 +25,7 @@ Document every **internal bridge** that still uses Pokelike/Pokémon naming whil
 | `markPokedexCaught()` | `data.js` | None on football path | Routes to `markAlbumSigned` | Save v4 | Album persistence QA |
 | `speciesId` on instances | `data.js`, `combat-adapter` | None — mirrors `profileId` | `profileId` authoritative for football | Save v4 | Combat adapter tests |
 | `renderPokemonCard()` | `ui.js` | None when entity has `profileId` | Dispatches to `renderPlayerCard()` | RC-043 | Player card QA |
-| `fetchPokemonById()` | `data.js` | **High on trainer/battle nodes** until RC-019 | Football NPC teams via `DomainCombatAdapter` | RC-019 | Trainer + friendly match QA |
+| `fetchPokemonById()` | `data.js` | None on football trainer path (RC-B16 resolved) | `buildFootballNpcTeam` + profile instances | Post-RC Classic split | Trainer + friendly match QA |
 | `createInstance()` | `data.js` | High on legacy battle paths | `createPlayerInstance()` for profiles | RC-019 | Battle presentation |
 | `NODE_TYPES.CATCH` | `map.js` | None — label = Scout Report | Enum internal only | Phase 4+ enum rename | Map harness |
 | `NODE_TYPES.POKECENTER` | `map.js` | None — label = Recovery Center | Enum internal only | Defer | Map labels QA |

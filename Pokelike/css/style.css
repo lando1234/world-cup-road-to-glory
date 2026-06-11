@@ -2,6 +2,14 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 
+/* Football-default boot: hide Classic-only title controls until legacy mode */
+.football-boot #btn-hard-run,
+.football-boot #btn-endless-run,
+.football-boot .gen-toggle-wrap,
+.football-boot #title-pokemon-disclaimer {
+  display: none !important;
+}
+
 * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; }
 
 :root {

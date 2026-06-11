@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="football-boot">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -43,7 +43,7 @@
     </div>
   </div>
   <button id="btn-new-run" class="btn-primary">New Campaign</button>
-  <button id="btn-hard-run" class="btn-primary" style="margin-top:6px;" title="Hardcore mode — any Pokémon that faints in battle is lost permanently. Exception: rival (Silver) battles won't permanently faint your team if you win.">Nuzlocke</button>
+  <button id="btn-hard-run" class="btn-primary classic-only-control" style="margin-top:6px;" title="Hardcore mode — players removed from the run after elimination. Exception: rival battles may spare your squad if you win.">Hard Mode</button>
   <button id="btn-endless-run" class="btn-primary" style="margin-top:6px;">Battle Tower</button>
   <div style="display:flex;gap:8px;margin-top:8px;">
     <button id="title-btn-collection" onclick="openPokedexModal()" class="btn-secondary">📖 World Cup Album</button>
@@ -66,8 +66,8 @@
     <a href="privacy.html" style="color:var(--text-dim);font-size:8px;text-decoration:none;">Privacy Policy</a>
   </div>
   </div>
-  <div id="title-pokemon-disclaimer" style="display:none;margin-top:10px;max-width:340px;color:var(--text-dim);font-size:8px;opacity:0.6;line-height:1.4;text-align:center;padding:0 10px;">
-    Fan-made project. Not affiliated with, endorsed by, or sponsored by Nintendo, Game Freak, or The Pokémon Company. All Pokémon names and sprites are property of their respective owners.
+  <div id="title-pokemon-disclaimer" class="classic-only-control" style="display:none;margin-top:10px;max-width:340px;color:var(--text-dim);font-size:8px;opacity:0.6;line-height:1.4;text-align:center;padding:0 10px;">
+    Fan-made project. Not affiliated with or endorsed by any third-party rights holders referenced in Classic mode.
   </div>
 </div>
 
@@ -229,7 +229,7 @@
 
 <!-- ===== CITY STAMP / BADGE COMPATIBILITY SCREEN ===== -->
 <div id="badge-screen" class="screen city-stamp-screen">
-  <img id="badge-icon-img" class="badge-icon city-stamp-legacy-badge-icon" src="" alt="Badge">
+  <img id="badge-icon-img" class="badge-icon city-stamp-legacy-badge-icon" src="" alt="City Stamp">
   <div id="badge-stamp-flag" class="badge-stamp-flag city-stamp-emblem" style="display:none;"></div>
   <div id="badge-msg" class="city-stamp-message">City Stamp earned</div>
   <div id="badge-leader" class="city-stamp-host"></div>

@@ -412,6 +412,7 @@ function applyTitleScreenPresentation() {
 
   screen.classList.toggle('football-title', copy.isFootball);
   screen.classList.toggle('legacy-title', !copy.isFootball);
+  document.documentElement.classList.toggle('football-boot', copy.isFootball);
 }
 
 document.addEventListener('DOMContentLoaded', applyTitleScreenPresentation);
