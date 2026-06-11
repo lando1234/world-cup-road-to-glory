@@ -368,7 +368,7 @@ runTest("P2-026 scout pool expansion guard validates late bands without runtime 
   assert(expansion.bands.some(band => band.mapMin === 3), "expansion scout pools should include map 3+ bands");
   assert(expansion.bands.some(band => band.mapMax === 7), "expansion scout pools should include map 7 coverage");
   const slicePools = JSON.parse(readText("data/football/scout_pools.json"));
-  assert(slicePools.bands.length === 2, "runtime scout pools should keep slice-only bands");
+  assert(slicePools.bands.some(band => band.bandId === "late"), "runtime scout pools should include merged late band after Phase 3");
   assert(smokeHttpSource.includes("scout_pools_expansion.json"), "HTTP smoke should verify scout pool expansion JSON");
 });
 

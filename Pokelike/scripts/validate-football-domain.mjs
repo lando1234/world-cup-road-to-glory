@@ -589,7 +589,7 @@ await runTest("album domain loads layout and exposes ordered slot ids", () => {
 });
 
 await runTest("scout pools define Phase 1 stage bands", () => {
-  assert(scoutPoolCatalog.config.bands.length === 2, `expected 2 scout bands, received ${scoutPoolCatalog.config.bands.length}`);
+  assert(scoutPoolCatalog.config.bands.length === scoutPoolsJson.bands.length, `scout band count mismatch: loaded ${scoutPoolCatalog.config.bands.length}, json ${scoutPoolsJson.bands.length}`);
   const early = context.window.DomainScout.getBandForMap(0);
   const mid = context.window.DomainScout.getBandForMap(2);
   assert(early.bandId === "early", "mapIndex 0 should use early scout band");
