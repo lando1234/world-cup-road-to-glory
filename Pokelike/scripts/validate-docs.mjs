@@ -24,6 +24,7 @@ const phase2AssumptionsHtml = readText("docs/020-phase-2-assumptions-tradeoffs-a
 const phase2ValidationReport = readText("docs/019-phase-2-validation-report.md");
 const phase3Plan = readText("docs/021-phase-3-expansion-content-release-hardening-plan.md");
 const phase3Ledger = readText("docs/024-phase-3-engineering-task-breakdown.md");
+const phase3ManualQaRunbook = readText("docs/025-phase-3-manual-qa-runbook.md");
 const phase3AssumptionsHtml = readText("docs/022-phase-3-assumptions-tradeoffs-assets-report.html");
 
 const frictionEntries = (visualFrictionsHtml.match(/class="entry"/g) || []).length;
@@ -90,6 +91,10 @@ assert(
 );
 assert(phase3AssumptionsHtml.includes("Go / No-Go Status"), "Phase 3 assumptions report must document go/no-go");
 assert(phase3AssumptionsHtml.includes("Expansion Readiness"), "Phase 3 assumptions report must document expansion readiness");
+assert(phase3ManualQaRunbook.includes("Phase 3 Manual QA Runbook"), "Phase 3 manual QA runbook must include the expected heading");
+assert(phase3ManualQaRunbook.includes("Knockout Guard Assertion"), "Phase 3 manual QA runbook must include knockout guard checks");
+assert(phase3ManualQaRunbook.includes("Core 8-City Path"), "Phase 3 manual QA runbook must include 8-city path");
+assert(phase3ManualQaRunbook.includes("Blocker Definition"), "Phase 3 manual QA runbook must define blockers");
 assert(phase3AssumptionsHtml.includes("P3-GOV"), "Phase 3 assumptions report must include the governance ledger note");
 
 console.log(`PASS docs validation: ${frictionEntries} visual friction entries`);
