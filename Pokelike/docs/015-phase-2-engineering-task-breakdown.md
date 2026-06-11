@@ -6,7 +6,7 @@
 **Mode:** One task, one validation pass, one commit  
 **Branch:** `main` unless explicitly changed  
 **Screenshots:** Not automated by default
-**Last sync:** `main` @ this commit — Runtime no-live-API gate (P2-021)
+**Last sync:** `main` @ this commit — Football-native node icon registry (P2-010)
 
 ---
 
@@ -14,9 +14,9 @@
 
 | Metric | Count |
 |--------|------:|
-| **Done** | 10 |
+| **Done** | 11 |
 | **Partial** | 0 |
-| **Not started** | 20 |
+| **Not started** | 19 |
 | **Total tickets** | 30 |
 
 **Legend:** ✅ Done · 🟡 Partial · ⬜ Not started
@@ -278,7 +278,7 @@ Closeout requires a validation report, manual QA result, no-cloud assertion, no-
 | P2-007 | ✅ | A | P2-002 | Batch 1 | `231a81f` |
 | P2-008 | ✅ | C | P2-001 | Batch 1 | `cad24b2` |
 | P2-009 | ✅ | C | P2-008 | Batch 2/3 | `115fb67` |
-| P2-010 | ⬜ | E | P2-003 | Batch 4/5 | |
+| P2-010 | ✅ | E | P2-003 | Batch 4/5 | this commit |
 | P2-011 | ⬜ | D | P2-005, P2-007 | Batch 4 | |
 | P2-012 | ⬜ | D | P2-011 | Batch 4 | |
 | P2-013 | ⬜ | D | P2-012 | Batch 4 | |
@@ -289,7 +289,7 @@ Closeout requires a validation report, manual QA result, no-cloud assertion, no-
 | P2-018 | ⬜ | F | P2-017 | Batch 6 | |
 | P2-019 | ⬜ | B | P2-018 | Batch 7 | |
 | P2-020 | ⬜ | B | P2-019 | Batch 7 | |
-| P2-021 | ✅ | C | P2-009 | Batch 3 | this commit |
+| P2-021 | ✅ | C | P2-009 | Batch 3 | `14ac5cb` |
 | P2-022 | ⬜ | A | P2-006, P2-018, P2-021 | Batch 8 | |
 | P2-023 | ⬜ | Variable | P2-022 | Batch 8 conditional | |
 | P2-024 | ⬜ | G | P2-022, no blockers | Batch 9 | |

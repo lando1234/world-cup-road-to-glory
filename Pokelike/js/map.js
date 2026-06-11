@@ -37,6 +37,26 @@ const GEN2_NODE_WEIGHTS = {
   battle: 25, catch: 5, item: 10, trainer: 40, question: 10, pokecenter: 0, move_tutor: 5, trade: 5, legendary: 0,
 };
 
+const FOOTBALL_NODE_PRESENTATION = Object.freeze({
+  [NODE_TYPES.START]:      Object.freeze({ color: '#315a78', icon: 'KO', label: 'Arrival' }),
+  [NODE_TYPES.BATTLE]:     Object.freeze({ color: '#8a3535', icon: '⚽', label: 'Friendly Match — +1 Form Level' }),
+  [NODE_TYPES.CATCH]:      Object.freeze({ color: '#28704f', icon: 'SR', label: 'Scout Report' }),
+  [NODE_TYPES.ITEM]:       Object.freeze({ color: '#315d8f', icon: 'GE', label: 'Gear Crate' }),
+  [NODE_TYPES.QUESTION]:   Object.freeze({ color: '#8a6730', icon: 'EV', label: 'Tournament Event' }),
+  [NODE_TYPES.BOSS]:       Object.freeze({ color: '#7a3a8d', icon: 'HC', label: 'Host City Challenge' }),
+  [NODE_TYPES.POKECENTER]: Object.freeze({ color: '#137178', icon: '+',  label: 'Recovery Center' }),
+  [NODE_TYPES.TRAINER]:    Object.freeze({ color: '#8a5128', icon: 'RN', label: 'Rival National Team — +2 Form Levels' }),
+  [NODE_TYPES.LEGENDARY]:  Object.freeze({ color: '#8d7524', icon: 'LG', label: 'Legend Scouting' }),
+  [NODE_TYPES.MOVE_TUTOR]: Object.freeze({ color: '#465f88', icon: 'SC', label: 'Specialist Coach' }),
+  [NODE_TYPES.TRADE]:      Object.freeze({ color: '#376e72', icon: 'TM', label: 'Transfer Market — Disabled in Phase 2' }),
+  [NODE_TYPES.SILVER]:     Object.freeze({ color: '#6d3f84', icon: 'RN', label: 'Rival National Team' })
+});
+
+function getFootballNodePresentation(node) {
+  if (window.FEATURES?.footballMode !== true) return null;
+  return FOOTBALL_NODE_PRESENTATION[node.type] || null;
+}
+
 function weightedRandom(weights) {
   const total = Object.values(weights).reduce((a, b) => a + b, 0);
   let r = rng() * total;
@@ -367,6 +387,8 @@ const KANTO_GYM_LEADER_SPRITES = [
 ];
 
 function getNodeSprite(node) {
+  if (getFootballNodePresentation(node)) return null;
+
   const gen2 = typeof state !== 'undefined' && state.gen2Mode;
   const ICON_SPRITES = {
     [NODE_TYPES.BATTLE]:    gen2 ? 'sprites/gen2/grass.png'    : 'sprites/grass.png',
@@ -693,6 +715,12 @@ function renderMap(map, container, onNodeClick) {
 }
 
 function getNodeColor(node) {
+  const footballPresentation = getFootballNodePresentation(node);
+  if (footballPresentation) {
+    if (node.visited) return '#333';
+    return footballPresentation.color;
+  }
+
   // The START node doubles as the run's mode indicator — a subtle blue tint
   // for Normal, subtle red tint for Nuzlocke. Kept close to the default
   // gray-blue (#4a4a6a) so it reads as flavour, not a UI shout.
@@ -720,6 +748,9 @@ function getNodeColor(node) {
 
 function getNodeIcon(node) {
   if (node.visited) return '✓';
+  const footballPresentation = getFootballNodePresentation(node);
+  if (footballPresentation) return footballPresentation.icon;
+
   const icons = {
     [NODE_TYPES.START]:      '★',
     [NODE_TYPES.BATTLE]:     '⚔',
@@ -772,6 +803,7 @@ function getSilverHoverLabel() {
 function getNodeLabel(node) {
   if (node.visited) return 'Visited';
   if (window.FEATURES?.footballMode === true) {
+    const footballPresentation = getFootballNodePresentation(node);
     const themeNode = window.GAME_THEME?.node || {};
     if (node.type === NODE_TYPES.BOSS) {
       const boss = window.DomainBosses?.getHostCity(node.mapIndex);
@@ -785,21 +817,18 @@ function getNodeLabel(node) {
         return `<div style="font-weight:bold;margin-bottom:4px;">${challengeLabel}: ${boss.hostCity} — ${boss.label}</div>${teamHtml}`;
       }
     }
-    const footballLabels = {
-      [NODE_TYPES.START]:      'Start',
-      [NODE_TYPES.BATTLE]:     `${themeNode.friendlyMatch || 'Friendly Match'} — +1 Form Level`,
-      [NODE_TYPES.CATCH]:      themeNode.scoutReport || 'Scout Report',
-      [NODE_TYPES.ITEM]:       themeNode.gearCrate || 'Gear Crate',
-      [NODE_TYPES.QUESTION]:   'Tournament Event',
-      [NODE_TYPES.POKECENTER]: themeNode.recoveryCenter || 'Recovery Center',
-      [NODE_TYPES.TRAINER]:    `${themeNode.rivalNationalTeam || 'Rival National Team'} — +2 Form Levels`,
-      [NODE_TYPES.BOSS]:       themeNode.hostCityChallenge || 'Host City Challenge',
-      [NODE_TYPES.LEGENDARY]:  'Legendary Scouting',
-      [NODE_TYPES.MOVE_TUTOR]: 'Specialist Coach',
-      [NODE_TYPES.TRADE]:      'Transfer Market — Disabled in Phase 1',
-      [NODE_TYPES.SILVER]:     'Rival National Team',
-    };
-    return footballLabels[node.type] || node.type;
+    if (footballPresentation) {
+      const themedLabels = {
+        [NODE_TYPES.BATTLE]:     `${themeNode.friendlyMatch || 'Friendly Match'} — +1 Form Level`,
+        [NODE_TYPES.CATCH]:      themeNode.scoutReport || footballPresentation.label,
+        [NODE_TYPES.ITEM]:       themeNode.gearCrate || footballPresentation.label,
+        [NODE_TYPES.POKECENTER]: themeNode.recoveryCenter || footballPresentation.label,
+        [NODE_TYPES.TRAINER]:    `${themeNode.rivalNationalTeam || 'Rival National Team'} — +2 Form Levels`,
+        [NODE_TYPES.BOSS]:       themeNode.hostCityChallenge || footballPresentation.label
+      };
+      return themedLabels[node.type] || footballPresentation.label;
+    }
+    return node.type;
   }
   if (node.type === NODE_TYPES.BOSS) {
     const mi = node.mapIndex ?? -1;

@@ -42,6 +42,7 @@ const portraitManifest = JSON.parse(readText("data/football/portrait_manifest.js
 const playerProfiles = JSON.parse(readText("data/football/player_profiles.json"));
 const dataSource = readText("js/data.js");
 const gameSource = readText("js/game.js");
+const mapSource = readText("js/map.js");
 const profilesSource = readText("js/domain/profiles.js");
 const featuresSource = readText("js/domain/features.js");
 const cloudSaveSource = readText("js/cloud-save.js");
@@ -155,6 +156,18 @@ runTest("P2-021 football runtime-critical display path does not require live API
   assert(!profilesSource.includes("searchPlayer("), "DomainProfiles should not call live TheSportsDB search");
   assert(!footballStarterBranch.includes("https://"), "football starter branch should not build remote sprite URLs");
   assert(footballStarterBranch.includes("markAlbumSigned"), "football starter branch should use local album write path");
+});
+
+runTest("P2-010 football map node presentation uses native registry", () => {
+  const spriteBlock = extractBetween(mapSource, "function getNodeSprite", "// Rendering");
+  assert(mapSource.includes("FOOTBALL_NODE_PRESENTATION"), "map.js should define a football node presentation registry");
+  assert(mapSource.includes("function getFootballNodePresentation"), "map.js should expose football node presentation lookup");
+  assert(mapSource.includes("Scout Report"), "football node registry should include Scout Report");
+  assert(mapSource.includes("Host City Challenge"), "football node registry should include Host City Challenge");
+  assert(mapSource.includes("Recovery Center"), "football node registry should include Recovery Center");
+  assert(spriteBlock.includes("if (getFootballNodePresentation(node)) return null;"), "football map nodes should avoid legacy sprite icons");
+  assert(mapSource.includes("return footballPresentation.color"), "football node colors should come from the registry");
+  assert(mapSource.includes("return footballPresentation.icon"), "football node icons should come from the registry");
 });
 
 const failed = results.filter(result => result.status === "FAIL");
