@@ -6,7 +6,7 @@
 **Mode:** One task, one validation pass, one commit  
 **Branch:** `main` unless explicitly changed  
 **Screenshots:** Not automated by default
-**Last sync:** `main` @ this commit — HTTP smoke script (P2-007)
+**Last sync:** `main` @ this commit — Portrait/legal/art decision gate (P2-008)
 
 ---
 
@@ -14,9 +14,9 @@
 
 | Metric | Count |
 |--------|------:|
-| **Done** | 4 |
+| **Done** | 5 |
 | **Partial** | 0 |
-| **Not started** | 26 |
+| **Not started** | 25 |
 | **Total tickets** | 30 |
 
 **Legend:** ✅ Done · 🟡 Partial · ⬜ Not started
@@ -275,8 +275,8 @@ Closeout requires a validation report, manual QA result, no-cloud assertion, no-
 | P2-004 | ⬜ | B | P2-003 | Batch 2 | |
 | P2-005 | ⬜ | B | P2-004 | Batch 2 | |
 | P2-006 | ✅ | A | P2-001 | Batch 1 | `5b7f083` |
-| P2-007 | ✅ | A | P2-002 | Batch 1 | this commit |
-| P2-008 | ⬜ | C | P2-001 | Batch 1 | |
+| P2-007 | ✅ | A | P2-002 | Batch 1 | `231a81f` |
+| P2-008 | ✅ | C | P2-001 | Batch 1 | this commit |
 | P2-009 | ⬜ | C | P2-008 | Batch 2/3 | |
 | P2-010 | ⬜ | E | P2-003 | Batch 4/5 | |
 | P2-011 | ⬜ | D | P2-005, P2-007 | Batch 4 | |

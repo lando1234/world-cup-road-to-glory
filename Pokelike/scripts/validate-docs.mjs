@@ -19,6 +19,7 @@ const taskBreakdown = readText("docs/011-engineering-task-breakdown.md");
 const assumptionsHtml = readText("docs/012-phase-1-assumptions-tradeoffs-report.html");
 const phase2TaskBreakdown = readText("docs/015-phase-2-engineering-task-breakdown.md");
 const phase2ManualQaRunbook = readText("docs/017-phase-2-manual-qa-runbook.md");
+const portraitAssetStrategy = readText("docs/018-portrait-asset-strategy.md");
 const phase2AssumptionsHtml = readText("docs/020-phase-2-assumptions-tradeoffs-assets-report.html");
 
 const frictionEntries = (visualFrictionsHtml.match(/class="entry"/g) || []).length;
@@ -48,6 +49,13 @@ assert(phase2ManualQaRunbook.includes("Full-Squad QA"), "Phase 2 manual QA runbo
 assert(phase2ManualQaRunbook.includes("Reload Persistence QA"), "Phase 2 manual QA runbook must include reload persistence QA");
 assert(phase2ManualQaRunbook.includes("Game-Over QA"), "Phase 2 manual QA runbook must include game-over QA");
 assert(phase2ManualQaRunbook.includes("Legacy Terminology QA"), "Phase 2 manual QA runbook must include legacy terminology QA");
+assert(portraitAssetStrategy.includes("Phase 2 Portrait Asset Strategy"), "portrait strategy must include the expected heading");
+assert(
+  portraitAssetStrategy.includes("local stylized non-likeness jersey avatars"),
+  "portrait strategy must record the public-safe default"
+);
+assert(portraitAssetStrategy.includes("TheSportsDB remains internal-demo/reference only"), "portrait strategy must restrict TheSportsDB");
+assert(visualFrictionsHtml.includes("018-portrait-asset-strategy.md"), "visual frictions registry must link the portrait strategy");
 assert(assumptionsHtml.includes("T0-001"), "assumptions report must include T0-001");
 assert(assumptionsHtml.includes("One task, one commit"), "assumptions report must include one-task-one-commit rule");
 assert(
